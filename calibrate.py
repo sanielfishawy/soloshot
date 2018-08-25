@@ -1,6 +1,7 @@
 import tkinter as tk
 import math as math
 import time as time
+import canvas_utils as CUtils
 
 
 def mouse_click(e):
@@ -11,8 +12,8 @@ def mouse_click(e):
     
     if  Tags().get_num_tags() > 1:
         last_two_tags = [Tags().get_tags()[-2], Tags().get_tags()[-1]]
-        possible_camera_positions = CameraPositionCalculator(last_two_tags).calc()
-        CameraPositionRender(possible_camera_positions).render()
+        #possible_camera_positions = CameraPositionCalculator(last_two_tags).calc()
+        #CameraPositionRender(possible_camera_positions).render()
 
 
 
@@ -23,15 +24,9 @@ _canvasWidth = 500
 _canvasHeight = 500
 _label_font = ("arial", 10, "normal")
 _canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)
+_canvas_utils = CUtils.CanvasUtils(_canvas)
 _canvas.bind("<Button-1>", mouse_click)
 _canvas.pack()
-
-
-def add_dot(x, y, color="black"):
-    return _canvas.create_oval(x-1, y-1, x+1, y+1, outline=color, fill=color)
-
-def add_dot_label(x, y, text, color="black", anchor="nw"):
-    return _canvas.create_text(x, y+2, text=text, anchor=anchor, fill=color, font=_label_font)
 
 class _CameraSingleton:
     def __init__(self, x, y):
@@ -53,8 +48,8 @@ class _CameraSingleton:
         return "C (" + str(self.x) + ", " + str(self.y) + ")"
     
     def render_camera(self):
-        self.dot = add_dot(self.x, self.y, color = self.camera_color)
-        self.label = add_dot_label(self.x, self.y, self.camera_label(), color=self.camera_color)
+        #self.dot = _canvas_utils.add_dot(self.x, self.y, color = self.camera_color)
+        self.label = _canvas_utils.create_dot_label(self.x, self.y, self.camera_label(), color=self.camera_color)
 
 _camera_singleton = None
 
@@ -97,8 +92,8 @@ class Tag:
         return "T" + str(self.n) # + self.str_position() 
         
     def render_tag(self): 
-        self.dot = add_dot(self.x, self.y, color=self.tag_color) 
-        self.label = add_dot_label(self.x, self.y, self.tag_label(), color=self.tag_color, anchor="sw") 
+        #self.dot = _canvas_utils.add_dot(self.x, self.y, color=self.tag_color) 
+        self.label = _canvas_utils.create_dot_label(self.x, self.y, self.tag_label(), color=self.tag_color, anchor="sw") 
 
     def render_line_to_camera(self):
         self.line_to_camera = _canvas.create_line(self.x, self.y, Camera().get_x(), Camera().get_y(), fill=self.tag_color)
@@ -204,7 +199,6 @@ class CameraPositionCalculator:
         self.a_deg = self.angle_between_tags.get_angle()
         self.a_rad = math.radians(self.a_deg)
 
-    def calc():
 
 
 class CameraPositionCalculatorDeprecated:

@@ -1,7 +1,7 @@
 import math
 import sympy.geometry as Geo
 
-def isosceles_points(p1, p2, theta_deg):
+def isosceles_points_deprecated(p1, p2, theta_deg):
     #             r1
     #             +
     #            /|\
@@ -32,3 +32,37 @@ def isosceles_points(p1, p2, theta_deg):
     r1 = (mp.x.evalf() - dx, mp.y.evalf() + dy)  #pylint: disable=no-member
     r2 = (mp.x.evalf() + dx, mp.y.evalf() - dy)  #pylint: disable=no-member
     return (r1, r2)
+
+        
+#          Circum...        
+#            theta_deg
+#               /\
+#              /  \
+#             /    \
+#            /      \
+#           p1      p2
+def circumcenters(p1, p2, theta_deg):
+    radius = circumradius(p1, p2, theta_deg)
+    c1 = Geo.Circle(p1, radius)
+    c2 = Geo.Circle(p2, radius)
+    return Geo.intersection(c1, c2)
+
+def circumcircles(p1, p2, theta_deg):
+    (c1, c2) = circumcenters(p1, p2, theta_deg)
+    radius = circumradius(p1, p2, theta_deg)
+    return (Geo.Circle(c1, radius), Geo.Circle(c2, radius))
+
+def circumradius(p1, p2, theta_deg):
+    return 0.5 * circumdiameter(p1, p2, theta_deg)
+    
+def circumdiameter(p1, p2, theta_deg):
+    s = Geo.Segment(p1, p2)
+    return ( s.length / math.sin(math.radians(theta_deg)) ).evalf()
+
+def subtended_angle_rad(v, p1, p2):
+    s1 = Geo.Segment(v, p1)
+    s2 = Geo.Segment(v, p2)
+    return s1.smallest_angle_between(s2).evalf()
+
+def subtended_angle_deg(v, p1, p2):
+    return math.degrees(subtended_angle_rad(v, p1, p2))

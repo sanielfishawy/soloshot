@@ -1,0 +1,19 @@
+- random wandering person wanders in a zone
+
+- Bubble caclulation
+    - For: 
+        - No correction 
+        - Using: 
+            - raw base GPS
+            - raw compass 
+            - maximum field of view
+    - Given:
+        - Maximum base gps error radius
+        - Maximum compass error
+    - Determine:
+        - Minimum caculated distance from tag to base using raw GPS
+    - Such that:
+        - Tag will be within the middle 2/3 of the frame horizontally (1/6 reserve on either side)
+        - When we attempt to center the tag.
+
+- 
