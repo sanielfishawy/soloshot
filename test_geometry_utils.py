@@ -51,7 +51,63 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
             half_a = (0.5 * a.length).evalf()
             half_r = (0.5 * r.length).evalf()
 
-            self.assertAlmostEquals(_tan, half_a / half_r)
+            self.assertAlmostEqual(_tan, half_a / half_r)
+    
+    def test_angle_of_vector(self):
+        p0 = (0,0)
+        p1_s = [(0,0),
+                (1,0),
+                (1,1), 
+                (0,1), 
+                (-1,1), 
+                (-1,0), 
+                (-1,-1), 
+                (0,-1), 
+                (1,-1)] 
+
+        results =  [None,
+                    0,
+                    math.pi / 4,
+                    math.pi / 2,
+                    3 * math.pi / 4,
+                    math.pi,
+                    -( 3 * math.pi / 4),
+                    - math.pi / 2,
+                    - math.pi / 4]
+        
+        for i, p1 in enumerate(p1_s):
+            self.assertAlmostEqual(GU.angle_of_vector([p0, p1]), results[i])
+
+    def test_point_with_angle_and_distance_to_point(self):
+
+        p0 = (1,1)
+
+        d = 1
+        rt2_2 = math.sqrt(2) / 2
+
+        angles = [0,
+                  math.pi / 4,
+                  math.pi / 2,
+                  3 * pi / 4,
+                  math.pi,
+                  -3 * math.pi / 4, 
+                  -math.pi / 2,
+                  -math.pi / 4]
+        
+        expect_s = [(2,1),
+                    (1 + rt2_2, 1 + rt2_2),
+                    (1, 2),
+                    (1 - rt2_2, 1 + rt2_2),
+                    (0, 1),
+                    (1 - rt2_2, 1 - rt2_2),
+                    (1, 0),
+                   (1 + rt2_2, 1 - rt2_2)]
+        
+        for i, angle in enumerate(angles):
+            r = GU.point_with_angle_and_distance_from_point(p0, angle, d)
+            expect = expect_s[i]
+            self.assertAlmostEqual(r[0], expect[0])
+            self.assertAlmostEqual(r[1], expect[1])
 
 if __name__ == '__main__':
     unittest.main()

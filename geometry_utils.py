@@ -1,7 +1,8 @@
 import math
 import sympy.geometry as Geo
 
-def isosceles_points_deprecated(p1, p2, theta_deg):
+def isosceles_points(p1, p2, theta_deg):
+    # DEPRECATED: This method is not currently used
     #             r1
     #             +
     #            /|\
@@ -66,3 +67,23 @@ def subtended_angle_rad(v, p1, p2):
 
 def subtended_angle_deg(v, p1, p2):
     return math.degrees(subtended_angle_rad(v, p1, p2))
+
+def angle_of_vector(coords):
+    p1, p2 = coords
+    p1_x, p1_y = p1
+    p2_x, p2_y = p2
+    if (p2_x == p1_x):
+        if (p2_y == p1_y):
+            r = None
+        elif (p2_y > p1_y):
+            r = math.pi / 2
+        elif (p2_y < p1_y):
+            r = -math.pi / 2
+    else:
+        r = math.atan2( (p2_y - p1_y), (p2_x - p1_x) )
+
+    return r
+
+def point_with_angle_and_distance_from_point(point, angle_rad, d):
+    return (point[0] + d * math.cos(angle_rad), (point[1] + d * math.sin(angle_rad)))
+    

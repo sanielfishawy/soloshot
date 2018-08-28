@@ -1,3 +1,4 @@
+import random
 
 class CanvasUtils:
     def __init__(self, canvas):
@@ -12,3 +13,20 @@ class CanvasUtils:
 
     def create_circle_with_center_and_radius(self, c, r, params={}):
         return self.canvas.create_oval(c.x-r, c.y-r, c.x+r, c.y+r, **params)
+    
+    @staticmethod
+    def random_color():
+        return random.choice(CanvasUtils.colors())
+
+    @staticmethod
+    def colors():
+        return ['blue',
+                'red',
+                'orange',
+                'green',
+                'SkyBlue',
+                'yellow',
+                'DeepPink',
+                'chocolate',
+                'black',
+                'violet']
