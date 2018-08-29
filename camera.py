@@ -25,13 +25,16 @@ class Camera:
         self.timestamp = 0
         self.state_history = []
 
+    def get_timestamp(self):
+        return self.timestamp
+        
     def get_actual_pan_angle_deg(self):
         return self.motor_pan_angle_deg + self.compass_error_deg
 
     def get_actual_pan_angle_rad(self):
         return math.radians(self.get_actual_pan_angle_deg())
 
-    def objects_in_view(self):
+    def get_objects_in_view(self):
         return self.get_view_triangle().objects_in_view(self.timestamp)
 
     def get_view_triangle(self):
@@ -40,13 +43,13 @@ class Camera:
                              self.right_of_frame_angle_point()])
 
     def left_of_frame_angle_rad(self):
-        return self.get_actual_pan_angle_rad + ( self.fov_rad / 2 ) 
+        return self.get_actual_pan_angle_rad() + ( self.fov_rad / 2 ) 
 
     def left_of_frame_angle_deg(self):
         return math.degrees(self.left_of_frame_angle_deg())
         
     def right_of_frame_angle_rad(self):
-        return self.get_actual_pan_angle_rad - ( self.fov_rad / 2 ) 
+        return self.get_actual_pan_angle_rad() - ( self.fov_rad / 2 ) 
 
     def right_of_frame_angle_deg(self):
         return math.degrees(self.right_of_frame_angle_deg())

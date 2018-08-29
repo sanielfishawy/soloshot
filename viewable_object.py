@@ -17,18 +17,30 @@ class ViewableObject:
  
     def get_position_history(self):
         return self.position_history
+    
+    def get_position_history_len(self):
+        return len(self.get_position_history())
 
-    def get_position_at_time_stamp(self, time_stamp):
-        return self.position_history[time_stamp]
+    def get_position_at_time_stamp(self, timestamp):
+        if timestamp >= self.get_position_history_len():
+            r = None
+        else:
+            r = self.position_history[timestamp]
+        
+        return r
+    
+    def get_name(self):
+        return self.name
 
 class StationaryObject(ViewableObject):
 
     def __init__(self, position, **kwds):
         self.position = position
         super().__init__(**kwds)
+        self.create_postion_history()
 
     def create_postion_history(self):
-        [self.position] * self.num_timestamps
+        self.position_history = [self.position] * self.num_timestamps
         return self
 
 class MovingObject(ViewableObject):
