@@ -1,6 +1,6 @@
 import tkinter as tk
-from canvas_utils import *
-from moving_object import *
+from canvas_utils import CanvasUtils
+from viewable_object import *
 
 def mouse_click(e):
     Demo().add_moving_object()
@@ -23,7 +23,7 @@ class _DemoSingleton:
         self.boundary_render = _canvas.create_polygon(*self.boundary.exterior.coords, fill='', outline='orange')
 
     def add_moving_object(self):
-        self.moving_object = MovingObject(self.boundary)
+        self.moving_object = MovingObject(boundary=self.boundary)
         self.widgets.append(_canvas.create_line(*self.moving_object.get_position_history(), fill=CanvasUtils.random_color()))
 
     def clear(self):

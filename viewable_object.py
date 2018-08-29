@@ -2,36 +2,56 @@ import math as math
 import geometry_utils as GU
 import random as random
 from shapely.geometry import Polygon, Point, LineString
+from simple_uid import SimpleUID
 
-class MovingObject:
-    def __init__(self, 
-                 boundary, # Boundary
-                 max_speed_fps=10, 
-                 min_speed_fps=9, 
-                 twistyness_deg_ps=45, 
-                 frames_per_second=3,
-                 video_length_sec=1000):
+class ViewableObject:
+    def __init__(self,
+                 lifespan_num_timestamps=1000,
+                 foo=1000,
+                 name=None
+                 ):
 
-        self.max_speed = max_speed_fps
-        self.min_speed = min_speed_fps
-        self.twistyness_deg = twistyness_deg_ps
-        self.frps = frames_per_second
-        self.boundary = boundary
-        self.video_length = video_length_sec
-    
-        self.calc_intermediate_variables()
+        self.num_timestamps = lifespan_num_timestamps
+        self.name = name
+        self.id = SimpleUID().get_id()
         self.position_history = []
-        self.create_postion_history()
-
+ 
     def get_position_history(self):
         return self.position_history
 
-    def calc_intermediate_variables(self):
-        self.num_frames = self.frps * self.video_length
-        self.twistyness_rad = math.radians(self.twistyness_deg)
-        self.max_angle_change_per_frame_rad = self.twistyness_rad / self.frps
-        self.max_distance_per_frame = self.max_speed / self.frps
-        self.min_distance_per_frame = self.min_speed / self.frps
+    def get_position_at_time_stamp(self, time_stamp):
+        return self.position_history[time_stamp]
+
+class StationaryObject(ViewableObject):
+    def __init__(self, 
+                 position=(0,0)
+                ):
+
+        self.position = position
+        super().__init__()
+
+    def create_postion_history(self):
+        [self.position] * self.num_timestamps
+        return self
+
+class MovingObject(ViewableObject):
+    def __init__(self, 
+                 boundary=None, # Boundary
+                 max_dist_per_timestamp=10, 
+                 min_dist_per_timestamp=9, 
+                 twistyness_deg_per_timestamp=45
+                ):
+
+        self.max_dist_per_timestamp = max_dist_per_timestamp
+        self.min_dist_per_timestamp = min_dist_per_timestamp
+        self.max_deg_per_timestamp = twistyness_deg_per_timestamp
+        self.max_rad_per_timestamp = math.radians(self.max_deg_per_timestamp)
+        if boundary == None:
+            raise "Moving object requires a boundary parameter of class Boundary"
+        self.boundary = boundary
+        super().__init__()
+    
+        self.create_postion_history()
 
     def create_postion_history(self):
         ps = self.random_start_point()
@@ -40,7 +60,7 @@ class MovingObject:
                                                                                  self.boundary.angle_to_centroid(ps), 
                                                                                  self.random_distance()))
 
-        for _ in range(2, self.num_frames):
+        for _ in range(2, self.num_timestamps):
             self.add_point_to_history()
 
 
@@ -56,7 +76,7 @@ class MovingObject:
 
     def random_angle(self):
         r = random.random() * 2 - 1
-        return self.last_angle() + r * self.twistyness_rad
+        return self.last_angle() + r * self.max_rad_per_timestamp
 
     def last_angle(self):
         return GU.angle_of_vector(self.last_segment())
@@ -74,7 +94,7 @@ class MovingObject:
         return self.boundary.random_point()
     
     def random_distance(self):
-        return random.random() * (self.max_distance_per_frame - self.min_distance_per_frame) + self.min_distance_per_frame
+        return random.random() * (self.max_dist_per_timestamp - self.min_dist_per_timestamp) + self.min_dist_per_timestamp
         
 
 class Boundary(Polygon):
