@@ -7,7 +7,6 @@ from simple_uid import SimpleUID
 class ViewableObject:
     def __init__(self,
                  lifespan_num_timestamps=1000,
-                 foo=1000,
                  name=None
                  ):
 
@@ -23,12 +22,10 @@ class ViewableObject:
         return self.position_history[time_stamp]
 
 class StationaryObject(ViewableObject):
-    def __init__(self, 
-                 position=(0,0)
-                ):
 
+    def __init__(self, position, **kwds):
         self.position = position
-        super().__init__()
+        super().__init__(**kwds)
 
     def create_postion_history(self):
         [self.position] * self.num_timestamps
@@ -39,7 +36,8 @@ class MovingObject(ViewableObject):
                  boundary=None, # Boundary
                  max_dist_per_timestamp=10, 
                  min_dist_per_timestamp=9, 
-                 twistyness_deg_per_timestamp=45
+                 twistyness_deg_per_timestamp=45,
+                 **kwds
                 ):
 
         self.max_dist_per_timestamp = max_dist_per_timestamp
@@ -49,7 +47,7 @@ class MovingObject(ViewableObject):
         if boundary == None:
             raise "Moving object requires a boundary parameter of class Boundary"
         self.boundary = boundary
-        super().__init__()
+        super().__init__(**kwds)
     
         self.create_postion_history()
 

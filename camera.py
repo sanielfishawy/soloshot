@@ -13,7 +13,6 @@ class Camera:
                  fov_deg=67,
                  range=2000):
 
-        self.motor_pan_angle_deg = 0
         self.actual_position = actual_position
         self.gps_position = gps_position
         self.compass_error_deg = compass_error_deg
@@ -22,6 +21,10 @@ class Camera:
         self.fov_rad = math.radians(self.fov_deg)
         self.range = range
 
+        self.motor_pan_angle_deg = 0
+        self.timestamp = 0
+        self.state_history = []
+
     def get_actual_pan_angle_deg(self):
         return self.motor_pan_angle_deg + self.compass_error_deg
 
@@ -29,7 +32,7 @@ class Camera:
         return math.radians(self.get_actual_pan_angle_deg())
 
     def objects_in_view(self):
-        return self.get_view_triangle().objects_in_view()
+        return self.get_view_triangle().objects_in_view(self.timestamp)
 
     def get_view_triangle(self):
         return ViewTriangle([self.actual_position, 
