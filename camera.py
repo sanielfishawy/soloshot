@@ -1,6 +1,5 @@
 import math 
 from shapely.geometry import Polygon
-from object_universe import ObjectUniverse
 import geometry_utils as GU
 from view_triangle import ViewTriangle
 
@@ -13,6 +12,8 @@ class Camera:
                  compass_error_deg=0,
                  fov_deg=67,
                  range=2000,
+                 computer_vision=None,
+                 object_universe = None,
                  ):
 
         self.actual_position = actual_position
@@ -22,7 +23,8 @@ class Camera:
         self.fov_deg = fov_deg
         self.fov_rad = math.radians(self.fov_deg)
         self.range = range
-        self.object_universe = ObjectUniverse()
+        self.computer_vision = computer_vision
+        self.object_universe = object_universe
 
         self.num_timestamps = num_timestamps
         self.init_state_history()
@@ -33,11 +35,32 @@ class Camera:
     def set_num_timestamps(self, n):
         self.num_timestamps = n
         self.adjust_state_history_to_num_timestamps()
+        self.notify_computer_vision_of_timestamp_adjustment()
+        return self
+
+    def set_object_universe(self, object_universe):
+        self.object_universe = object_universe
+        return self
+
+    def get_object_universe(self):
+        return self.object_universe
+
+    def set_computer_vision(self, computer_vision):
+        self.computer_vision = computer_vision
+        self.computer_vision.set_camera(self)
+        return self
+
+    def get_computer_vision(self):
+        return self.computer_vision
 
     def init_state_history(self):
         self.state_history = [{'motor_pan_angle_deg': 0}]
         self.adjust_state_history_to_num_timestamps()
 
+    def notify_computer_vision_of_timestamp_adjustment(self):
+        if self.computer_vision:
+            self.computer_vision.camera_num_timestamps_changed()
+    
     def adjust_state_history_to_num_timestamps(self):
         if self.get_num_timestamps() > self.get_state_history_len():
             self.extend_state_history()
@@ -62,11 +85,10 @@ class Camera:
         return self.get_state_history()[timestamp]
     
     def set_state_of_pan_motor_angle_at_timestamp(self, angle_deg, timestamp):
-        st = self.get_state_at_timestamp(timestamp)
-        if st == None:
-            st = {}
+        if self.get_state_at_timestamp(timestamp) == None:
+            self.get_state_history()[timestamp] = {}
 
-        st['motor_pan_angle_deg'] = angle_deg
+        self.get_state_history()[timestamp]['motor_pan_angle_deg'] = angle_deg
 
     def get_motor_pan_angle_deg(self, timestamp):
         h = self.get_state_history_at_time(timestamp)
@@ -95,13 +117,13 @@ class Camera:
         if self.get_state_at_timestamp(timestamp) == None:
             return []
         else:
-            return self.get_view_triangle(timestamp).objects_in_view(timestamp)
+            return self.get_view_triangle(timestamp).objects_in_view(timestamp, self.object_universe)
 
     def get_objects_out_view(self, timestamp):
         if self.get_state_at_timestamp(timestamp) == None:
             return self.object_universe.get_viewable_objects()
         else:
-            return self.get_view_triangle(timestamp).objects_out_view(timestamp)
+            return self.get_view_triangle(timestamp).objects_out_view(timestamp, self.object_universe)
 
     def get_view_triangle(self, timestamp):
         return ViewTriangle([self.actual_position, 

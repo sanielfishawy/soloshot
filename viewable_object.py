@@ -61,9 +61,9 @@ class StationaryObject(ViewableObject):
     def __init__(self, position, **kwds):
         self.position = position
         super().__init__(**kwds)
-        self.create_postion_history()
+        self.create_position_history()
 
-    def create_postion_history(self):
+    def create_position_history(self):
         self.position_history = [self.position] * self.num_timestamps
         return self
 

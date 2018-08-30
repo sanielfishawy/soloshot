@@ -1,5 +1,8 @@
+- Stationary object does not update its history when num timestamps changes.
+
 - create cv
-    - belongs to a camera
+    - make object universe not a singleton.
+    - When camera state length changes clear the cv history
     - 
     - maintains a table of all objects in the universe across all timestamps
     - for all timestamps of the camera it identifies all visible object and marks in the table those objects that are out of view

@@ -9,7 +9,7 @@ class SimpleID:
 
     def get_id(self):
         self.last_id += 1
-        return self.last_id
+        return self.prefix + str(self.last_id)
         
 class _SimpleUIDSingleton:
     def __init__(self):
