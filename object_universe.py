@@ -1,30 +1,49 @@
 class _ObjectUniverseSingleton:
 
-    def __init__(self):
-        self.objects = []
+    def __init__(self, num_timestamps=1000):
+        self.viewable_objects = []
+        self.camera = None
+        self.tag = None
+        self.num_timestamps = num_timestamps
 
-    def add_objects(self, objects):
-        if not isinstance(objects, list):
-            objects = [objects]
+    def add_camera(self, camera):
+        self.camera = camera
+        self.camera.set_num_timestamps(self.get_num_timestamps())
 
-        self.objects += objects
+    def set_num_timestamps(self, n):
+        self.num_timestamps = n
+        for vo in self.viewable_objects:
+            vo.set_num_timestamps(self.num_timestamps)
+        return self
+    
+    def get_num_timestamps(self):
+        return self.num_timestamps
+            
+    def add_viewable_objects(self, viewable_objects):
+        if not isinstance(viewable_objects, list):
+            viewable_objects = [viewable_objects]
+
+        for obj in viewable_objects:
+            obj.set_num_timestamps(self.num_timestamps)
+
+        self.viewable_objects += viewable_objects
         return self
 
-    def get_objects(self, time_stamp):
-        return self.objects
+    def get_viewable_objects(self):
+        return self.viewable_objects
 
-    def clear_objects(self):
-        self.objects = []
+    def clear_viewable_objects(self):
+        self.viewable_objects = []
         return self
 
-    def get_num_objects(self):
-        return len(self.objects)
+    def get_num_viewable_objects(self):
+        return len(self.viewable_objects)
 
 _object_universe_singleton = None
 
-def ObjectUniverse():
+def ObjectUniverse(num_timestamps=1000):
     global _object_universe_singleton
     if _object_universe_singleton == None:
-        _object_universe_singleton = _ObjectUniverseSingleton()
+        _object_universe_singleton = _ObjectUniverseSingleton(num_timestamps=num_timestamps)
     
     return _object_universe_singleton

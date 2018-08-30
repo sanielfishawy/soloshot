@@ -1,1 +1,8 @@
-- create demo of moving object
+- create cv
+    - belongs to a camera
+    - 
+    - maintains a table of all objects in the universe across all timestamps
+    - for all timestamps of the camera it identifies all visible object and marks in the table those objects that are out of view
+
+
+

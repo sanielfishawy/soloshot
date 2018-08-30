@@ -1,5 +1,6 @@
 import unittest
-from viewable_object import *
+from viewable_object import RandomlyMovingObject
+from boundary import Boundary
 from shapely.geometry import Point
 import math
 
@@ -15,7 +16,7 @@ class TestMovingObjectAndBoundary(unittest.TestCase):
         self.inside_point = (50, 10)
         self.outside_point = (110, 50)
 
-        self.moving_object = MovingObject(self.boundary)
+        self.moving_object = RandomlyMovingObject(self.boundary)
 
     def test_random_point_on_boundary_is_on_boundary(self):
         rp = Point(self.boundary.random_point())

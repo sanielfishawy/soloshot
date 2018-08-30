@@ -6,15 +6,35 @@ from simple_uid import SimpleUID
 
 class ViewableObject:
     def __init__(self,
-                 lifespan_num_timestamps=1000,
+                 num_timestamps=1000,
                  name=None
                  ):
 
-        self.num_timestamps = lifespan_num_timestamps
+        self.num_timestamps = num_timestamps
         self.name = name
         self.id = SimpleUID().get_id()
         self.position_history = []
+        self.create_position_history()
  
+    def set_num_timestamps(self, n):
+        self.num_timestamps = n
+
+        if self.get_position_history_len() != self.num_timestamps:
+            self.create_position_history()
+        
+        return self
+        
+    def get_num_timestamps(self):
+        return self.num_timestamps
+
+    def create_position_history(self):
+        self.position_history = [None] * self.num_timestamps
+        return self
+    
+    def clear_postion_history(self):
+        self.position_history = []
+        return self
+        
     def get_position_history(self):
         return self.position_history
     
@@ -29,6 +49,10 @@ class ViewableObject:
         
         return r
     
+    def set_position_at_timestamp(self, pos, timestamp):
+        self.get_position_history()[timestamp] = pos
+        return self
+
     def get_name(self):
         return self.name
 
@@ -43,7 +67,7 @@ class StationaryObject(ViewableObject):
         self.position_history = [self.position] * self.num_timestamps
         return self
 
-class MovingObject(ViewableObject):
+class RandomlyMovingObject(ViewableObject):
     def __init__(self, 
                  boundary=None, # Boundary
                  max_dist_per_timestamp=10, 
@@ -64,6 +88,7 @@ class MovingObject(ViewableObject):
         self.create_postion_history()
 
     def create_postion_history(self):
+        self.clear_postion_history()
         ps = self.random_start_point()
         self.position_history.append(ps)
         self.position_history.append(GU.point_with_angle_and_distance_from_point(ps, 
@@ -106,14 +131,3 @@ class MovingObject(ViewableObject):
     def random_distance(self):
         return random.random() * (self.max_dist_per_timestamp - self.min_dist_per_timestamp) + self.min_dist_per_timestamp
         
-
-class Boundary(Polygon):
-    
-    def random_point(self):
-        return random.choice(self.exterior.coords)
-    
-    def angle_to_centroid(self, point):
-        return GU.angle_of_vector([point, self.centroid.coords[0]])
-
-    def is_out_of_bounds(self, point):
-        return not self.contains(Point(point))

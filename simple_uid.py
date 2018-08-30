@@ -1,3 +1,16 @@
+class SimpleID:
+    def __init__(self, prefix=""):
+        self.prefix = prefix
+        self.last_id = -1
+
+    def set_prefix(self, prefix):
+        self.prefix = prefix
+        return self
+
+    def get_id(self):
+        self.last_id += 1
+        return self.last_id
+        
 class _SimpleUIDSingleton:
     def __init__(self):
         self.last_id = -1
