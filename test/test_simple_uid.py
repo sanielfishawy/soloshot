@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, '/Users/sani/dev/soloshot')
 import unittest
 from simple_uid import SimpleID
 

@@ -1,5 +1,5 @@
 - Demo of computer vision
-    - Moving objects in a boundar
+    - Moving objects in a boundary
     - Camera has partial view of the boundary
     - Play the objects moving over time
     - When they move into view they change to orange and get a cv_id

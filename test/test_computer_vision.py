@@ -1,5 +1,5 @@
 import sys
-sys.path.insert(0, '../')
+sys.path.insert(0, '/Users/sani/dev/soloshot')
 import unittest
 from object_universe import ObjectUniverse
 from camera import Camera
