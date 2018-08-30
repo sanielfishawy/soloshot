@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../')
 import unittest
 import geometry_utils as GU
 import sympy.geometry as Geo

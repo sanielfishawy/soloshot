@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../')
 import unittest
 from object_universe import ObjectUniverse
 from camera import Camera

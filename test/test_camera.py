@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '../')
 from camera import Camera
 from viewable_object import StationaryObject
 from object_universe import ObjectUniverse
