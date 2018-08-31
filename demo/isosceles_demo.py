@@ -1,3 +1,5 @@
+import sys
+sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
 import geometry_utils as GeometryUtils
 

@@ -1,4 +1,4 @@
-from sympy import *
+from sympy import symbols, tan, atan, solve
 import math as math
 
 def minimum_uncalibrated_distance(max_base_gps_error_radius, 

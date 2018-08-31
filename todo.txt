@@ -1,4 +1,15 @@
+- Render architecture
+
+- Animation architecture
+    - Animator
+        - Gets all element_renderers
+        - Plays from start to end
+    
 - Demo of computer vision
+    - Add a boundary
+    - Add objects
+    - Add the concept of time
+
     - Moving objects in a boundary
     - Camera has partial view of the boundary
     - Play the objects moving over time

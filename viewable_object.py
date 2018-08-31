@@ -41,7 +41,7 @@ class ViewableObject:
     def get_position_history_len(self):
         return len(self.get_position_history())
 
-    def get_position_at_time_stamp(self, timestamp):
+    def get_position_at_timestamp(self, timestamp):
         if timestamp >= self.get_position_history_len():
             r = None
         else:

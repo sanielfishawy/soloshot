@@ -1,7 +1,9 @@
+import sys
+sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
 import geometry_utils as GeometryUtils
 import sympy.geometry as Geo
-import canvas_utils as CUtils
+import tk_canvas_renderers.canvas_utils as CUtils
 
 def mouse_click(e):
     point = Geo.Point(e.x, e.y)

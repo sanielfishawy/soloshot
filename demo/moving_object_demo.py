@@ -1,7 +1,7 @@
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
-from canvas_utils import CanvasUtils
+from tk_canvas_renderers.canvas_utils import CanvasUtils
 from viewable_object import RandomlyMovingObject
 from boundary import Boundary
 

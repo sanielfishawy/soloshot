@@ -17,20 +17,20 @@ class TestStationaryObject(unittest.TestCase):
         self.assertEqual(self.so.get_num_timestamps(), self.num_timestamps)
         self.assertEqual(self.so.get_position_history_len(), self.num_timestamps)
         for timestamp in range(0, self.num_timestamps):
-            self.assertEqual(self.so.get_position_at_time_stamp(timestamp), self.pos)
+            self.assertEqual(self.so.get_position_at_timestamp(timestamp), self.pos)
 
     def test_sationary_object_updates_postion_history_when_num_timestamps_changes(self):
         self.so.set_num_timestamps(50)
         self.assertEqual(self.so.get_position_history_len(), 50)
         for timestamp in range(0,50):
-            self.assertEqual(self.so.get_position_at_time_stamp(timestamp), self.pos)
+            self.assertEqual(self.so.get_position_at_timestamp(timestamp), self.pos)
 
     def test_stationary_object_updates_its_num_timestamps_to_match_object_universe_it_gets_added_to(self):
         ou = ObjectUniverse(num_timestamps=200)
         ou.add_viewable_objects(self.so)
         self.assertEqual(self.so.get_position_history_len(), 200)
         for timestamp in range(0, 200):
-            self.assertEqual(self.so.get_position_at_time_stamp(timestamp), self.pos)
+            self.assertEqual(self.so.get_position_at_timestamp(timestamp), self.pos)
 
 class TestMovingObjectAndBoundary(unittest.TestCase):
     
