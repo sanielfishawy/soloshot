@@ -2,10 +2,12 @@ import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
 from shapely.geometry import Point
+import threading 
 
 class _TKRenderer:
 
-    def __init__(self, scale=1, canvas_width=500, canvas_height=500, font_size=10):
+    def __init__(self, scale=1, canvas_width=500, canvas_height=500, font_size=10, mouse_click_callback=None):
+        self.tk = tk
         self.root = tk.Tk()
         self.root.title("Soloshot")
 
@@ -13,9 +15,18 @@ class _TKRenderer:
         self.canvas_height = canvas_height
         self.label_font = ("arial", font_size, "normal")
         self.canvas = tk.Canvas(self.root, width=self.canvas_width, height=self.canvas_height)
-        # self.canvas.bind("<Button-1>", mouse_click)
         self.scale = scale
         self.canvas.pack()    
+        self.root.protocol("WM_DELETE_WINDOW", self.closed_window_callback)
+        self.set_mouse_click_callback(mouse_click_callback)
+    
+    def set_mouse_click_callback(self, mouse_click_callback):
+        self.canvas.bind("<Button-1>", mouse_click_callback)
+        return self
+
+    def closed_window_callback(self):
+        self.root.quit()
+        self.root.destroy()
 
     def get_canvas(self):
         return self.canvas
@@ -27,8 +38,12 @@ class _TKRenderer:
         self.scale = scale
         return scale
 
+    def update(self):
+        self.root.update()
+        return self
+
     def start_tk_event_loop(self):
-        tk.mainloop()
+        self.tk.mainloop()
         return self
 
     def scale_tuple(self, tpl):

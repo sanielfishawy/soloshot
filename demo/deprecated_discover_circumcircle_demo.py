@@ -1,7 +1,7 @@
 import tkinter as tk
 import math as math
 import time as time
-import canvas_utils as CUtils
+import tk_canvas_renderers.canvas_utils as CUtils
 
 
 def mouse_click(e):
@@ -12,8 +12,8 @@ def mouse_click(e):
     
     if  Tags().get_num_tags() > 1:
         last_two_tags = [Tags().get_tags()[-2], Tags().get_tags()[-1]]
-        #possible_camera_positions = CameraPositionCalculator(last_two_tags).calc()
-        #CameraPositionRender(possible_camera_positions).render()
+        # possible_camera_positions = CameraPositionCalculator(last_two_tags).calc()
+        # CameraPositionRender(possible_camera_positions).render()
 
 
 
