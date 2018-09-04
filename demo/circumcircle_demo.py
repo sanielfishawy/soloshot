@@ -24,8 +24,8 @@ class _DemoSingleton:
     def __init__(self):
         self.widgets = []
         self.c = Geo.Point(250, 250)
-        _canvas_utils.create_dot(self.c, {"outline": "orange", "fill": "orange"})
-        self.camera_label = _canvas_utils.create_dot_label(*self.c, "c", {"fill": "orange"})
+        _canvas_utils.create_dot(self.c, outline="orange", fill="orange")
+        self.camera_label = _canvas_utils.create_dot_label(*self.c, "c", fill="orange")
         self.points = []
 
     def add_point(self, p):
@@ -42,7 +42,7 @@ class _DemoSingleton:
         radius = GeometryUtils.circumradius(p1, p2, theta_deg)
         colors = ["orange", "green"]
         for i, c in enumerate(c_centers):
-            self.widgets.append( _canvas_utils.create_circle_with_center_and_radius(c, radius, {"outline":colors[i]}) )
+            self.widgets.append( _canvas_utils.create_circle_with_center_and_radius(c, radius, outline=colors[i]) )
 
     def clear(self):
         for w in self.widgets:

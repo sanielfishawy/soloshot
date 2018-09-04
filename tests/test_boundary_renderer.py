@@ -14,13 +14,14 @@ class TestBoundaryRenderer(unittest.TestCase):
         self.tk_renderer = TKRenderer(scale=2, canvas_width=self.canvas_width, canvas_height=self.canvas_height)
         self.boundary = Boundary(self.bounary_points)
         self.boundary_renderer = BoundaryRenderer(self.boundary)
+        return self
 
 
     def test_params_are_passed_to_tk_renderer_singleton(self):
         self.assertEqual(self.tk_renderer.canvas_width, self.canvas_width)
         self.assertEqual(self.tk_renderer.canvas_height, self.canvas_height)
 
-    def test_visually(self):
+    def visualize(self):
         self.boundary_renderer.render()
         self.tk_renderer.start_tk_event_loop()
 

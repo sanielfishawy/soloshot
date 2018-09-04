@@ -9,6 +9,7 @@ class Camera:
                  num_timestamps=1000,
                  actual_position=(0,0),
                  gps_position=(0,0),
+                 gps_max_error=(6),
                  compass_error_deg=0,
                  fov_deg=67,
                  range=2000,
@@ -18,6 +19,7 @@ class Camera:
 
         self.actual_position = actual_position
         self.gps_position = gps_position
+        self.gps_max_error = gps_max_error
         self.compass_error_deg = compass_error_deg
         self.compass_error_rad = math.radians(self.compass_error_deg)
         self.fov_deg = fov_deg
@@ -38,6 +40,27 @@ class Camera:
         self.notify_computer_vision_of_timestamp_adjustment()
         return self
 
+    def get_actual_position(self):
+        return self.actual_position
+
+    def set_actual_position(self, actual_position):
+        self.actual_position = actual_position
+        return self
+
+    def set_gps_position(self, gps_position):
+        self.gps_position = gps_position
+        return self
+
+    def get_gps_position(self):
+        return self.gps_position
+
+    def set_gps_max_error(self, gps_max_error):
+        self.gps_max_error = gps_max_error
+        return self
+
+    def get_gps_max_error(self):
+        return self.gps_max_error
+        
     def set_object_universe(self, object_universe):
         self.object_universe = object_universe
         return self

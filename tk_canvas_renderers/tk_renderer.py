@@ -48,6 +48,9 @@ class _TKRenderer:
 
     def scale_tuple(self, tpl):
         return tuple([ t * self.scale for t in tpl ])
+    
+    def scale_distance(self, distance):
+        return distance * self.scale
 
     def scale_coords(self, crds):
         return list(map(self.scale_tuple, crds))
@@ -55,6 +58,14 @@ class _TKRenderer:
     def delete_elements(self, elements):
         for el in elements:
             self.canvas.delete(el)
+        return self
+
+    def raise_element(self, element):
+        self.canvas.tag_raise(element)
+        return self
+    
+    def lower_element(self, element):
+        self.canvas.tag_lower(element)
         return self
 
     # Render geometries with scale
@@ -70,7 +81,9 @@ class _TKRenderer:
         return self.canvas.create_text(s_crds[0]+6, s_crds[1]-1, text=text, anchor="se", font=self.label_font, **kargs)
 
     def create_circle_with_center_and_radius(self, c, r, **kargs):
-        return self.canvas.create_oval(c.x-r, c.y-r, c.x+r, c.y+r, **kargs)
+        s_c= self.scale_tuple(c)
+        s_r = self.scale_distance(r)
+        return self.canvas.create_oval(s_c[0]-s_r, s_c[1]-s_r, s_c[0]+s_r, s_c[1]+s_r, **kargs)
 _tk_renderer = None
 
 def TKRenderer(**kargs):

@@ -14,8 +14,9 @@ class TestViewableObjectRenderer(unittest.TestCase):
                                  self.stationary_object
                                 ]
         self.viewable_object_renderer = ViewableObjectsRenderer(viewable_objects=self.viewable_objects)
+        return self
     
-    def test_visually(self):
+    def visualize(self):
         self.viewable_object_renderer.render(0)
         self.tk_renderer.start_tk_event_loop()
     

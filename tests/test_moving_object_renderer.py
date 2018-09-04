@@ -23,9 +23,9 @@ class TestMovingObjectRenderer(unittest.TestCase):
         self.animator.add_element_renderers([self.viewable_objects_renderer,
                                              self.boundary_renderer] )
         self.tk_renderer.set_mouse_click_callback(self.animator.play)
+        return self
     
-    def test_visually(self):
-        pass
+    def visualize(self):
         self.tk_renderer.start_tk_event_loop()
         
 if __name__ == '__main__':
