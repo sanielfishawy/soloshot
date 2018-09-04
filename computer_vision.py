@@ -10,7 +10,7 @@ class ComputerVision:
 
     def get_viewable_object_id_history(self):
         return self.viewable_object_id_history
-
+    
     def set_camera(self, camera):
         self.camera = camera
         self.init_viewable_object_id_history()
@@ -55,4 +55,8 @@ class ComputerVision:
         self.viewable_object_id_history[timestamp][obj] = cv_id
 
     def get_cv_id_for_obj_at_timestamp(self, obj, timestamp):
-        return self.get_viewable_object_id_history()[timestamp][obj]
+        if self.get_viewable_object_id_history() == None or \
+           self.get_viewable_object_id_history()[timestamp] == None:
+           return None
+        else:
+           return self.get_viewable_object_id_history()[timestamp][obj]

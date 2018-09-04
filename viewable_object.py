@@ -18,8 +18,13 @@ class ViewableObject:
  
     def set_num_timestamps(self, n):
         self.num_timestamps = n
+        pos_len = self.get_position_history_len()
 
-        if self.get_position_history_len() != self.num_timestamps:
+        if pos_len == 0:
+            self.create_position_history()
+        elif pos_len > self.num_timestamps:
+            self.position_history = self.position_history[0: self.num_timestamps]
+        elif pos_len < self.num_timestamps:
             self.create_position_history()
         
         return self

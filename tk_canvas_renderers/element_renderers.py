@@ -26,10 +26,12 @@ class BoundaryRenderer(ElementRenderer):
         self.tk_renderer = TKRenderer()
         self.boundary = boundary
         super().__init__(**kargs)
+        self.render()
     
-    def render(self, **kargs):
-        self.delete_moving_rendered_elements()
-        self.moving_rendered_elements.append(self.tk_renderer.create_polygon(self.boundary.exterior.coords, fill='', outline='orange'))
+    def render(self, timestamp=None, **kargs):
+        if timestamp == None:
+            self.delete_stationary_rendered_elements()
+            self.stationary_rendered_elements.append(self.tk_renderer.create_polygon(self.boundary.exterior.coords, fill='', outline='orange'))
 
 class ViewableObjectsRenderer(ElementRenderer):
     def __init__(self, viewable_objects=[], computer_vision=None, **kargs):
@@ -97,6 +99,7 @@ class CameraRenderer(ElementRenderer):
         self.gps_err_color = 'red'
         self.view_triangle_color = '#FEFAED'
         super().__init__(**kargs)
+        self.render()
 
     def render(self, timestamp=None, **kargs):
         if timestamp == None:

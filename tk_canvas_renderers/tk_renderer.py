@@ -6,19 +6,37 @@ import threading
 
 class _TKRenderer:
 
-    def __init__(self, scale=1, canvas_width=500, canvas_height=500, font_size=10, mouse_click_callback=None):
+    def __init__(self, scale=1, canvas_width=500, canvas_height=500, font_size=9, mouse_click_callback=None):
         self.tk = tk
         self.root = tk.Tk()
         self.root.title("Soloshot")
 
         self.canvas_width = canvas_width
         self.canvas_height = canvas_height
-        self.label_font = ("arial", font_size, "normal")
         self.canvas = tk.Canvas(self.root, width=self.canvas_width, height=self.canvas_height)
-        self.scale = scale
         self.canvas.pack()    
+
         self.root.protocol("WM_DELETE_WINDOW", self.closed_window_callback)
         self.set_mouse_click_callback(mouse_click_callback)
+    
+        self.label_font = ("arial", font_size, "normal")
+        self.scale = scale
+
+    def set_canvas_width(self, width):
+        self.canvas.config(width=width)
+        return self
+
+    def set_canvas_height(self, height):
+        self.canvas.config(height=height)
+        return self
+
+    def set_font_size(self, font_size):
+        self.font_size = font_size
+        return self
+    
+    def set_scale(self, scale):
+        self.scale = scale
+        return self
     
     def set_mouse_click_callback(self, mouse_click_callback):
         self.canvas.bind("<Button-1>", mouse_click_callback)
@@ -33,10 +51,6 @@ class _TKRenderer:
 
     def get_scale(self):
         return self.scale
-
-    def set_scale(self, scale):
-        self.scale = scale
-        return scale
 
     def update(self):
         self.root.update()
@@ -84,6 +98,7 @@ class _TKRenderer:
         s_c= self.scale_tuple(c)
         s_r = self.scale_distance(r)
         return self.canvas.create_oval(s_c[0]-s_r, s_c[1]-s_r, s_c[0]+s_r, s_c[1]+s_r, **kargs)
+        
 _tk_renderer = None
 
 def TKRenderer(**kargs):

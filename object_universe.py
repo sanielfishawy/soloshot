@@ -9,6 +9,7 @@ class ObjectUniverse:
     def add_camera(self, camera):
         self.camera = camera
         self.camera.set_object_universe(self).set_num_timestamps(self.get_num_timestamps())
+        return self
 
     def set_num_timestamps(self, n):
         self.num_timestamps = n

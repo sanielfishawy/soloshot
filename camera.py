@@ -23,7 +23,6 @@ class Camera:
         self.compass_error_deg = compass_error_deg
         self.compass_error_rad = math.radians(self.compass_error_deg)
         self.fov_deg = fov_deg
-        self.fov_rad = math.radians(self.fov_deg)
         self.range = range
         self.computer_vision = computer_vision
         self.object_universe = object_universe
@@ -60,7 +59,21 @@ class Camera:
 
     def get_gps_max_error(self):
         return self.gps_max_error
-        
+    
+    def set_fov_deg(self, fov_deg):
+        self.fov_deg = fov_deg
+        return self
+    
+    def get_fov_deg(self):
+        return self.fov_deg
+
+    def set_fov_rad(self, fov_rad):
+        self.fov_deg = math.radians(fov_rad)
+        return self
+    
+    def get_fov_rad(self):
+        return math.radians(self.fov_deg)
+
     def set_object_universe(self, object_universe):
         self.object_universe = object_universe
         return self
@@ -154,13 +167,13 @@ class Camera:
                              self.right_of_frame_angle_point(timestamp)])
 
     def left_of_frame_angle_rad(self, timestamp):
-        return self.get_actual_pan_angle_rad(timestamp) + ( self.fov_rad / 2 ) 
+        return self.get_actual_pan_angle_rad(timestamp) + ( self.get_fov_rad() / 2 ) 
 
     def left_of_frame_angle_deg(self, timestamp):
         return math.degrees(self.left_of_frame_angle_deg(timestamp))
         
     def right_of_frame_angle_rad(self, timestamp):
-        return self.get_actual_pan_angle_rad(timestamp) - ( self.fov_rad / 2 ) 
+        return self.get_actual_pan_angle_rad(timestamp) - ( self.get_fov_rad() / 2 ) 
 
     def right_of_frame_angle_deg(self, timestamp):
         return math.degrees(self.right_of_frame_angle_deg(timestamp))
