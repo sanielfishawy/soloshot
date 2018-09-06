@@ -80,6 +80,31 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         for i, p1 in enumerate(p1_s):
             self.assertAlmostEqual(GU.angle_of_vector([p0, p1]), results[i])
 
+    def test_angel_of_vector_between_points_360_rad(self):
+        p0 = (0,0)
+        p1_s = [(0,0),
+                (1,0),
+                (1,1), 
+                (0,1), 
+                (-1,1), 
+                (-1,0), 
+                (-1,-1), 
+                (0,-1), 
+                (1,-1)] 
+
+        results =  [None,
+                    0,
+                    math.pi / 4,
+                    math.pi / 2,
+                    3 * math.pi / 4,
+                    math.pi,
+                    5 * math.pi / 4,
+                    3 * math.pi / 2,
+                    7 * math.pi / 4]
+        
+        for i, p1 in enumerate(p1_s):
+            self.assertAlmostEqual(GU.angel_of_vector_between_points_360_rad(p0, p1), results[i]) 
+
     def test_point_with_angle_and_distance_to_point(self):
 
         p0 = (1,1)
@@ -110,6 +135,56 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
             expect = expect_s[i]
             self.assertAlmostEqual(r[0], expect[0])
             self.assertAlmostEqual(r[1], expect[1])
+
+    def test_quadrant(self):
+        v = (1,1)
+        p1_s = [(2,2),(0,2),(0,0),(2,0)]
+        p2_s = p1_s
+
+        for i, p in enumerate(p1_s):
+            self.assertEqual(GU.quadrant_of_vector(v, p), i+1)
+
+    def test_signed_subtended_angle_from_p1_to_p2_rad(self):
+        v = (1,1)
+        p1_s = [(2,2),(0,2),(0,0),(2,0)]
+        p2_s = p1_s
+
+        for p1_i, p1 in enumerate(p1_s):
+            for p2_i, p2 in enumerate(p2_s):
+                s_angle = GU.signed_subtended_angle_from_p1_to_p2_rad(v, p1, p2)
+                q1 = GU.quadrant_of_vector(v, p1)
+                q2 = GU.quadrant_of_vector(v, p2)
+
+                if p1_i == p2_i:
+                    self.assertEqual(s_angle, 0)
+                if q1 == 1:
+                    if q2 == 2:
+                        self.assertAlmostEqual(s_angle, math.pi / 2)
+                    elif q2 == 3:
+                        self.assertAlmostEqual(s_angle, math.pi)
+                    elif q2 == 4:
+                        self.assertAlmostEqual(s_angle, -math.pi / 2)
+                if q1 == 2:
+                    if q2 == 1:
+                        self.assertAlmostEqual(s_angle, -math.pi / 2)
+                    elif q2 == 3:
+                        self.assertAlmostEqual(s_angle, math.pi / 2)
+                    elif q2 == 4:
+                        self.assertAlmostEqual(s_angle, math.pi)
+                if q1 == 3:
+                    if q2 == 1:
+                        self.assertAlmostEqual(s_angle, - math.pi)
+                    elif q2 == 2:
+                        self.assertAlmostEqual(s_angle, -math.pi / 2)
+                    elif q2 == 4:
+                        self.assertAlmostEqual(s_angle, math.pi / 2)
+                if q1 == 4:
+                    if q2 == 1:
+                        self.assertAlmostEqual(s_angle, math.pi / 2)
+                    elif q2 == 2:
+                        self.assertAlmostEqual(s_angle, -math.pi)
+                    elif q2 == 3:
+                        self.assertAlmostEqual(s_angle, -math.pi / 2)
 
 if __name__ == '__main__':
     unittest.main()

@@ -68,7 +68,7 @@ class Camera:
         return self.fov_deg
 
     def set_fov_rad(self, fov_rad):
-        self.fov_deg = math.radians(fov_rad)
+        self.fov_deg = math.degrees(fov_rad)
         return self
     
     def get_fov_rad(self):
@@ -80,6 +80,11 @@ class Camera:
 
     def get_object_universe(self):
         return self.object_universe
+
+    def set_image_generator(self, image_generator):
+        self.image_generator = image_generator
+        self.image_generator.set_camera(self)
+        return self
 
     def set_computer_vision(self, computer_vision):
         self.computer_vision = computer_vision
@@ -120,6 +125,10 @@ class Camera:
     def get_state_at_timestamp(self, timestamp):
         return self.get_state_history()[timestamp]
     
+    def set_state_of_pan_motor_angle_at_timestamp_rad(self, angle_rad, timestamp):
+        self.set_state_of_pan_motor_angle_at_timestamp(math.degrees(angle_rad), timestamp)
+        return self
+        
     def set_state_of_pan_motor_angle_at_timestamp(self, angle_deg, timestamp):
         if self.get_state_at_timestamp(timestamp) == None:
             self.get_state_history()[timestamp] = {}
@@ -148,6 +157,12 @@ class Camera:
 
     def get_actual_pan_angle_rad(self, timestamp):
         return math.radians(self.get_actual_pan_angle_deg(timestamp))
+
+    def is_object_in_view(self, obj, timestamp):
+        if self.get_state_at_timestamp(timestamp) == None:
+            return False
+        else:
+            return self.get_view_triangle(timestamp).object_is_in_view(obj, timestamp)
 
     def get_objects_in_view(self, timestamp):
         if self.get_state_at_timestamp(timestamp) == None:
