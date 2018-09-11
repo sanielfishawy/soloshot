@@ -33,13 +33,21 @@ class TestTagPositionAnalyzer(unittest.TestCase):
     def test_first_time_after_timestamp_where_range_exceeds_threshold(self):
         t = self.tag_position_analyzer._first_time_after_timestamp_where_range_of_angles_exceeds_threshold(0, math.pi/32 - 0.01)
         self.assertEqual(t, 1)
-        
-    def test_only_a_single_position_in_frame_causes_range_of_frame_to_exceed_threshold(self):
+    
+    def test_range_of_angles_in_frame_just_exeeds_threshold(self):
         for n in range(2, 6):
             frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold((n * math.pi / 32) - .01)
             for frame in frames:
-                if frame[1] != None:
-                    self.assertEqual(n, frame[1]-frame[0])
+                if frame['frame'][1] != None:
+                    self.assertEqual(n, frame['frame'][1]-frame['frame'][0])
+    
+    def test_min_and_max_positions_in_frame(self):
+        for n in range(2,6):
+            frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold((n * math.pi / 32) -.01)
+            for frame in frames:
+                if frame['frame'][1] != None:
+                    self.assertEqual(frame['timestamp_of_min_angle'], frame['frame'][0])
+                    self.assertEqual(frame['timestamp_of_max_angle'], frame['frame'][1])
 
 if __name__ == '__main__':
     unittest.main()
