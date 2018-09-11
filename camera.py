@@ -2,6 +2,8 @@ import math
 from shapely.geometry import Polygon
 import geometry_utils as GU
 from view_triangle import ViewTriangle
+from computer_vision import ComputerVision
+from image_generator import ImageGenerator
 
 class Camera:
 
@@ -14,7 +16,9 @@ class Camera:
                  fov_deg=67,
                  range=2000,
                  computer_vision=None,
+                 image_generator = None,
                  object_universe = None,
+                 image_width = 1000
                  ):
 
         self.actual_position = actual_position
@@ -24,12 +28,23 @@ class Camera:
         self.compass_error_rad = math.radians(self.compass_error_deg)
         self.fov_deg = fov_deg
         self.range = range
-        self.computer_vision = computer_vision
         self.object_universe = object_universe
+        self.image_width = image_width
 
         self.num_timestamps = num_timestamps
         self.init_state_history()
+        self.set_computer_vision(computer_vision)
+        self.add_computer_vision_if_none()
+        self.set_image_generator(image_generator)
+        self.add_image_generator_if_none()
 
+    def set_range(self, range):
+        self.range = range
+        return self
+
+    def get_range(self):
+        return self.range
+        
     def get_num_timestamps(self):
         return self.num_timestamps
 
@@ -81,14 +96,29 @@ class Camera:
     def get_object_universe(self):
         return self.object_universe
 
+    def add_image_generator_if_none(self):
+        if self.image_generator == None:
+            self.set_image_generator(ImageGenerator())
+        return self
+
     def set_image_generator(self, image_generator):
         self.image_generator = image_generator
-        self.image_generator.set_camera(self)
+        if self.image_generator != None:
+            self.image_generator.set_camera(self)
+        return self
+
+    def get_image_generator(self):
+        return self.image_generator
+        
+    def add_computer_vision_if_none(self):
+        if self.computer_vision == None:
+            self.set_computer_vision(ComputerVision())
         return self
 
     def set_computer_vision(self, computer_vision):
         self.computer_vision = computer_vision
-        self.computer_vision.set_camera(self)
+        if self.computer_vision != None:
+            self.computer_vision.set_camera(self)
         return self
 
     def get_computer_vision(self):

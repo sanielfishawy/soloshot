@@ -8,6 +8,22 @@ class ElementRenderer:
         self.moving_rendered_elements = []
         self.stationary_rendered_elements = []
 
+    def render(self, timestamp=None, **kargs):
+        if timestamp == None:
+            self.render_stationary_elements()
+        else:
+            self.render_moving_elements(timestamp)
+
+        return self
+    
+    # implement in child class
+    def render_stationary_elements(self):
+        pass  
+
+    # implement in child class
+    def render_moving_elements(self, timestamp):
+        pass  
+
     def delete_moving_rendered_elements(self):
         self.tk_renderer.delete_elements(self.moving_rendered_elements)
         self.moving_rendered_elements = []
@@ -28,10 +44,9 @@ class BoundaryRenderer(ElementRenderer):
         super().__init__(**kargs)
         self.render()
     
-    def render(self, timestamp=None, **kargs):
-        if timestamp == None:
-            self.delete_stationary_rendered_elements()
-            self.stationary_rendered_elements.append(self.tk_renderer.create_polygon(self.boundary.exterior.coords, fill='', outline='orange'))
+    def render_stationary_elements(self):
+        self.delete_stationary_rendered_elements()
+        self.stationary_rendered_elements.append(self.tk_renderer.create_polygon(self.boundary.exterior.coords, fill='', outline='orange'))
 
 class ViewableObjectsRenderer(ElementRenderer):
     def __init__(self, viewable_objects=[], computer_vision=None, **kargs):
@@ -55,19 +70,24 @@ class ViewableObjectsRenderer(ElementRenderer):
     def get_viewable_objects(self):
         return self.viewable_objects
 
-    def render(self, timestamp=0, **kargs):
+    def render_moving_elements(self, timestamp):
         self.delete_moving_rendered_elements()
         for obj in self.viewable_objects:
             self.render_viewable_object(obj, timestamp)
         
     def render_viewable_object(self, obj, timestamp):
-        self.moving_rendered_elements.append(self.tk_renderer.create_dot(obj.get_position_at_timestamp(timestamp),
-                                                                  outline=self.color(obj, timestamp),
-                                                                  fill=self.color(obj,timestamp)))
+        self.moving_rendered_elements.append(self.get_dot(      obj.get_position_at_timestamp(timestamp), obj, timestamp))
 
-        self.moving_rendered_elements.append(self.tk_renderer.create_dot_label(obj.get_position_at_timestamp(timestamp),
-                                                                        text=self.cv_id_for_object(obj, timestamp),
-                                                                        fill=self.color(obj, timestamp)))
+        self.moving_rendered_elements.append(self.get_dot_label(obj.get_position_at_timestamp(timestamp), obj, timestamp))
+
+    def get_dot_label(self, coords, obj, timestamp):
+        return self.tk_renderer.create_dot_label(coords,
+                                                 text=self.cv_id_for_object(obj, timestamp),
+                                                 fill=self.color(obj, timestamp))
+    def get_dot(self, coords, obj, timestamp):
+        return self.tk_renderer.create_dot(coords,
+                                           outline=self.color(obj, timestamp),
+                                           fill=self.color(obj,timestamp)) 
 
     def cv_id_for_object(self, obj, timestamp):
         if self.computer_vision == None:
@@ -89,6 +109,48 @@ class ViewableObjectsRenderer(ElementRenderer):
         else:
             return self.undetected_color
 
+
+class ImageRenderer(ViewableObjectsRenderer):
+
+    def __init__(self, image_generator, **kargs):
+        self.image_generator = image_generator
+        self.y_of_line = 50
+        self.x_of_line = 50
+        self.origin =  (self.x_of_line, self.y_of_line)
+        self.image_width = self.image_generator.get_image_width()
+        self.center_x_of_line = int(self.x_of_line + self.image_width / 2)
+        self.x_for_all_inview_objects_for_all_camera_time = self.image_generator.get_x_for_all_inview_objects_for_all_camera_time()
+        super().__init__(**kargs)
+        self.render()
+
+    def get_image_width(self):
+        return self.image_width
+        
+    def render_stationary_elements(self):
+        self.delete_stationary_rendered_elements()
+        self.render_line()
+    
+    def render_moving_elements(self, timestamp):
+        self.delete_moving_rendered_elements()
+        self.render_inview_objects(timestamp)
+
+    def render_inview_objects(self, timestamp):
+        for obj in self.x_for_all_inview_objects_for_all_camera_time[timestamp].keys():
+            self.render_inview_object(obj, timestamp)
+    
+    def render_inview_object(self, obj, timestamp):
+        x = self.x_for_all_inview_objects_for_all_camera_time[timestamp][obj]
+        coords = (self.get_rendered_x_for_x(x), self.y_of_line)
+        self.moving_rendered_elements.append(      self.get_dot(coords, obj, timestamp))
+        self.moving_rendered_elements.append(self.get_dot_label(coords, obj, timestamp))
+
+    def get_rendered_x_for_x(self, x):
+        return x + self.center_x_of_line
+
+    def render_line(self):
+        self.stationary_rendered_elements.append(self.tk_renderer.create_line([self.origin, 
+                                                                              (self.x_of_line + self.image_width, self.y_of_line)] ))
+
 class CameraRenderer(ElementRenderer):
 
     def __init__(self, camera, **kargs):
@@ -100,14 +162,6 @@ class CameraRenderer(ElementRenderer):
         self.view_triangle_color = '#FEFAED'
         super().__init__(**kargs)
         self.render()
-
-    def render(self, timestamp=None, **kargs):
-        if timestamp == None:
-            self.render_stationary_elements()
-        else:
-            self.render_moving_elements(timestamp)
-
-        return self
 
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
@@ -161,3 +215,4 @@ class CameraRenderer(ElementRenderer):
         self.tk_renderer.lower_element(rvt)
         self.moving_rendered_elements.append(rvt)
         return self
+    

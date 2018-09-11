@@ -63,20 +63,20 @@ class ImageGenerator:
     def __init__(self, image_width=640):
         self.i_w = image_width
     
+    def get_image_width(self):
+        return self.i_w
+    
     def set_camera(self, camera):
         self.camera = camera
-        self.setup_for_camera()
 
     def setup_for_camera(self):
         self.fov = self.camera.get_fov_rad()
         self.half_fov = self.fov / 2
-        self.d = self.i_w / (2 * math.tan(self.half_fov))
+        self.d = (self.i_w / 2) / math.tan(self.half_fov)
         return self
     
-    def get_d(self):
-        return self.d
-
     def get_x_for_all_inview_objects_for_all_camera_time(self):
+        self.setup_for_camera()
         r = []
         for timestamp in range(self.camera.get_state_history_len()):
             r.append(self.get_x_for_all_inview_objects_at_timestamp(timestamp))

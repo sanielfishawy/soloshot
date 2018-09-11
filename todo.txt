@@ -1,6 +1,4 @@
-- Demo entire universe
-    - Moving objects in a boundary
-    - Camera has partial view of the boundary
-    - Play the objects moving over time
-    - When they move into view they change to orange and get a cv_id
-    - When they move out of view they lose their id and turn to black
+- Demo image renderer
+    - points for objects moving over time
+    - add randomly moving objects
+    - put in a separate window

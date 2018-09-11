@@ -98,6 +98,11 @@ class _TKRenderer:
         s_c= self.scale_tuple(c)
         s_r = self.scale_distance(r)
         return self.canvas.create_oval(s_c[0]-s_r, s_c[1]-s_r, s_c[0]+s_r, s_c[1]+s_r, **kargs)
+
+    def create_line(self, points, **kargs):
+        s_points = [self.scale_tuple(point) for  point in points]
+        return self.canvas.create_line(*s_points, **kargs)
+
         
 _tk_renderer = None
 
