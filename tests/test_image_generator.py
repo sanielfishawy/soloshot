@@ -46,8 +46,8 @@ class TestImageGenerator(unittest.TestCase):
         
     def test_theta_calculation_for_image_generator(self):
         self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time()
-        self.assertAlmostEqual(-self.theta, self.image_generator.get_theta_rad(self.viewable_objects[0], 0))
-        self.assertAlmostEqual(self.theta, self.image_generator.get_theta_rad(self.viewable_objects[1], 0))
+        self.assertAlmostEqual(-self.theta, self.image_generator._get_theta_rad(self.viewable_objects[0], 0))
+        self.assertAlmostEqual(self.theta, self.image_generator._get_theta_rad(self.viewable_objects[1], 0))
 
     def test_get_x_for_all_inview_objects_for_all_camera_time(self):
 

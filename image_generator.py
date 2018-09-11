@@ -79,29 +79,29 @@ class ImageGenerator:
         self.setup_for_camera()
         r = []
         for timestamp in range(self.camera.get_state_history_len()):
-            r.append(self.get_x_for_all_inview_objects_at_timestamp(timestamp))
+            r.append(self._get_x_for_all_inview_objects_at_timestamp(timestamp))
         return r
 
-    def get_x_for_all_inview_objects_at_timestamp(self, timestamp):
+    def _get_x_for_all_inview_objects_at_timestamp(self, timestamp):
         r = {}
         for obj in self.camera.get_objects_in_view(timestamp):
-            r[obj] = self.get_x_for_inview_object_at_timestamp(obj, timestamp)
+            r[obj] = self._get_x_for_inview_object_at_timestamp(obj, timestamp)
         
         return r
 
-    def get_x_for_inview_object_at_timestamp(self, obj, timestamp):
+    def _get_x_for_inview_object_at_timestamp(self, obj, timestamp):
         if not self.camera.is_object_in_view(obj, timestamp):
             raise "Object not in view"
         
-        return self.d * math.tan( self.get_theta_rad(obj, timestamp) )
+        return self.d * math.tan( self._get_theta_rad(obj, timestamp) )
         
-    def get_theta_rad(self, obj, timestamp):
+    def _get_theta_rad(self, obj, timestamp):
         o_pos = obj.get_position_at_timestamp(timestamp)
         c_pos = self.camera.get_actual_position()
-        i_c_pos = self.get_i_c(timestamp)
+        i_c_pos = self._get_i_c(timestamp)
         return GUtils.signed_subtended_angle_from_p1_to_p2_rad(c_pos, i_c_pos, o_pos)
 
-    def get_i_c(self, timestamp):
+    def _get_i_c(self, timestamp):
         return GUtils.point_with_angle_and_distance_from_point(self.camera.get_actual_position(), 
                                                                self.camera.get_actual_pan_angle_rad(timestamp), 
                                                                self.d)

@@ -1,4 +1,7 @@
-- Demo image renderer
-    - points for objects moving over time
-    - add randomly moving objects
-    - put in a separate window
+- ImageAnalyzer
+    - For any two timestamps:
+        - For all objects in view in both of those frames
+        - Get the angle subteneded by the object based on the x position of the object in one frame vs the other.
+    - Requires
+        - Camera
+        
