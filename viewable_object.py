@@ -15,6 +15,10 @@ class ViewableObject:
         self.id = SimpleUID().get_id()
         self.position_history = []
         self.create_position_history()
+        self.is_tag = False
+    
+    def get_is_tag(self):
+        return self.is_tag
  
     def set_num_timestamps(self, n):
         self.num_timestamps = n
@@ -136,3 +140,9 @@ class RandomlyMovingObject(ViewableObject):
     def random_distance(self):
         return random.random() * (self.max_dist_per_timestamp - self.min_dist_per_timestamp) + self.min_dist_per_timestamp
         
+
+class RandomelyMovingTag(RandomlyMovingObject):
+
+    def __init__(self, **kwds):
+        super().__init__(**kwds)
+        self.is_tag = True

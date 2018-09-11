@@ -135,7 +135,17 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
             expect = expect_s[i]
             self.assertAlmostEqual(r[0], expect[0])
             self.assertAlmostEqual(r[1], expect[1])
-
+    
+    def test_point_with_angle_and_distance_to_point_for_angle_over_2_pi(self):
+        a1 = math.pi / 4
+        a2 = 9 * math.pi / 4
+        p1 = (1,1)
+        d = 100
+        p2a1 = GU.point_with_angle_and_distance_from_point(p1, a1, d)
+        p2a2 = GU.point_with_angle_and_distance_from_point(p1, a2, d)
+        self.assertAlmostEqual(p2a1[0], p2a2[0])
+        self.assertAlmostEqual(p2a1[1], p2a2[1])
+        
     def test_quadrant(self):
         v = (1,1)
         p1_s = [(2,2),(0,2),(0,0),(2,0)]

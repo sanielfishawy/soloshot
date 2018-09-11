@@ -7,7 +7,7 @@ from image_generator import ImageGenerator
 from camera import Camera
 from computer_vision import ComputerVision
 from object_universe import ObjectUniverse
-from viewable_object import StationaryObject, RandomlyMovingObject
+from viewable_object import StationaryObject, RandomlyMovingObject, RandomelyMovingTag
 from tk_canvas_renderers.animator import Animator
 from boundary import Boundary
 
@@ -35,6 +35,8 @@ class TestImageRenderer(unittest.TestCase):
         self.boundary = Boundary([(200,200), (400,200), (400,600), (200,600)])
         for _ in range(10):
             self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
+        
+        self.viewable_objects.append(RandomelyMovingTag(boundary=self.boundary))
 
         self.object_universe.add_camera(self.camera).\
                              add_viewable_objects(self.viewable_objects)

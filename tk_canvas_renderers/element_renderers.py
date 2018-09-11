@@ -54,6 +54,7 @@ class ViewableObjectsRenderer(ElementRenderer):
         self.viewable_objects = viewable_objects
         self.detected_color = 'green'
         self.undetected_color = 'black'
+        self.tag_color = 'red'
         super().__init__(**kargs)
 
     def set_computer_vision(self, cv):
@@ -90,7 +91,9 @@ class ViewableObjectsRenderer(ElementRenderer):
                                            fill=self.color(obj,timestamp)) 
 
     def cv_id_for_object(self, obj, timestamp):
-        if self.computer_vision == None:
+        if obj.get_is_tag():
+            return 'tag'
+        elif self.computer_vision == None:
             return '?'
         else:
             return self.computer_vision.get_cv_id_for_obj_at_timestamp(obj, timestamp)
@@ -104,7 +107,9 @@ class ViewableObjectsRenderer(ElementRenderer):
             return True
 
     def color(self, obj, timestamp):
-        if self.is_detected_by_cv(obj, timestamp):
+        if obj.get_is_tag():
+            return self.tag_color
+        elif self.is_detected_by_cv(obj, timestamp):
             return self.detected_color
         else:
             return self.undetected_color

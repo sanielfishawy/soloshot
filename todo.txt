@@ -1,7 +1,16 @@
-- ImageAnalyzer
-    - For any two timestamps:
-        - For all objects in view in both of those frames
-        - Get the angle subteneded by the object based on the x position of the object in one frame vs the other.
-    - Requires
-        - Camera
-        
+- Algorithm
+    - TagPositionAnalyzer
+        - Calculates subtended angle between two timestamps of the tag gps to the base gps
+        - Looks for timestamps where subtended angle is greater than a threshold
+            - By
+                - For each gps position of tag it calculates angle from the base
+                - It goes through the data from timestamp 0
+                - It expands a frame of timestamps until the range of angles in that frame > some threshold
+                - It returns the endpoints of the range of angles for that frame
+                - It starts a new frame from that timestamp
+                - It repeats the process finding min and max angles in frames until it has gone through all the data
+
+            - To handle comparing q4 - q1
+                - Save the quadrant for each angle
+                - If you get a q1
+                    - Adjust all previous and future q4s in that frame
