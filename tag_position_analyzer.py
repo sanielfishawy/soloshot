@@ -71,8 +71,11 @@ class TagPositionAnalyzer:
             frame = {}
             frame['frame'] = (frame_start, frame_end)
             if frame_end != None:
-                frame['timestamp_of_min_angle'] = self._timestamp_of_min_angle_in_frame(frame_start, frame_end)
-                frame['timestamp_of_max_angle'] = self._timestamp_of_max_angle_in_frame(frame_start, frame_end)
+                min_ts = self._timestamp_of_min_angle_in_frame(frame_start, frame_end)
+                max_ts = self._timestamp_of_max_angle_in_frame(frame_start, frame_end)
+                frame['timestamp_of_min_angle'] = min_ts
+                frame['timestamp_of_max_angle'] = max_ts
+                frame['distance_between_positions'] = self._distance_between_positions(min_ts, max_ts)
             r.append(frame)
             frame_start = frame_end
 
@@ -81,6 +84,9 @@ class TagPositionAnalyzer:
         
         return r
     
+    def _distance_between_positions(self, timestamp1, timestamp2):
+        return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1), self.tag.get_position_at_timestamp(timestamp2))
+
     def _crosses_q1_4_boundary(self, quadrants):
         return 1 in quadrants.keys() and 4 in quadrants.keys()
 

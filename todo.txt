@@ -1,3 +1,7 @@
 - Base position calibration
     - Get frames with angle range greater threshold
-    - Get 
+    - Use the timestamps for min and max angle
+    - For each viewable object at those timestamps create circumcircles using d from tag_gps and angle from image_analyzer
+    - Imagine an error circle that is radius max_gps_error with center on camera.gps_position
+    - Retain only portion of each circumcircle that is within the error circle
+    - See how it goes. 

@@ -125,3 +125,6 @@ def angel_of_vector_between_points_360_rad(p1,p2):
 def point_with_angle_and_distance_from_point(point, angle_rad, d):
     return (point[0] + d * math.cos(angle_rad), (point[1] + d * math.sin(angle_rad)))
     
+
+def distance_between_points(p1, p2):
+    return math.sqrt( (p2[0] - p1[0])**2 + (p2[1] - p1[1])**2 )

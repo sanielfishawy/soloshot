@@ -195,6 +195,11 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                         self.assertAlmostEqual(s_angle, -math.pi)
                     elif q2 == 3:
                         self.assertAlmostEqual(s_angle, -math.pi / 2)
+    
+    def test_distance_between_points(self):
+        p1 = (1,1)
+        p2 = (4,5)
+        self.assertEqual(GU.distance_between_points(p1, p2), 5)
 
 if __name__ == '__main__':
     unittest.main()
