@@ -1,6 +1,7 @@
 import math
 from tag_position_analyzer import TagPositionAnalyzer
 from image_analyzer import ImageAnalyzer 
+from shapely.geometry import Point
 
 class CircumcirleAnalyzer:
 
@@ -18,3 +19,6 @@ class CircumcirleAnalyzer:
     def setup_image_analyzer(self):
         self.image_analyzer.set_images(self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time())
         return self
+    
+    def error_circle(self):
+        return Point(self.camera.get_gps_position).buffer(self.camera.get_max_gps_error(), resolution=10000)

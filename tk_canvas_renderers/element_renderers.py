@@ -150,7 +150,7 @@ class ImageRenderer(ViewableObjectsRenderer):
         self.moving_rendered_elements.append(self.get_dot_label(coords, obj, timestamp))
 
     def get_rendered_x_for_x(self, x):
-        return x + self.center_x_of_line
+        return self.center_x_of_line - x  
 
     def render_line(self):
         self.stationary_rendered_elements.append(self.tk_renderer.create_line([self.origin, 

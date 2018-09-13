@@ -33,7 +33,7 @@ class TestImageRenderer(unittest.TestCase):
             self.viewable_objects.append(StationaryObject((301, y))) 
 
         self.boundary = Boundary([(200,200), (400,200), (400,600), (200,600)])
-        for _ in range(10):
+        for _ in range(0):
             self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
         
         self.viewable_objects.append(RandomelyMovingTag(boundary=self.boundary))

@@ -2,11 +2,10 @@ import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
 import geometry_utils as GeometryUtils
-import sympy.geometry as Geo
 import tk_canvas_renderers.canvas_utils as CUtils
 
 def mouse_click(e):
-    point = Geo.Point(e.x, e.y)
+    point = (e.x, e.y)
     Demo().add_point(point)
 
 _root = tk.Tk()
@@ -23,7 +22,7 @@ _canvas.pack()
 class _DemoSingleton:
     def __init__(self):
         self.widgets = []
-        self.c = Geo.Point(250, 250)
+        self.c = (250, 250)
         _canvas_utils.create_dot(self.c, outline="orange", fill="orange")
         self.camera_label = _canvas_utils.create_dot_label(*self.c, "c", fill="orange")
         self.points = []
@@ -37,9 +36,9 @@ class _DemoSingleton:
             self.widgets.append( _canvas.create_line(*self.points[-2], *self.points[-1]) )
     
     def render_circumcircles(self, p1, p2):
-        theta_deg = GeometryUtils.subtended_angle_deg(self.c, p1, p2)
-        c_centers = GeometryUtils.circumcenters(p1, p2, theta_deg)
-        radius = GeometryUtils.circumradius(p1, p2, theta_deg)
+        theta_rad = GeometryUtils.signed_subtended_angle_from_p1_to_p2_rad(self.c, p1, p2)
+        c_centers = GeometryUtils.circumcenters(p1, p2, theta_rad)
+        radius = GeometryUtils.circumradius(p1, p2, theta_rad)
         colors = ["orange", "green"]
         for i, c in enumerate(c_centers):
             self.widgets.append( _canvas_utils.create_circle_with_center_and_radius(c, radius, outline=colors[i]) )

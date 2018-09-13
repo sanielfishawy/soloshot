@@ -58,10 +58,29 @@ class TestTagPositionAnalyzer(unittest.TestCase):
             for frame in frames:
                 if frame['frame'][1] != None:
                     self.assertAlmostEqual(frame['distance_between_positions'], self.get_distance_between_points(n)) 
-    
+
+    def test_angle_betwen_points_counter_clockwise_rotation(self):
+        for n in range(2,6):
+            frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold((2 * n * math.pi / self.number_of_slices_of_circle) -.01)
+            for frame in frames:
+                if frame['frame'][1] != None:
+                    self.assertAlmostEqual(frame['angle_between_positions'], self.get_angle_between_points(n)) 
+
+    def test_angle_betwen_points_clockwise_rotation(self):
+        for timestamp, pos in enumerate(reversed(self.positions)):
+            self.vo.set_position_at_timestamp(pos, timestamp)
+
+        for n in range(2,6):
+            frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold((2 * n * math.pi / self.number_of_slices_of_circle) -.01)
+            for frame in frames:
+                if frame['frame'][1] != None:
+                    self.assertAlmostEqual(frame['angle_between_positions'], -self.get_angle_between_points(n)) 
+
+    def get_angle_between_points(self, n):
+        return n * 2 * math.pi / self.number_of_slices_of_circle
+
     def get_distance_between_points(self, n):
-        angle = n * 2 * math.pi / self.number_of_slices_of_circle
-        return 2 * self.radius * math.sin(angle/2)
+        return 2 * self.radius * math.sin(self.get_angle_between_points(n) /2)
          
 if __name__ == '__main__':
     unittest.main()

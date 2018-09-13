@@ -2,59 +2,21 @@ import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import unittest
 import geometry_utils as GU
-import sympy.geometry as Geo
 from sympy import *
 import math
 
 class TestGeometryUtilsIsosceles(unittest.TestCase):
     
-    def setUp(self): 
-        # Set up a segment in each quadrant with varying angles
-        thetas = [10, 30, 90, 150]
+    def test_line_between_circumcenters_is_perpendicular_to_line_between_points(self):
+        p1 = (0,0)
+        p2 = (0,1)
+        theta = math.pi/8
+        cc1, cc2 = GU.circumcenters(p1, p2, theta)
+        a1 = GU.angel_of_vector_between_points_360_rad(p1,p2)
+        a2 = GU.angel_of_vector_between_points_360_rad(cc2,cc1)
+        diff = abs(a1-a2)
+        self.assertAlmostEqual(diff, math.pi / 2)
 
-        pc = Geo.Point(100,100)
-        
-        ps = [ (110, 120), 
-               (95, 113),
-               (85, 75),
-               (115, 65) ]
-
-        self.cases = []
-
-        for i, point in enumerate(ps):
-            case = {}
-           
-            case["theta"] = thetas[i]
-            
-            a = Geo.Segment(pc, point)
-            case["a"] = a
-
-            r1, r2 = GU.isosceles_points(a.p1, a.p2, thetas[i])
-            case["r"] = Geo.Segment(r1, r2)
-            self.cases.append(case)
-
-    def test_r_a_are_perpendicular(self):
-        for case in self.cases:
-            a,r = case["a"], case["r"]
-            self.assertAlmostEqual(a.smallest_angle_between(r).evalf(), N(pi/2))
-
-    def test_r_and_a_intersect_at_midpoint(self):
-        for case in self.cases:
-            a,r = case["a"], case["r"]
-            mid_a = a.midpoint
-            mid_r = r.midpoint
-            self.assertAlmostEqual( mid_a.x.evalf(), mid_r.x.evalf() )
-            self.assertAlmostEqual( mid_a.y.evalf(), mid_r.y.evalf() )
-
-    def test_r_correct_length(self):
-        for case in self.cases:
-            a,r,theta = case["a"], case["r"], case["theta"]
-            _tan = tan(math.radians(theta/2)).evalf()
-            half_a = (0.5 * a.length).evalf()
-            half_r = (0.5 * r.length).evalf()
-
-            self.assertAlmostEqual(_tan, half_a / half_r)
-    
     def test_angle_of_vector(self):
         p0 = (0,0)
         p1_s = [(0,0),

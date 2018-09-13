@@ -1,38 +1,5 @@
 import math
-import sympy.geometry as Geo
-
-def isosceles_points(p1, p2, theta_deg):
-    # DEPRECATED: This method is not currently used
-    #             r1
-    #             +
-    #            /|\
-    #           / | \
-    #          /  |d \
-    #         /   |   \
-    #        / a/2|a/2 \
-    #    p1 x-----+-----x p2
-    #        \    |    /
-    #         \   |   /
-    #          \  |d /
-    #           \ | /
-    #            \|/
-    #             +
-    #             r2
-    a = Geo.Segment(p1, p2)
-    half_a = a.length.evalf() / 2.0
-    mp = a.midpoint
-    r_slope = a.perpendicular_bisector().slope.evalf()  #pylint: disable=no-member
-    
-    half_theta_deg = theta_deg / 2.0
-    half_theta_rad = math.radians(half_theta_deg)
-    d = half_a / math.tan(half_theta_rad)
-    
-    dx = d / math.sqrt(1 + r_slope**2)
-    dy = -dx * r_slope
-
-    r1 = (mp.x.evalf() - dx, mp.y.evalf() + dy)  #pylint: disable=no-member
-    r2 = (mp.x.evalf() + dx, mp.y.evalf() - dy)  #pylint: disable=no-member
-    return (r1, r2)
+from shapely.geometry import Point
 
         
 #          Circum...        
@@ -42,31 +9,18 @@ def isosceles_points(p1, p2, theta_deg):
 #             /    \
 #            /      \
 #           p1      p2
-def circumcenters(p1, p2, theta_deg):
-    radius = circumradius(p1, p2, theta_deg)
-    c1 = Geo.Circle(p1, radius)
-    c2 = Geo.Circle(p2, radius)
-    return Geo.intersection(c1, c2)
 
-def circumcircles(p1, p2, theta_deg):
-    (c1, c2) = circumcenters(p1, p2, theta_deg)
-    radius = circumradius(p1, p2, theta_deg)
-    return (Geo.Circle(c1, radius), Geo.Circle(c2, radius))
+def circumcenters(p1, p2, theta_rad):
+    radius = circumradius(p1, p2, abs(theta_rad))
+    c1 = Point(p1).buffer(radius, resolution=10000).exterior #pylint: disable=no-member
+    c2 = Point(p2).buffer(radius, resolution=10000).exterior #pylint: disable=no-member
+    return [(p.x, p.y) for p in c1.intersection(c2)]
 
-def circumradius(p1, p2, theta_deg):
-    return 0.5 * circumdiameter(p1, p2, theta_deg)
+def circumradius(p1, p2, theta_rad):
+    return 0.5 * circumdiameter(p1, p2, abs(theta_rad))
     
-def circumdiameter(p1, p2, theta_deg):
-    s = Geo.Segment(p1, p2)
-    return ( s.length / math.sin(math.radians(theta_deg)) ).evalf()
-
-def subtended_angle_rad(v, p1, p2):
-    s1 = Geo.Segment(v, p1)
-    s2 = Geo.Segment(v, p2)
-    return s1.smallest_angle_between(s2).evalf()
-
-def subtended_angle_deg(v, p1, p2):
-    return math.degrees(subtended_angle_rad(v, p1, p2))
+def circumdiameter(p1, p2, theta_rad):
+    return abs( distance_between_points(p1, p2) / math.sin(theta_rad) )
 
 def signed_subtended_angle_from_p1_to_p2_rad(v, p1, p2):
     a1 = angle_of_vector_360_rad((v, p1))
