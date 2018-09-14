@@ -10,6 +10,9 @@
             "request": "launch",
             "program": "${file}",
             "pythonPath": "/usr/local/bin/python3.7",
+            "env": {
+                "PYTHONPATH": "/Users/sani/dev/soloshot/lib/python3.7/site-packages:/Users/sani/dev/soloshot"
+            },
         },
         {
             "name": "Python: Current File",

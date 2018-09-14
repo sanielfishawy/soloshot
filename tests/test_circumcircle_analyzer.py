@@ -1,5 +1,4 @@
-import sys, unittest, math
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import sys, math, unittest
 from object_universe import ObjectUniverse
 from camera import Camera
 from image_analyzer import ImageAnalyzer
