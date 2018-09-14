@@ -85,6 +85,45 @@ class TagPositionAnalyzer:
         
         return r
     
+    def get_early_position(self, frame):
+        return self.tag.get_position_at_timestamp(self.get_early_min_max_timestamp(frame))
+
+    def get_late_position(self, frame):
+        return self.tag.get_position_at_timestamp(self.get_late_min_max_timestamp(frame))
+
+    def get_early_min_max_timestamp(self, frame):
+        if frame['timestamp_of_min_angle'] < frame['timestamp_of_max_angle']:
+            return frame['timestamp_of_min_angle'] 
+        else:
+            return frame['timestamp_of_max_angle']
+        
+    def get_late_min_max_timestamp(self, frame):
+        if frame['timestamp_of_min_angle'] > frame['timestamp_of_max_angle']:
+            return frame['timestamp_of_min_angle'] 
+        else:
+            return frame['timestamp_of_max_angle']
+        
+    def get_frame_start_timestamp(self, frame):
+        return self.get_frame_bounds(frame)[0]
+
+    def get_frame_end_timestamp(self, frame):
+        return self.get_frame_bounds(frame)[1]
+    
+    def get_frame_bounds(self, frame):
+        return frame['frame']
+
+    def get_distance_between_positions(self, frame):
+        return frame['distance_between_positions']
+    
+    def get_timestamp_of_max_angle(self, frame):
+        return frame['timestamp_of_max_angle']
+    
+    def get_timestamp_of_min_angle(self, frame):
+        return frame['timestamp_of_min_angle']
+    
+    def get_angle_between_positions(self, frame):
+        return frame['angle_between_positions']
+        
     def _distance_between_positions(self, timestamp1, timestamp2):
         return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1), 
                                               self.tag.get_position_at_timestamp(timestamp2))

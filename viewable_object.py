@@ -141,7 +141,7 @@ class RandomlyMovingObject(ViewableObject):
         return random.random() * (self.max_dist_per_timestamp - self.min_dist_per_timestamp) + self.min_dist_per_timestamp
         
 
-class RandomelyMovingTag(RandomlyMovingObject):
+class RandomlyMovingTag(RandomlyMovingObject):
 
     def __init__(self, **kwds):
         super().__init__(**kwds)

@@ -5,7 +5,7 @@
     + TagPositionAnalyzer
 
 - Base position calibration
-    - Get frames with angle range greater than threshold
+    + Get frames with angle range greater than threshold
     - Use the timestamps for min and max angle
     - For each viewable object at those timestamps 
         - If the object was moving in the same rotation as tag
