@@ -8,6 +8,7 @@ class Animator:
         self.current_timestamp = 0
         self.num_timestamps = num_timestamps
         self.seconds_per_timestamp = seconds_per_timestamp
+        self.render_stationary_sub_elements()
 
     def set_element_renderers(self, element_renderers):
         self.element_renderers = element_renderers

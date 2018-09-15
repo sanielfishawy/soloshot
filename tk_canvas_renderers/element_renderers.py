@@ -220,4 +220,28 @@ class CameraRenderer(ElementRenderer):
         self.tk_renderer.lower_element(rvt)
         self.moving_rendered_elements.append(rvt)
         return self
+
+
+class CircumcirleRenderer(ElementRenderer):
+
+    def __init__(self, circumcirlcle_analyzer, **kargs):
+        self.circumcircle_analyzer = circumcirlcle_analyzer
+        self.frames = circumcirlcle_analyzer.get_analyzed_frames()
+        super().__init__(**kargs)
+        self.render()
+    
+    def render_stationary_elements(self):
+        self.delete_stationary_rendered_elements()
+        for frame in self.frames:
+            p1 = self.circumcircle_analyzer.get_tag_position_analyzer().get_early_position(frame)
+            p2 = self.circumcircle_analyzer.get_tag_position_analyzer().get_late_position(frame)
+            tag = self.circumcircle_analyzer.get_tag(frame)
+            if p1 != None and p2 != None and tag != None:
+                self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p1))
+                self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p2))
+
+                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius())
+
+        
+
     

@@ -6,14 +6,24 @@ from shapely.geometry import Point
 
 class CircumcircleAnalyzer:
 
-    def __init__(self, camera, tag):
+    def __init__(self, camera, tag, tag_gps_angle_threshold=math.radians(3)):
         self.camera = camera
         self.tag = tag
         self.tag_position_analyzer = TagPositionAnalyzer(tag, camera)
-        self.tag_gps_angle_threshold = math.radians(3)
+        self.tag_gps_angle_threshold = tag_gps_angle_threshold
         self.frames = None
         self.error_circle = None
     
+    def get_tag_gps_angle_threshold(self):
+        return self.tag_gps_angle_threshold
+
+    def set_tag_gps_angle_threshold(self, theta_rad):
+        self.tag_gps_angle_threshold = theta_rad
+        return self
+    
+    def get_tag_position_analyzer(self):
+        return self.tag_position_analyzer
+
     def get_analyzed_frames(self):
         for frame in self._get_frames():
             self._analyze_frame(frame)
@@ -44,18 +54,19 @@ class CircumcircleAnalyzer:
     
     def _get_error_circle(self):
         if self.error_circle == None:
-            self.error_circle = Point(self.camera.get_gps_position()).buffer(self.camera.get_gps_max_error(), resolution=10000)
+            self.error_circle = Point(self.camera.get_gps_position()).buffer(self.camera.get_gps_max_error(), resolution=1000)
         return self.error_circle
 
     def _analyze_frame(self, frame):
-        self._add_objects_angles_to_frame(frame)
-        self._mark_objects_with_rotation_same_as_tag_in_frame(frame)
-        self._add_circumcircles_for_objects_in_frame(frame)
+        if not self.tag_position_analyzer.is_terminal_frame(frame): 
+            self._add_objects_angles_to_frame(frame)
+            self._mark_objects_with_rotation_same_as_tag_in_frame(frame)
+            self._add_circumcircles_for_objects_in_frame(frame)
         
     def _mark_objects_with_rotation_same_as_tag_in_frame(self, frame):
         for obj in self._get_frame_in_view_object_angles(frame):
-            self._get_frame_rotation_same_as_tag(frame)[obj] = self.tag_position_analyzer.get_angle_between_positions(frame) > 0 ==\
-                                                               self._get_frame_in_view_object_angles(frame)[obj] > 0
+            self._get_frame_rotation_same_as_tag(frame)[obj] = (self.tag_position_analyzer.get_angle_between_positions(frame) > 0) == \
+                                                               (self._get_frame_in_view_object_angles(frame)[obj] > 0)
 
     def _add_circumcircles_for_objects_in_frame(self, frame):
         p1 = self.tag_position_analyzer.get_early_position(frame)
@@ -73,8 +84,8 @@ class CircumcircleAnalyzer:
             cc['circumcenters'] = GU.circumcenters(p1, p2, theta_rad)
             r = GU.circumradius(p1, p2, theta_rad)
             cc['circumradius'] = r
-            cc['c1'] = Point(p1).buffer(r, resolution=10000).exterior #pylint: disable=no-member
-            cc['c2'] = Point(p2).buffer(r, resolution=10000).exterior #pylint: disable=no-member
+            cc['c1'] = Point(p1).buffer(r, resolution=1000).exterior #pylint: disable=no-member
+            cc['c2'] = Point(p2).buffer(r, resolution=1000).exterior #pylint: disable=no-member
         
             cc['intersects_error_circle'] = False
             cc['error_circle_intersection'] = None
@@ -84,6 +95,25 @@ class CircumcircleAnalyzer:
             elif cc['c2'].intersects(self._get_error_circle()):
                 cc['intersects_error_circle'] = True
                 cc['error_circle_intersection'] = cc['c2'].intersection(self._get_error_circle())
+
+    def get_in_view_objects(self, frame):
+        return self._get_frame_in_view_object_angles(frame).keys()
+    
+    def get_rotation_same_as_tag(self, frame, obj):
+        rot_s = self._get_frame_rotation_same_as_tag(frame)
+        return rot_s[obj] if obj in rot_s else None
+    
+    def is_terminal_frame(self, frame):
+        return self.tag_position_analyzer.is_terminal_frame(frame)
+
+    def get_tag(self, frame):
+        for obj in self.get_in_view_objects(frame):
+            if obj.get_is_tag():
+                return obj
+        
+        return None
+
+
 
     def _add_objects_angles_to_frame(self, frame):
         ts1 = self.tag_position_analyzer.get_early_min_max_timestamp(frame)

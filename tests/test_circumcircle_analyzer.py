@@ -1,4 +1,6 @@
 import sys, math, unittest
+sys.path.insert(0, '/Users/sani/dev/soloshot')
+
 from object_universe import ObjectUniverse
 from camera import Camera
 from image_analyzer import ImageAnalyzer
@@ -6,13 +8,14 @@ from circumcircle_analyzer import CircumcircleAnalyzer
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer
+from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
 from tk_canvas_renderers.animator import Animator
 
 class TestCircumcircleAnalyzer(unittest.TestCase):
 
     def setUp(self):
         self.num_timestamps = 100
+        self.tag_gps_angle_threshold = math.radians(15)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -38,23 +41,46 @@ class TestCircumcircleAnalyzer(unittest.TestCase):
 
         self.image_analyzer = ImageAnalyzer(self.camera)
         
-        self.circumcircle_analyzer = CircumcircleAnalyzer(self.camera, self.tag)
+        self.circumcircle_analyzer = CircumcircleAnalyzer(self.camera, 
+                                                          self.tag, 
+                                                          tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
-    def test_circum(self):
-        frames = self.circumcircle_analyzer.get_analyzed_frames()
+        self.frames = self.circumcircle_analyzer.get_analyzed_frames()
+
+        return self
+
+    def test_angle_between_positions_is_greater_than_threshold(self):
+        for frame in self.frames:
+            if not self.circumcircle_analyzer.is_terminal_frame(frame):
+                self.assertGreater(abs(self.circumcircle_analyzer.get_tag_position_analyzer().get_angle_between_positions(frame)), 
+                                self.tag_gps_angle_threshold)
+
+    def test_rotation_same_as_tag_for_tag(self):
+        for frame in self.frames:
+            rot = self.circumcircle_analyzer.get_rotation_same_as_tag(frame, self.tag)
+
+            if self.circumcircle_analyzer.is_terminal_frame(frame):
+                self.assertEqual(rot, None)
+            else:
+                self.assertTrue(rot)
+    
+    def test_frames(self):
         pass
 
-    def dont_test_visually(self):
+    def visualize(self):
         self.boundary_renderer = BoundaryRenderer(self.boundary)
         self.camera_renderer = CameraRenderer(self.camera)
         self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
+        self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
+        self.circumcircle_renderer = CircumcirleRenderer(self.circumcircle_analyzer)
 
         self.renderers = [
                             self.camera_renderer,
                             self.viewable_objects_renderer,
                             self.boundary_renderer,
                             self.image_renderer,
+                            self.circumcircle_renderer,
         ]
 
         self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)

@@ -63,7 +63,7 @@ class TagPositionAnalyzer:
         return r
     
     def get_frames_where_range_exceeds_threshold(self, threshold_rad):
-        r = []
+        self._frames = []
         frame_start = 0
         frame_end = None
         for _ in range(self.tag.get_num_timestamps()):
@@ -77,18 +77,24 @@ class TagPositionAnalyzer:
                 frame['timestamp_of_max_angle'] = max_ts
                 frame['distance_between_positions'] = self._distance_between_positions(min_ts, max_ts)
                 frame['angle_between_positions'] = self._angle_between_timestamps(min_ts, max_ts)
-            r.append(frame)
+            self._frames.append(frame)
             frame_start = frame_end
 
             if frame_end == None:
                 break
         
-        return r
+        return self._frames
     
     def get_early_position(self, frame):
+        if self.is_terminal_frame(frame):
+            return None
+
         return self.tag.get_position_at_timestamp(self.get_early_min_max_timestamp(frame))
 
     def get_late_position(self, frame):
+        if self.is_terminal_frame(frame):
+            return None
+
         return self.tag.get_position_at_timestamp(self.get_late_min_max_timestamp(frame))
 
     def get_early_min_max_timestamp(self, frame):
@@ -123,6 +129,9 @@ class TagPositionAnalyzer:
     
     def get_angle_between_positions(self, frame):
         return frame['angle_between_positions']
+    
+    def is_terminal_frame(self, frame):
+        return self.get_frame_end_timestamp(frame) == None
         
     def _distance_between_positions(self, timestamp1, timestamp2):
         return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1), 
