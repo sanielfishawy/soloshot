@@ -22,7 +22,7 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
         self.camera = Camera()
         self.camera.set_actual_position((100, 400)).\
                     set_gps_position((100,380)).\
-                    set_gps_max_error(20).\
+                    set_gps_max_error(25).\
                     set_fov_rad(math.pi/2)
     
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
@@ -64,8 +64,11 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
             else:
                 self.assertTrue(rot)
     
-    def test_frames(self):
-        pass
+    def test_tag_circumcircles_always_intersect_error_circle(self):
+        for frame in self.frames:
+            if not self.circumcircle_analyzer.is_terminal_frame(frame):
+                tag = self.circumcircle_analyzer.get_tag(frame)
+                self.assertTrue(self.circumcircle_analyzer.get_circumcircles(frame)[tag].get_intersects_error_circle())
 
     def visualize(self):
         self.boundary_renderer = BoundaryRenderer(self.boundary)

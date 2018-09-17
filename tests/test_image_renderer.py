@@ -43,7 +43,24 @@ class TestImageRenderer(unittest.TestCase):
     
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
         
-        # Render
+        self.image_renderer = ImageRenderer(self.camera.get_image_generator())                                                
+        self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
+
+        return self
+
+    def test_default_image_width_is_640(self):
+        self.assertEqual(self.camera.get_image_generator().get_image_width(), 640)
+        self.assertEqual(self.image_renderer.get_image_width(), 640)
+    
+    def test_all_in_view_objects_are_projected_within_image_width(self):
+        x_for_all_inview_objects = self.camera.image_generator.get_x_for_all_inview_objects_for_all_camera_time()       
+
+        for x_s in x_for_all_inview_objects:
+            for obj in x_s.keys():
+                self.assertLess(abs(x_s[obj]), self.image_renderer.get_image_width() / 2)
+        
+
+    def visualize(self):
         self.camera_renderer = CameraRenderer(self.camera)
         self.objects_renderer = ViewableObjectsRenderer(viewable_objects=self.viewable_objects, 
                                                         computer_vision=self.camera.get_computer_vision())
@@ -67,21 +84,6 @@ class TestImageRenderer(unittest.TestCase):
                      set_scale(1).\
                      set_mouse_click_callback(self.animator.play)
 
-        return self
-
-    def test_default_image_width_is_640(self):
-        self.assertEqual(self.camera.get_image_generator().get_image_width(), 640)
-        self.assertEqual(self.image_renderer.get_image_width(), 640)
-    
-    def test_all_in_view_objects_are_projected_within_image_width(self):
-        x_for_all_inview_objects = self.camera.image_generator.get_x_for_all_inview_objects_for_all_camera_time()       
-
-        for x_s in x_for_all_inview_objects:
-            for obj in x_s.keys():
-                self.assertLess(abs(x_s[obj]), self.image_renderer.get_image_width() / 2)
-        
-
-    def visualize(self):
         TKRenderer().start_tk_event_loop()
 
 if __name__ == '__main__':

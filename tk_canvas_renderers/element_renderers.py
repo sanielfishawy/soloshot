@@ -236,11 +236,9 @@ class CircumcirleRenderer(ElementRenderer):
                 self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p1))
                 self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p2))
 
-                # self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius())
-    
-    def get_circumcenters_of_tag(self, tag, frame):
-        pass
-
-        
-
-    
+                cc = self.circumcircle_analyzer.get_circumcircles(frame)[tag]
+                c1_center = cc.get_circumcenters()[0]
+                c2_center = cc.get_circumcenters()[1]
+                cc_radius = cc.get_circumradius()
+                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius(c1_center, cc_radius))
+                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius(c2_center, cc_radius))

@@ -2,7 +2,6 @@ import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import unittest
 import geometry_utils as GU
-from sympy import *
 import math
 
 class TestGeometryUtilsIsosceles(unittest.TestCase):
@@ -77,7 +76,7 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         angles = [0,
                   math.pi / 4,
                   math.pi / 2,
-                  3 * pi / 4,
+                  3 * math.pi / 4,
                   math.pi,
                   -3 * math.pi / 4, 
                   -math.pi / 2,
