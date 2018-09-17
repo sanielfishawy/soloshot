@@ -1,8 +1,10 @@
-- Make sure signs are correct for:
-    + ImageGenerator
-    + ImageAnalyzer
-    + ImageRenderer
-    + TagPositionAnalyzer
+
+- Remove render from element_renderers init
+- Rename circumcirle_analyzer object motion circumcirle_analyzer
+-
+- Use a class for circumcircle objects
+
+- For circumcircle analyzer do lazy calculation and add a recacluate method.
 
 - Base position calibration
     + Get frames with angle range greater than threshold

@@ -42,7 +42,6 @@ class BoundaryRenderer(ElementRenderer):
         self.tk_renderer = TKRenderer()
         self.boundary = boundary
         super().__init__(**kargs)
-        self.render()
     
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
@@ -126,7 +125,6 @@ class ImageRenderer(ViewableObjectsRenderer):
         self.center_x_of_line = int(self.x_of_line + self.image_width / 2)
         self.x_for_all_inview_objects_for_all_camera_time = self.image_generator.get_x_for_all_inview_objects_for_all_camera_time()
         super().__init__(**kargs)
-        self.render()
 
     def get_image_width(self):
         return self.image_width
@@ -166,7 +164,6 @@ class CameraRenderer(ElementRenderer):
         self.gps_err_color = 'red'
         self.view_triangle_color = '#FEFAED'
         super().__init__(**kargs)
-        self.render()
 
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
@@ -228,7 +225,6 @@ class CircumcirleRenderer(ElementRenderer):
         self.circumcircle_analyzer = circumcirlcle_analyzer
         self.frames = circumcirlcle_analyzer.get_analyzed_frames()
         super().__init__(**kargs)
-        self.render()
     
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
@@ -240,7 +236,10 @@ class CircumcirleRenderer(ElementRenderer):
                 self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p1))
                 self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p2))
 
-                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius())
+                # self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius())
+    
+    def get_circumcenters_of_tag(self, tag, frame):
+        pass
 
         
 

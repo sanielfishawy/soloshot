@@ -45,7 +45,7 @@ class CircumcircleAnalyzer:
         return frame['circumcircles']
     
     def _get_frame_in_view_object_angles(self, frame):
-        return frame['in_view_objects_angles']
+        return frame['in_view_objects_angles'] if not self.is_terminal_frame(frame) else None
 
     def _get_image_analyzer(self):
         self.image_analyzer = ImageAnalyzer(self.camera)
@@ -97,7 +97,7 @@ class CircumcircleAnalyzer:
                 cc['error_circle_intersection'] = cc['c2'].intersection(self._get_error_circle())
 
     def get_in_view_objects(self, frame):
-        return self._get_frame_in_view_object_angles(frame).keys()
+        return self._get_frame_in_view_object_angles(frame).keys() if not self.is_terminal_frame(frame) else []
     
     def get_rotation_same_as_tag(self, frame, obj):
         rot_s = self._get_frame_rotation_same_as_tag(frame)
@@ -108,12 +108,10 @@ class CircumcircleAnalyzer:
 
     def get_tag(self, frame):
         for obj in self.get_in_view_objects(frame):
-            if obj.get_is_tag():
+            if obj != None and obj.get_is_tag():
                 return obj
         
         return None
-
-
 
     def _add_objects_angles_to_frame(self, frame):
         ts1 = self.tag_position_analyzer.get_early_min_max_timestamp(frame)
