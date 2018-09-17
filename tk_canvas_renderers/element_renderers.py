@@ -223,7 +223,7 @@ class CircumcirleRenderer(ElementRenderer):
 
     def __init__(self, circumcirlcle_analyzer, **kargs):
         self.circumcircle_analyzer = circumcirlcle_analyzer
-        self.frames = circumcirlcle_analyzer.get_analyzed_frames()
+        self.frames = circumcirlcle_analyzer.get_frames()
         super().__init__(**kargs)
     
     def render_stationary_elements(self):

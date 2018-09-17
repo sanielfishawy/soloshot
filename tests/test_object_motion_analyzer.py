@@ -4,14 +4,14 @@ sys.path.insert(0, '/Users/sani/dev/soloshot')
 from object_universe import ObjectUniverse
 from camera import Camera
 from image_analyzer import ImageAnalyzer
-from circumcircle_analyzer import CircumcircleAnalyzer
+from object_motion_analyzer import ObjectMotionAnalyzer
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 
 from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
 from tk_canvas_renderers.animator import Animator
 
-class TestCircumcircleAnalyzer(unittest.TestCase):
+class TestObjectMotionAnalyzer(unittest.TestCase):
 
     def setUp(self):
         self.num_timestamps = 100
@@ -41,11 +41,11 @@ class TestCircumcircleAnalyzer(unittest.TestCase):
 
         self.image_analyzer = ImageAnalyzer(self.camera)
         
-        self.circumcircle_analyzer = CircumcircleAnalyzer(self.camera, 
+        self.circumcircle_analyzer = ObjectMotionAnalyzer(self.camera, 
                                                           self.tag, 
                                                           tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
-        self.frames = self.circumcircle_analyzer.get_analyzed_frames()
+        self.frames = self.circumcircle_analyzer.get_frames()
 
         return self
 
