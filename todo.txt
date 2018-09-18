@@ -1,20 +1,23 @@
+- BaseCalibrator
+    - ObjectRanker
+        - Get frames from object position analzyer
+        - Create a hash of objects
+            - Moved opposite tag n
+            - Moved opposite tag t
+            - Did not intersect error circle n
+            - Did not intersect error circle t
+            - Eliminated t
+            - Eliminated reason
+                - Eliminate all moved opposite tag
+                - Once one has intersected error cirlcle n times eliminate all that have intersected fewer than n-1 times
+    
+    - BasePositionCalculator
+        - Gets error circles for most likely tag candidate
+        - Provides base position
 
-- Use a class for circumcircle objects
+    - BaseAngleCalculatorCalculator
+        - With camera gps position set to base position rerun the frames
+        - Use offset of tag object to calculate angle error.
 
-- For circumcircle analyzer do lazy calculation and add a recacluate method.
 
-- Base position calibration
-    + Get frames with angle range greater than threshold
-    - Use the timestamps for min and max angle
-    - For each viewable object at those timestamps 
-        - If the object was moving in the same rotation as tag
-            - create circumcircles using d from tag_gps and angle from image_analyzer
-        - Keep track of
-            - Everytime the object was moving in the oposite rotation from the tag in the time in question
-            - Everytime a circumcircle intersected with the error circle
-            - The part of the curve of that circumcirle within the error circle.
-    - Imagine an error circle that is radius max_gps_error with center on camera.gps_position
-    - Retain only portion of each circumcircle that is within the error circle
-
-- Eliminate sympy from geometry_utils use only shapely
 

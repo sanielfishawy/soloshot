@@ -86,6 +86,9 @@ class ObjectMotionAnalyzer:
             frame['circumcircles'] = {}
         return frame['circumcircles']
     
+    def get_circumcircles_for_object_in_frame(self, frame, obj):
+        return self.get_circumcircles(frame)[obj] if obj in self.get_circumcircles(frame) else None 
+        
     def is_terminal_frame(self, frame):
         return self.tag_position_analyzer.is_terminal_frame(frame)
 
