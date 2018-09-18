@@ -1,15 +1,7 @@
 - BaseCalibrator
-    - ObjectRanker
-        - Get frames from object position analzyer
-        - Create a hash of objects
-            - Moved opposite tag n
-            - Moved opposite tag t
-            - Did not intersect error circle n
-            - Did not intersect error circle t
-            - Eliminated t
-            - Eliminated reason
-                - Eliminate all moved opposite tag
-                - Once one has intersected error cirlcle n times eliminate all that have intersected fewer than n-1 times
+    - ObjectStatsProcessor
+        - Do one pass eliminating all objects that moved in oposite direction to the tag.
+        - Do another pass to test intersection for only the remaining objects
     
     - BasePositionCalculator
         - Gets error circles for most likely tag candidate

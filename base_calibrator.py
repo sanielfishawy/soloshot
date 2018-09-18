@@ -19,8 +19,8 @@ class ObjectsStatsProcessor:
         :type object_motion_analyzer: ObjectMotionAnalyzer
         :type tag_position_analyzer: TagPositionAnalyzer
         """
-        self.object_motion_anlayzer = object_motion_analyzer
-        self.tag_position_analyzer = self.object_motion_anlayzer.get_tag_position_analyzer()
+        self.object_motion_analyzer = object_motion_analyzer
+        self.tag_position_analyzer = self.object_motion_analyzer.get_tag_position_analyzer()
         self.processed_objects = {}
 
     def get_processed_objects(self):
@@ -29,8 +29,8 @@ class ObjectsStatsProcessor:
         return self.processed_objects
     
     def _process_objects(self):
-        for frame in self.object_motion_anlayzer.get_frames():
-            for obj in self.object_motion_anlayzer.get_frames():
+        for frame in self.object_motion_analyzer.get_frames():
+            for obj in self.object_motion_analyzer.get_in_view_objects(frame):
                 self._process_object(frame, obj)
 
     def _process_object(self, frame, obj):
@@ -38,7 +38,9 @@ class ObjectsStatsProcessor:
         self._set_didnt_intersect_error_circle(frame, obj)
     
     def _set_moved_opposite_to_tag(self, frame, obj):
-        if not self.object_motion_anlayzer.get_rotation_same_as_tag():
+        self.get_moved_opposite_to_tag_n(obj) #init
+        self.get_moved_opposite_to_tag_t(obj) #init
+        if not self.object_motion_analyzer.get_rotation_same_as_tag(frame, obj):
             self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n] = self.get_moved_opposite_to_tag_n(obj) + 1
             if self.get_moved_opposite_to_tag_t(obj) == None:
                 self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = self.tag_position_analyzer.get_early_position(frame)
@@ -47,8 +49,10 @@ class ObjectsStatsProcessor:
         """
         :type cc: Circumcircles
         """
-        cc = self.object_motion_anlayzer.get_circumcircles_for_object_in_frame(frame, obj)
-        if not cc.get_didnt_intersect_error_circle():
+        self.get_didnt_intersect_error_circle_n(obj) #init
+        self.get_didnt_intersect_error_circle_t(obj) #init
+        cc = self.object_motion_analyzer.get_circumcircles_for_object_in_frame(frame, obj)
+        if cc != None and not cc.get_intersects_error_circle():
             self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_n] = self.get_didnt_intersect_error_circle_n(obj) + 1
             if self.get_didnt_intersect_error_circle_t(obj) == None:
                 self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t] = self.tag_position_analyzer.get_early_position(frame)
@@ -65,7 +69,7 @@ class ObjectsStatsProcessor:
     
     def get_moved_opposite_to_tag_t(self, obj):
         if self.moved_opposite_to_tag_t not in self._get_hash_for_obj(obj):
-            self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n] = None
+            self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = None
         return self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] 
     
     def get_did_move_opposite_to_tag(self, obj):
@@ -88,11 +92,14 @@ class ObjectsStatsProcessor:
         return self.didnt_intersect_error_circle_t != None
     
     def get_objects_that_always_moved_same_direction_as_tag(self):
-        return list(filter([obj for obj in self.get_processed_objects()], self.get_didnt_move_opposite_to_tag))
+        objs = [obj for obj in self.get_processed_objects()]
+        return list(filter(self.get_didnt_move_opposite_to_tag, [obj for obj in self.get_processed_objects()]))
 
     def get_top_ranked_object(self):
         r = self.get_ranked_objects()
         return r[0] if len(r) > 0 else None
         
     def get_ranked_objects(self):
-        return self.get_objects_that_always_moved_same_direction_as_tag().sort(key=self.didnt_intersect_error_circle_n)
+        l = self.get_objects_that_always_moved_same_direction_as_tag()
+        l.sort(key=self.get_didnt_intersect_error_circle_n)
+        return l

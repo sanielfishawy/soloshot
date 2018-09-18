@@ -183,7 +183,7 @@ class Circumcircles:
     
     def get_c2_intersects_error_circle(self):
         if self.c2_intersects_error_circle == None:
-            self.c2_intersects_error_circle = self.get_c2_low_def().intersects(self.get_error_circle_exterior)
+            self.c2_intersects_error_circle = self.get_c2_low_def().intersects(self.get_error_circle_exterior())
         return self.c2_intersects_error_circle
     
     def get_intersects_error_circle(self):

@@ -7,6 +7,7 @@ from image_analyzer import ImageAnalyzer
 from object_motion_analyzer import ObjectMotionAnalyzer
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
+from base_calibrator import ObjectsStatsProcessor
 
 from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
 from tk_canvas_renderers.animator import Animator
@@ -14,8 +15,8 @@ from tk_canvas_renderers.animator import Animator
 class TestBaseCalibrator(unittest.TestCase):
 
     def setUp(self):
-        self.num_timestamps = 100
-        self.tag_gps_angle_threshold = math.radians(15)
+        self.num_timestamps = 40
+        self.tag_gps_angle_threshold = math.radians(10)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -28,8 +29,11 @@ class TestBaseCalibrator(unittest.TestCase):
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
         
         self.tag = RandomlyMovingTag(boundary=self.boundary)
-        self.r_obj = RandomlyMovingObject(boundary=self.boundary)
-        self.viewable_objects = [self.tag, self.r_obj]
+        self.r_objs = []
+        for _ in range(10):
+            self.r_objs.append(RandomlyMovingObject(boundary=self.boundary))
+        
+        self.viewable_objects = [self.tag] + self.r_objs
 
         self.object_universe.add_camera(self.camera).\
                              add_viewable_objects(self.viewable_objects)
@@ -47,29 +51,22 @@ class TestBaseCalibrator(unittest.TestCase):
 
         self.frames = self.object_motion_analyzer.get_frames()
 
+        self.object_stats_processor = ObjectsStatsProcessor(self.object_motion_analyzer)
+
         return self
 
-    def test_angle_between_positions_is_greater_than_threshold(self):
-        for frame in self.frames:
-            if not self.object_motion_analyzer.is_terminal_frame(frame):
-                self.assertGreater(abs(self.object_motion_analyzer.get_tag_position_analyzer().get_angle_between_positions(frame)), 
-                                self.tag_gps_angle_threshold)
-
-    def test_rotation_same_as_tag_for_tag(self):
-        for frame in self.frames:
-            rot = self.object_motion_analyzer.get_rotation_same_as_tag(frame, self.tag)
-
-            if self.object_motion_analyzer.is_terminal_frame(frame):
-                self.assertEqual(rot, None)
-            else:
-                self.assertTrue(rot)
+    def dont_test_tag_is_top_ranked_object(self):
+        self.assertEqual(self.object_stats_processor.get_top_ranked_object(), self.tag)
     
-    def test_tag_circumcircles_always_intersect_error_circle(self):
-        for frame in self.frames:
-            if not self.object_motion_analyzer.is_terminal_frame(frame):
-                tag = self.object_motion_analyzer.get_tag(frame)
-                self.assertTrue(self.object_motion_analyzer.get_circumcircles(frame)[tag].get_intersects_error_circle())
+    def dont_test_all_ranked_objects_always_moved_same_direction_as_tag(self):
+        ranked = self.object_stats_processor.get_ranked_objects()
+        print(len(ranked))
+        for obj in ranked:
+            self.assertTrue(self.object_stats_processor.get_didnt_move_opposite_to_tag(obj))
     
+    def test_foo(self):
+        pass
+
     def visualize(self):
         self.boundary_renderer = BoundaryRenderer(self.boundary)
         self.camera_renderer = CameraRenderer(self.camera)
