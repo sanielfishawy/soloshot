@@ -12,7 +12,7 @@ from object_stats_processor import ObjectsStatsProcessor
 from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
 from tk_canvas_renderers.animator import Animator
 
-class TestBaseCalibrator(unittest.TestCase):
+class TestObjectStatsProcessor(unittest.TestCase):
 
     def setUp(self):
         self.num_timestamps = 50
