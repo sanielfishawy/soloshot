@@ -72,7 +72,8 @@ class ObjectMotionAnalyzer:
             error_circle_center = self.camera.get_gps_position()
             error_circle_radius = self.camera.get_gps_max_error()
             self.get_circumcircles(frame)[obj] = Circumcircles(p1, p2, theta_rad, error_circle_center, error_circle_radius)
-            return self
+
+        return self
 
     def get_in_view_objects(self, frame):
         return self._get_frame_in_view_object_angles(frame).keys() if not self.is_terminal_frame(frame) else []

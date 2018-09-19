@@ -130,6 +130,12 @@ class TagPositionAnalyzer:
     def get_angle_between_positions(self, frame):
         return frame['angle_between_positions']
     
+    def get_last_complete_frame(self):
+        f = self._frames[-1]
+        if self.is_terminal_frame(f) and len(self._frames) >= 2:
+            f = self._frames[-2]
+        return f
+
     def is_terminal_frame(self, frame):
         return self.get_frame_end_timestamp(frame) == None
         

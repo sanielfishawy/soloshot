@@ -4,7 +4,7 @@ sys.path.insert(0, '/Users/sani/dev/soloshot')
 from object_universe import ObjectUniverse
 from camera import Camera
 from image_analyzer import ImageAnalyzer
-from object_motion_analyzer import ObjectMotionAnalyzer
+from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 
@@ -14,8 +14,8 @@ from tk_canvas_renderers.animator import Animator
 class TestBaseCalibrator(unittest.TestCase):
 
     def setUp(self):
-        self.num_timestamps = 100
-        self.tag_gps_angle_threshold = math.radians(15)
+        self.num_timestamps = 60
+        self.tag_gps_angle_threshold = math.radians(10)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -28,8 +28,11 @@ class TestBaseCalibrator(unittest.TestCase):
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
         
         self.tag = RandomlyMovingTag(boundary=self.boundary)
-        self.r_obj = RandomlyMovingObject(boundary=self.boundary)
-        self.viewable_objects = [self.tag, self.r_obj]
+        self.viewable_objects = [self.tag]
+
+        self.num_randomly_moving_objects = 10
+        for _ in range(self.num_randomly_moving_objects):
+            self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
 
         self.object_universe.add_camera(self.camera).\
                              add_viewable_objects(self.viewable_objects)
@@ -48,6 +51,15 @@ class TestBaseCalibrator(unittest.TestCase):
         self.frames = self.object_motion_analyzer.get_frames()
 
         return self
+
+    def test_circumcircles_added_for_each_viewable_object_in_each_frame(self):
+        for frame in self.frames:
+            if not self.object_motion_analyzer.is_terminal_frame(frame):
+                objs = self.object_motion_analyzer.get_in_view_objects(frame)
+                self.assertEqual(len(objs), self.num_randomly_moving_objects + 1)
+                for obj in self.object_motion_analyzer.get_in_view_objects(frame):
+                    self.assertIsInstance(self.object_motion_analyzer.get_circumcircles_for_object_in_frame(frame, obj), Circumcircles)
+
 
     def test_angle_between_positions_is_greater_than_threshold(self):
         for frame in self.frames:

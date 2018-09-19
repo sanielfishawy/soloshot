@@ -1,7 +1,9 @@
+- Image renderer 
+    - Take input from ObjectStatsProcessor
+    - Make tag change color or something when it is eliminated
+
 - BaseCalibrator
     - ObjectStatsProcessor
-        - Do one pass eliminating all objects that moved in oposite direction to the tag.
-        - Do another pass to test intersection for only the remaining objects
     
     - BasePositionCalculator
         - Gets error circles for most likely tag candidate
