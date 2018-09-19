@@ -7,7 +7,7 @@ from image_analyzer import ImageAnalyzer
 from object_motion_analyzer import ObjectMotionAnalyzer
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
-from base_calibrator import ObjectsStatsProcessor
+from object_stats_processor import ObjectsStatsProcessor
 
 from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
 from tk_canvas_renderers.animator import Animator

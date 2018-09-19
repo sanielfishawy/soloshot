@@ -1,12 +1,6 @@
 from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
 from tag_position_analyzer import TagPositionAnalyzer
 
-class BaseCalibrator:
-
-    def __init__(self):
-        pass
-
-
 class ObjectsStatsProcessor:
     moved_opposite_to_tag_n = 'moved_opposite_to_tag_n'
     moved_opposite_to_tag_t = 'moved_opposite_to_tag_t'
