@@ -42,8 +42,6 @@ class TestBaseCalibrator(unittest.TestCase):
         
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.image_analyzer = ImageAnalyzer(self.camera)
-        
         self.object_motion_analyzer = ObjectMotionAnalyzer(self.camera, 
                                                            self.tag, 
                                                            tag_gps_angle_threshold=self.tag_gps_angle_threshold)

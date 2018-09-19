@@ -12,6 +12,7 @@ class ObjectMotionAnalyzer:
         self.tag_position_analyzer = TagPositionAnalyzer(tag, camera)
         self.tag_gps_angle_threshold = tag_gps_angle_threshold
         self.frames = None
+        self.image_analyzer = None
     
     def get_tag_gps_angle_threshold(self):
         return self.tag_gps_angle_threshold
@@ -25,6 +26,7 @@ class ObjectMotionAnalyzer:
 
     def re_analyze(self):
         self.frames = None
+        self.image_analyzer = None
         return self
 
     def get_frames(self):
@@ -49,8 +51,9 @@ class ObjectMotionAnalyzer:
         return frame['in_view_objects_angles'] if not self.is_terminal_frame(frame) else None
 
     def _get_image_analyzer(self):
-        self.image_analyzer = ImageAnalyzer(self.camera)
-        self.image_analyzer.set_images(self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time())
+        if self.image_analyzer == None:
+            self.image_analyzer = ImageAnalyzer(self.camera)
+            self.image_analyzer.set_images(self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time())
         return self.image_analyzer
     
     def _analyze_frame(self, frame):
