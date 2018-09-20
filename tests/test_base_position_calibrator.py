@@ -1,7 +1,7 @@
 import sys, math, unittest
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 
-from base_calibrator import BasePositionCalibrator
+from base_position_calibrator import BasePositionCalibrator
 from object_universe import ObjectUniverse
 from camera import Camera
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag

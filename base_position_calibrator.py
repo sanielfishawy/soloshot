@@ -5,7 +5,7 @@ from object_motion_analyzer import ObjectMotionAnalyzer
 from viewable_object import ViewableObject
 from shapely.geometry import Point, LineString, MultiPoint
 
-class BaseCalibrator:
+class BasePositionCalibrator:
 
     def __init__(self, camera, tag, tag_gps_angle_threshold=math.radians(3)):
         '''
