@@ -3,13 +3,12 @@ sys.path.insert(0, '/Users/sani/dev/soloshot')
 
 from object_universe import ObjectUniverse
 from camera import Camera
-from image_analyzer import ImageAnalyzer
 from object_motion_analyzer import ObjectMotionAnalyzer
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 from object_stats_processor import ObjectsStatsProcessor
 
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
+from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcircleRenderer
 from tk_canvas_renderers.animator import Animator
 
 class TestObjectStatsProcessor(unittest.TestCase):
@@ -125,7 +124,7 @@ class TestObjectStatsProcessor(unittest.TestCase):
         self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
         self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = CircumcirleRenderer(self.object_motion_analyzer)
+        self.circumcircle_renderer = CircumcircleRenderer(self.object_motion_analyzer)
 
         self.renderers = [
                             self.camera_renderer,

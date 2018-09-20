@@ -8,7 +8,7 @@ from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcirleRenderer
+from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcircleRenderer
 from tk_canvas_renderers.animator import Animator
 
 class TestBaseCalibrator(unittest.TestCase):
@@ -50,6 +50,12 @@ class TestBaseCalibrator(unittest.TestCase):
 
         return self
 
+    def test_get_all_cirumcircles_for_object_for_all_frames_returns_list_of_cc_objects(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        self.assertGreater(len(ccs), 0)
+        for cc in ccs:
+            self.assertEqual(type(cc), Circumcircles)
+
     def test_circumcircles_added_for_each_viewable_object_in_each_frame(self):
         for frame in self.frames:
             if not self.object_motion_analyzer.is_terminal_frame(frame):
@@ -86,7 +92,7 @@ class TestBaseCalibrator(unittest.TestCase):
         self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
         self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = CircumcirleRenderer(self.object_motion_analyzer)
+        self.circumcircle_renderer = CircumcircleRenderer(self.object_motion_analyzer)
 
         self.renderers = [
                             self.camera_renderer,

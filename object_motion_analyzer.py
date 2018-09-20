@@ -35,6 +35,9 @@ class ObjectMotionAnalyzer:
         
         return self.frames
 
+    def get_complete_frames(self):
+        return list(filter(self.is_not_terminal_frame, self.get_frames()))
+
     def _analyze_frames(self):
         self.frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold(self.tag_gps_angle_threshold)
         for frame in self.frames:
@@ -93,6 +96,12 @@ class ObjectMotionAnalyzer:
     def get_circumcircles_for_object_in_frame(self, frame, obj):
         return self.get_circumcircles(frame)[obj] if obj in self.get_circumcircles(frame) else None 
         
+    def get_circumcircles_for_object_for_all_frames(self, obj):
+        return [self.get_circumcircles_for_object_in_frame(frame, obj) for frame in self.get_complete_frames()]
+
+    def is_not_terminal_frame(self, frame):
+        return self.tag_position_analyzer.is_not_terminal_frame(frame)
+
     def is_terminal_frame(self, frame):
         return self.tag_position_analyzer.is_terminal_frame(frame)
 

@@ -12,11 +12,15 @@ class ObjectsStatsProcessor:
     def __init__(self, object_motion_analyzer):
         """
         :type object_motion_analyzer: ObjectMotionAnalyzer
-        :type tag_position_analyzer: TagPositionAnalyzer
         """
         self._object_motion_analyzer = object_motion_analyzer
-        self._tag_position_analyzer = self._object_motion_analyzer.get_tag_position_analyzer()
         self._processed_objects = {}
+
+    def get_tag_position_analyzer(self):
+        """
+        :rtype TagPositionAnalyzer
+        """
+        return self._object_motion_analyzer.get_tag_position_analyzer()
 
     def get_processed_objects(self):
         if self._processed_objects == {}:
@@ -57,8 +61,8 @@ class ObjectsStatsProcessor:
             self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n] = self.get_moved_opposite_to_tag_n(obj) + 1
             self._get_hash_for_obj(obj)[self.eliminated] = True
             if self.get_moved_opposite_to_tag_t(obj) == None:
-                self._get_hash_for_obj(obj)[self.elimination_t] = self._tag_position_analyzer.get_early_min_max_timestamp(frame)
-                self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = self._tag_position_analyzer.get_early_min_max_timestamp(frame)
+                self._get_hash_for_obj(obj)[self.elimination_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
+                self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
     
     def _set_didnt_intersect_error_circle(self, frame, obj):
         """
@@ -73,13 +77,13 @@ class ObjectsStatsProcessor:
             self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_n] = self.get_didnt_intersect_error_circle_n(obj) + 1
 
             if self.get_didnt_intersect_error_circle_t(obj) == None:
-                self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t] = self._tag_position_analyzer.get_early_min_max_timestamp(frame)
+                self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
 
     def _set_eliminated_for_all_moved_same_as_tag_which_are_not_top_ranked_object(self):
         for obj in self.get_ranked_objects():
             if obj not in self.get_top_ranked_objects():
                 self._get_hash_for_obj(obj)[self.eliminated] = True
-                self._get_hash_for_obj(obj)[self.elimination_t] = self._tag_position_analyzer.get_early_min_max_timestamp(self._tag_position_analyzer.get_last_complete_frame())
+                self._get_hash_for_obj(obj)[self.elimination_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(self.get_tag_position_analyzer().get_last_complete_frame())
 
     def _get_hash_for_obj(self, obj):
         if obj not in self._processed_objects:

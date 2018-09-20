@@ -219,7 +219,7 @@ class CameraRenderer(ElementRenderer):
         return self
 
 
-class CircumcirleRenderer(ElementRenderer):
+class CircumcircleRenderer(ElementRenderer):
 
     def __init__(self, circumcirlcle_analyzer, **kargs):
         self.circumcircle_analyzer = circumcirlcle_analyzer

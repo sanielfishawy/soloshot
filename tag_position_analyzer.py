@@ -136,6 +136,9 @@ class TagPositionAnalyzer:
             f = self._frames[-2]
         return f
 
+    def is_not_terminal_frame(self, frame):
+        return not self.is_terminal_frame(frame)
+        
     def is_terminal_frame(self, frame):
         return self.get_frame_end_timestamp(frame) == None
         

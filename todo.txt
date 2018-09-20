@@ -1,15 +1,9 @@
-- Move base_calibrator.py to object_stats_processor.py
-- Move test_base_calibrator.py to test_object_stats_processor.py
-- Get tests to work again
-- Create base_calibrator.py file
 
 - Image renderer 
     - Take input from ObjectStatsProcessor
     - Make tag change color or something when it is eliminated
 
 - BaseCalibrator
-    - ObjectStatsProcessor
-    
     - BasePositionCalculator
         - Gets error circles for most likely tag candidate
         - Provides base position
