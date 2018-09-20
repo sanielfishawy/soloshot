@@ -1,5 +1,6 @@
 import unittest, math, sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
+
 from image_generator import ImageGenerator
 from camera import Camera
 from computer_vision import ComputerVision

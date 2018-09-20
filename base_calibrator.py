@@ -66,7 +66,9 @@ class BaseCalibrator:
         for a in self._get_all_error_circle_intersections():
             for b in self._get_all_error_circle_intersections():
                 if a != b:
-                    points.append(a.intersection(b))
+                    isect = a.intersection(b)
+                    if type(isect) == Point: # Ignore similar circumcircles which intersect in mulitple points and would smear the results.
+                        points.append(a.intersection(b))
         return MultiPoint(points=points)
         
     def _get_all_error_circle_intersections(self):

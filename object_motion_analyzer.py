@@ -177,7 +177,7 @@ class Circumcircles:
     def get_c2_low_def(self):
         if self.c2_low_def == None:
             self.c2_low_def = Point(self.get_circumcenters()[1]).buffer(self.get_circumradius(), self.low_def_res).exterior #pylint: disable=no-member
-        return self.c1_low_def
+        return self.c2_low_def
 
     def get_c1_high_def(self):
         if self.c1_high_def == None:
@@ -187,7 +187,7 @@ class Circumcircles:
     def get_c2_high_def(self):
         if self.c2_high_def == None:
             self.c2_high_def = Point(self.get_circumcenters()[1]).buffer(self.get_circumradius(), self.high_def_res).exterior #pylint: disable=no-member
-        return self.c1_high_def
+        return self.c2_high_def
 
     def get_c1_intersects_error_circle(self):
         if self.c1_intersects_error_circle == None:

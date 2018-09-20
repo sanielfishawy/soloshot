@@ -48,10 +48,6 @@ class ObjectsStatsProcessor:
                 if not self.get_eliminated(obj): # only do expenensive intersection analysis for objects that never moved opposite
                     self._set_didnt_intersect_error_circle(frame, obj)
 
-    def _process_object(self, frame, obj):
-        self._set_moved_opposite_to_tag(frame, obj)
-        self._set_didnt_intersect_error_circle(frame, obj)
-    
     def _set_moved_opposite_to_tag(self, frame, obj):
         self.get_moved_opposite_to_tag_n(obj) #init
         self.get_moved_opposite_to_tag_t(obj) #init
@@ -80,8 +76,15 @@ class ObjectsStatsProcessor:
                 self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
 
     def _set_eliminated_for_all_moved_same_as_tag_which_are_not_top_ranked_object(self):
-        for obj in self.get_ranked_objects():
-            if obj not in self.get_top_ranked_objects():
+        # Note I cant use the ranked etc functions for this here becuase we are still processing objects
+        not_eliminated = list(filter(self.get_not_eliminated, self._processed_objects))
+        if len(not_eliminated) == 0:
+            return
+
+        not_eliminated.sort(key=self.get_didnt_intersect_error_circle_n)
+        top_ranked_n = self.get_didnt_intersect_error_circle_n(not_eliminated[0])
+        for obj in not_eliminated:
+            if self.get_didnt_intersect_error_circle_n(obj) != top_ranked_n:
                 self._get_hash_for_obj(obj)[self.eliminated] = True
                 self._get_hash_for_obj(obj)[self.elimination_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(self.get_tag_position_analyzer().get_last_complete_frame())
 
@@ -128,6 +131,9 @@ class ObjectsStatsProcessor:
         if self.eliminated not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.eliminated] = False
         return self._get_hash_for_obj(obj)[self.eliminated]
+    
+    def get_not_eliminated(self, obj):
+        return not self.get_eliminated(obj)
     
     def get_all_eliminated(self):
         return list(filter(self.get_eliminated, [obj for obj in self.get_processed_objects()]))

@@ -3,10 +3,6 @@
     - Take input from ObjectStatsProcessor
     - Make tag change color or something when it is eliminated
 
-- BaseCalibrator
-    - BasePositionCalculator
-        - Gets error circles for most likely tag candidate
-        - Provides base position
 
     - BaseAngleCalculatorCalculator
         - With camera gps position set to base position rerun the frames

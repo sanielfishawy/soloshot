@@ -1,7 +1,7 @@
 import sys, math, unittest
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 
-from base_calibrator import BaseCalibrator
+from base_calibrator import BasePositionCalibrator
 from object_universe import ObjectUniverse
 from camera import Camera
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
@@ -12,11 +12,14 @@ from tk_canvas_renderers.animator import Animator
 
 from object_motion_analyzer import Circumcircles
 from shapely.geometry import LineString, Point, MultiPoint
+
 class TestBaseCalibrator(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self, num_randomly_moving_objects=1):
+        self.num_randomly_moving_objects = num_randomly_moving_objects
+
         self.num_timestamps = 50
-        self.tag_gps_angle_threshold = math.radians(10)
+        self.tag_gps_angle_threshold = math.radians(6)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -30,7 +33,7 @@ class TestBaseCalibrator(unittest.TestCase):
         
         self.tag = RandomlyMovingTag(boundary=self.boundary)
         self.r_objs = []
-        for _ in range(1):
+        for _ in range(self.num_randomly_moving_objects):
             self.r_objs.append(RandomlyMovingObject(boundary=self.boundary))
         
         self.viewable_objects = [self.tag] + self.r_objs
@@ -43,13 +46,16 @@ class TestBaseCalibrator(unittest.TestCase):
         
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.base_calibrator = BaseCalibrator(self.camera, 
+        self.base_calibrator = BasePositionCalibrator(self.camera, 
                                               self.tag, 
                                               tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
 
         return self
     
+    def test_tag_candidate_is_always_the_tag(self):
+        self.assertEqual(self.tag, self.base_calibrator._get_tag_candidate())
+
     def test_get_base_position_returns_close_to_actual_base_position(self):
         cbp = self.base_calibrator.get_base_position()
         abp = self.camera.get_actual_position()
@@ -58,7 +64,7 @@ class TestBaseCalibrator(unittest.TestCase):
         self.assertEqual(type(abp), tuple)
 
         for i,_ in enumerate(cbp):
-            self.assertAlmostEqual(cbp[i], abp[i], places=5)
+            self.assertAlmostEqual(cbp[i], abp[i], places=4)
 
     def test_get_intersection_points_returns_a_multipoint(self):
         points = self.base_calibrator._get_points_where_error_circle_intersections_intersect_each_other()

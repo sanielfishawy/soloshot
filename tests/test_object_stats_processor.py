@@ -15,7 +15,7 @@ class TestObjectStatsProcessor(unittest.TestCase):
 
     def setUp(self):
         self.num_timestamps = 50
-        self.tag_gps_angle_threshold = math.radians(10)
+        self.tag_gps_angle_threshold = math.radians(6)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 

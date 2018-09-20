@@ -1,6 +1,8 @@
 import sys, math, unittest
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 
+from shapely.geometry import LineString, LinearRing
+
 from object_universe import ObjectUniverse
 from camera import Camera
 from image_analyzer import ImageAnalyzer
@@ -11,9 +13,11 @@ from boundary import Boundary
 from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcircleRenderer
 from tk_canvas_renderers.animator import Animator
 
-class TestBaseCalibrator(unittest.TestCase):
+class TestObjectMotionAnalyzer(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self, num_randomly_moving_objects=10):
+        self.num_randomly_moving_objects = num_randomly_moving_objects
+
         self.num_timestamps = 60
         self.tag_gps_angle_threshold = math.radians(10)
 
@@ -30,7 +34,6 @@ class TestBaseCalibrator(unittest.TestCase):
         self.tag = RandomlyMovingTag(boundary=self.boundary)
         self.viewable_objects = [self.tag]
 
-        self.num_randomly_moving_objects = 10
         for _ in range(self.num_randomly_moving_objects):
             self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
 
@@ -46,9 +49,35 @@ class TestBaseCalibrator(unittest.TestCase):
                                                            self.tag, 
                                                            tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
-        self.frames = self.object_motion_analyzer.get_frames()
+        self.frames = self.object_motion_analyzer.get_complete_frames()
 
         return self
+
+    def test_get_c1_high_def_returns_a_linear_ring(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        for cc in ccs:
+            self.assertEqual(type(cc.get_c1_high_def()), LinearRing)
+            
+    def test_get_c1_low_def_returns_a_linear_ring(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        for cc in ccs:
+            self.assertEqual(type(cc.get_c1_low_def()), LinearRing)
+            
+    def test_get_c2_high_def_returns_a_linear_ring(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        for cc in ccs:
+            self.assertEqual(type(cc.get_c2_high_def()), LinearRing)
+            
+    def test_get_c2_low_def_returns_a_linear_ring(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        for cc in ccs:
+            self.assertEqual(type(cc.get_c2_low_def()), LinearRing)
+            
+    def test_intersection_with_error_circle_for_tag_always_returns_linestring(self):
+        ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
+        for cc in ccs:
+            isect = cc.get_error_circle_intersection()
+            self.assertEqual(type(isect), LineString)
 
     def test_get_all_cirumcircles_for_object_for_all_frames_returns_list_of_cc_objects(self):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
@@ -84,7 +113,8 @@ class TestBaseCalibrator(unittest.TestCase):
         for frame in self.frames:
             if not self.object_motion_analyzer.is_terminal_frame(frame):
                 tag = self.object_motion_analyzer.get_tag(frame)
-                self.assertTrue(self.object_motion_analyzer.get_circumcircles(frame)[tag].get_intersects_error_circle())
+                isects = self.object_motion_analyzer.get_circumcircles(frame)[tag].get_intersects_error_circle()
+                self.assertTrue(isects)
     
     def visualize(self):
         self.boundary_renderer = BoundaryRenderer(self.boundary)
