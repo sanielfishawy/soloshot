@@ -19,7 +19,7 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
         self.num_randomly_moving_objects = num_randomly_moving_objects
 
         self.num_timestamps = 60
-        self.tag_gps_angle_threshold = math.radians(10)
+        self.tag_gps_angle_threshold = math.radians(7)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -80,6 +80,7 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
             self.assertEqual(type(isect), LineString)
 
     def test_get_all_cirumcircles_for_object_for_all_frames_returns_list_of_cc_objects(self):
+        # The setup ensures that the randomly moving tag is in every frame.
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         self.assertGreater(len(ccs), 0)
         for cc in ccs:

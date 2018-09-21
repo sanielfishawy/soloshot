@@ -25,7 +25,6 @@ class Camera:
         self.gps_position = gps_position
         self.gps_max_error = gps_max_error
         self.compass_error_deg = compass_error_deg
-        self.compass_error_rad = math.radians(self.compass_error_deg)
         self.fov_deg = fov_deg
         self.range = range
         self.object_universe = object_universe
@@ -88,6 +87,13 @@ class Camera:
     
     def get_fov_rad(self):
         return math.radians(self.fov_deg)
+    
+    def set_compass_error_rad(self, angle_rad):
+        self.compass_error_deg = math.degrees(angle_rad)
+        return self
+    
+    def get_compass_error_rad(self):
+        return math.radians(self.compass_error_deg)
 
     def set_object_universe(self, object_universe):
         self.object_universe = object_universe

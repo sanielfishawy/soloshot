@@ -1,9 +1,11 @@
 import math
+from shapely.geometry import Point, LineString, MultiPoint
+
 from camera import Camera
 from object_stats_processor import ObjectsStatsProcessor
 from object_motion_analyzer import ObjectMotionAnalyzer
+from tag_position_analyzer import TagPositionAnalyzer
 from viewable_object import ViewableObject
-from shapely.geometry import Point, LineString, MultiPoint
 
 class BasePositionCalibrator:
 
@@ -52,7 +54,7 @@ class BasePositionCalibrator:
         p = self.get_base_position_point()
         return (p.x, p.y)
 
-    def _get_tag_candidate(self):
+    def get_tag_candidate(self):
         if len(self.get_object_stats_processor().get_top_ranked_objects()) > 1:
             raise 'code not written to handle more than one top_ranked_object'
 
@@ -77,5 +79,8 @@ class BasePositionCalibrator:
         return self._error_circle_intersections
     
     def _get_all_circumcircle_objects(self):
-        return self.get_object_motion_analyzer().get_circumcircles_for_object_for_all_frames(self._get_tag_candidate())
+        ccs = self.get_object_motion_analyzer().get_circumcircles_for_object_for_all_frames(self.get_tag_candidate())
+        ccs_with_tag_candidate_in_frame = list(filter(lambda cc: cc != None, ccs))
+        return ccs_with_tag_candidate_in_frame
         
+

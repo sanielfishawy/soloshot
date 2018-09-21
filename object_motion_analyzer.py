@@ -37,6 +37,21 @@ class ObjectMotionAnalyzer:
 
     def get_complete_frames(self):
         return list(filter(self.is_not_terminal_frame, self.get_frames()))
+    
+    def get_first_complete_frame(self):
+        f = self.get_complete_frames()
+        if len(f) == 0:
+            return None
+        return f[0]
+    
+    def get_first_frame_with_object(self, obj):
+        for f in self.get_complete_frames():
+            if self.get_frame_includes_object(f, obj):
+                return f
+        return None
+    
+    def get_frame_includes_object(self, frame, obj):
+        return obj in self.get_in_view_objects(frame)
 
     def _analyze_frames(self):
         self.frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold(self.tag_gps_angle_threshold)
@@ -116,8 +131,17 @@ class ObjectMotionAnalyzer:
         ts1 = self.tag_position_analyzer.get_early_min_max_timestamp(frame)
         ts2 = self.tag_position_analyzer.get_late_min_max_timestamp(frame)
         frame['in_view_objects_angles'] = self._get_image_analyzer().get_subtended_angles_for_all_objects(ts1, ts2)
+        frame['in_view_objects_angle_relative_to_center_early'] = self._get_image_analyzer().get_angles_relative_to_center_for_all_objects(ts1)
+        frame['in_view_objects_angle_relative_to_center_late']  = self._get_image_analyzer().get_angles_relative_to_center_for_all_objects(ts2)
         return self
     
+    def get_early_angle_relative_to_center(self, frame):
+        if 'in_view_objects_angle_relative_to_center_early' not in frame:
+            frame['in_view_objects_angle_relative_to_center_early'] = {}
+        return frame['in_view_objects_angle_relative_to_center_early']
+        
+    def get_early_angle_relative_to_center_for_object_in_frame(self, obj, frame):
+        return self.get_early_angle_relative_to_center(frame)[obj] if obj in self.get_early_angle_relative_to_center(frame) else None
 
 class Circumcircles:
 

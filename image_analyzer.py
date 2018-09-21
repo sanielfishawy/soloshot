@@ -17,7 +17,7 @@ from image_generator import ImageGenerator
 #
 # 
 # Moving from left to right gives postive subtended angles
-# Moving from right to left gives negatie subtended angles
+# Moving from right to left gives negative subtended angles
 # x from image generator may be positive (right of center screen) e.g. x2 or negative (left of center screen) e.g. x1
 #
 class ImageAnalyzer:
@@ -59,6 +59,23 @@ class ImageAnalyzer:
         a2 = math.atan2(x2, self.get_d())
         return a2 - a1
     
+    def _get_angle_relative_to_center_with_x_rad(self, x):
+        return math.atan2(x, self.get_d())
+        
+    def _get_angle_relative_to_center_with_obj_timestamp_rad(self, obj, timestamp):
+        x = self.images[timestamp][obj]
+        
+        if x == None:
+            return None
+        else:
+            return self._get_angle_relative_to_center_with_x_rad(x)
+
+    def get_angles_relative_to_center_for_all_objects(self, timestamp):
+        r = {}
+        for obj in self.images[timestamp]:
+            r[obj] = self._get_angle_relative_to_center_with_obj_timestamp_rad(obj, timestamp)
+        return r
+
     def _calc_d(self):
         return self.camera.get_image_generator().get_image_width() / 2 / math.tan(self.camera.get_fov_rad() / 2)
     

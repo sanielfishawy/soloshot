@@ -13,7 +13,7 @@ from tk_canvas_renderers.animator import Animator
 from object_motion_analyzer import Circumcircles
 from shapely.geometry import LineString, Point, MultiPoint
 
-class TestBaseCalibrator(unittest.TestCase):
+class TestBasePositionCalibrator(unittest.TestCase):
 
     def setUp(self, num_randomly_moving_objects=1):
         self.num_randomly_moving_objects = num_randomly_moving_objects
@@ -46,18 +46,27 @@ class TestBaseCalibrator(unittest.TestCase):
         
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.base_calibrator = BasePositionCalibrator(self.camera, 
+        self.base_position_calibrator = BasePositionCalibrator(self.camera, 
                                               self.tag, 
                                               tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
 
         return self
     
+    def test_get_all_circumcircle_objects_gets_only_cc_objects(self):
+        # Wrote this test while tracking down a bug which seems to be in ObjectPositionAnalyzer but which I discovered
+        # when testing BaseAngleCalibrator. But I cant reproduce it here or in TestObjectMotionAnalyzer
+        ccs = self.base_position_calibrator._get_all_circumcircle_objects()
+        self.assertGreater(len(ccs), 0)
+        for cc in ccs:
+            self.assertEqual(type(cc), Circumcircles)
+
+
     def test_tag_candidate_is_always_the_tag(self):
-        self.assertEqual(self.tag, self.base_calibrator._get_tag_candidate())
+        self.assertEqual(self.tag, self.base_position_calibrator.get_tag_candidate())
 
     def test_get_base_position_returns_close_to_actual_base_position(self):
-        cbp = self.base_calibrator.get_base_position()
+        cbp = self.base_position_calibrator.get_base_position()
         abp = self.camera.get_actual_position()
 
         self.assertEqual(type(cbp), tuple)
@@ -67,24 +76,24 @@ class TestBaseCalibrator(unittest.TestCase):
             self.assertAlmostEqual(cbp[i], abp[i], places=4)
 
     def test_get_intersection_points_returns_a_multipoint(self):
-        points = self.base_calibrator._get_points_where_error_circle_intersections_intersect_each_other()
+        points = self.base_position_calibrator._get_points_where_error_circle_intersections_intersect_each_other()
         self.assertGreater(len(points), 0)
         self.assertEqual(type(points), MultiPoint)
 
     def test_all_error_circle_intersections_interesect_each_other(self):
-        intersections = self.base_calibrator._get_all_error_circle_intersections()
+        intersections = self.base_position_calibrator._get_all_error_circle_intersections()
         for a in intersections:
             for b in intersections:
                 self.assertTrue(a.intersects(b))
 
     def test_get_all_error_circle_intersections_gets_a_list_of_linestrings(self):
-        intersections = self.base_calibrator._get_all_error_circle_intersections()
+        intersections = self.base_position_calibrator._get_all_error_circle_intersections()
         self.assertGreater(len(intersections), 0)
         for isect in intersections:
             self.assertEqual(type(isect), LineString)
     
     def test_get_all_circumcircle_objects_returns_circumcircle_objects_for_the_tag(self):
-        ccs = self.base_calibrator._get_all_circumcircle_objects()
+        ccs = self.base_position_calibrator._get_all_circumcircle_objects()
         self.assertGreater(len(ccs), 0)
         for cc in ccs:
             self.assertEqual(type(cc), Circumcircles)
@@ -95,7 +104,7 @@ class TestBaseCalibrator(unittest.TestCase):
         self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
         self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = CircumcircleRenderer(self.base_calibrator.get_object_motion_analyzer())
+        self.circumcircle_renderer = CircumcircleRenderer(self.base_position_calibrator.get_object_motion_analyzer())
 
         self.renderers = [
                             self.camera_renderer,
