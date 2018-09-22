@@ -65,15 +65,15 @@ class BasePositionCalibrator:
         :rtype MultiPoint
         '''
         points = []
-        for a in self._get_all_error_circle_intersections():
-            for b in self._get_all_error_circle_intersections():
+        for a in self.get_all_error_circle_intersections():
+            for b in self.get_all_error_circle_intersections():
                 if a != b:
                     isect = a.intersection(b)
                     if type(isect) == Point: # Ignore similar circumcircles which intersect in mulitple points and would smear the results.
                         points.append(a.intersection(b))
         return MultiPoint(points=points)
         
-    def _get_all_error_circle_intersections(self):
+    def get_all_error_circle_intersections(self):
         if self._error_circle_intersections == None:
             self._error_circle_intersections = [cc.get_error_circle_intersection() for cc in self._get_all_circumcircle_objects()]
         return self._error_circle_intersections

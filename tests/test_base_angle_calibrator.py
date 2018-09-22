@@ -8,7 +8,7 @@ from camera import Camera
 from viewable_object import RandomlyMovingTag
 from boundary import Boundary
 
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcircleRenderer 
+from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer 
 from tk_canvas_renderers.animator import Animator
 
 from object_motion_analyzer import Circumcircles
@@ -72,7 +72,7 @@ class TestBaseAngleCalibrator(unittest.TestCase):
         self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
         self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = CircumcircleRenderer(self.base_position_calibrator.get_object_motion_analyzer())
+        self.circumcircle_renderer = BasePositionCalibratorRenderer(self.base_position_calibrator.get_object_motion_analyzer())
 
         self.renderers = [
                             self.camera_renderer,

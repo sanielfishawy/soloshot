@@ -1,25 +1,23 @@
 import sys, math, unittest
 sys.path.insert(0, '/Users/sani/dev/soloshot')
+from shapely.geometry import LineString, Point, MultiPoint
 
 from base_position_calibrator import BasePositionCalibrator
 from object_universe import ObjectUniverse
 from camera import Camera
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
-
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, CircumcircleRenderer 
-from tk_canvas_renderers.animator import Animator
-
 from object_motion_analyzer import Circumcircles
-from shapely.geometry import LineString, Point, MultiPoint
+
+from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
 
 class TestBasePositionCalibrator(unittest.TestCase):
 
-    def setUp(self, num_randomly_moving_objects=1):
+    def setUp(self, num_randomly_moving_objects=1, tag_gps_angle_threshold=6):
         self.num_randomly_moving_objects = num_randomly_moving_objects
 
         self.num_timestamps = 50
-        self.tag_gps_angle_threshold = math.radians(6)
+        self.tag_gps_angle_threshold = math.radians(tag_gps_angle_threshold)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -81,13 +79,13 @@ class TestBasePositionCalibrator(unittest.TestCase):
         self.assertEqual(type(points), MultiPoint)
 
     def test_all_error_circle_intersections_interesect_each_other(self):
-        intersections = self.base_position_calibrator._get_all_error_circle_intersections()
+        intersections = self.base_position_calibrator.get_all_error_circle_intersections()
         for a in intersections:
             for b in intersections:
                 self.assertTrue(a.intersects(b))
 
     def test_get_all_error_circle_intersections_gets_a_list_of_linestrings(self):
-        intersections = self.base_position_calibrator._get_all_error_circle_intersections()
+        intersections = self.base_position_calibrator.get_all_error_circle_intersections()
         self.assertGreater(len(intersections), 0)
         for isect in intersections:
             self.assertEqual(type(isect), LineString)
@@ -99,28 +97,17 @@ class TestBasePositionCalibrator(unittest.TestCase):
             self.assertEqual(type(cc), Circumcircles)
         
     def visualize(self):
-        self.boundary_renderer = BoundaryRenderer(self.boundary)
-        self.camera_renderer = CameraRenderer(self.camera)
-        self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
-        self.image_renderer = ImageRenderer(self.camera.get_image_generator())
-        self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = CircumcircleRenderer(self.base_position_calibrator.get_object_motion_analyzer())
 
-        self.renderers = [
-                            self.camera_renderer,
-                            self.viewable_objects_renderer,
-                            self.boundary_renderer,
-                            self.image_renderer,
-                            self.circumcircle_renderer,
-        ]
+        renderable_objects = [
+                               self.boundary,
+                               self.object_universe,
+                               self.base_position_calibrator,
+                             ] 
 
-        self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)
-
-        TKRenderer().set_canvas_height(900).\
-                     set_canvas_width(1000).\
-                     set_scale(1).\
-                     set_mouse_click_callback(self.animator.play).\
-                     start_tk_event_loop()
+        RenderOrchestrator(self.num_timestamps, 
+                                                      seconds_per_timestamp=0.2,
+                                                      renderable_objects=renderable_objects).run()
+        
 
 if __name__ == '__main__':
     unittest.main()

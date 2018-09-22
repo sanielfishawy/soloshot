@@ -1,3 +1,5 @@
+from viewable_object import ViewableObjects
+
 class ObjectUniverse:
 
     def __init__(self, num_timestamps=1000):
@@ -10,6 +12,12 @@ class ObjectUniverse:
         self.camera = camera
         self.camera.set_object_universe(self).set_num_timestamps(self.get_num_timestamps())
         return self
+
+    def get_camera(self):
+        '''
+        :rtype Camera
+        '''
+        return self.camera
 
     def set_num_timestamps(self, n):
         self.num_timestamps = n
@@ -35,6 +43,9 @@ class ObjectUniverse:
 
     def get_viewable_objects(self):
         return self.viewable_objects
+    
+    def get_viewable_objects_as_viewable_objects_class(self):
+        return ViewableObjects(viewable_objects=self.get_viewable_objects())
 
     def clear_viewable_objects(self):
         self.viewable_objects = []

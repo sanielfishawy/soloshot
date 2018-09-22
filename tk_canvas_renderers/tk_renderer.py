@@ -86,13 +86,13 @@ class _TKRenderer:
     def create_polygon(self, crds, **kargs):
         return self.canvas.create_polygon(*self.scale_coords(crds), **kargs)
 
-    def create_dot(self, crds, **kargs):
+    def create_dot(self, crds, size=1, **kargs):
         s_crds = self.scale_tuple(crds)
-        return self.canvas.create_oval(s_crds[0]-1, s_crds[1]-1, s_crds[0]+1, s_crds[1]+1, **kargs)
+        return self.canvas.create_oval(s_crds[0]-size, s_crds[1]-size, s_crds[0]+size, s_crds[1]+size, **kargs)
 
-    def create_dot_label(self, crds, text, **kargs):
+    def create_dot_label(self, crds, text, anchor='se', **kargs):
         s_crds = self.scale_tuple(crds)
-        return self.canvas.create_text(s_crds[0]+6, s_crds[1]-1, text=text, anchor="se", font=self.label_font, **kargs)
+        return self.canvas.create_text(s_crds[0]+6, s_crds[1]-1, text=text, anchor=anchor, font=self.label_font, **kargs)
 
     def create_circle_with_center_and_radius(self, c, r, **kargs):
         s_c= self.scale_tuple(c)

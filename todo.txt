@@ -1,12 +1,16 @@
+- Try current render for BasePositionCalibrator
+- Move the objects in to RenderOrchestrator
+- 
+
+- RenderOrchestrator
+    - Add objects and they should render
+
+
 
 - Image renderer 
     - Take input from ObjectStatsProcessor
     - Make tag change color or something when it is eliminated
 
-
-    - BaseAngleCalculatorCalculator
-        - With camera gps position set to base position rerun the frames
-        - Use offset of tag object to calculate angle error.
 
 
 

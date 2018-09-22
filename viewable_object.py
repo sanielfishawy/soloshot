@@ -146,3 +146,18 @@ class RandomlyMovingTag(RandomlyMovingObject):
     def __init__(self, **kwds):
         super().__init__(**kwds)
         self.is_tag = True
+
+
+class ViewableObjects:
+    def __init__(self, viewable_objects=[]):
+        self._viewable_objects = viewable_objects
+
+    def set_viewable_objects(self, viewable_objects):
+        if type(viewable_objects) != list:
+            self._viewable_objects = [viewable_objects]
+        else:
+            self._viewable_objects = viewable_objects
+        return self
+    
+    def get_viewable_objects(self):
+        return self._viewable_objects

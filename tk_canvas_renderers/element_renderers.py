@@ -1,6 +1,10 @@
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 from tk_canvas_renderers.tk_renderer import TKRenderer
+from base_position_calibrator import BasePositionCalibrator
+from object_motion_analyzer import ObjectMotionAnalyzer
+from tag_position_analyzer import TagPositionAnalyzer
+from object_stats_processor import ObjectsStatsProcessor
 
 class ElementRenderer:
     def __init__(self, **kargs):
@@ -80,10 +84,11 @@ class ViewableObjectsRenderer(ElementRenderer):
 
         self.moving_rendered_elements.append(self.get_dot_label(obj.get_position_at_timestamp(timestamp), obj, timestamp))
 
-    def get_dot_label(self, coords, obj, timestamp):
+    def get_dot_label(self, coords, obj, timestamp, **kargs):
         return self.tk_renderer.create_dot_label(coords,
                                                  text=self.cv_id_for_object(obj, timestamp),
-                                                 fill=self.color(obj, timestamp))
+                                                 fill=self.color(obj, timestamp),
+                                                 **kargs)
     def get_dot(self, coords, obj, timestamp):
         return self.tk_renderer.create_dot(coords,
                                            outline=self.color(obj, timestamp),
@@ -116,8 +121,13 @@ class ViewableObjectsRenderer(ElementRenderer):
 
 class ImageRenderer(ViewableObjectsRenderer):
 
-    def __init__(self, image_generator, **kargs):
+    def __init__(self, image_generator, object_stats_processor=None, **kargs):
+        '''
+        :param ImageGenerator image_generator:
+        :param ObjectsStatsProcessor object_stats_processor:
+        '''
         self.image_generator = image_generator
+        self.object_stats_processor = object_stats_processor
         self.y_of_line = 50
         self.x_of_line = 50
         self.origin =  (self.x_of_line, self.y_of_line)
@@ -125,6 +135,10 @@ class ImageRenderer(ViewableObjectsRenderer):
         self.center_x_of_line = int(self.x_of_line + self.image_width / 2)
         self.x_for_all_inview_objects_for_all_camera_time = self.image_generator.get_x_for_all_inview_objects_for_all_camera_time()
         super().__init__(**kargs)
+
+    def set_object_stats_processor(self, object_stats_processor):
+        self.object_stats_processor = object_stats_processor
+        return self
 
     def get_image_width(self):
         return self.image_width
@@ -144,8 +158,20 @@ class ImageRenderer(ViewableObjectsRenderer):
     def render_inview_object(self, obj, timestamp):
         x = self.x_for_all_inview_objects_for_all_camera_time[timestamp][obj]
         coords = (self.get_rendered_x_for_x(x), self.y_of_line)
-        self.moving_rendered_elements.append(      self.get_dot(coords, obj, timestamp))
-        self.moving_rendered_elements.append(self.get_dot_label(coords, obj, timestamp))
+        self.moving_rendered_elements.append(self.get_dot(coords, obj, timestamp))
+        self.moving_rendered_elements.append(self.get_dot_label(coords, obj, timestamp, anchor=self.get_anchor(obj, timestamp)))
+
+    def get_anchor(self, obj, timestamp):
+        if self.get_eliminated(obj, timestamp):
+            return 'ne'
+        else:
+            return 'se'
+     
+    def get_eliminated(self, obj, timestamp):
+        if self.object_stats_processor == None:
+            return False
+        else:
+            return obj in self.object_stats_processor.get_all_eliminated_before_timestamp(timestamp)
 
     def get_rendered_x_for_x(self, x):
         return self.center_x_of_line - x  
@@ -219,26 +245,58 @@ class CameraRenderer(ElementRenderer):
         return self
 
 
-class CircumcircleRenderer(ElementRenderer):
+class BasePositionCalibratorRenderer(ElementRenderer):
 
-    def __init__(self, circumcirlcle_analyzer, **kargs):
-        self.circumcircle_analyzer = circumcirlcle_analyzer
-        self.frames = circumcirlcle_analyzer.get_frames()
+    def __init__(self, base_position_calibrator, **kargs):
+        '''
+        :param BasePositionCalibrator base_position_calibrator:
+        '''
+        self.base_position_calibrator = base_position_calibrator
+        self.cc_color = 'orange'
+        self.dot_color = 'blue'
+        self.early_late_points = None
         super().__init__(**kargs)
     
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
-        for frame in self.frames:
-            p1 = self.circumcircle_analyzer.get_tag_position_analyzer().get_early_position(frame)
-            p2 = self.circumcircle_analyzer.get_tag_position_analyzer().get_late_position(frame)
-            tag = self.circumcircle_analyzer.get_tag(frame)
-            if p1 != None and p2 != None and tag != None:
-                self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p1))
-                self.stationary_rendered_elements.append(self.tk_renderer.create_dot(p2))
+        for isect in self.base_position_calibrator.get_all_error_circle_intersections():
+            self.stationary_rendered_elements.append(self.tk_renderer.create_line(isect.coords,
+                                                                                  fill=self.cc_color,
+                                                                                  smooth=True,
+                                                                                  ))
 
-                cc = self.circumcircle_analyzer.get_circumcircles(frame)[tag]
-                c1_center = cc.get_circumcenters()[0]
-                c2_center = cc.get_circumcenters()[1]
-                cc_radius = cc.get_circumradius()
-                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius(c1_center, cc_radius))
-                self.stationary_rendered_elements.append(self.tk_renderer.create_circle_with_center_and_radius(c2_center, cc_radius))
+    def render_moving_elements(self, timestamp):
+        self.delete_moving_rendered_elements()
+        if timestamp in self._get_early_late_points():
+            self.stationary_rendered_elements.append(self.tk_renderer.create_dot(self.early_late_points[timestamp], 
+                                                                             fill=self.dot_color,
+                                                                             outline=self.dot_color,
+                                                                             size=3))
+
+    def _get_object_motion_analyzer(self):
+        '''
+        :rtype ObjectMotionAnalyzer
+        '''
+        return self.base_position_calibrator.get_object_motion_analyzer()
+
+    def _get_tag_position_analyzer(self):
+        '''
+        :rtype TagPositionAnalzyer
+        '''
+        return self._get_object_motion_analyzer().get_tag_position_analyzer()
+
+    def _get_frames(self):
+        return self._get_object_motion_analyzer().get_complete_frames()
+
+    def _get_early_late_points(self):
+        if self.early_late_points == None:
+            self.early_late_points = {}
+            for frame in self._get_frames():
+                etime = self._get_tag_position_analyzer().get_early_min_max_timestamp(frame)
+                ltime = self._get_tag_position_analyzer().get_late_min_max_timestamp(frame)
+                epos  = self._get_tag_position_analyzer().get_early_position(frame)
+                lpos  = self._get_tag_position_analyzer().get_late_position(frame)
+                self.early_late_points[etime] = epos
+                self.early_late_points[ltime] = lpos
+
+        return self.early_late_points

@@ -13,7 +13,6 @@ class BaseAngleCalibrator:
         :param BasePositionCalibrator base_position_calibrator:
         '''
         self._base_position_calibrator = base_position_calibrator
-        self._get_tag() # Forces initialization of base_position_calculator and classes it uses.
 
     def get_base_angle_error(self):
         r = self._get_actual_camera_angle() - self._get_camera_motor_angle()
