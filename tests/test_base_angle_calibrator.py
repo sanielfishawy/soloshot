@@ -7,28 +7,28 @@ from object_universe import ObjectUniverse
 from camera import Camera
 from viewable_object import RandomlyMovingTag
 from boundary import Boundary
-
-from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer 
-from tk_canvas_renderers.animator import Animator
-
 from object_motion_analyzer import Circumcircles
+
+from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
+
 
 class TestBaseAngleCalibrator(unittest.TestCase):
 
-    def setUp(self):
+    def setUp(self, tag_gps_angle_threshold=6, compass_err_deg=3.7):
+        self.tag_gps_angle_threshold = tag_gps_angle_threshold
+        self.compass_err_deg = compass_err_deg
 
         self.num_timestamps = 50
-        self.tag_gps_angle_threshold = math.radians(6)
+        self.tag_gps_angle_threshold = math.radians(self.tag_gps_angle_threshold)
 
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
-        self.compass_error = 3.7
         self.camera = Camera()
         self.camera.set_actual_position((100, 400)).\
                     set_gps_position((100,380)).\
                     set_gps_max_error(25).\
                     set_fov_rad(math.pi/2).\
-                    set_compass_error_rad(math.radians(self.compass_error))
+                    set_compass_error_rad(math.radians(self.compass_err_deg))
     
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
         
@@ -67,28 +67,16 @@ class TestBaseAngleCalibrator(unittest.TestCase):
         self.assertEqual(type(angle), float)
 
     def visualize(self):
-        self.boundary_renderer = BoundaryRenderer(self.boundary)
-        self.camera_renderer = CameraRenderer(self.camera)
-        self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
-        self.image_renderer = ImageRenderer(self.camera.get_image_generator())
-        self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.circumcircle_renderer = BasePositionCalibratorRenderer(self.base_position_calibrator.get_object_motion_analyzer())
 
-        self.renderers = [
-                            self.camera_renderer,
-                            self.viewable_objects_renderer,
-                            self.boundary_renderer,
-                            self.image_renderer,
-                            self.circumcircle_renderer,
-        ]
+        renderable_objects = [
+                               self.boundary,
+                               self.object_universe,
+                               self.base_position_calibrator,
+                             ] 
 
-        self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)
-
-        TKRenderer().set_canvas_height(900).\
-                     set_canvas_width(1000).\
-                     set_scale(1).\
-                     set_mouse_click_callback(self.animator.play).\
-                     start_tk_event_loop()
-
+        RenderOrchestrator(self.num_timestamps, 
+                           seconds_per_timestamp=0.2,
+                           renderable_objects=renderable_objects).run()
+        
 if __name__ == '__main__':
     unittest.main()

@@ -1,15 +1,78 @@
-- Try current render for BasePositionCalibrator
-- Move the objects in to RenderOrchestrator
-- 
+Video data (Kon)
+  - Video
+  - Timestamped data for:
+    - Must have
+      - Base Gps
+      - Tag Gps
+      - Fov
+      - Camera pan motor position
+    - Nice to have
+      - Base compass
+      - Camera tilt motor position
+      - Base
+        - Pitch
+        - Yaw
 
-- RenderOrchestrator
-    - Add objects and they should render
+Camera control (John)
+  - Already have
+    - Pan motor
+      - Set
+      - Get
+    - Tilt motor
+      - Set 
+      - Get
+    - Tag Gps
+    - Base Gps
+  - Want to have
+    - Zoom
+      - Set 
+        - Raw
+        - Steps
+      - Get
+    - Fov
+      - Get
+  - Nice to have
+    - Base
+      - Pitch
+      - Yaw
+    - Focus
+   
 
 
 
-- Image renderer 
-    - Take input from ObjectStatsProcessor
-    - Make tag change color or something when it is eliminated
+
+
+Gps position and angle error can be calculated independently.
+
+Show cirucmcircles demo
+
+Physical environment
+ - Viewable objects - moving_objects_demo
+   - Just subclass parent or one of the subclasses
+ - Camera - camera_demo
+    - Image generator - 
+    - Computer vision - image_renderer_demo
+
+Rendering tools
+ - Element renderers
+   - Just subclass parent or one of the subclasses
+ - Animator
+ - Tk_renderer
+ - Render orchestrator
+
+Base calibration pipeline
+ - Tag_position_analyzer
+ - Object_motion_analyzer
+ - Object_stats_processor
+ - Base_position_calibrator
+    - Show test method
+    - Demo
+ - Base_angle_calibrator
+
+
+
+
+
 
 
 

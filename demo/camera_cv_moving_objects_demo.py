@@ -5,9 +5,7 @@ from camera import Camera
 from computer_vision import ComputerVision
 from viewable_object import RandomlyMovingObject
 from boundary import Boundary
-from tk_canvas_renderers.element_renderers import CameraRenderer, BoundaryRenderer, ViewableObjectsRenderer
-from tk_canvas_renderers.animator import Animator
-from tk_canvas_renderers.tk_renderer import TKRenderer
+from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
 
 class Demo:
 
@@ -27,7 +25,7 @@ class Demo:
         self.cv = ComputerVision()
         self.camera.set_computer_vision(self.cv)
 
-        self.boundary = Boundary([(150, 50), (150, 550), (300, 550), (300, 50)])
+        self.boundary = Boundary([(150, 100), (150, 550), (300, 550), (300, 100)])
 
         self.viewable_objects = []
         for _ in range(20):
@@ -40,24 +38,34 @@ class Demo:
         self.cv.set_cv_ids_for_all_camera_time()
 
         # Rendering
-        self.camera_renderer = CameraRenderer(self.camera)
-        self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.cv)
-        self.boundary_renderer = BoundaryRenderer(self.boundary)
+        renderable_objects = [
+                               self.boundary,
+                               self.object_universe,
+                             ] 
 
-        self.renderers = [
-                            self.camera_renderer,
-                            self.viewable_objects_renderer,
-                            self.boundary_renderer
-        ]
+        RenderOrchestrator(self.num_timestamps, 
+                           seconds_per_timestamp=0.2,
+                           renderable_objects=renderable_objects).run()
+        
+        
+    #     self.camera_renderer = CameraRenderer(self.camera)
+    #     self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.cv)
+    #     self.boundary_renderer = BoundaryRenderer(self.boundary)
 
-        self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)
-        TKRenderer().set_canvas_height(800).\
-                     set_canvas_width(900).\
-                     set_scale(1).\
-                     set_mouse_click_callback(self.animator.play)
+    #     self.renderers = [
+    #                         self.camera_renderer,
+    #                         self.viewable_objects_renderer,
+    #                         self.boundary_renderer
+    #     ]
 
-    def run(self):
-        TKRenderer().start_tk_event_loop()
+    #     self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)
+    #     TKRenderer().set_canvas_height(800).\
+    #                  set_canvas_width(900).\
+    #                  set_scale(1).\
+    #                  set_mouse_click_callback(self.animator.play)
+
+    # def run(self):
+    #     TKRenderer().start_tk_event_loop()
 
 if __name__ == '__main__':
-    Demo().run()
+    Demo()

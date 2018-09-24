@@ -13,7 +13,7 @@ from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
 
 class TestBasePositionCalibrator(unittest.TestCase):
 
-    def setUp(self, num_randomly_moving_objects=1, tag_gps_angle_threshold=6):
+    def setUp(self, num_randomly_moving_objects=10, tag_gps_angle_threshold=6):
         self.num_randomly_moving_objects = num_randomly_moving_objects
 
         self.num_timestamps = 50
@@ -105,8 +105,8 @@ class TestBasePositionCalibrator(unittest.TestCase):
                              ] 
 
         RenderOrchestrator(self.num_timestamps, 
-                                                      seconds_per_timestamp=0.2,
-                                                      renderable_objects=renderable_objects).run()
+                           seconds_per_timestamp=0.2,
+                           renderable_objects=renderable_objects).run()
         
 
 if __name__ == '__main__':

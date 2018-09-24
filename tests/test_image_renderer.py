@@ -1,21 +1,22 @@
 import sys, unittest, math
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 
-from tk_canvas_renderers.tk_renderer import TKRenderer
-from tk_canvas_renderers.element_renderers import ImageRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, BoundaryRenderer
 from image_generator import ImageGenerator
 from camera import Camera
 from computer_vision import ComputerVision
 from object_universe import ObjectUniverse
 from viewable_object import StationaryObject, RandomlyMovingObject, RandomlyMovingTag
-from tk_canvas_renderers.animator import Animator
 from boundary import Boundary
 
+from tk_canvas_renderers.element_renderers import ImageRenderer
+from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
 
 class TestImageRenderer(unittest.TestCase):
 
-    def setUp(self):
-        # Environment
+    def setUp(self, num_randomly_moving_objects=0):
+
+        self.num_randomly_moving_objects = num_randomly_moving_objects
+
         self.num_timestamps = 100
         self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
 
@@ -33,7 +34,7 @@ class TestImageRenderer(unittest.TestCase):
             self.viewable_objects.append(StationaryObject((301, y))) 
 
         self.boundary = Boundary([(200,200), (400,200), (400,600), (200,600)])
-        for _ in range(0):
+        for _ in range(self.num_randomly_moving_objects):
             self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
         
         self.viewable_objects.append(RandomlyMovingTag(boundary=self.boundary))
@@ -61,30 +62,15 @@ class TestImageRenderer(unittest.TestCase):
         
 
     def visualize(self):
-        self.camera_renderer = CameraRenderer(self.camera)
-        self.objects_renderer = ViewableObjectsRenderer(viewable_objects=self.viewable_objects, 
-                                                        computer_vision=self.camera.get_computer_vision())
-        self.image_renderer = ImageRenderer(self.camera.get_image_generator())                                                
-        self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
-        self.boundary_renderer = BoundaryRenderer(self.boundary)
+        renderable_objects = [
+                               self.boundary,
+                               self.object_universe,
+                             ] 
+
+        RenderOrchestrator(self.num_timestamps, 
+                           seconds_per_timestamp=0.2,
+                           renderable_objects=renderable_objects).run()
         
-        self.renderers = [
-                            self.camera_renderer,
-                            self.objects_renderer,
-                            self.image_renderer,
-                            self.boundary_renderer,
-                         ]
-
-        self.animator = Animator(element_renderers=self.renderers, 
-                                 num_timestamps=self.num_timestamps, 
-                                 seconds_per_timestamp=0.2)
-
-        TKRenderer().set_canvas_height(800).\
-                     set_canvas_width(900).\
-                     set_scale(1).\
-                     set_mouse_click_callback(self.animator.play)
-
-        TKRenderer().start_tk_event_loop()
 
 if __name__ == '__main__':
     unittest.main()

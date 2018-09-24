@@ -13,7 +13,6 @@ class TestBoundaryRenderer(unittest.TestCase):
         self.bounary_points = [(100,100), (300,100), (300,200), (100,200)]
         self.tk_renderer = TKRenderer(scale=2, canvas_width=self.canvas_width, canvas_height=self.canvas_height)
         self.boundary = Boundary(self.bounary_points)
-        self.boundary_renderer = BoundaryRenderer(self.boundary)
         return self
 
 
@@ -22,6 +21,7 @@ class TestBoundaryRenderer(unittest.TestCase):
         self.assertEqual(self.tk_renderer.canvas_height, self.canvas_height)
 
     def visualize(self):
+        self.boundary_renderer = BoundaryRenderer(self.boundary)
         self.boundary_renderer.render()
         self.tk_renderer.start_tk_event_loop()
 
