@@ -1,5 +1,11 @@
-import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import sys, os
+sys.path.insert(0, os.getcwd())
+
+import tkinter as tk
+import PIL
+import PIL.Image
+import PIL.ImageTk
+
 from tk_canvas_renderers.tk_renderer import TKRenderer
 from base_position_calibrator import BasePositionCalibrator
 from object_motion_analyzer import ObjectMotionAnalyzer
@@ -300,3 +306,13 @@ class BasePositionCalibratorRenderer(ElementRenderer):
                 self.early_late_points[ltime] = lpos
 
         return self.early_late_points
+
+
+class PhotoRenderer(ElementRenderer):
+
+    def __init__(self, image):
+        self.image = image
+        super().__init__()
+    
+    def render_stationary_elements(self):
+        self.stationary_rendered_elements.append(self.tk_renderer.create_photo((0,0), self.image))

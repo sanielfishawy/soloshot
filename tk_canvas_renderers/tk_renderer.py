@@ -1,8 +1,10 @@
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
+
 import tkinter as tk
 from shapely.geometry import Point
-import threading 
+import PIL
+import PIL.ImageTk
 
 class _TKRenderer:
 
@@ -21,6 +23,8 @@ class _TKRenderer:
     
         self.label_font = ("arial", font_size, "normal")
         self.scale = scale
+
+        self.rendered_photos = {} #need to keep a reference to prevent garbage collection
 
     def set_canvas_width(self, width):
         self.canvas.config(width=width)
@@ -103,6 +107,12 @@ class _TKRenderer:
         s_points = [self.scale_tuple(point) for  point in points]
         return self.canvas.create_line(*s_points, **kargs)
 
+    def create_photo(self, position, image, **kargs):
+        photo = PIL.ImageTk.PhotoImage(image)
+        # photo = tk.PhotoImage(file="/Users/Sani/dev/soloshot/data/images/will.PPM")
+        rendered_id = self.canvas.create_image(position[0], position[1], image=photo, **kargs)
+        self.rendered_photos[rendered_id] = photo
+        return rendered_id
         
 _tk_renderer = None
 
