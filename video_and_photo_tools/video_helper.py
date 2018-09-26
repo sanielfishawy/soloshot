@@ -9,7 +9,7 @@ class VideoHelper:
         self.cap = cv2.VideoCapture(video_url)
 
     def get_images_at_times_ms(self, times_ms):
-        if not isinstance(times_ms, list)
+        if not isinstance(times_ms, list):
             times_ms = [times_ms]
         return [self.get_image_at_msec(t) for t in times_ms]
 

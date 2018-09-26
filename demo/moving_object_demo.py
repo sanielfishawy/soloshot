@@ -1,6 +1,7 @@
+import tkinter as tk
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
-import tkinter as tk
+
 from tk_canvas_renderers.canvas_utils import CanvasUtils
 from viewable_object import RandomlyMovingObject
 from boundary import Boundary
@@ -17,7 +18,7 @@ _label_font = ("arial", 10, "normal")
 _canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)
 _canvas_utils = CanvasUtils(_canvas)
 _canvas.bind("<Button-1>", mouse_click)
-_canvas.pack()    
+_canvas.pack()
 
 class _DemoSingleton:
     def __init__(self):
@@ -32,7 +33,7 @@ class _DemoSingleton:
     def clear(self):
         for w in self.widgets:
             _canvas.delete(w)
-        
+
         self.widgets = []
         self.points = []
 
@@ -43,7 +44,7 @@ def Demo():
     global _demo_singleton
     if _demo_singleton == None:
         _demo_singleton = _DemoSingleton()
-    
+
     return _demo_singleton
 
 _clear_button = tk.Button(_root, text="Clear", command=Demo().clear)
