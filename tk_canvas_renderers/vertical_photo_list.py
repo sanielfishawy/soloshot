@@ -5,7 +5,7 @@ import PIL.Image
 
 from tk_canvas_renderers.canvas_utils import CanvasUtils
 
-class PhotoRenderer:
+class VerticalPhotoList:
 
     def __init__(self, photos: Iterable[PIL.Image.Image],
                  window_height=None,
@@ -52,8 +52,6 @@ class PhotoRenderer:
                                      bg=CanvasUtils.random_color()
                                     )
             inner_canvas.create_image(0, 0, image=photo, anchor='nw')
-            inner_canvas.create_line(0, 0, 300, 300)
-            inner_canvas.pack(expand=tk.YES, fill=tk.BOTH)
             self._outer_canvas.create_window(0, y_pos,
                                              anchor='nw',
                                              height=self._get_photo_resize_height(),
