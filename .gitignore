@@ -2,6 +2,10 @@
 __pycache__/
 *.py[cod]
 
+# Data including test_data
+data/
+data/
+
 # C extensions
 *.so
 

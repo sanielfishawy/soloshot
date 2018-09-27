@@ -1,10 +1,10 @@
 Tools
- - Pull a number of stills from a video at ms timestamps.
- - 
-
+StillPicker:
+  - Get the x position of the cursor in motionsStillPikccker:
+  - Num_photos
 
 Fov characterization
  - Find all the ranges with stable Fovs in a video
  - In each Fov range find a frame with pan change greater than threshold
  - Present the two photos for the frame and pick the same point on both frames
- - Save 
+ - Save
