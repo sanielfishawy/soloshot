@@ -1,24 +1,91 @@
 Tools
+Performance characterization
+x cv2 Read time
+x Convert array to Image time (fromarray)
+    x RGB
+x Convert format
+    x RGB -> L
+x Resize 640 time
+    x L
+    x RGB
+- Size of file
+    - Jpeg
+        - L
+        - RGB
+    - PPM
+        - L
+        - RGB
+    - Bitmap
+        - L
+        - RGB
+- Convert to TkPhotoImage
+    - Jpeg
+        - L
+        - RGB
+    - PPM
+        - L
+        - RGB
+    - Bitmap
+        - L
+        - RGB
+- Write to disk time
+    - L
+    - RGB
+    - PPM
+    - Bitmap
+- Read from disk time
+    - L
+    - RGB
+    - PPM
+    - Bitmap
+
+
+
 StillPicker:
  x Change next to done should terminate the event loop and return control
  x Add ability to select pick_frame vs pick_range
  x Instructions: when pick frame:
     x Slide to scrub. Tap to pick frame.
     x Slide to scrub. Tap to pick start. Double tap to pick end.
- - Tap and double tap events
-    - Save current ifv to correct attribute
-        - self._selected_start
-        - self._selected_end
-    - Mark the frame on the screen
-        - start
-        - end
-        - selected
+ x Tap and double tap events
+    x Save current ifv to correct attribute
+        x self._selected_start
+        x self._selected_end
+    x Mark the frame on the screen
+        x start
+        x end
+        x selected
  - Add ability to pass callback((Start, End), or (picked frame))
    - Add callback
    - Call after done with results
 
 Fov characterization
- - Find all the ranges with stable Fovs in a video
- - In each Fov range find a frame with pan change greater than threshold
+ - Find all pan direction changes with high rate of change
+    - Times at which
+        - First deriviative crosses zero
+        - Second derivative is high
+    - Show those on StillPicker and ask user to pick point at which pan direction changes
+    - Get the offsets beteen frame time and pan direction change time
+
  - Present the two photos for the frame and pick the same point on both frames
  - Save
+
+
+
+ SESSION_DB/
+   |-- friendly_name_with_underscores/
+        |-- TRACK (dragged from camera)/
+            |-- Video.MP4
+            |-- Thumbnail.THM
+            |-- .SESSION
+
+        |-- Cloud/
+            |-- *.bin
+            |-- *.trk
+        |-- Cache
+            ...
+        |-- NPZ
+
+   |-- friendly_name_with_underscores_2/
+        |-- TRACK (dragged from cammera)/
+        ...
