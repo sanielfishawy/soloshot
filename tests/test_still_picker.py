@@ -15,7 +15,9 @@ class TestStillPicker(unittest.TestCase):
         self.video_helper = VideoHelper(TestStillPicker.TEST_VIDEO_PATH)
         middle_frame = int(self.video_helper.get_frame_count() / 2)
         self.images_from_video = self.video_helper.get_images_around_frame_number(middle_frame, 50, 50)
-        self.still_picker = StillPicker(self.images_from_video)
+        self.still_picker = StillPicker(self.images_from_video,
+                                        selector_type=StillPicker.SELECT_RANGE,
+                                       )
 
     def test_foo(self):
         self.still_picker.run()

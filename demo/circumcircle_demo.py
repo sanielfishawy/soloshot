@@ -1,3 +1,5 @@
+#pylint: disable-all
+
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 import tkinter as tk
@@ -17,7 +19,7 @@ _label_font = ("arial", 10, "normal")
 _canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)
 _canvas_utils = CUtils.CanvasUtils(_canvas)
 _canvas.bind("<Button-1>", mouse_click)
-_canvas.pack()    
+_canvas.pack()
 
 class _DemoSingleton:
     def __init__(self):
@@ -34,7 +36,7 @@ class _DemoSingleton:
         if len(self.points) > 1:
             self.render_circumcircles(self.points[-2], self.points[-1])
             self.widgets.append( _canvas.create_line(*self.points[-2], *self.points[-1]) )
-    
+
     def render_circumcircles(self, p1, p2):
         theta_rad = GeometryUtils.signed_subtended_angle_from_p1_to_p2_rad(self.c, p1, p2)
         c_centers = GeometryUtils.circumcenters(p1, p2, theta_rad)
@@ -46,7 +48,7 @@ class _DemoSingleton:
     def clear(self):
         for w in self.widgets:
             _canvas.delete(w)
-        
+
         self.widgets = []
         self.points = []
 
@@ -57,7 +59,7 @@ def Demo():
     global _demo_singleton
     if _demo_singleton == None:
         _demo_singleton = _DemoSingleton()
-    
+
     return _demo_singleton
 
 _clear_button = tk.Button(_root, text="Clear", command=Demo().clear)

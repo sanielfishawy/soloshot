@@ -1,7 +1,21 @@
 Tools
 StillPicker:
-  - Get the x position of the cursor in motionsStillPikccker:
-  - Num_photos
+ x Change next to done should terminate the event loop and return control
+ x Add ability to select pick_frame vs pick_range
+ x Instructions: when pick frame:
+    x Slide to scrub. Tap to pick frame.
+    x Slide to scrub. Tap to pick start. Double tap to pick end.
+ - Tap and double tap events
+    - Save current ifv to correct attribute
+        - self._selected_start
+        - self._selected_end
+    - Mark the frame on the screen
+        - start
+        - end
+        - selected
+ - Add ability to pass callback((Start, End), or (picked frame))
+   - Add callback
+   - Call after done with results
 
 Fov characterization
  - Find all the ranges with stable Fovs in a video
