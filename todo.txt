@@ -1,43 +1,7 @@
 Tools
-Performance characterization
-x cv2 Read time
-x Convert array to Image time (fromarray)
-    x RGB
-x Convert format
-    x RGB -> L
-x Resize 640 time
-    x L
-    x RGB
-- Size of file
-    - Jpeg
-        - L
-        - RGB
-    - PPM
-        - L
-        - RGB
-    - Bitmap
-        - L
-        - RGB
-- Convert to TkPhotoImage
-    - Jpeg
-        - L
-        - RGB
-    - PPM
-        - L
-        - RGB
-    - Bitmap
-        - L
-        - RGB
-- Write to disk time
-    - L
-    - RGB
-    - PPM
-    - Bitmap
-- Read from disk time
-    - L
-    - RGB
-    - PPM
-    - Bitmap
+- Video helper
+    - Add Cache
+    - Add ability to request mode and size of file
 
 
 

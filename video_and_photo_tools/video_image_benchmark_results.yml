@@ -1,0 +1,65 @@
+Image File Sizes:
+  image-L-640.bmp: 231478
+  image-L-640.jpeg: 20902
+  image-L-640.png: 101097
+  image-L-640.ppm: 230415
+convert_640_l_to_tk_image_benchmark:
+  num_runs: 10
+  time_per: 0.0008
+  total_time: 0.0082
+convert_640_rgb_to_tk_image_benchmark:
+  num_runs: 10
+  time_per: 0.0014
+  total_time: 0.0136
+convert_array_to_image_benchmark:
+  num_runs: 10
+  time_per: 0.0143
+  total_time: 0.1433
+convert_rgb_to_l_benchmark:
+  num_runs: 10
+  time_per: 0.0122
+  total_time: 0.1217
+cv2_read_benchmark:
+  num_runs: 10
+  time_per: 0.0292
+  total_time: 0.2921
+open_bmp_benchmark:
+  num_runs: 10
+  time_per: 0.0004
+  total_time: 0.0036
+open_jpg_benchmark:
+  num_runs: 10
+  time_per: 0.0002
+  total_time: 0.002
+open_png_benchmark:
+  num_runs: 10
+  time_per: 0.0003
+  total_time: 0.0029
+open_ppm_benchmark:
+  num_runs: 10
+  time_per: 0.0003
+  total_time: 0.0026
+resize_l_image_benchmark:
+  num_runs: 10
+  time_per: 0.0476
+  total_time: 0.4764
+resize_rgb_image_benchmark:
+  num_runs: 10
+  time_per: 0.118
+  total_time: 1.1798
+save_bmp_benchmark:
+  num_runs: 10
+  time_per: 0.0013
+  total_time: 0.0128
+save_jpg_benchmark:
+  num_runs: 10
+  time_per: 0.0077
+  total_time: 0.0767
+save_png_benchmark:
+  num_runs: 10
+  time_per: 0.0597
+  total_time: 0.5969
+save_ppm_benchmark:
+  num_runs: 10
+  time_per: 0.0011
+  total_time: 0.0113

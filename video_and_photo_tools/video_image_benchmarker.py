@@ -1,14 +1,28 @@
+# pylint: disable=protected-access
+import os
+import yaml
 from pathlib import Path
 import timeit
+import tkinter
 import cv2
 import PIL.Image
 import PIL.ImageTk
-import tkinter
 
 class _VideoImageBenchmarks:
 
     VIDEO_PATH = Path('.') / 'data/test_data/test_videos/video.mp4'
     VIDEO_PATH_STR = str(VIDEO_PATH.resolve())
+    IMAGE_DIR_PATH = Path('.') / 'data/test_data/test_images'
+    FORMAT_JPG = 'jpeg'
+    FORMAT_PPM = 'ppm'
+    FORMAT_PNG = 'png'
+    FORMAT_BMP = 'bmp'
+    FORMATS = [
+        FORMAT_BMP,
+        FORMAT_JPG,
+        FORMAT_PNG,
+        FORMAT_PPM
+    ]
 
     def __init__(self):
         self._cap = cv2.VideoCapture(_VideoImageBenchmarks.VIDEO_PATH_STR)
@@ -26,6 +40,10 @@ class _VideoImageBenchmarks:
         self._get_l_image_large()
         self._get_rgb_image_640()
         self._get_l_image_640()
+        self.save_bmp_benchmark()
+        self.save_jpg_benchmark()
+        self.save_png_benchmark()
+        self.save_ppm_benchmark()
 
     def cv2_read_benchmark_setup(self):
         self._cap.set(cv2.CAP_PROP_POS_AVI_RATIO, 0)
@@ -58,6 +76,51 @@ class _VideoImageBenchmarks:
         tk_640_l = PIL.ImageTk.PhotoImage(image=self._get_l_image_640())
         assert tk_640_l._PhotoImage__size == (640, 360)
         assert tk_640_l._PhotoImage__mode == 'L'
+
+    def save_jpg_benchmark(self):
+        self._save_image(self._get_l_image_640(), _VideoImageBenchmarks.FORMAT_JPG)
+
+    def save_ppm_benchmark(self):
+        self._save_image(self._get_l_image_640(), _VideoImageBenchmarks.FORMAT_PPM)
+
+    def save_png_benchmark(self):
+        self._save_image(self._get_l_image_640(), _VideoImageBenchmarks.FORMAT_PNG)
+
+    def save_bmp_benchmark(self):
+        self._save_image(self._get_l_image_640(), _VideoImageBenchmarks.FORMAT_BMP)
+
+    def open_jpg_benchmark(self):
+        self._open_image('L', '640', _VideoImageBenchmarks.FORMAT_JPG)
+
+    def open_png_benchmark(self):
+        self._open_image('L', '640', _VideoImageBenchmarks.FORMAT_PNG)
+
+    def open_bmp_benchmark(self):
+        self._open_image('L', '640', _VideoImageBenchmarks.FORMAT_BMP)
+
+    def open_ppm_benchmark(self):
+        self._open_image('L', '640', _VideoImageBenchmarks.FORMAT_PPM)
+
+    def _open_image(self, mode, width, image_format):
+        PIL.Image.open(self._get_image_path(mode, width, image_format))
+
+    def _save_image(self, image, image_format):
+        image.save(self._get_image_path_with_image(image, image_format), image_format)
+
+    def _get_image_path(self, mode, width, image_format):
+        return self._get_image_path_with_filename(self._get_image_filename(mode,
+                                                                           width,
+                                                                           image_format))
+
+    def _get_image_path_with_filename(self, image_filename):
+        return str((_VideoImageBenchmarks.IMAGE_DIR_PATH / image_filename).resolve())
+
+    def _get_image_filename(self, mode, width, image_format):
+        return 'image-' + mode + '-' + str(width) + '.' + image_format.lower()
+
+    def _get_image_path_with_image(self, image, image_format):
+        return self._get_image_path(image.mode, image.width, image_format)
+
 
     def _resize_image(self, image: PIL.Image.Image):
         aspect = image.width / image.height
@@ -108,6 +171,7 @@ class _VideoImageBenchmarkRunner:
     TOTAL_TIME = 'total_time'
     NUM_RUNS = 'num_runs'
     TIME_PER = 'time_per'
+    RESULTS_FILE_PATH = Path('.') / 'video_and_photo_tools/video_image_benchmark_results.yml'
 
     def __init__(self):
         VideoImageBenchmarks() #init
@@ -138,13 +202,26 @@ class _VideoImageBenchmarkRunner:
 
     def _get_result(self, total_time, num_runs):
         return {
-            _VideoImageBenchmarkRunner.TOTAL_TIME: total_time,
-            _VideoImageBenchmarkRunner.NUM_RUNS: num_runs,
-            _VideoImageBenchmarkRunner.TIME_PER: total_time / num_runs,
+            _VideoImageBenchmarkRunner.TOTAL_TIME: round(total_time, 4),
+            _VideoImageBenchmarkRunner.NUM_RUNS: round(num_runs, 4),
+            _VideoImageBenchmarkRunner.TIME_PER: round(total_time / num_runs, 4),
         }
+
+    def log_image_sizes(self):
+        VideoImageBenchmarks().setup()
+        r = {}
+        for iformat in _VideoImageBenchmarks.FORMATS:
+            filename = 'image-L-640.' + iformat
+            path = str((_VideoImageBenchmarks.IMAGE_DIR_PATH / filename).resolve())
+            r[filename] = os.path.getsize(path)
+        self._results['Image File Sizes'] = r
 
     def get_results(self):
         return self._results
+
+    def dump_results(self):
+        with open(_VideoImageBenchmarkRunner.RESULTS_FILE_PATH, 'w') as yaml_file:
+            yaml.dump(self._results, yaml_file, default_flow_style=False)
 
 _video_image_benchmark_runner = None
 
@@ -172,7 +249,15 @@ if __name__ == '__main__':
         VideoImageBenchmarks().resize_rgb_image_benchmark,
         VideoImageBenchmarks().convert_640_rgb_to_tk_image_benchmark,
         VideoImageBenchmarks().convert_640_l_to_tk_image_benchmark,
+        VideoImageBenchmarks().save_jpg_benchmark,
+        VideoImageBenchmarks().save_bmp_benchmark,
+        VideoImageBenchmarks().save_png_benchmark,
+        VideoImageBenchmarks().save_ppm_benchmark,
+        VideoImageBenchmarks().open_jpg_benchmark,
+        VideoImageBenchmarks().open_bmp_benchmark,
+        VideoImageBenchmarks().open_png_benchmark,
+        VideoImageBenchmarks().open_ppm_benchmark,
     ]
     VideoImageBenchmarkRunner().run_benchmarks(b_marks)
-    r = VideoImageBenchmarkRunner().get_results()
-    a=1
+    VideoImageBenchmarkRunner().log_image_sizes()
+    VideoImageBenchmarkRunner().dump_results()

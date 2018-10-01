@@ -1,0 +1,52 @@
+These conclusions refer to the file video_image_benchmark_results.yml which is created by video_image_benchmarker.py.
+
+Question: Is an image cache warranted?
+Answer: Yes we get 100x performance improvement for cache hits
+Reasoning:
+    - Pipleline with no image cache
+        - cv2_read_benchmark:                    0.029
+        - convert_array_to_image_benchmark:      0.0144
+        - resize_rgb_image_benchmark:            0.1165
+        - convert_640_rgb_to_tk_image_benchmark: 0.0014
+        -----------------------------------------------
+        TOTAL                                    0.1613
+
+    - Read pipleline with image cache
+        - open_jpg_benchmark:                    0.0002
+        - convert_640_rgb_to_tk_image_benchmark: 0.0014
+        -----------------------------------------------
+        TOTAL                                    0.0016
+
+    - Performance improvement for cache hit: 0.1613 / .0016 = 100X
+
+
+Question: what mode to use RGB vs L (b&w)?
+Answer: Use L
+Reasoning: 40% faster write pipeline. Smaller filesizes. Faster read pipeline
+
+    - Write cache pipline using L:
+        - cv2_read_benchmark:           0.029
+        - convert_rgb_to_l_benchmark:   0.0122
+        - resize_l_image_benchmark:     0.0487
+        --------------------------------------
+        TOTAL                           0.090
+
+    - Write cache pipeline using RGB:
+        - cv2_read_benchmark:           0.029
+        - resize_rgb_image_benchmark:   0.1165
+        --------------------------------------
+        TOTAL                           0.145
+
+Question: what format to use jpg, png, bmp, ppm?
+Answer: Use jpg
+Reasoning: The small improvement in read pipline speed for The 5x to 10x increase in filesize for the other formats does not merit the
+    - File sizes
+        - image-L-640.bmp: 231478
+        - image-L-640.jpeg: 20902
+        - image-L-640.png: 101097
+        - image-L-640.ppm: 230415
+    - File open speed
+        - open_bmp_benchmark: 0.0003
+        - open_jpg_benchmark: 0.0002
+        - open_png_benchmark: 0.0002
+        - open_ppm_benchmark: 0.0003
