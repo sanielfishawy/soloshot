@@ -38,6 +38,8 @@ class VideoHelper:
         self._use_cache = use_cache
         self._cache_dir_path = cache_dir_path
         self._image_cache = ImageCache(cache_dir_path=cache_dir_path)
+        self._frame_count = None
+        self.get_frame_count()
 
     def get_video_id(self):
         return self._video_url.name + '-' + str(os.path.getsize(self._video_url))
@@ -49,7 +51,8 @@ class VideoHelper:
 
         return i_f_v
 
-    def get_image_from_cache_at_frame_num(self, frame_num) -> ImageFromVideo:
+    # Used for multi image grabs
+    def get_image_from_cache_at_frame_num(self, frame_num, time_ms=None) -> ImageFromVideo:
         if not self._use_cache:
             return None
 
@@ -64,25 +67,32 @@ class VideoHelper:
             return None
 
         from_cache = True
+        if time_ms is None:
+            time_ms = self.get_time_ms_for_frame_num(frame_num)
+
         return self._get_image_from_video_object(image,
-                                                 self.get_time_ms_for_frame_num(frame_num),
+                                                 time_ms,
                                                  frame_num,
                                                  from_cache,
                                                 )
 
+    # Not used for multi image grabs.
     def get_image_from_video_at_frame_num(self, frame_num) -> ImageFromVideo:
         frame_num = self.bounded_frame_num(frame_num)
         self._cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
         time_ms = self._cap.get(cv2.CAP_PROP_POS_MSEC)
 
         image = self._get_image_at_current_frame()
-        image = image.convert(self._image_mode)
-        image = image.resize_with_width_preserve_aspect(self._image_width)
+        image = self._adust_image_width_mode(image)
 
         self._store_in_cache(image, frame_num)
 
         from_cache = False
         return self._get_image_from_video_object(image, time_ms, frame_num, from_cache)
+
+    def _adust_image_width_mode(self, image):
+        image = image.convert(self._image_mode)
+        return image.resize_with_width_preserve_aspect(self._image_width)
 
     def _store_in_cache(self, image, frame_num):
         if self._use_cache:
@@ -100,6 +110,7 @@ class VideoHelper:
                               from_cache=from_cache,
                              )
 
+    # Not used for multi image grabs.
     def get_image_from_video_at_time_ms(self, time_ms):
         return self.get_image_at_frame_num(self.get_frame_num_for_time_ms(time_ms))
 
@@ -134,23 +145,40 @@ class VideoHelper:
     def get_images_from_video_at_frame_nums(self, frame_nums: list) -> List[ImageFromVideo]:
         return [self.get_image_at_frame_num(num) for num in frame_nums]
 
+    # Usef for multi image grabs
     # Fast because doing continuous reads
-    def get_num_images_from_after_start_n(self, start_n, num):
+    def get_num_images_from_video_after_start_n(self, start_n, num):
         result = []
         start_n = self.bounded_frame_num(start_n)
+
         self._cap.set(cv2.CAP_PROP_POS_FRAMES, start_n)
         time_ms = self._cap.get(cv2.CAP_PROP_POS_MSEC)
         time_per_frame = self.get_time_per_frame_ms()
 
-        for idx in range(start_n, start_n + num):
-            success, arr = self._cap.read()
-            if not success:
-                break
+        for frame_num in range(start_n, start_n + num):
 
-            ifv = ImageFromVideo(frame_num=idx,
-                                 time_ms=time_ms,
-                                 video_url=self._video_url,
-                                 image=PIL.Image.fromarray(arr))
+            ifv = self.get_image_from_cache_at_frame_num(frame_num, time_ms=time_ms)
+
+            if ifv is None:
+
+                success, arr = self._cap.read()
+                if not success:
+                    break
+
+                image = PIL.Image.fromarray(arr)
+                image = self._adust_image_width_mode(image)
+                self._store_in_cache(image, frame_num)
+                from_cache = False
+                ifv = self._get_image_from_video_object(image,
+                                                        time_ms,
+                                                        frame_num,
+                                                        from_cache,
+                                                       )
+
+            # If we got the last one from cache the cap read pointer wont have been incremented
+            # so do it manually
+            if ifv.get_from_cache():
+                self._cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num + 1)
 
             result.append(ifv)
             time_ms += time_per_frame
@@ -169,7 +197,7 @@ class VideoHelper:
         start = self.bounded_frame_num(frame_num - before)
         end = self.bounded_frame_num(frame_num + after)
         num = end - start
-        return self.get_num_images_from_after_start_n(start, num)
+        return self.get_num_images_from_video_after_start_n(start, num)
 
     def get_images_around_time_ms(self, time_ms, before=10, after=10):
         return self.get_images_around_frame_number(self.get_frame_num_for_time_ms(time_ms),
@@ -180,8 +208,10 @@ class VideoHelper:
         # Note that CAP_PROP_FRAME_COUNT is only an estimate so use the following method instead
         # Note CAP_PROP_POS_AVI_RATIO=1 positions 1 after the last frame. Therefore
         # no need to add 1 to get the zero based frame_count
-        self._cap.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
-        return self._cap.get(cv2.CAP_PROP_POS_FRAMES)
+        if self._frame_count is None:
+            self._cap.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
+            self._frame_count = self._cap.get(cv2.CAP_PROP_POS_FRAMES)
+        return self._frame_count
 
     def get_video_duration_ms(self):
         self._cap.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)

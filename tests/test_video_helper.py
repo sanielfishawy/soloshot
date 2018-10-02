@@ -19,7 +19,7 @@ class TestVideoHelper(unittest.TestCase):
         self.video_helper._image_cache.clear_cache()
         self.cap = cv2.VideoCapture(str(TestVideoHelper.TEST_VIDEO_PATH.resolve()))
         self.video_duration_ms = self.video_helper.get_video_duration_ms()
-        self.mid_frame = (self.video_helper.get_frame_count() / 2)
+        self.mid_frame = int(self.video_helper.get_frame_count() / 2)
         self.mid_time_ms = self.video_helper.get_time_ms_for_frame_num(self.mid_frame)
 
     def test_get_video_id(self):
@@ -41,7 +41,7 @@ class TestVideoHelper(unittest.TestCase):
         img = self.video_helper.get_image_at_frame_num(self.mid_frame)
         self.assertEqual(self.mid_time_ms, img.get_time_ms())
         img = self.video_helper.get_image_at_frame_num(self.mid_frame)
-        self.assertEqual(self.mid_time_ms, img.get_time_ms())
+        self.assertAlmostEqual(self.mid_time_ms, img.get_time_ms())
         self.assertTrue(img.get_from_cache())
 
     def test_returns_image_with_correct_width_and_mode(self):
@@ -70,30 +70,42 @@ class TestVideoHelper(unittest.TestCase):
                              self.video_helper.bounded_frame_num(frame_count))
 
     def test_get_n_gets_the_right_frames(self):
-        mid_num = int(self.video_helper.get_frame_count() / 2)
         num = 20
-        last_num = mid_num + num - 1
+        last_num = self.mid_frame + num - 1
 
-        ifvs = self.video_helper.get_num_images_from_after_start_n(mid_num, num)
+        ifvs = self.video_helper.get_num_images_from_video_after_start_n(self.mid_frame, num)
         self.assertEqual(len(ifvs), num)
         for idx, ivf in enumerate(ifvs):
-            self.assertEqual(ivf.get_frame_num(), int(mid_num) + idx)
+            self.assertEqual(ivf.get_frame_num(), self.mid_frame + idx)
 
         last = ifvs[-1]
         direct_last = self.video_helper.get_image_at_frame_num(last_num)
         self.assertEqual(last.get_frame_num(), direct_last.get_frame_num())
         self.assertAlmostEqual(last.get_time_ms(), direct_last.get_time_ms())
 
-    def dont_test_performance_of_grabbing_100_frames(self):
-        mid = self.video_helper.get_video_duration_ms() / 2
-        self.video_helper.get_images_around_time_ms(mid, 5, 5)
+    def test_get_n_retrieves_from_cache(self):
+        self.video_helper._image_cache.clear_cache()
+        num = 20
+        ifvs = self.video_helper.get_num_images_from_video_after_start_n(self.mid_frame, num)
+        self.assertEqual(len(ifvs), num)
+        for ifv in ifvs:
+            self.assertFalse(ifv.get_from_cache())
 
-    def dont_test_performance_of_open_cv_read(self):
-        mid = self.video_helper.get_frame_count() / 2
-        for n in range(100):
-            self.cap.set(cv2.CAP_PROP_POS_FRAMES, mid + n)
-            success, arr = self.cap.read()
-            self.assertTrue(success)
+        ifvs = self.video_helper.get_num_images_from_video_after_start_n(self.mid_frame, num)
+        self.assertEqual(len(ifvs), num)
+        for ifv in ifvs:
+            self.assertTrue(ifv.get_from_cache())
+
+        del_from_cache_frame_num = self.mid_frame + 5
+        del_from_cache_file = TestVideoHelper.TEST_CACHE_DIR_PATH / f'video.mp4-3725381013-width=640-mode=L-frame_num={del_from_cache_frame_num}.jpg'
+        os.remove(del_from_cache_file.resolve())
+
+        ifvs = self.video_helper.get_num_images_from_video_after_start_n(self.mid_frame, num)
+        for ifv in ifvs:
+            if ifv.get_frame_num() == del_from_cache_frame_num:
+                self.assertFalse(ifv.get_from_cache())
+            else:
+                self.assertTrue(ifv.get_from_cache())
 
 
 if __name__ == '__main__':
