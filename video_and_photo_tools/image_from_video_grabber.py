@@ -154,12 +154,21 @@ class ImageFromVideoGrabber:
         self._cap.set(cv2.CAP_PROP_POS_FRAMES, start_n)
         time_ms = self._cap.get(cv2.CAP_PROP_POS_MSEC)
         time_per_frame = self.get_time_per_frame_ms()
+        got_from_cache = False
 
         for frame_num in range(start_n, start_n + num):
 
             ifv = self.get_image_from_cache_at_frame_num(frame_num, time_ms=time_ms)
 
-            if ifv is None:
+            if ifv is not None:
+                got_from_cache = True
+
+            else:
+                # If we got from the cache previously then read position has not been advancing
+                # so do it manually
+                if got_from_cache:
+                    self._cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num)
+                got_from_cache = False
 
                 success, arr = self._cap.read()
                 if not success:
@@ -175,10 +184,6 @@ class ImageFromVideoGrabber:
                                                         from_cache,
                                                        )
 
-            # If we got the last one from cache the cap read pointer wont have been incremented
-            # so do it manually
-            if ifv.get_from_cache():
-                self._cap.set(cv2.CAP_PROP_POS_FRAMES, frame_num + 1)
 
             result.append(ifv)
             time_ms += time_per_frame

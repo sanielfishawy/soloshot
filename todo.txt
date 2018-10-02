@@ -1,7 +1,5 @@
 Tools
 
-- VideoHelper
-    - Rename to ImageFromVideoGrabber
 
 - StillPicker
     - Remove resize and mode from StillPicker

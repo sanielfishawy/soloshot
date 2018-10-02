@@ -16,7 +16,6 @@ class StillPicker:
 
     def __init__(self,
                  images_from_video: List[ImageFromVideo],
-                 width=600,
                  selector_type=0,
                  callback=None,
                 ):
@@ -24,7 +23,6 @@ class StillPicker:
         :param photos Iterable[ImageFromVideo]: pics have equal dimensions typically extracted using VideoHelper
         '''
         self._images_from_video = images_from_video
-        self._width = width
         self._margin_for_cursor_scrub = .2
         self._selector_type = selector_type
         self._callback = callback
@@ -49,8 +47,8 @@ class StillPicker:
         instructions_label.grid(row=0, column=0, pady=(10))
 
         self._canvas = tk.Canvas(master=self._root,
-                                 width=self._width,
-                                 height=self._get_resize_height(),
+                                 width=self._get_photos_width(),
+                                 height=self._get_photos_height(),
                                 )
         self._canvas.bind('<Motion>', self._motion)
         self._canvas.bind('<Button-1>', self._left_click)
@@ -74,6 +72,12 @@ class StillPicker:
 
         self._display_current_photo()
         return self
+
+    def _get_photos_width(self):
+        return self._images_from_video[0].get_image().width
+
+    def _get_photos_height(self):
+        return self._images_from_video[0].get_image().height
 
     def _get_instructions(self):
         if self._selector_type == StillPicker.SELECT_SINGLE_IMAGE:
@@ -104,35 +108,21 @@ class StillPicker:
         self._display_current_photo()
 
     def _get_idx_from_cursor_x(self, cursor_x):
-        left_scrub_bound = self._margin_for_cursor_scrub * self._width
-        right_scrub_bound = (1 - self._margin_for_cursor_scrub) * self._width
+        left_scrub_bound = self._margin_for_cursor_scrub * self._get_photos_width()
+        right_scrub_bound = (1 - self._margin_for_cursor_scrub) * self._get_photos_width()
         width_of_scrub = right_scrub_bound - left_scrub_bound
 
         if cursor_x <= left_scrub_bound:
             return 0
 
-        idx = int(self._get_num_images_from_video() * (cursor_x - left_scrub_bound) / width_of_scrub)
+        idx = int(self._get_num_images_from_video() * (cursor_x - left_scrub_bound) / width_of_scrub) # pylint: disable=C0301
         return min(idx, self._get_num_images_from_video() - 1)
-
-    def _get_aspect_ratio(self):
-        img = self._images_from_video[0].get_image()
-        return img.width / img.height
-
-    def _get_resize_height(self):
-        return int(self._width / self._get_aspect_ratio())
-
-    def _get_resize_size(self):
-        return (self._width, self._get_resize_height())
 
     def _get_tk_photos(self):
         if self._tk_photos is None:
-            self._tk_photos = [PIL.ImageTk.PhotoImage(image=photo)
-                               for photo in self._get_resized_photos()]
+            self._tk_photos = [PIL.ImageTk.PhotoImage(image=ifv.get_image())
+                               for ifv in self._images_from_video]
         return self._tk_photos
-
-    def _get_resized_photos(self):
-        return [ifv.get_image().resize(self._get_resize_size(),
-                                       PIL.Image.ANTIALIAS) for ifv in self._images_from_video]
 
     def _display_current_photo(self):
         self._display_photo(self._current_photo_idx)
