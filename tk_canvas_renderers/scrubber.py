@@ -1,14 +1,15 @@
 import sys
 import os
+import abc
 from typing import List
 import tkinter as tk
 import PIL.Image
 import PIL.ImageTk
 
 sys.path.insert(0, os.getcwd())
-from video_and_photo_tools.image_from_video import ImageFromVideo # pylint disable=C0413
+from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413
 
-class StillPicker:
+class Scrubber:
 
     SELECT_SINGLE_IMAGE = 0
     SELECT_RANGE = 1
@@ -36,6 +37,8 @@ class StillPicker:
         self._canvas = None
         self._photo_on_canvas = None
         self._done_button = None
+        self._button_1 = None
+        self._button_2 = None
         self._selected_text = None
 
     def setup_ui(self):
@@ -44,7 +47,7 @@ class StillPicker:
         instructions_label = tk.Label(master=self._root,
                                       text=self._get_instructions(),
                                      )
-        instructions_label.grid(row=0, column=0, pady=(10))
+        instructions_label.grid(row=0, column=0, columnspan=3, pady=(10))
 
         self._canvas = tk.Canvas(master=self._root,
                                  width=self._get_photos_width(),
@@ -53,12 +56,12 @@ class StillPicker:
         self._canvas.bind('<Motion>', self._motion)
         self._canvas.bind('<Button-1>', self._left_click)
         self._canvas.bind('<Button-2>', self._right_click)
-        self._canvas.grid(row=1, column=0, padx=5, pady=5)
+        self._canvas.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
         self._photo_on_canvas = self._canvas.create_image(0, 0, anchor='nw')
         self._selected_text = self._canvas.create_text(50,
                                                        50,
                                                        anchor='w',
-                                                       font=StillPicker.SELECT_LABEL_FONT,
+                                                       font=Scrubber.SELECT_LABEL_FONT,
                                                       )
         self._canvas.tag_raise(self._selected_text)
 
@@ -68,7 +71,23 @@ class StillPicker:
                                       padx=5,
                                       pady=5,
                                      )
-        self._done_button.grid(row=2, column=0, pady=(0, 10))
+        self._done_button.grid(row=2, column=2, pady=(0, 10))
+
+        self._button_1 = tk.Button(master=self._root,
+                                   text="Button 1",
+                                   command=self._button_1_click,
+                                   padx=5,
+                                   pady=5,
+                                  )
+        self._button_1.grid(row=2, column=0, pady=(0, 10))
+
+        self._button_2 = tk.Button(master=self._root,
+                                   text="Button 2",
+                                   command=self._button_2_click,
+                                   padx=5,
+                                   pady=5,
+                                  )
+        self._button_2.grid(row=2, column=1, pady=(0, 10))
 
         self._display_current_photo()
         return self
@@ -80,7 +99,7 @@ class StillPicker:
         return self._images_from_video[0].get_image().height
 
     def _get_instructions(self):
-        if self._selector_type == StillPicker.SELECT_SINGLE_IMAGE:
+        if self._selector_type == Scrubber.SELECT_SINGLE_IMAGE:
             return "Slide to scrub. Tap to pick frame."
 
         return "Slide to scrub. Left click to pick begin. Right click to pick end."
@@ -97,7 +116,7 @@ class StillPicker:
         self._display_current_photo()
 
     def _right_click(self, _):
-        if self._selector_type is not StillPicker.SELECT_RANGE:
+        if self._selector_type is not Scrubber.SELECT_RANGE:
             return
 
         self._selected_end_idx = self._current_photo_idx
@@ -137,7 +156,7 @@ class StillPicker:
 
     def _update_selected_text(self):
         if self._current_photo_idx is self._selected_start_idx:
-            if self._selector_type is StillPicker.SELECT_SINGLE_IMAGE:
+            if self._selector_type is Scrubber.SELECT_SINGLE_IMAGE:
                 self._canvas.itemconfigure(self._selected_text, text='Selected', fill='green')
             else:
                 self._canvas.itemconfigure(self._selected_text, text='Start', fill='green')
@@ -146,17 +165,16 @@ class StillPicker:
         else:
             self._canvas.itemconfigure(self._selected_text, text='')
 
-
-    def _display_next_photo(self):
-        self._increment_photo_idx()
-        self._display_current_photo()
-
-    def _increment_photo_idx(self):
-        self._current_photo_idx = (self._current_photo_idx + 1) % len(self._images_from_video)
-        return self
-
     def _done_click(self):
         self._root.destroy()
+
+    @abc.abstractmethod
+    def _button_1_click(self):
+        pass
+
+    @abc.abstractmethod
+    def _button_2_click(self):
+        pass
 
     def _get_num_images_from_video(self):
         return len(self._images_from_video)
