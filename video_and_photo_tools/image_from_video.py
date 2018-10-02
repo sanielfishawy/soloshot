@@ -3,12 +3,20 @@ import PIL.Image
 
 class ImageFromVideo:
 
-    def __init__(self, image: PIL.Image.Image, frame_num=None, time_ms=None, video_url=None, video_id=None):
+    def __init__(self,
+                 image: PIL.Image.Image,
+                 frame_num=None,
+                 time_ms=None,
+                 video_url=None,
+                 video_id=None,
+                 from_cache=False):
+
         self._image = image
         self._frame_num = frame_num
         self._time_ms = time_ms
         self._video_url = Path(video_url)
         self._video_id = video_id
+        self._from_cache = from_cache
 
     def set_image(self, image: PIL.Image.Image):
         self._image = image
@@ -30,6 +38,10 @@ class ImageFromVideo:
         self._video_id = video_id
         return self
 
+    def set_from_cache(self, from_cache):
+        self._from_cache = from_cache
+        return self
+
     def get_image(self) -> PIL.Image:
         return self._image
 
@@ -44,3 +56,6 @@ class ImageFromVideo:
 
     def get_video_id(self) -> str:
         return self._video_id
+
+    def get_from_cache(self) -> bool:
+        return self._from_cache

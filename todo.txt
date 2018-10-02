@@ -1,11 +1,12 @@
 Tools
-- Video helper
+- Video helper tested
+    - Add time_ms to Cache
     - Add ability to request mode and size of file
-    - Remove resize and mode from StillPicker
-    - Generate unique id for Video filename+num_bytes
+    x Generate unique id for Video filename+num_bytes
         - Add it to ImageFromVideo object
     - Add Cache
 
+    - Remove resize and mode from StillPicker
 - StillPicker
     - Refactor to Scrubber
         - Subclass to StillPicker
