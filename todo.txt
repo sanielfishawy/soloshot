@@ -1,7 +1,20 @@
 Tools
 - Video helper
-    - Add Cache
     - Add ability to request mode and size of file
+    - Remove resize and mode from StillPicker
+    - Generate unique id for Video filename+num_bytes
+        - Add it to ImageFromVideo object
+    - Add Cache
+
+- StillPicker
+    - Refactor to Scrubber
+        - Subclass to StillPicker
+        -
+    - Add
+        - VideoUrl in title
+        - Frame number
+        - Place selected etc in middle of image
+
 
 
 

@@ -3,11 +3,12 @@ import PIL.Image
 
 class ImageFromVideo:
 
-    def __init__(self, image: PIL.Image.Image, frame_num=None, time_ms=None, video_url=None):
+    def __init__(self, image: PIL.Image.Image, frame_num=None, time_ms=None, video_url=None, video_id=None):
         self._image = image
         self._frame_num = frame_num
         self._time_ms = time_ms
         self._video_url = Path(video_url)
+        self._video_id = video_id
 
     def set_image(self, image: PIL.Image.Image):
         self._image = image
@@ -25,6 +26,10 @@ class ImageFromVideo:
         self._video_url = Path(video_url)
         return self
 
+    def set_video_id(self, video_id):
+        self._video_id = video_id
+        return self
+
     def get_image(self) -> PIL.Image:
         return self._image
 
@@ -36,3 +41,6 @@ class ImageFromVideo:
 
     def get_video_url(self) -> Path:
         return self._video_url
+
+    def get_video_id(self) -> str:
+        return self._video_id

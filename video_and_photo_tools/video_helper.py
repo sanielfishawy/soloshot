@@ -11,10 +11,21 @@ from video_and_photo_tools.image_from_video import ImageFromVideo
 
 class VideoHelper:
 
-    def __init__(self, video_url):
+    IMAGE_MODE_L = 'L'
+
+    def __init__(self,
+                 video_url,
+                 image_mode='L',
+                 image_width=640):
         self._video_url = Path(video_url)
+        self._image_mode = image_mode
+        self._image_width = image_width
+
         self._cap = cv2.VideoCapture(str(video_url.resolve()))
         self._frame_rate = None
+
+    def get_video_id(self):
+        return self._video_url.name + '-' + str(os.path.getsize(self._video_url))
 
     def get_image_from_video_at_frame_num(self, frame_num) -> ImageFromVideo:
         frame_num = self.bounded_frame_num(frame_num)
@@ -24,6 +35,7 @@ class VideoHelper:
                               time_ms=time_ms,
                               frame_num=frame_num,
                               video_url=self._video_url,
+                              video_id=self.get_video_id(),
                              )
 
     def get_image_from_video_at_time_ms(self, time_ms):

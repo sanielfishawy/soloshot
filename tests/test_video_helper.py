@@ -16,6 +16,11 @@ class TestVideoHelper(unittest.TestCase):
         self.cap = cv2.VideoCapture(str(TestVideoHelper.TEST_VIDEO_PATH.resolve()))
         self.video_duration_ms = self.video_helper.get_video_duration_ms()
 
+    def test_get_video_id(self):
+        size = str(os.path.getsize(TestVideoHelper.TEST_VIDEO_PATH))
+        filename = TestVideoHelper.TEST_VIDEO_PATH.name
+        self.assertEqual(self.video_helper.get_video_id(), filename + '-' + size)
+
     def test_get_image_from_video_at_frame_returns_the_correct_data(self):
         frame_num = int(self.video_helper.get_frame_count() / 2)
         im = self.video_helper.get_image_from_video_at_frame_num(frame_num)
