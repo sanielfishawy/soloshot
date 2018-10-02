@@ -6,32 +6,32 @@ from pathlib import Path
 import PIL.Image
 import cv2
 sys.path.insert(0, os.getcwd())
-from video_and_photo_tools.video_helper import VideoHelper
+from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 
-class TestVideoHelper(unittest.TestCase):
+class TestImageFromVideoGrabber(unittest.TestCase):
 
     TEST_VIDEO_PATH = Path('.') / 'data/test_data/test_videos/video.mp4'
     TEST_CACHE_DIR_PATH = Path('.') / 'data/test_data/test_cache'
 
     def setUp(self):
-        self.video_helper = VideoHelper(TestVideoHelper.TEST_VIDEO_PATH,
-                                        cache_dir_path=TestVideoHelper.TEST_CACHE_DIR_PATH)
+        self.video_helper = ImageFromVideoGrabber(TestImageFromVideoGrabber.TEST_VIDEO_PATH,
+                                        cache_dir_path=TestImageFromVideoGrabber.TEST_CACHE_DIR_PATH)
         self.video_helper._image_cache.clear_cache()
-        self.cap = cv2.VideoCapture(str(TestVideoHelper.TEST_VIDEO_PATH.resolve()))
+        self.cap = cv2.VideoCapture(str(TestImageFromVideoGrabber.TEST_VIDEO_PATH.resolve()))
         self.video_duration_ms = self.video_helper.get_video_duration_ms()
         self.mid_frame = int(self.video_helper.get_frame_count() / 2)
         self.mid_time_ms = self.video_helper.get_time_ms_for_frame_num(self.mid_frame)
 
     def test_get_video_id(self):
-        size = str(os.path.getsize(TestVideoHelper.TEST_VIDEO_PATH))
-        filename = TestVideoHelper.TEST_VIDEO_PATH.name
+        size = str(os.path.getsize(TestImageFromVideoGrabber.TEST_VIDEO_PATH))
+        filename = TestImageFromVideoGrabber.TEST_VIDEO_PATH.name
         self.assertEqual(self.video_helper.get_video_id(), filename + '-' + size)
 
     def test_get_image_at_frame_saves_and_retrieves_from_cache(self):
         self.video_helper._image_cache.clear_cache()
-        self.assertEqual(0, len(list(TestVideoHelper.TEST_CACHE_DIR_PATH.glob('*'))))
+        self.assertEqual(0, len(list(TestImageFromVideoGrabber.TEST_CACHE_DIR_PATH.glob('*'))))
         img = self.video_helper.get_image_at_frame_num(self.mid_frame)
-        self.assertEqual(1, len(list(TestVideoHelper.TEST_CACHE_DIR_PATH.glob('*'))))
+        self.assertEqual(1, len(list(TestImageFromVideoGrabber.TEST_CACHE_DIR_PATH.glob('*'))))
         self.assertFalse(img.get_from_cache())
         img = self.video_helper.get_image_at_frame_num(self.mid_frame)
         self.assertTrue(img.get_from_cache())
@@ -97,7 +97,7 @@ class TestVideoHelper(unittest.TestCase):
             self.assertTrue(ifv.get_from_cache())
 
         del_from_cache_frame_num = self.mid_frame + 5
-        del_from_cache_file = TestVideoHelper.TEST_CACHE_DIR_PATH / f'video.mp4-3725381013-width=640-mode=L-frame_num={del_from_cache_frame_num}.jpg'
+        del_from_cache_file = TestImageFromVideoGrabber.TEST_CACHE_DIR_PATH / f'video.mp4-3725381013-width=640-mode=L-frame_num={del_from_cache_frame_num}.jpg'
         os.remove(del_from_cache_file.resolve())
 
         ifvs = self.video_helper.get_num_images_from_video_after_start_n(self.mid_frame, num)

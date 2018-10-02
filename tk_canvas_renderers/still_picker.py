@@ -6,7 +6,7 @@ import PIL.Image
 import PIL.ImageTk
 
 sys.path.insert(0, os.getcwd())
-from video_and_photo_tools.image_from_video import ImageFromVideo
+from video_and_photo_tools.image_from_video import ImageFromVideo # pylint disable=C0413
 
 class StillPicker:
 

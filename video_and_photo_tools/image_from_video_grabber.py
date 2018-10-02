@@ -9,9 +9,9 @@ import PIL.Image
 sys.path.insert(0, os.getcwd())
 from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413
 from video_and_photo_tools.image_cache import ImageCache # pylint: disable=C0413
-import video_and_photo_tools.pil_image_extensions
+import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611
 
-class VideoHelper:
+class ImageFromVideoGrabber:
 
     IMAGE_MODE_L = 'L'
     IMAGE_MODE_RGB = 'RGB'

@@ -1,18 +1,6 @@
 Tools
 
 - VideoHelper
-    - get_num_images_from_after_start_n
-        - use cache
-
-
-        - set frame position
-        - try cache
-            - if cache success
-                - add results
-                - update frame pos
-            - else
-                - do read
-
     - Rename to ImageFromVideoGrabber
 
 - StillPicker
