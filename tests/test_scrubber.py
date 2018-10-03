@@ -4,7 +4,7 @@ import os
 import unittest
 from pathlib import Path
 sys.path.insert(0, os.getcwd())
-from tk_canvas_renderers.still_picker import Scrubber
+from tk_canvas_renderers.scrubber import Scrubber
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 
 
