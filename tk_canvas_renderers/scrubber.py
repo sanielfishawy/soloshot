@@ -11,8 +11,6 @@ from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disa
 
 class Scrubber:
 
-    SELECT_LABEL_FONT = ("arial", 35, "normal")
-
     def __init__(self,
                  images_from_video: List[ImageFromVideo] = None,
                  callback=None,
@@ -105,6 +103,15 @@ class Scrubber:
     @abc.abstractmethod
     def _button_2_click(self):
         pass
+
+    def _get_center_of_canvas_coords(self):
+        return (int(self._get_photos_width() / 2), int(self._get_photos_height() / 2))
+
+    def _set_button_1_text(self, text):
+        self._button_1.config(text=text)
+
+    def _set_button_2_text(self, text):
+        self._button_2.config(text=text)
 
     def _get_photos_width(self):
         return self._images_from_video[0].get_image().width

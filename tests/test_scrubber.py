@@ -7,7 +7,6 @@ sys.path.insert(0, os.getcwd())
 from tk_canvas_renderers.scrub_picker import ScrubPicker
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 
-
 class TestScrubber(unittest.TestCase):
 
     TEST_VIDEO_PATH = Path('.') / 'data/test_data/test_videos/video.mp4'

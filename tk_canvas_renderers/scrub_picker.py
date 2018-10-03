@@ -7,6 +7,7 @@ class ScrubPicker(Scrubber):
 
     SELECT_SINGLE_IMAGE = 0
     SELECT_RANGE = 1
+    SELECT_LABEL_FONT = ("arial", 55, "normal")
 
     def __init__(self,
                  selector_type=0,
@@ -21,18 +22,29 @@ class ScrubPicker(Scrubber):
 
     def setup_ui(self):
         super().setup_ui()
-        self._selected_text = self._canvas.create_text(50,
-                                                       50,
-                                                       anchor='w',
-                                                       font=Scrubber.SELECT_LABEL_FONT,
+        self._selected_text = self._canvas.create_text(self._get_center_of_canvas_coords()[0],
+                                                       self._get_center_of_canvas_coords()[1],
+                                                       font=ScrubPicker.SELECT_LABEL_FONT,
                                                       )
         self._canvas.tag_raise(self._selected_text)
+        self._set_button_text()
+
+    def _set_button_text(self):
+        if self._selector_type == ScrubPicker.SELECT_RANGE:
+            self._set_button_1_text('Jump to Start')
+            self._set_button_2_text('Jump to End')
+        else:
+            self._set_button_1_text('Jump to Selected')
 
     def _button_1_click(self):
-        pass
+        # Jump to start
+        if self._selected_start_idx is not None:
+            self._display_photo(self._selected_start_idx)
 
     def _button_2_click(self):
-        pass
+        # Jump to end
+        if self._selected_end_idx is not None:
+            self._display_photo(self._selected_end_idx)
 
     def _get_instructions(self):
         if self._selector_type == ScrubPicker.SELECT_SINGLE_IMAGE:
