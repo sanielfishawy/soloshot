@@ -5,8 +5,8 @@ class CanvasUtils:
         self.canvas = canvas
         self.label_font = ("arial", 10, "normal")
 
-    def create_dot(self, p, **kargs):
-        return self.canvas.create_oval(p[0]-1, p[1]-1, p[0]+1, p[1]+1, **kargs)
+    def create_dot(self, p, radius=1, **kargs):
+        return self.canvas.create_oval(p[0]-radius, p[1]-radius, p[0]+radius, p[1]+radius, **kargs)
 
     def create_dot_label(self, x, y, text, **kargs):
         return self.canvas.create_text(x,

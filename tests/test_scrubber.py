@@ -17,10 +17,10 @@ class TestScrubber(unittest.TestCase):
                                                               cache_dir_path=TestScrubber.IMAGE_CACHE_DIR_PATH)
 
         middle_frame = int(self.image_from_video_grabber.get_frame_count() / 2)
-        self.images_from_video = self.image_from_video_grabber.get_images_around_frame_number(middle_frame, 10, 10)
+        self.images_from_video = self.image_from_video_grabber.get_images_around_frame_number(middle_frame, 100, 100)
 
         self.scrub_picker = ScrubPicker(images_from_video=self.images_from_video,
-                                        selector_type=ScrubPicker.SELECT_RANGE,
+                                        selector_type=ScrubPicker.SELECT_SINGLE_IMAGE,
                                        )
 
     def test_visualize(self):

@@ -1,11 +1,19 @@
 Tools
-- StillPicker
-    - Refactor to Scrubber
-        - Subclass to StillPicker
+- ScrubPicker
+    - Jump to selected, start end
+        - After jump to selected freeze until it is crossed with the cursor.
+        - Indicator to show where you are in the video
+    - Position indicator
+        - Separate class
+            - canvas
+            - y_pos above bottom of canvas
+            - right extent
+            - left extent
+            - set position
     - Add
         - VideoUrl in title
-        - Frame number
-        - Place selected etc in middle of image
+        - Frame number under instructions
+    - Ability to remove buttons
     - Add ability to pass callback((Start, End), or (picked frame))
         - Add callback
         - Call after done with results

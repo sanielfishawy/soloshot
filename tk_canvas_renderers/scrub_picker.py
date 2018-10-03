@@ -39,12 +39,12 @@ class ScrubPicker(Scrubber):
     def _button_1_click(self):
         # Jump to start
         if self._selected_start_idx is not None:
-            self._display_photo(self._selected_start_idx)
+            self._display_photo(self._selected_start_idx, override_frozen=True)
 
     def _button_2_click(self):
         # Jump to end
         if self._selected_end_idx is not None:
-            self._display_photo(self._selected_end_idx)
+            self._display_photo(self._selected_end_idx, override_frozen=True)
 
     def _get_instructions(self):
         if self._selector_type == ScrubPicker.SELECT_SINGLE_IMAGE:

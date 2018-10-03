@@ -8,6 +8,7 @@ import PIL.ImageTk
 
 sys.path.insert(0, os.getcwd())
 from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413
+from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator # pylint: disable=C0413
 
 class Scrubber:
 
@@ -29,10 +30,15 @@ class Scrubber:
 
         self._root = None
         self._canvas = None
+        self._canvas_utils = None
         self._photo_on_canvas = None
         self._done_button = None
         self._button_1 = None
         self._button_2 = None
+
+        self._is_frozen = False
+
+        self._video_position_indicator = None
 
     @abc.abstractmethod
     def setup_ui(self):
@@ -50,8 +56,14 @@ class Scrubber:
         self._canvas.bind('<Motion>', self._motion)
         self._canvas.bind('<Button-1>', self._left_click)
         self._canvas.bind('<Button-2>', self._right_click)
+        self._canvas.bind('<Enter>', self._enter)
+        self._canvas.bind('<Leave>', self._leave)
         self._canvas.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
         self._photo_on_canvas = self._canvas.create_image(0, 0, anchor='nw')
+
+        self._video_position_indicator = VideoPositionIndicator(self._canvas,
+                                                                self._get_left_scrub_bound()) # pylint: disable=C0301
+        self._video_position_indicator.setup_ui()
 
         self._done_button = tk.Button(master=self._root,
                                       text="Done",
@@ -122,15 +134,18 @@ class Scrubber:
     def _motion(self, event):
         self._display_photo(self._get_idx_from_cursor_x(event.x))
 
-    def _get_idx_from_cursor_x(self, cursor_x):
-        left_scrub_bound = self._margin_for_cursor_scrub * self._get_photos_width()
-        right_scrub_bound = (1 - self._margin_for_cursor_scrub) * self._get_photos_width()
-        width_of_scrub = right_scrub_bound - left_scrub_bound
+    def _get_left_scrub_bound(self):
+        return self._margin_for_cursor_scrub * self._get_photos_width()
 
-        if cursor_x <= left_scrub_bound:
+    def _get_right_scrub_bound(self):
+        return (1 - self._margin_for_cursor_scrub) * self._get_photos_width()
+
+    def _get_idx_from_cursor_x(self, cursor_x):
+        width_of_scrub = self._get_right_scrub_bound() - self._get_left_scrub_bound()
+        if cursor_x <= self._get_left_scrub_bound():
             return 0
 
-        idx = int(self._get_num_images_from_video() * (cursor_x - left_scrub_bound) / width_of_scrub) # pylint: disable=C0301
+        idx = int(self._get_num_images_from_video() * (cursor_x - self._get_left_scrub_bound()) / width_of_scrub) # pylint: disable=C0301
         return min(idx, self._get_num_images_from_video() - 1)
 
     def _get_tk_photos(self):
@@ -143,15 +158,44 @@ class Scrubber:
         self._display_photo(self._current_photo_idx)
         return self
 
-    def _display_photo(self, idx):
-        self._current_photo_idx = idx
-        self._canvas.itemconfig(self._photo_on_canvas, image=self._get_tk_photos()[idx])
-        self._update_canvas_overlay()
-        self._root.update()
+    def _display_photo(self, idx, override_frozen=False):
+        if self._handle_frozen(idx) or override_frozen:
+            self._current_photo_idx = idx
+            self._canvas.itemconfig(self._photo_on_canvas, image=self._get_tk_photos()[idx])
+            self._update_canvas_overlay()
+            self._update_video_position_indicator()
+            self._root.update()
+        return self
+
+    def _handle_frozen(self, idx):
+        if self._is_frozen:
+            if self._current_photo_idx == idx:
+                self._un_freeze()
+                return True
+            else:
+                return False
+        return True
+
+
+    def _update_video_position_indicator(self):
+        percent = self._current_photo_idx / self._get_num_images_from_video()
+        self._video_position_indicator.set_percent(percent)
         return self
 
     def _done_click(self):
         self._root.destroy()
+
+    def _leave(self, _):
+        self._freeze()
+
+    def _enter(self, event):
+        pass
+
+    def _freeze(self):
+        self._is_frozen = True
+
+    def _un_freeze(self):
+        self._is_frozen = False
 
     def _get_num_images_from_video(self):
         return len(self._images_from_video)
