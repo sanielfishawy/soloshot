@@ -7,19 +7,19 @@ from tk_canvas_renderers.canvas_utils import CanvasUtils
 
 class VerticalPhotoList:
 
-    def __init__(self, photos: Iterable[PIL.Image.Image],
+    def __init__(self, images_from_video: Iterable[PIL.Image.Image],
                  window_height=None,
-                 num_photos_displayed_vertically=2):
+                ):
 
-        self._photos = photos
-        self._tk_photos = None
-        self._num_photos_displayed_vertically = num_photos_displayed_vertically
+        self._images_from_video = images_from_video
+        self._tk_images = None
         self._window_height = window_height
 
         self._root = None
         self._outer_frame = None
         self._outer_canvas = None
         self._vbar = None
+        self._inner_canvases = []
 
     def _setup_ui(self):
         self._root = tk.Tk()
@@ -30,10 +30,10 @@ class VerticalPhotoList:
         self._outer_canvas = tk.Canvas(self._outer_frame,
                                        scrollregion=(0,
                                                      0,
-                                                     self._get_first_photo_resize_width(),
-                                                     self._get_total_photo_height()),
+                                                     self._get_image_width(),
+                                                     self._get_total_images_height()),
                                        background='blue')
-        self._outer_canvas.config(width=self._get_first_photo_resize_width(),
+        self._outer_canvas.config(width=self._get_image_width(),
                                   height=self._get_window_height())
 
         self._vbar = tk.Scrollbar(self._outer_frame, orient=tk.VERTICAL)
@@ -54,47 +54,34 @@ class VerticalPhotoList:
             inner_canvas.create_image(0, 0, image=photo, anchor='nw')
             self._outer_canvas.create_window(0, y_pos,
                                              anchor='nw',
-                                             height=self._get_photo_resize_height(),
-                                             width=self._get_first_photo_resize_width(),
+                                             height=self._get_image_height(),
+                                             width=self._get_image_width(),
                                              window=inner_canvas)
 
-            y_pos += self._get_photo_resize_height()
-
-    def _get_resized_photos(self) -> Iterable[PIL.Image.Image]:
-        return [photo.resize(self._get_photo_resize_size())
-                for photo in self._photos]
+            y_pos += self._get_image_height()
 
     def _get_tk_photos(self):
-        if self._tk_photos is None:
-            self._tk_photos = [PIL.ImageTk.PhotoImage(image=photo)
-                               for photo in self._get_resized_photos()]
-        return self._tk_photos
+        if self._tk_images is None:
+            self._tk_images = [PIL.ImageTk.PhotoImage(image=ifv.get_image())
+                               for ifv in self._images_from_video]
+        return self._tk_images
 
     def _get_window_height(self):
         if self._window_height is None:
             self._window_height = self._root.winfo_screenheight() - 75
         return self._window_height
 
-    def _get_photo_resize_width(self, photo: PIL.Image.Image):
-        return self._get_photo_resize_height() * self._get_aspect_ratio(photo)
+    def _get_total_images_height(self):
+        return self._get_num_images() * self._get_image_height()
 
-    def _get_first_photo_resize_width(self):
-        return self._get_photo_resize_width(self._photos[0])
+    def _get_image_width(self):
+        return self._images_from_video[0].get_image().width
 
-    def _get_photo_resize_height(self):
-        return self._get_window_height() / self._num_photos_displayed_vertically
+    def _get_image_height(self):
+        return self._images_from_video[0].get_image().height
 
-    def _get_photo_resize_size(self):
-        return (int(self._get_first_photo_resize_width()), int(self._get_photo_resize_height()))
-
-    def _get_total_photo_height(self):
-        return self._get_num_photos() * self._get_photo_resize_height()
-
-    def _get_num_photos(self):
-        return len(self._photos)
-
-    def _get_aspect_ratio(self, photo: PIL.Image.Image):
-        return photo.width / photo.height
+    def _get_num_images(self):
+        return len(self._images_from_video)
 
     def run(self):
         self._setup_ui()

@@ -46,15 +46,3 @@ for field in fields:
 # base_tilt_at_current_pan_angle [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
 # base_roll_at_current_pan_angle [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
 # cam_pitch [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
-
-
-
-motor_time
-pan_motor_read
-tilt_motor_read
-base_lat
-base_long
-base_alt
-base_tilt_at_current_pan_angle
-base_roll_at_current_pan_angle
-cam_pitch

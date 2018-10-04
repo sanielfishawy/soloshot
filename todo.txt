@@ -1,9 +1,9 @@
 Tools
+- VerticalPhotoList
+    - Remove resize ability
+    - Use image from video objects
+    - Use a grid to display
 - ScrubPicker
-    - Add
-        - VideoUrl in title
-        - Frame number under instructions
-    - Ability to remove buttons
     - Add ability to pass callback((Start, End), or (picked frame))
         - Add callback
         - Call after done with results
