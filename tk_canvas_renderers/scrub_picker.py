@@ -35,6 +35,7 @@ class ScrubPicker(Scrubber):
             self._set_button_2_text('Jump to End')
         else:
             self._set_button_1_text('Jump to Selected')
+            self._button_2.grid_remove()
 
     def _button_1_click(self):
         # Jump to start

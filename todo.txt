@@ -1,15 +1,5 @@
 Tools
 - ScrubPicker
-    - Jump to selected, start end
-        - After jump to selected freeze until it is crossed with the cursor.
-        - Indicator to show where you are in the video
-    - Position indicator
-        - Separate class
-            - canvas
-            - y_pos above bottom of canvas
-            - right extent
-            - left extent
-            - set position
     - Add
         - VideoUrl in title
         - Frame number under instructions

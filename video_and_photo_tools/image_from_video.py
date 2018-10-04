@@ -14,7 +14,7 @@ class ImageFromVideo:
         self._image = image
         self._frame_num = frame_num
         self._time_ms = time_ms
-        self._video_url = Path(video_url)
+        self._video_path = Path(video_url)
         self._video_id = video_id
         self._from_cache = from_cache
 
@@ -30,8 +30,8 @@ class ImageFromVideo:
         self._time_ms = time_ms
         return self
 
-    def set_video_url(self, video_url):
-        self._video_url = Path(video_url)
+    def set_video_path(self, video_path):
+        self._video_path = Path(video_path)
         return self
 
     def set_video_id(self, video_id):
@@ -51,8 +51,8 @@ class ImageFromVideo:
     def get_time_ms(self):
         return self._time_ms
 
-    def get_video_url(self) -> Path:
-        return self._video_url
+    def get_video_path(self) -> Path:
+        return self._video_path
 
     def get_video_id(self) -> str:
         return self._video_id

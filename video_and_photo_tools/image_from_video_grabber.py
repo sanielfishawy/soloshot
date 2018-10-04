@@ -103,7 +103,7 @@ class ImageFromVideoGrabber:
 
     def _get_image_from_video_object(self, image, time_ms, frame_num, from_cache):
         return ImageFromVideo(image=image,
-                              time_ms=time_ms,
+                              time_ms=int(time_ms),
                               frame_num=frame_num,
                               video_url=self._video_url,
                               video_id=self.get_video_id(),

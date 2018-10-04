@@ -29,6 +29,9 @@ class Scrubber:
         self._tk_photos = None
 
         self._root = None
+        self._instructions_label = None
+        self._frame_num_label = None
+        self._frame_ms_label = None
         self._canvas = None
         self._canvas_utils = None
         self._photo_on_canvas = None
@@ -43,11 +46,22 @@ class Scrubber:
     @abc.abstractmethod
     def setup_ui(self):
         self._root = tk.Tk()
+        self._root.title(str(self._get_video_path().resolve()))
 
-        instructions_label = tk.Label(master=self._root,
-                                      text=self._get_instructions(),
-                                     )
-        instructions_label.grid(row=0, column=0, columnspan=3, pady=(10))
+        self._instructions_label = tk.Label(master=self._root,
+                                            text=self._get_instructions(),
+                                           )
+        self._instructions_label.grid(row=0, column=0, columnspan=3, pady=10)
+
+        self._frame_num_label = tk.Label(master=self._root,
+                                         text=self._get_frame_num_label_text(),
+                                        )
+        self._frame_num_label.grid(row=1, column=0, sticky=tk.W, padx=10)
+
+        self._frame_ms_label = tk.Label(master=self._root,
+                                        text=self._get_frame_ms_label_text(),
+                                       )
+        self._frame_ms_label.grid(row=2, column=0, sticky=tk.W, padx=10)
 
         self._canvas = tk.Canvas(master=self._root,
                                  width=self._get_photos_width(),
@@ -58,7 +72,7 @@ class Scrubber:
         self._canvas.bind('<Button-2>', self._right_click)
         self._canvas.bind('<Enter>', self._enter)
         self._canvas.bind('<Leave>', self._leave)
-        self._canvas.grid(row=1, column=0, columnspan=3, padx=5, pady=5)
+        self._canvas.grid(row=3, column=0, columnspan=3, padx=5, pady=5)
         self._photo_on_canvas = self._canvas.create_image(0, 0, anchor='nw')
 
         self._video_position_indicator = VideoPositionIndicator(self._canvas,
@@ -71,7 +85,7 @@ class Scrubber:
                                       padx=5,
                                       pady=5,
                                      )
-        self._done_button.grid(row=2, column=2, pady=(0, 10))
+        self._done_button.grid(row=4, column=2, pady=(0, 10))
 
         self._button_1 = tk.Button(master=self._root,
                                    text="Button 1",
@@ -79,7 +93,7 @@ class Scrubber:
                                    padx=5,
                                    pady=5,
                                   )
-        self._button_1.grid(row=2, column=0, pady=(0, 10))
+        self._button_1.grid(row=4, column=0, pady=(0, 10))
 
         self._button_2 = tk.Button(master=self._root,
                                    text="Button 2",
@@ -87,7 +101,7 @@ class Scrubber:
                                    padx=5,
                                    pady=5,
                                   )
-        self._button_2.grid(row=2, column=1, pady=(0, 10))
+        self._button_2.grid(row=4, column=1, pady=(0, 10))
 
         self._display_current_photo()
         return self
@@ -116,6 +130,12 @@ class Scrubber:
     def _button_2_click(self):
         pass
 
+    def _get_frame_num_label_text(self):
+        return 'Frame: ' + '{:,}'.format(self._get_current_image_from_video().get_frame_num())
+
+    def _get_frame_ms_label_text(self):
+        return 'Time: ' + '{:,}'.format(self._get_current_image_from_video().get_time_ms()) + 'ms'
+
     def _get_center_of_canvas_coords(self):
         return (int(self._get_photos_width() / 2), int(self._get_photos_height() / 2))
 
@@ -124,6 +144,9 @@ class Scrubber:
 
     def _set_button_2_text(self, text):
         self._button_2.config(text=text)
+
+    def _get_video_path(self):
+        return self._images_from_video[0].get_video_path()
 
     def _get_photos_width(self):
         return self._images_from_video[0].get_image().width
@@ -154,6 +177,9 @@ class Scrubber:
                                for ifv in self._images_from_video]
         return self._tk_photos
 
+    def _get_current_image_from_video(self):
+        return self._images_from_video[self._current_photo_idx]
+
     def _display_current_photo(self):
         self._display_photo(self._current_photo_idx)
         return self
@@ -164,6 +190,7 @@ class Scrubber:
             self._canvas.itemconfig(self._photo_on_canvas, image=self._get_tk_photos()[idx])
             self._update_canvas_overlay()
             self._update_video_position_indicator()
+            self._update_frame_num_and_ms_text()
             self._root.update()
         return self
 
@@ -176,6 +203,9 @@ class Scrubber:
                 return False
         return True
 
+    def _update_frame_num_and_ms_text(self):
+        self._frame_num_label.config(text=self._get_frame_num_label_text())
+        self._frame_ms_label.config(text=self._get_frame_ms_label_text())
 
     def _update_video_position_indicator(self):
         percent = self._current_photo_idx / self._get_num_images_from_video()
