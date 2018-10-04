@@ -48,8 +48,14 @@ class ImageFromVideo:
     def get_frame_num(self):
         return self._frame_num
 
+    def get_formatted_frame_num(self):
+        return '{:,}'.format(self.get_frame_num())
+
     def get_time_ms(self):
         return self._time_ms
+
+    def get_formatted_time_ms(self):
+        return '{:,}'.format(self.get_time_ms())
 
     def get_video_path(self) -> Path:
         return self._video_path

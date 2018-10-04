@@ -1,13 +1,13 @@
 Tools
 - VerticalPhotoList
-    - Factor out single_image_canvas
-        - Passed
-            - image from Video
-            - master
-        - Methods
-            - You can query it for width and height
+    x Factor out single_image_canvas
+        x Passed
+            x image from Video
+            x master
+        x Methods
+            x You can query it for width and height
             - get_canvas
-        - add canvas info overlay
+        x add canvas info overlay
         - create a class for position picker
         - optionally add a position picker to single_image_canvas
     - Callback with results from position_pickers
