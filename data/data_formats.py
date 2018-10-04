@@ -1,32 +1,60 @@
+# pylint: disable=C0103
 from pathlib import Path
 import numpy as np
 
-DATA_DIR = Path('.') / 'data'
+NPZ_DIR = Path('.') / 'data'  # Change this to match your test directory structure
+BASE_NPZ_PATH = NPZ_DIR / 'base.npz'
 
-MOTOR_DATA_FILENAME = 'motor.npz'
+dummy_data = np.arange(15)
 
-MOTOR_TIME = 'motor_time'
-PAN_MOTOR_READ = 'pan_motor_read'
-TILT_MOTOR_READ = 'tilt_motor_read'
-MOTOR_LEGEND = np.array([
-    [MOTOR_TIME],
-    [PAN_MOTOR_READ],
-    [TILT_MOTOR_READ]
-])
+np.savez(BASE_NPZ_PATH,
+         motor_time=dummy_data,
+         pan_motor_read=dummy_data,
+         tilt_motor_read=dummy_data,
+         base_lat=dummy_data,
+         base_long=dummy_data,
+         base_alt=dummy_data,
+         base_tilt_at_current_pan_angle=dummy_data,
+         base_roll_at_current_pan_angle=dummy_data,
+         cam_pitch=dummy_data,
+        )
 
-motor_data = np.arange(15).reshape(3,5)
+base_npz = np.load(BASE_NPZ_PATH)
 
-MOTOR_DATA_PATH = DATA_DIR / MOTOR_DATA_FILENAME
-np.savez(MOTOR_DATA_PATH, motor_legend=MOTOR_LEGEND, motor_data=motor_data)
+fields = base_npz.files
+print(fields)
+# ['motor_time',
+#  'pan_motor_read',
+#  'tilt_motor_read',
+#  'base_lat',
+#  'base_long',
+#  'base_alt',
+#  'base_tilt_at_current_pan_angle',
+#  'base_roll_at_current_pan_angle',
+#  'cam_pitch']
 
-motor_npz = np.load(MOTOR_DATA_PATH)
+for field in fields:
+    data = base_npz[field]
+    print(field, data)
 
-print(motor_npz.files)
+# motor_time [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# pan_motor_read [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# tilt_motor_read [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# base_lat [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# base_long [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# base_alt [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# base_tilt_at_current_pan_angle [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# base_roll_at_current_pan_angle [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
+# cam_pitch [ 0  1  2  3  4  5  6  7  8  9 10 11 12 13 14]
 
-motor_legend = motor_npz['motor_legend']
-print(motor_legend)
-
-motor_data = motor_npz['motor_data']
-print(motor_data)
 
 
+motor_time
+pan_motor_read
+tilt_motor_read
+base_lat
+base_long
+base_alt
+base_tilt_at_current_pan_angle
+base_roll_at_current_pan_angle
+cam_pitch
