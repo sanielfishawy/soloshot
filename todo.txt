@@ -1,8 +1,17 @@
 Tools
 - VerticalPhotoList
-    - Remove resize ability
-    - Use image from video objects
-    - Use a grid to display
+    - Factor out single_image_canvas
+        - Passed
+            - image from Video
+            - master
+        - Methods
+            - You can query it for width and height
+            - get_canvas
+        - add canvas info overlay
+        - create a class for position picker
+        - optionally add a position picker to single_image_canvas
+    - Callback with results from position_pickers
+
 - ScrubPicker
     - Add ability to pass callback((Start, End), or (picked frame))
         - Add callback

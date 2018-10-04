@@ -5,7 +5,7 @@ import PIL.Image
 
 from tk_canvas_renderers.canvas_utils import CanvasUtils
 
-class VerticalPhotoList:
+class VerticalImageList:
 
     def __init__(self, images_from_video: Iterable[PIL.Image.Image],
                  window_height=None,
