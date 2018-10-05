@@ -1,19 +1,14 @@
-- CanvasPositionPicker:
-    x Places an x,y axis on the canvas with center in the middle
-     When you tap it sets a point with a label
-    - You can get the point
+- Data characterization
+    - Check on ease of importing
 
 - VerticalPhotoList
     - Add instructions at the top
     - Add a done button at the top
-        - create a class for position picker
-        - optionally add a position picker to single_image_canvas
     - Callback with results from position_pickers
 
 - ScrubPicker
     - Add ability to pass callback((Start, End), or (picked frame))
         - Add callback
-        - Call after done with results
 
 Fov characterization
  - Find all pan direction changes with high rate of change
