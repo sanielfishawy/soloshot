@@ -1,13 +1,11 @@
-Tools
+- CanvasPositionPicker:
+    x Places an x,y axis on the canvas with center in the middle
+     When you tap it sets a point with a label
+    - You can get the point
+
 - VerticalPhotoList
-    x Factor out single_image_canvas
-        x Passed
-            x image from Video
-            x master
-        x Methods
-            x You can query it for width and height
-            - get_canvas
-        x add canvas info overlay
+    - Add instructions at the top
+    - Add a done button at the top
         - create a class for position picker
         - optionally add a position picker to single_image_canvas
     - Callback with results from position_pickers
@@ -29,21 +27,3 @@ Fov characterization
  - Save
 
 
-
- SESSION_DB/
-   |-- friendly_name_with_underscores/
-        |-- TRACK (dragged from camera)/
-            |-- Video.MP4
-            |-- Thumbnail.THM
-            |-- .SESSION
-
-        |-- Cloud/
-            |-- *.bin
-            |-- *.trk
-        |-- Cache
-            ...
-        |-- NPZ
-
-   |-- friendly_name_with_underscores_2/
-        |-- TRACK (dragged from cammera)/
-        ...

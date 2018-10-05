@@ -1,3 +1,4 @@
+# pylint: disable=C0413
 import sys
 sys.path.insert(0, '/Users/sani/dev/soloshot')
 from object_universe import ObjectUniverse
@@ -14,7 +15,7 @@ class Demo:
         # Setup physical environment
         self.num_timestamps = 100
 
-        self.camera = Camera() 
+        self.camera = Camera()
         self.camera.set_actual_position((100,300)).\
                     set_gps_position((100,290)).\
                     set_gps_max_error(10).\
@@ -30,24 +31,24 @@ class Demo:
         self.viewable_objects = []
         for _ in range(20):
             self.viewable_objects.append(RandomlyMovingObject(boundary=self.boundary))
-        
-        self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps) 
+
+        self.object_universe = ObjectUniverse(num_timestamps=self.num_timestamps)
         self.object_universe.add_camera(self.camera).\
                              add_viewable_objects(self.viewable_objects)
-        
+
         self.cv.set_cv_ids_for_all_camera_time()
 
         # Rendering
         renderable_objects = [
                                self.boundary,
                                self.object_universe,
-                             ] 
+                             ]
 
-        RenderOrchestrator(self.num_timestamps, 
+        RenderOrchestrator(self.num_timestamps,
                            seconds_per_timestamp=0.2,
                            renderable_objects=renderable_objects).run()
-        
-        
+
+
     #     self.camera_renderer = CameraRenderer(self.camera)
     #     self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.cv)
     #     self.boundary_renderer = BoundaryRenderer(self.boundary)

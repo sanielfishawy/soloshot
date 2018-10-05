@@ -47,9 +47,9 @@ class VerticalImageList:
         self._outer_canvas.pack(side=tk.LEFT, expand=True, fill=tk.BOTH)
         self._outer_canvas.config(yscrollcommand=self._vbar.set)
 
-        self._add_inner_canvases()
+        self._add_single_image_canvases()
 
-    def _add_inner_canvases(self):
+    def _add_single_image_canvases(self):
         y_pos = 0
         for sic in self._get_single_image_canvases():
             self._outer_canvas.create_window(0, y_pos,
@@ -73,16 +73,19 @@ class VerticalImageList:
         return self._window_height
 
     def _get_image_width(self):
-        return self._get_single_image_canvases()[0].get_width()
+        return self._get_first_image().get_image().width
 
     def _get_image_height(self):
-        return self._get_single_image_canvases()[0].get_height()
+        return self._get_first_image().get_image().height
 
     def _get_total_images_height(self):
         return self._get_num_images() * self._get_image_height()
 
     def _get_num_images(self):
         return len(self._images_from_video)
+
+    def _get_first_image(self):
+        return self._images_from_video[0]
 
     def run(self):
         self._setup_ui()
