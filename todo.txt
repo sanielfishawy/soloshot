@@ -1,5 +1,8 @@
 - Data characterization
+    - Create a class for google drive service
     - Check on ease of importing
+
+    - Write testcases for
 
 - VerticalPhotoList
     - Add instructions at the top
