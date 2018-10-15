@@ -128,6 +128,29 @@ class TestInputDataStructure(unittest.TestCase):
                     if actual_field not in expected_npz_fields:
                         self.fail(f'Extra field: {actual_field} in {npz_file_path}')
 
+    def test_npz_fields_have_the_same_length(self):
+        for npz_file_path in self.get_npz_file_paths():
+            np_data = np.load(npz_file_path)
+            actual_npz_fields = np_data.files
+            name_of_first_field = actual_npz_fields[0]
+            length_of_first_field = len(np_data[name_of_first_field])
+            if length_of_first_field < 1:
+                self.fail(f'{name_of_first_field} in {npz_file_path} is too short. ({length_of_first_field}')
+            for actual_field in actual_npz_fields:
+                if len(np_data[actual_field]) != length_of_first_field:
+                    self.fail(f'{actual_field} not same length as {name_of_first_field} in {npz_file_path}')
+
+    def test_non_implemented_fields_are_full_of_nones(self):
+        for npz_file_path in self.get_npz_file_paths():
+            np_data = np.load(npz_file_path)
+            for field in np_data.files:
+                field_data = np_data[field]
+                if len(field_data) == 1:
+                    continue
+                if (field_data == field_data[0]).all():
+                    if (field_data != None).all(): # pylint: disable=C0121
+                        self.fail(f'Apparent unimplemented field: {field} in {npz_file_path} not full of Nones')
+
     def verify_directory_and_sub_directories(self, dir_structure, path: Path):
         if isinstance(dir_structure, dict):
             for child in dir_structure.keys():
@@ -150,6 +173,16 @@ class TestInputDataStructure(unittest.TestCase):
 
     def get_session_dirs(self):
         return self.__class__.TOP_LEVEL_DIR_PATH.iterdir()
+
+    def get_npz_filenames(self):
+        return self.__class__.NPZ_FIELDS.keys()
+
+    def get_npz_file_paths(self):
+        r = []
+        for session_dir in self.get_session_dirs():
+            for npz_filename in self.get_npz_filenames():
+                r.append(session_dir / self.__class__.NPZ_DIR / npz_filename)
+        return r
 
 if __name__ == '__main__':
     unittest.main()
