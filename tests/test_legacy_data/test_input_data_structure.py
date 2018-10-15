@@ -143,6 +143,8 @@ class TestInputDataStructure(unittest.TestCase):
         num_wilds = sum(1 for _ in wilds)
         if num_wilds < 1:
             self.fail(f'{path / dir_or_file_with_wild_chars} not found.')
+        if num_wilds > 1:
+            self.fail(f'Too many {path / dir_or_file_with_wild_chars} found.')
         for wild in wilds:
             self.assertTrue((path /  wild).exists())
 
