@@ -168,6 +168,9 @@ class TestInputDataStructure(unittest.TestCase):
 
     def test_video_duration_same_as_base_duration(self):
         for session_dir in self.get_session_dirs():
+            video_path = self.get_video_path(session_dir)
+            assert video_path is not None,\
+                   f'No video found in {session_dir.name} cannot run {self.test_video_duration_same_as_base_duration.__name__}'
             self.assertAlmostEqual(self.get_duration_ms_base_npz(self.get_base_npz_path(session_dir)),
                                    self.get_duration_ms_of_video_at_path(self.get_video_path(session_dir)))
 
@@ -211,8 +214,10 @@ class TestInputDataStructure(unittest.TestCase):
                 if len(list(track_dir.glob(self.__class__.RECODED_VIDEO_FILE))) > 0]
 
     def get_video_path(self, session_dir):
-        return list(self.get_track_dir(session_dir).glob(self.__class__.RECODED_VIDEO_FILE))[0]
-
+        video_files = list(self.get_track_dir(session_dir).glob(self.__class__.RECODED_VIDEO_FILE))
+        if len(video_files) == 0:
+            return None
+        return video_files[0]
 
     def get_track_dirs(self):
         return [self.get_track_dir(session_dir) for session_dir in self.get_session_dirs()]
