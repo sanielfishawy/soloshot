@@ -21,7 +21,8 @@ class TestInputDataStructure(unittest.TestCase):
     SESSION_DIR = '*'
 
     TRACK_DIR = 'Track*'
-    VIDEO_FILE = '*.MP4'
+    RAW_VIDEO_FILE = '*.MP4'
+    RECODED_VIDEO_FILE = 'video.mp4'
     SESSION_FILE = 'SS3_EDIT_*.SESSION'
 
     NPZ_DIR = 'NPZ'
@@ -38,8 +39,8 @@ class TestInputDataStructure(unittest.TestCase):
         'tilt_motor_read',
         'base_latitude',
         'base_longitude',
-        'base_alt_gps',
-        'base_alt_barometer',
+        'base_altitude_gps',
+        'base_altitude_barometer',
         'base_tilt_at_current_pan_angle',
         'base_roll_at_current_pan_angle',
         'cam_pitch',
@@ -80,10 +81,15 @@ class TestInputDataStructure(unittest.TestCase):
             CAMERA_NPZ_FILE,
         ],
         TRACK_DIR: [
-            VIDEO_FILE,
+            RAW_VIDEO_FILE,
+            RECODED_VIDEO_FILE,
             SESSION_FILE,
         ]
     }
+
+    MULTIPLE_MATCHING_FILES_ALLOWED = [
+        RAW_VIDEO_FILE,
+    ]
 
     def setUp(self):
         pass
@@ -180,7 +186,7 @@ class TestInputDataStructure(unittest.TestCase):
         num_wilds = sum(1 for _ in wilds)
         if num_wilds < 1:
             self.fail(f'{path / dir_or_file_with_wild_chars} not found.')
-        if num_wilds > 1:
+        if num_wilds > 1 and dir_or_file_with_wild_chars not in self.__class__.MULTIPLE_MATCHING_FILES_ALLOWED:
             self.fail(f'Too many {path / dir_or_file_with_wild_chars} found.')
         for wild in wilds:
             self.assertTrue((path /  wild).exists())
@@ -200,12 +206,12 @@ class TestInputDataStructure(unittest.TestCase):
         return r
 
     def get_video_paths(self):
-        return [list(track_dir.glob(self.__class__.VIDEO_FILE))[0]
+        return [list(track_dir.glob(self.__class__.RECODED_VIDEO_FILE))[0]
                 for track_dir in self.get_track_dirs()
-                if len(list(track_dir.glob(self.__class__.VIDEO_FILE))) > 0]
+                if len(list(track_dir.glob(self.__class__.RECODED_VIDEO_FILE))) > 0]
 
     def get_video_path(self, session_dir):
-        return list(self.get_track_dir(session_dir).glob(self.__class__.VIDEO_FILE))[0]
+        return list(self.get_track_dir(session_dir).glob(self.__class__.RECODED_VIDEO_FILE))[0]
 
 
     def get_track_dirs(self):
@@ -227,8 +233,6 @@ class TestInputDataStructure(unittest.TestCase):
 
     def get_base_npz_path(self, session_dir):
         return session_dir / self.__class__.NPZ_DIR / self.__class__.BASE_NPZ_FILE
-
-
 
 if __name__ == '__main__':
     unittest.main()
