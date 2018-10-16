@@ -1,4 +1,7 @@
 
+- Test input data structure:
+    - Test that length of video file in ms is same as len of data in ms
+
 - VerticalPhotoList
     - Add instructions at the top
     - Add a done button at the top

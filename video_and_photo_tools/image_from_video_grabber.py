@@ -17,8 +17,8 @@ class ImageFromVideoGrabber:
     IMAGE_MODE_RGB = 'RGB'
     IMAGE_FORMAT_JPG = 'jpg'
     IMAGE_FORMAT_PNG = 'png'
-    IMAGE_FORMAT_ppm = 'ppm'
-    IMAGE_FORMAT_bmp = 'bmp'
+    IMAGE_FORMAT_PPM = 'ppm'
+    IMAGE_FORMAT_BMP = 'bmp'
 
     def __init__(self,
                  video_url,
