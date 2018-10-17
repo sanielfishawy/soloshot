@@ -216,10 +216,12 @@ class TestInputDataStructure(unittest.TestCase):
                 npz_duration = self.get_duration_in_ms_for_npz_with_a_time_field(npz_path)
                 if npz_duration is None:
                     continue
+                delta = 200
                 self.assertAlmostEqual(video_duration,
                                        npz_duration,
-                                       msg=(f'{session_dir.name}: video duration: ({video_duration})'
-                                            f'not equal to '
+                                       delta=delta,
+                                       msg=(f'{session_dir.name}: video duration: ({video_duration}) '
+                                            f'not within {delta} ms of '
                                             f'{npz_path.name} timefield duration ({npz_duration})'
                                            )
                                        )
