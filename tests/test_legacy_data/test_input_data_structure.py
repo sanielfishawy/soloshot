@@ -47,14 +47,18 @@ class TestInputDataStructure(unittest.TestCase):
         'base_compass',
     ]
 
+    LENS_TIME_FIELD = 'lens_time'
+
     LENS_NPZ_FIELDS = [
-        'lens_time',
+        LENS_TIME_FIELD,
         'lens_fov',
         'lens_zoom',
     ]
 
+    TAG_TIME_FIELD = 'tag_time'
+
     TAG_NPZ_FIELDS = [
-        'tag_time',
+        TAG_TIME_FIELD,
         'tag_latitude',
         'tag_longitude',
         'tag_altitude_gps',
@@ -64,6 +68,12 @@ class TestInputDataStructure(unittest.TestCase):
     CAMERA_NPZ_FIELDS = [
         'record_start_time',
         'preview_start_time',
+    ]
+
+    TIME_FIELDS = [
+        BASE_TIME_FIELD,
+        LENS_TIME_FIELD,
+        TAG_TIME_FIELD,
     ]
 
     UNIMPLEMENTED_FIELDS = [
@@ -146,20 +156,29 @@ class TestInputDataStructure(unittest.TestCase):
                         self.fail(f'Extra field: {actual_field} in {npz_file_path}')
 
     def test_npz_fields_have_the_same_length(self):
-        for npz_file_path in self.get_npz_file_paths():
+        for npz_file_path in self.get_all_npz_file_paths():
             np_data = np.load(npz_file_path)
             actual_npz_fields = np_data.files
             name_of_first_field = actual_npz_fields[0]
-            length_of_first_field = len(np_data[name_of_first_field])
-            if length_of_first_field < 1:
-                self.fail(f'{name_of_first_field} in {npz_file_path} is too short. ({length_of_first_field}')
+            length_of_first_field = np_data[name_of_first_field].size
+            self.assertGreater(length_of_first_field,
+                               0,
+                               msg=(f'{name_of_first_field} in {npz_file_path} '
+                                    f'is too short ({length_of_first_field}).'
+                                   )
+                               )
             for actual_field in actual_npz_fields:
-                field_len = len(np_data[actual_field])
-                if field_len != length_of_first_field:
-                    self.fail(f'{actual_field} ({field_len}) not same length as {name_of_first_field} ({length_of_first_field}) in {npz_file_path}')
+                field_len = np_data[actual_field].size
+                self.assertEqual(field_len,
+                                 length_of_first_field,
+                                 msg=(f'{actual_field} ({field_len}) '
+                                      f'not same length as {name_of_first_field} ({length_of_first_field}) '
+                                      f'in {npz_file_path}'
+                                     )
+                                 )
 
     def test_non_implemented_fields_are_full_of_nones(self):
-        for npz_file_path in self.get_npz_file_paths():
+        for npz_file_path in self.get_all_npz_file_paths():
             np_data = np.load(npz_file_path)
             for field in np_data.files:
                 if field in self.__class__.UNIMPLEMENTED_FIELDS:
@@ -170,7 +189,7 @@ class TestInputDataStructure(unittest.TestCase):
                         self.fail(f'Apparent unimplemented field: {field} in {npz_file_path} not full of Nones')
 
     def test_implemented_fields_have_no_nones(self):
-        for npz_file_path in self.get_npz_file_paths():
+        for npz_file_path in self.get_all_npz_file_paths():
             np_data = np.load(npz_file_path)
             for field in np_data.files:
                 if field not in self.__class__.UNIMPLEMENTED_FIELDS:
@@ -185,13 +204,25 @@ class TestInputDataStructure(unittest.TestCase):
             if not cv2.VideoCapture(str(video_path.resolve())).isOpened():
                 self.fail(f'Could not open {video_path} with cv2.VideoCapture')
 
-    def test_video_duration_same_as_base_duration(self):
+    def test_time_fields_duration_same_as_video_duration(self):
         for session_dir in self.get_session_dirs():
             video_path = self.get_video_path(session_dir)
             assert video_path is not None,\
-                   f'No video found in {session_dir.name} cannot run {self.test_video_duration_same_as_base_duration.__name__}'
-            self.assertAlmostEqual(self.get_duration_ms_base_npz(self.get_base_npz_path(session_dir)),
-                                   self.get_duration_ms_of_video_at_path(self.get_video_path(session_dir)))
+                   (f'No video found in {session_dir.name} '
+                    f'cannot run {self.test_time_fields_duration_same_as_video_duration.__name__}')
+            video_duration = self.get_duration_ms_of_video_at_path(video_path)
+
+            for npz_path in self.get_npz_file_paths(session_dir):
+                npz_duration = self.get_duration_in_ms_for_npz_with_a_time_field(npz_path)
+                if npz_duration is None:
+                    continue
+                self.assertAlmostEqual(video_duration,
+                                       npz_duration,
+                                       msg=(f'{session_dir.name}: video duration: ({video_duration})'
+                                            f'not equal to '
+                                            f'{npz_path.name} timefield duration ({npz_duration})'
+                                           )
+                                       )
 
     def verify_directory_and_sub_directories(self, dir_structure, path: Path):
         if isinstance(dir_structure, dict):
@@ -220,11 +251,14 @@ class TestInputDataStructure(unittest.TestCase):
     def get_npz_filenames(self):
         return self.__class__.NPZ_FIELDS.keys()
 
-    def get_npz_file_paths(self):
+    def get_npz_file_paths(self, session_dir):
+        return [session_dir / self.__class__.NPZ_DIR / npz_filename
+                for npz_filename in self.get_npz_filenames()]
+
+    def get_all_npz_file_paths(self):
         r = []
         for session_dir in self.get_session_dirs():
-            for npz_filename in self.get_npz_filenames():
-                r.append(session_dir / self.__class__.NPZ_DIR / npz_filename)
+            r += self.get_npz_file_paths(session_dir)
         return r
 
     def get_video_paths(self):
@@ -251,12 +285,15 @@ class TestInputDataStructure(unittest.TestCase):
         cap.set(cv2.CAP_PROP_POS_AVI_RATIO, 1)
         return cap.get(cv2.CAP_PROP_POS_MSEC)
 
-    def get_duration_ms_base_npz(self, base_path):
-        base_time = np.load(base_path)[self.__class__.BASE_TIME_FIELD]
-        return base_time[-1] - base_time[0]
+    def get_duration_in_ms_for_npz_with_a_time_field(self, npz_path):
+        npz_data = np.load(npz_path)
+        time_fields = [field for field in npz_data.files
+                       if field in self.__class__.TIME_FIELDS]
+        if not time_fields:
+            return None
+        time_data = npz_data[time_fields[0]]
+        return time_data[-1] - time_data[0]
 
-    def get_base_npz_path(self, session_dir):
-        return session_dir / self.__class__.NPZ_DIR / self.__class__.BASE_NPZ_FILE
 
 if __name__ == '__main__':
     unittest.main()
