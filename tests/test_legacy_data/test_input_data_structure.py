@@ -66,6 +66,14 @@ class TestInputDataStructure(unittest.TestCase):
         'preview_start_time',
     ]
 
+    UNIMPLEMENTED_FIELDS = [
+        'base_altitude_barometer',
+        'base_compass',
+        'lens_zoom',
+        'tag_altitude_barometer',
+        'preview_start_time',
+    ]
+
     NPZ_FIELDS = {
         BASE_NPZ_FILE: BASE_NPZ_FIELDS,
         LENS_NPZ_FILE: LENS_NPZ_FIELDS,
@@ -154,12 +162,23 @@ class TestInputDataStructure(unittest.TestCase):
         for npz_file_path in self.get_npz_file_paths():
             np_data = np.load(npz_file_path)
             for field in np_data.files:
-                field_data = np_data[field]
-                if len(field_data) == 1:
-                    continue
-                if (field_data == field_data[0]).all():
+                if field in self.__class__.UNIMPLEMENTED_FIELDS:
+                    field_data = np_data[field]
+                    if field_data.size == 0:
+                        self.fail(f'Apparent unimplemented field: {field} in {npz_file_path} is empty')
                     if (field_data != None).all(): # pylint: disable=C0121
                         self.fail(f'Apparent unimplemented field: {field} in {npz_file_path} not full of Nones')
+
+    def test_implemented_fields_have_no_nones(self):
+        for npz_file_path in self.get_npz_file_paths():
+            np_data = np.load(npz_file_path)
+            for field in np_data.files:
+                if field not in self.__class__.UNIMPLEMENTED_FIELDS:
+                    field_data = np_data[field]
+                    if field_data.size == 0:
+                        self.fail(f'Apparent implemented field: {field} in {npz_file_path} is empty')
+                    if (field_data == None).any(): # pylint: disable=C0121
+                        self.fail(f'Apparent implemented field: {field} in {npz_file_path} has a None')
 
     def test_video_file_can_be_opened_with_cv2(self):
         for video_path in self.get_video_paths():
