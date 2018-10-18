@@ -227,6 +227,16 @@ class TestInputDataStructure(unittest.TestCase):
                                            )
                                        )
 
+    def test_all_time_fields_monotonically_asscend(self):
+        for session_dir in self.get_session_dirs():
+            for field, data in self.get_npz_time_fields(session_dir).items():
+                print(session_dir.name, field)
+                self.assertTrue(self.field_is_monotonically_increasing(data),
+                                msg=(f'{session_dir.name}: '
+                                     f'{field} is not monotonically increasing.'
+                                    )
+                               )
+
     def verify_directory_and_sub_directories(self, dir_structure, path: Path):
         if isinstance(dir_structure, dict):
             for child in dir_structure.keys():
@@ -258,6 +268,20 @@ class TestInputDataStructure(unittest.TestCase):
         return [session_dir / self.__class__.NPZ_DIR / npz_filename
                 for npz_filename in self.get_npz_filenames()]
 
+    def get_npz_fields(self, session_dir):
+        r = {}
+        for npz_file_path in self.get_npz_file_paths(session_dir):
+            npz_data = np.load(npz_file_path)
+            for field in npz_data.files:
+                r[field] = npz_data[field]
+        return r
+
+    def get_npz_time_fields(self, session_dir):
+        all_npz_fields = self.get_npz_fields(session_dir)
+        return {key: all_npz_fields[key]
+                for key in all_npz_fields.keys() # pylint: disable=C0201
+                if key in self.__class__.TIME_FIELDS}
+
     def get_all_npz_file_paths(self):
         r = []
         for session_dir in self.get_session_dirs():
@@ -271,7 +295,7 @@ class TestInputDataStructure(unittest.TestCase):
 
     def get_video_path(self, session_dir):
         video_files = list(self.get_track_dir(session_dir).glob(self.__class__.RECODED_VIDEO_FILE))
-        if len(video_files) == 0:
+        if not video_files:
             return None
         return video_files[0]
 
@@ -297,6 +321,8 @@ class TestInputDataStructure(unittest.TestCase):
         time_data = npz_data[time_fields[0]]
         return time_data[-1] - time_data[0]
 
+    def field_is_monotonically_increasing(self, data):
+        return np.all(np.diff(data)>=0)
 
 if __name__ == '__main__':
     unittest.main()
