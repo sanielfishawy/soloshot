@@ -1,0 +1,1621 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+AngleBetweenTags	../demo/deprecated_discover_circumcircle_demo.py	/^class AngleBetweenTags:$/;"	kind:class	line:137
+Animator	../experiments/image.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:6
+Animator	../tests/test_camera_renderer.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:6
+Animator	../tests/test_moving_object_renderer.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:8
+Animator	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:14
+Animator	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:12
+Animator	../tk_canvas_renderers/animator.py	/^class Animator:$/;"	kind:class	line:4
+Animator	../tk_canvas_renderers/render_orchestrator.py	/^from tk_canvas_renderers.animator import Animator$/;"	kind:namespace	line:5
+BASE_NPZ_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    BASE_NPZ_FIELDS = [$/;"	kind:variable	line:36
+BASE_NPZ_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    BASE_NPZ_FILE = 'base.npz'$/;"	kind:variable	line:29
+BASE_NPZ_PATH	../data/data_formats.py	/^BASE_NPZ_PATH = NPZ_DIR \/ 'base.npz'$/;"	kind:variable	line:6
+BASE_TIME_FIELD	../tests/test_legacy_data/test_input_data_structure.py	/^    BASE_TIME_FIELD = 'base_time'$/;"	kind:variable	line:34
+BaseAngleCalibrator	../base_angle_calibrator.py	/^class BaseAngleCalibrator:$/;"	kind:class	line:9
+BaseAngleCalibrator	../tests/test_base_angle_calibrator.py	/^from base_angle_calibrator import BaseAngleCalibrator$/;"	kind:namespace	line:5
+BasePositionCalibrator	../base_angle_calibrator.py	/^from base_position_calibrator import BasePositionCalibrator$/;"	kind:namespace	line:4
+BasePositionCalibrator	../base_position_calibrator.py	/^class BasePositionCalibrator:$/;"	kind:class	line:10
+BasePositionCalibrator	../tests/test_base_angle_calibrator.py	/^from base_position_calibrator import BasePositionCalibrator$/;"	kind:namespace	line:4
+BasePositionCalibrator	../tests/test_base_position_calibrator.py	/^from base_position_calibrator import BasePositionCalibrator$/;"	kind:namespace	line:5
+BasePositionCalibrator	../tk_canvas_renderers/element_renderers.py	/^from base_position_calibrator import BasePositionCalibrator$/;"	kind:namespace	line:10
+BasePositionCalibrator	../tk_canvas_renderers/render_orchestrator.py	/^from base_position_calibrator import BasePositionCalibrator$/;"	kind:namespace	line:13
+BasePositionCalibratorRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+BasePositionCalibratorRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+BasePositionCalibratorRenderer	../tk_canvas_renderers/element_renderers.py	/^class BasePositionCalibratorRenderer(ElementRenderer):$/;"	kind:class	line:254
+Boundary	../boundary.py	/^class Boundary(Polygon):$/;"	kind:class	line:5
+Boundary	../demo/camera_cv_moving_objects_demo.py	/^from boundary import Boundary$/;"	kind:namespace	line:8
+Boundary	../demo/moving_object_demo.py	/^from boundary import Boundary$/;"	kind:namespace	line:7
+Boundary	../tests/test_base_angle_calibrator.py	/^from boundary import Boundary$/;"	kind:namespace	line:9
+Boundary	../tests/test_base_position_calibrator.py	/^from boundary import Boundary$/;"	kind:namespace	line:9
+Boundary	../tests/test_boundary_renderer.py	/^from boundary import Boundary$/;"	kind:namespace	line:6
+Boundary	../tests/test_image_renderer.py	/^from boundary import Boundary$/;"	kind:namespace	line:9
+Boundary	../tests/test_moving_object_renderer.py	/^from boundary import Boundary$/;"	kind:namespace	line:7
+Boundary	../tests/test_object_motion_analyzer.py	/^from boundary import Boundary$/;"	kind:namespace	line:11
+Boundary	../tests/test_object_stats_processor.py	/^from boundary import Boundary$/;"	kind:namespace	line:8
+Boundary	../tests/test_object_universe.py	/^from boundary import Boundary$/;"	kind:namespace	line:5
+Boundary	../tests/test_viewable_object.py	/^from boundary import Boundary$/;"	kind:namespace	line:5
+Boundary	../tk_canvas_renderers/render_orchestrator.py	/^from boundary import Boundary$/;"	kind:namespace	line:8
+BoundaryRenderer	../tests/test_boundary_renderer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer$/;"	kind:namespace	line:5
+BoundaryRenderer	../tests/test_moving_object_renderer.py	/^from tk_canvas_renderers.element_renderers import ViewableObjectsRenderer, BoundaryRenderer$/;"	kind:namespace	line:5
+BoundaryRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+BoundaryRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+BoundaryRenderer	../tk_canvas_renderers/element_renderers.py	/^class BoundaryRenderer(ElementRenderer):$/;"	kind:class	line:50
+C0413	../tk_canvas_renderers/scrub_picker.py	/^from tk_canvas_renderers.scrubber import Scrubber # pylint: disable=C0413$/;"	kind:namespace	line:4
+C0413	../tk_canvas_renderers/scrubber.py	/^from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator # pylint: disable=C0413$/;"	kind:namespace	line:11
+C0413	../tk_canvas_renderers/scrubber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+C0413	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_cache import ImageCache # pylint: disable=C0413$/;"	kind:namespace	line:11
+C0413	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+C0413	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+CAMERA_NPZ_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    CAMERA_NPZ_FIELDS = [$/;"	kind:variable	line:69
+CAMERA_NPZ_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    CAMERA_NPZ_FILE = 'camera.npz'$/;"	kind:variable	line:32
+CUtils	../demo/circumcircle_demo.py	/^import tk_canvas_renderers.canvas_utils as CUtils$/;"	kind:namespace	line:7
+CUtils	../demo/deprecated_discover_circumcircle_demo.py	/^import tk_canvas_renderers.canvas_utils as CUtils$/;"	kind:namespace	line:4
+Camera	../base_angle_calibrator.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../base_position_calibrator.py	/^from camera import Camera$/;"	kind:namespace	line:4
+Camera	../camera.py	/^class Camera:$/;"	kind:class	line:8
+Camera	../demo/camera_cv_moving_objects_demo.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../demo/deprecated_discover_circumcircle_demo.py	/^def Camera(x=None,y=None):$/;"	kind:function	line:56
+Camera	../tests/test_base_angle_calibrator.py	/^from camera import Camera$/;"	kind:namespace	line:7
+Camera	../tests/test_base_position_calibrator.py	/^from camera import Camera$/;"	kind:namespace	line:7
+Camera	../tests/test_camera.py	/^from camera import Camera$/;"	kind:namespace	line:3
+Camera	../tests/test_camera_renderer.py	/^from camera import Camera$/;"	kind:namespace	line:4
+Camera	../tests/test_computer_vision.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../tests/test_image_analyzer.py	/^from camera import Camera$/;"	kind:namespace	line:4
+Camera	../tests/test_image_generator.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../tests/test_image_renderer.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../tests/test_object_motion_analyzer.py	/^from camera import Camera$/;"	kind:namespace	line:7
+Camera	../tests/test_object_stats_processor.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../tests/test_tag_position_analyzer.py	/^from camera import Camera$/;"	kind:namespace	line:5
+Camera	../tk_canvas_renderers/render_orchestrator.py	/^from camera import Camera$/;"	kind:namespace	line:10
+CameraPositionCalculator	../demo/deprecated_discover_circumcircle_demo.py	/^class CameraPositionCalculator:$/;"	kind:class	line:195
+CameraPositionCalculatorDeprecated	../demo/deprecated_discover_circumcircle_demo.py	/^class CameraPositionCalculatorDeprecated:$/;"	kind:class	line:204
+CameraPositionRender	../demo/deprecated_discover_circumcircle_demo.py	/^class CameraPositionRender:$/;"	kind:class	line:289
+CameraRenderer	../tests/test_camera_renderer.py	/^from tk_canvas_renderers.element_renderers import CameraRenderer$/;"	kind:namespace	line:5
+CameraRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+CameraRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+CameraRenderer	../tk_canvas_renderers/element_renderers.py	/^class CameraRenderer(ElementRenderer):$/;"	kind:class	line:189
+CanvasPositionPicker	../tk_canvas_renderers/canvas_position_picker.py	/^class CanvasPositionPicker:$/;"	kind:class	line:3
+CanvasPositionPicker	../tk_canvas_renderers/single_image_canvas.py	/^from tk_canvas_renderers.canvas_position_picker import CanvasPositionPicker$/;"	kind:namespace	line:9
+CanvasUtils	../demo/moving_object_demo.py	/^from tk_canvas_renderers.canvas_utils import CanvasUtils$/;"	kind:namespace	line:5
+CanvasUtils	../tk_canvas_renderers/canvas_utils.py	/^class CanvasUtils:$/;"	kind:class	line:3
+CanvasUtils	../tk_canvas_renderers/single_image_canvas.py	/^from tk_canvas_renderers.canvas_utils import CanvasUtils$/;"	kind:namespace	line:8
+Circumcircles	../object_motion_analyzer.py	/^class Circumcircles:$/;"	kind:class	line:146
+Circumcircles	../object_stats_processor.py	/^from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles$/;"	kind:namespace	line:1
+Circumcircles	../tests/test_base_angle_calibrator.py	/^from object_motion_analyzer import Circumcircles$/;"	kind:namespace	line:10
+Circumcircles	../tests/test_base_position_calibrator.py	/^from object_motion_analyzer import Circumcircles$/;"	kind:namespace	line:10
+Circumcircles	../tests/test_object_motion_analyzer.py	/^from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles$/;"	kind:namespace	line:9
+ComputerVision	../camera.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:5
+ComputerVision	../computer_vision.py	/^class ComputerVision:$/;"	kind:class	line:3
+ComputerVision	../demo/camera_cv_moving_objects_demo.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:6
+ComputerVision	../image_generator.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:2
+ComputerVision	../tests/test_computer_vision.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:7
+ComputerVision	../tests/test_image_generator.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:6
+ComputerVision	../tests/test_image_renderer.py	/^from computer_vision import ComputerVision$/;"	kind:namespace	line:6
+DEFAULT_IMAGE_CACHE_DIR_PATH	../video_and_photo_tools/image_cache.py	/^    DEFAULT_IMAGE_CACHE_DIR_PATH = Path('.') \/ 'data\/image_cache'$/;"	kind:variable	line:7
+DIRECTORY_STRUCTURE	../tests/test_legacy_data/test_input_data_structure.py	/^    DIRECTORY_STRUCTURE = {$/;"	kind:variable	line:95
+Demo	../demo/camera_cv_moving_objects_demo.py	/^class Demo:$/;"	kind:class	line:11
+Demo	../demo/circumcircle_demo.py	/^def Demo():$/;"	kind:function	line:58
+Demo	../demo/moving_object_demo.py	/^def Demo():$/;"	kind:function	line:43
+ER	../tk_canvas_renderers/render_orchestrator.py	/^import tk_canvas_renderers.element_renderers as ER$/;"	kind:namespace	line:4
+ElementRenderer	../tk_canvas_renderers/element_renderers.py	/^class ElementRenderer:$/;"	kind:class	line:15
+FORMATS	../video_and_photo_tools/video_image_benchmarker.py	/^    FORMATS = [$/;"	kind:variable	line:20
+FORMAT_BMP	../video_and_photo_tools/video_image_benchmarker.py	/^    FORMAT_BMP = 'bmp'$/;"	kind:variable	line:19
+FORMAT_JPG	../video_and_photo_tools/video_image_benchmarker.py	/^    FORMAT_JPG = 'jpeg'$/;"	kind:variable	line:16
+FORMAT_PNG	../video_and_photo_tools/video_image_benchmarker.py	/^    FORMAT_PNG = 'png'$/;"	kind:variable	line:18
+FORMAT_PPM	../video_and_photo_tools/video_image_benchmarker.py	/^    FORMAT_PPM = 'ppm'$/;"	kind:variable	line:17
+GU	../base_angle_calibrator.py	/^import geometry_utils as GU$/;"	kind:namespace	line:3
+GU	../boundary.py	/^import geometry_utils as GU$/;"	kind:namespace	line:2
+GU	../camera.py	/^import geometry_utils as GU$/;"	kind:namespace	line:3
+GU	../object_motion_analyzer.py	/^import geometry_utils as GU$/;"	kind:namespace	line:2
+GU	../tests/test_geometry_utils.py	/^import geometry_utils as GU$/;"	kind:namespace	line:4
+GU	../tests/test_tag_position_analyzer.py	/^import geometry_utils as GU$/;"	kind:namespace	line:3
+GU	../viewable_object.py	/^import geometry_utils as GU$/;"	kind:namespace	line:2
+GUtils	../image_generator.py	/^import geometry_utils as GUtils$/;"	kind:namespace	line:4
+GUtils	../tag_position_analyzer.py	/^import geometry_utils as GUtils$/;"	kind:namespace	line:2
+GeometryUtils	../demo/circumcircle_demo.py	/^import geometry_utils as GeometryUtils$/;"	kind:namespace	line:6
+GeometryUtils	../demo/deprecated_isosceles_demo.py	/^import geometry_utils as GeometryUtils$/;"	kind:namespace	line:4
+HEAD_PATH	../tests/test_legacy_data/test_input_data_structure.py	/^    HEAD_PATH = Path('\/Volumes\/WD')$/;"	kind:variable	line:16
+Http	../experiments/google_drive.py	/^from httplib2 import Http$/;"	kind:namespace	line:4
+IMAGE_CACHE_DIR_PATH	../tests/test_image_cache.py	/^    IMAGE_CACHE_DIR_PATH = Path('.') \/ 'data\/test_data\/test_cache'$/;"	kind:variable	line:14
+IMAGE_CACHE_DIR_PATH	../tests/test_scrubber.py	/^    IMAGE_CACHE_DIR_PATH = Path('.') \/ 'data\/test_data\/test_cache'$/;"	kind:variable	line:13
+IMAGE_DIR_PATH	../video_and_photo_tools/video_image_benchmarker.py	/^    IMAGE_DIR_PATH = Path('.') \/ 'data\/test_data\/test_images'$/;"	kind:variable	line:15
+IMAGE_FORMAT_BMP	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_FORMAT_BMP = 'bmp'$/;"	kind:variable	line:21
+IMAGE_FORMAT_JPG	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_FORMAT_JPG = 'jpg'$/;"	kind:variable	line:18
+IMAGE_FORMAT_PNG	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_FORMAT_PNG = 'png'$/;"	kind:variable	line:19
+IMAGE_FORMAT_PPM	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_FORMAT_PPM = 'ppm'$/;"	kind:variable	line:20
+IMAGE_MODE_L	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_MODE_L = 'L'$/;"	kind:variable	line:16
+IMAGE_MODE_RGB	../video_and_photo_tools/image_from_video_grabber.py	/^    IMAGE_MODE_RGB = 'RGB'$/;"	kind:variable	line:17
+IMAGE_PATH	../tests/test_pil_image_extensions.py	/^    IMAGE_PATH = Path('.') \/ 'data\/test_data\/test_images\/photo.jpg'$/;"	kind:variable	line:11
+Image	../experiments/image2.py	/^import PIL.Image$/;"	kind:namespace	line:3
+Image	../experiments/image3.py	/^import PIL.Image$/;"	kind:namespace	line:3
+Image	../experiments/video.py	/^import PIL.Image$/;"	kind:namespace	line:1
+Image	../tests/test_image_cache.py	/^import PIL.Image$/;"	kind:namespace	line:6
+Image	../tests/test_image_from_video_grabber.py	/^import PIL.Image$/;"	kind:namespace	line:6
+Image	../tests/test_pil_image_extensions.py	/^import PIL.Image$/;"	kind:namespace	line:5
+Image	../tk_canvas_renderers/element_renderers.py	/^import PIL.Image$/;"	kind:namespace	line:6
+Image	../tk_canvas_renderers/scrubber.py	/^import PIL.Image$/;"	kind:namespace	line:6
+Image	../video_and_photo_tools/image_cache.py	/^import PIL.Image$/;"	kind:namespace	line:3
+Image	../video_and_photo_tools/image_from_video.py	/^import PIL.Image$/;"	kind:namespace	line:2
+Image	../video_and_photo_tools/image_from_video_grabber.py	/^import PIL.Image$/;"	kind:namespace	line:7
+Image	../video_and_photo_tools/pil_image_extensions.py	/^import PIL.Image$/;"	kind:namespace	line:2
+Image	../video_and_photo_tools/video_image_benchmarker.py	/^import PIL.Image$/;"	kind:namespace	line:8
+ImageAnalyzer	../image_analyzer.py	/^class ImageAnalyzer:$/;"	kind:class	line:23
+ImageAnalyzer	../object_motion_analyzer.py	/^from image_analyzer import ImageAnalyzer $/;"	kind:namespace	line:4
+ImageAnalyzer	../tests/test_image_analyzer.py	/^from image_analyzer import ImageAnalyzer$/;"	kind:namespace	line:7
+ImageAnalyzer	../tests/test_object_motion_analyzer.py	/^from image_analyzer import ImageAnalyzer$/;"	kind:namespace	line:8
+ImageCache	../tests/test_image_cache.py	/^from video_and_photo_tools.image_cache import ImageCache$/;"	kind:namespace	line:8
+ImageCache	../video_and_photo_tools/image_cache.py	/^class ImageCache:$/;"	kind:class	line:5
+ImageCache	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_cache import ImageCache # pylint: disable=C0413$/;"	kind:namespace	line:11
+ImageExtensions	../video_and_photo_tools/pil_image_extensions.py	/^class ImageExtensions(PIL.Image.Image):$/;"	kind:class	line:4
+ImageFromVideo	../tk_canvas_renderers/scrubber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+ImageFromVideo	../tk_canvas_renderers/single_image_canvas.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo$/;"	kind:namespace	line:7
+ImageFromVideo	../tk_canvas_renderers/vertical_image_list.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo$/;"	kind:namespace	line:9
+ImageFromVideo	../video_and_photo_tools/image_from_video.py	/^class ImageFromVideo:$/;"	kind:class	line:4
+ImageFromVideo	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+ImageFromVideoGrabber	../tests/test_image_from_video_grabber.py	/^from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber$/;"	kind:namespace	line:9
+ImageFromVideoGrabber	../tests/test_scrubber.py	/^from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber$/;"	kind:namespace	line:8
+ImageFromVideoGrabber	../tests/test_vertical_image_list.py	/^from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber$/;"	kind:namespace	line:9
+ImageFromVideoGrabber	../video_and_photo_tools/image_from_video_grabber.py	/^class ImageFromVideoGrabber:$/;"	kind:class	line:14
+ImageGenerator	../camera.py	/^from image_generator import ImageGenerator$/;"	kind:namespace	line:6
+ImageGenerator	../image_analyzer.py	/^from image_generator import ImageGenerator$/;"	kind:namespace	line:2
+ImageGenerator	../image_generator.py	/^class ImageGenerator:$/;"	kind:class	line:6
+ImageGenerator	../tests/test_image_generator.py	/^from image_generator import ImageGenerator$/;"	kind:namespace	line:4
+ImageGenerator	../tests/test_image_renderer.py	/^from image_generator import ImageGenerator$/;"	kind:namespace	line:4
+ImageGenerator	../tk_canvas_renderers/render_orchestrator.py	/^from image_generator import ImageGenerator$/;"	kind:namespace	line:12
+ImageRenderer	../tests/test_image_renderer.py	/^from tk_canvas_renderers.element_renderers import ImageRenderer$/;"	kind:namespace	line:11
+ImageRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+ImageRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+ImageRenderer	../tk_canvas_renderers/element_renderers.py	/^class ImageRenderer(ViewableObjectsRenderer):$/;"	kind:class	line:128
+ImageTk	../experiments/image2.py	/^import PIL.ImageTk$/;"	kind:namespace	line:2
+ImageTk	../experiments/image3.py	/^import PIL.ImageTk$/;"	kind:namespace	line:2
+ImageTk	../tk_canvas_renderers/element_renderers.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+ImageTk	../tk_canvas_renderers/scrubber.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+ImageTk	../tk_canvas_renderers/single_image_canvas.py	/^import PIL.ImageTk$/;"	kind:namespace	line:5
+ImageTk	../tk_canvas_renderers/tk_renderer.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+ImageTk	../video_and_photo_tools/video_image_benchmarker.py	/^import PIL.ImageTk$/;"	kind:namespace	line:9
+LENS_NPZ_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    LENS_NPZ_FIELDS = [$/;"	kind:variable	line:48
+LENS_NPZ_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    LENS_NPZ_FILE = 'lens.npz'$/;"	kind:variable	line:30
+LENS_TIME_FIELD	../tests/test_legacy_data/test_input_data_structure.py	/^    LENS_TIME_FIELD = 'lens_time'$/;"	kind:variable	line:46
+LineBetweenTags	../demo/deprecated_discover_circumcircle_demo.py	/^class LineBetweenTags:$/;"	kind:class	line:105
+LineString	../base_position_calibrator.py	/^from shapely.geometry import Point, LineString, MultiPoint$/;"	kind:namespace	line:2
+LineString	../image_generator.py	/^from shapely.geometry import LineString$/;"	kind:namespace	line:1
+LineString	../profile_shapely.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:1
+LineString	../tests/test_base_position_calibrator.py	/^from shapely.geometry import LineString, Point, MultiPoint$/;"	kind:namespace	line:3
+LineString	../tests/test_object_motion_analyzer.py	/^from shapely.geometry import LineString, LinearRing$/;"	kind:namespace	line:4
+LineString	../viewable_object.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:4
+LinearRing	../tests/test_object_motion_analyzer.py	/^from shapely.geometry import LineString, LinearRing$/;"	kind:namespace	line:4
+List	../tk_canvas_renderers/scrubber.py	/^from typing import List$/;"	kind:namespace	line:4
+List	../tk_canvas_renderers/vertical_image_list.py	/^from typing import List$/;"	kind:namespace	line:4
+List	../video_and_photo_tools/image_from_video_grabber.py	/^from typing import List$/;"	kind:namespace	line:3
+MULTIPLE_MATCHING_FILES_ALLOWED	../tests/test_legacy_data/test_input_data_structure.py	/^    MULTIPLE_MATCHING_FILES_ALLOWED = [$/;"	kind:variable	line:109
+MultiPoint	../base_position_calibrator.py	/^from shapely.geometry import Point, LineString, MultiPoint$/;"	kind:namespace	line:2
+MultiPoint	../tests/test_base_position_calibrator.py	/^from shapely.geometry import LineString, Point, MultiPoint$/;"	kind:namespace	line:3
+NPZ_DIR	../data/data_formats.py	/^NPZ_DIR = Path('.') \/ 'data'  # Change this to match your test directory structure$/;"	kind:variable	line:5
+NPZ_DIR	../tests/test_legacy_data/test_input_data_structure.py	/^    NPZ_DIR = 'NPZ'$/;"	kind:variable	line:28
+NPZ_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    NPZ_FIELDS = {$/;"	kind:variable	line:88
+NUM_RUNS	../video_and_photo_tools/video_image_benchmarker.py	/^    NUM_RUNS = 'num_runs'$/;"	kind:variable	line:172
+ObjectMotionAnalyzer	../base_angle_calibrator.py	/^from object_motion_analyzer import ObjectMotionAnalyzer$/;"	kind:namespace	line:6
+ObjectMotionAnalyzer	../base_position_calibrator.py	/^from object_motion_analyzer import ObjectMotionAnalyzer$/;"	kind:namespace	line:6
+ObjectMotionAnalyzer	../object_motion_analyzer.py	/^class ObjectMotionAnalyzer:$/;"	kind:class	line:7
+ObjectMotionAnalyzer	../object_stats_processor.py	/^from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles$/;"	kind:namespace	line:1
+ObjectMotionAnalyzer	../tests/test_object_motion_analyzer.py	/^from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles$/;"	kind:namespace	line:9
+ObjectMotionAnalyzer	../tests/test_object_stats_processor.py	/^from object_motion_analyzer import ObjectMotionAnalyzer$/;"	kind:namespace	line:6
+ObjectMotionAnalyzer	../tk_canvas_renderers/element_renderers.py	/^from object_motion_analyzer import ObjectMotionAnalyzer$/;"	kind:namespace	line:11
+ObjectMotionAnalyzer	../tk_canvas_renderers/render_orchestrator.py	/^from object_motion_analyzer import ObjectMotionAnalyzer$/;"	kind:namespace	line:14
+ObjectUniverse	../demo/camera_cv_moving_objects_demo.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:4
+ObjectUniverse	../object_universe.py	/^class ObjectUniverse:$/;"	kind:class	line:3
+ObjectUniverse	../tests/test_base_angle_calibrator.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:6
+ObjectUniverse	../tests/test_base_position_calibrator.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:6
+ObjectUniverse	../tests/test_camera.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:5
+ObjectUniverse	../tests/test_computer_vision.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:4
+ObjectUniverse	../tests/test_image_analyzer.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:5
+ObjectUniverse	../tests/test_image_generator.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:7
+ObjectUniverse	../tests/test_image_renderer.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:7
+ObjectUniverse	../tests/test_object_motion_analyzer.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:6
+ObjectUniverse	../tests/test_object_stats_processor.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:4
+ObjectUniverse	../tests/test_object_universe.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:6
+ObjectUniverse	../tests/test_viewable_object.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:8
+ObjectUniverse	../tk_canvas_renderers/render_orchestrator.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:9
+ObjectUniverse	../view_triangle.py	/^from object_universe import ObjectUniverse$/;"	kind:namespace	line:2
+ObjectsStatsProcessor	../base_position_calibrator.py	/^from object_stats_processor import ObjectsStatsProcessor$/;"	kind:namespace	line:5
+ObjectsStatsProcessor	../object_stats_processor.py	/^class ObjectsStatsProcessor:$/;"	kind:class	line:4
+ObjectsStatsProcessor	../tests/test_object_stats_processor.py	/^from object_stats_processor import ObjectsStatsProcessor$/;"	kind:namespace	line:9
+ObjectsStatsProcessor	../tk_canvas_renderers/element_renderers.py	/^from object_stats_processor import ObjectsStatsProcessor$/;"	kind:namespace	line:13
+PIL	../experiments/image.py	/^import PIL$/;"	kind:namespace	line:7
+PIL	../experiments/image2.py	/^import PIL.Image$/;"	kind:namespace	line:3
+PIL	../experiments/image2.py	/^import PIL.ImageTk$/;"	kind:namespace	line:2
+PIL	../experiments/image3.py	/^import PIL.Image$/;"	kind:namespace	line:3
+PIL	../experiments/image3.py	/^import PIL.ImageTk$/;"	kind:namespace	line:2
+PIL	../experiments/video.py	/^import PIL.Image$/;"	kind:namespace	line:1
+PIL	../tests/test_image_cache.py	/^import PIL.Image$/;"	kind:namespace	line:6
+PIL	../tests/test_image_from_video_grabber.py	/^import PIL.Image$/;"	kind:namespace	line:6
+PIL	../tests/test_pil_image_extensions.py	/^import PIL.Image$/;"	kind:namespace	line:5
+PIL	../tk_canvas_renderers/element_renderers.py	/^import PIL$/;"	kind:namespace	line:5
+PIL	../tk_canvas_renderers/element_renderers.py	/^import PIL.Image$/;"	kind:namespace	line:6
+PIL	../tk_canvas_renderers/element_renderers.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+PIL	../tk_canvas_renderers/scrubber.py	/^import PIL.Image$/;"	kind:namespace	line:6
+PIL	../tk_canvas_renderers/scrubber.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+PIL	../tk_canvas_renderers/single_image_canvas.py	/^import PIL.ImageTk$/;"	kind:namespace	line:5
+PIL	../tk_canvas_renderers/tk_renderer.py	/^import PIL$/;"	kind:namespace	line:6
+PIL	../tk_canvas_renderers/tk_renderer.py	/^import PIL.ImageTk$/;"	kind:namespace	line:7
+PIL	../video_and_photo_tools/image_cache.py	/^import PIL.Image$/;"	kind:namespace	line:3
+PIL	../video_and_photo_tools/image_from_video.py	/^import PIL.Image$/;"	kind:namespace	line:2
+PIL	../video_and_photo_tools/image_from_video_grabber.py	/^import PIL$/;"	kind:namespace	line:6
+PIL	../video_and_photo_tools/image_from_video_grabber.py	/^import PIL.Image$/;"	kind:namespace	line:7
+PIL	../video_and_photo_tools/pil_image_extensions.py	/^import PIL.Image$/;"	kind:namespace	line:2
+PIL	../video_and_photo_tools/video_image_benchmarker.py	/^import PIL.Image$/;"	kind:namespace	line:8
+PIL	../video_and_photo_tools/video_image_benchmarker.py	/^import PIL.ImageTk$/;"	kind:namespace	line:9
+Path	../data/data_formats.py	/^from pathlib import Path$/;"	kind:namespace	line:2
+Path	../experiments/google_drive.py	/^from pathlib import Path$/;"	kind:namespace	line:2
+Path	../tests/test_image_cache.py	/^from pathlib import Path$/;"	kind:namespace	line:4
+Path	../tests/test_image_from_video_grabber.py	/^from pathlib import Path$/;"	kind:namespace	line:5
+Path	../tests/test_legacy_data/test_input_data_structure.py	/^from pathlib import Path$/;"	kind:namespace	line:5
+Path	../tests/test_pil_image_extensions.py	/^from pathlib import Path$/;"	kind:namespace	line:4
+Path	../tests/test_scrubber.py	/^from pathlib import Path$/;"	kind:namespace	line:5
+Path	../tests/test_vertical_image_list.py	/^from pathlib import Path$/;"	kind:namespace	line:5
+Path	../video_and_photo_tools/image_cache.py	/^from pathlib import Path$/;"	kind:namespace	line:2
+Path	../video_and_photo_tools/image_from_video.py	/^from pathlib import Path$/;"	kind:namespace	line:1
+Path	../video_and_photo_tools/image_from_video_grabber.py	/^from pathlib import Path$/;"	kind:namespace	line:4
+Path	../video_and_photo_tools/video_image_benchmarker.py	/^from pathlib import Path$/;"	kind:namespace	line:4
+PhotoRenderer	../experiments/image.py	/^from tk_canvas_renderers.element_renderers import PhotoRenderer$/;"	kind:namespace	line:5
+PhotoRenderer	../tk_canvas_renderers/element_renderers.py	/^class PhotoRenderer(ElementRenderer):$/;"	kind:class	line:311
+Point	../base_position_calibrator.py	/^from shapely.geometry import Point, LineString, MultiPoint$/;"	kind:namespace	line:2
+Point	../boundary.py	/^from shapely.geometry import Polygon, Point$/;"	kind:namespace	line:1
+Point	../geometry_utils.py	/^from shapely.geometry import Point$/;"	kind:namespace	line:2
+Point	../object_motion_analyzer.py	/^from shapely.geometry import Point$/;"	kind:namespace	line:5
+Point	../profile_shapely.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:1
+Point	../tests/test_base_position_calibrator.py	/^from shapely.geometry import LineString, Point, MultiPoint$/;"	kind:namespace	line:3
+Point	../tests/test_viewable_object.py	/^from shapely.geometry import Point$/;"	kind:namespace	line:6
+Point	../tk_canvas_renderers/tk_renderer.py	/^from shapely.geometry import Point$/;"	kind:namespace	line:5
+Point	../view_triangle.py	/^from shapely.geometry import Polygon, Point$/;"	kind:namespace	line:1
+Point	../viewable_object.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:4
+Polygon	../boundary.py	/^from shapely.geometry import Polygon, Point$/;"	kind:namespace	line:1
+Polygon	../camera.py	/^from shapely.geometry import Polygon$/;"	kind:namespace	line:2
+Polygon	../profile_shapely.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:1
+Polygon	../view_triangle.py	/^from shapely.geometry import Polygon, Point$/;"	kind:namespace	line:1
+Polygon	../viewable_object.py	/^from shapely.geometry import Polygon, Point, LineString$/;"	kind:namespace	line:4
+RAW_VIDEO_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    RAW_VIDEO_FILE = '*.MP4'$/;"	kind:variable	line:24
+RECODED_VIDEO_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    RECODED_VIDEO_FILE = 'video.mp4'$/;"	kind:variable	line:25
+RESULTS_FILE_PATH	../video_and_photo_tools/video_image_benchmarker.py	/^    RESULTS_FILE_PATH = Path('.') \/ 'video_and_photo_tools\/video_image_benchmark_results.yml'$/;"	kind:variable	line:174
+RandomlyMovingObject	../demo/camera_cv_moving_objects_demo.py	/^from viewable_object import RandomlyMovingObject$/;"	kind:namespace	line:7
+RandomlyMovingObject	../demo/moving_object_demo.py	/^from viewable_object import RandomlyMovingObject$/;"	kind:namespace	line:6
+RandomlyMovingObject	../tests/test_base_position_calibrator.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:8
+RandomlyMovingObject	../tests/test_image_renderer.py	/^from viewable_object import StationaryObject, RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:8
+RandomlyMovingObject	../tests/test_moving_object_renderer.py	/^from viewable_object import RandomlyMovingObject$/;"	kind:namespace	line:6
+RandomlyMovingObject	../tests/test_object_motion_analyzer.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:10
+RandomlyMovingObject	../tests/test_object_stats_processor.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:7
+RandomlyMovingObject	../tests/test_object_universe.py	/^from viewable_object import RandomlyMovingObject, StationaryObject$/;"	kind:namespace	line:4
+RandomlyMovingObject	../tests/test_viewable_object.py	/^from viewable_object import RandomlyMovingObject, StationaryObject$/;"	kind:namespace	line:4
+RandomlyMovingObject	../viewable_object.py	/^class RandomlyMovingObject(ViewableObject):$/;"	kind:class	line:79
+RandomlyMovingTag	../tests/test_base_angle_calibrator.py	/^from viewable_object import RandomlyMovingTag$/;"	kind:namespace	line:8
+RandomlyMovingTag	../tests/test_base_position_calibrator.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:8
+RandomlyMovingTag	../tests/test_image_renderer.py	/^from viewable_object import StationaryObject, RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:8
+RandomlyMovingTag	../tests/test_object_motion_analyzer.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:10
+RandomlyMovingTag	../tests/test_object_stats_processor.py	/^from viewable_object import RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:7
+RandomlyMovingTag	../viewable_object.py	/^class RandomlyMovingTag(RandomlyMovingObject):$/;"	kind:class	line:144
+RenderOrchestrator	../demo/camera_cv_moving_objects_demo.py	/^from tk_canvas_renderers.render_orchestrator import RenderOrchestrator$/;"	kind:namespace	line:9
+RenderOrchestrator	../tests/test_base_angle_calibrator.py	/^from tk_canvas_renderers.render_orchestrator import RenderOrchestrator$/;"	kind:namespace	line:12
+RenderOrchestrator	../tests/test_base_position_calibrator.py	/^from tk_canvas_renderers.render_orchestrator import RenderOrchestrator$/;"	kind:namespace	line:12
+RenderOrchestrator	../tests/test_image_renderer.py	/^from tk_canvas_renderers.render_orchestrator import RenderOrchestrator$/;"	kind:namespace	line:12
+RenderOrchestrator	../tk_canvas_renderers/render_orchestrator.py	/^class RenderOrchestrator:$/;"	kind:class	line:16
+SCOPES	../experiments/google_drive.py	/^SCOPES = 'https:\/\/www.googleapis.com\/auth\/drive.metadata.readonly'$/;"	kind:variable	line:8
+SELECT_LABEL_FONT	../tk_canvas_renderers/scrub_picker.py	/^    SELECT_LABEL_FONT = ("arial", 55, "normal")$/;"	kind:variable	line:10
+SELECT_RANGE	../tk_canvas_renderers/scrub_picker.py	/^    SELECT_RANGE = 1$/;"	kind:variable	line:9
+SELECT_SINGLE_IMAGE	../tk_canvas_renderers/scrub_picker.py	/^    SELECT_SINGLE_IMAGE = 0$/;"	kind:variable	line:8
+SESSION_DIR	../tests/test_legacy_data/test_input_data_structure.py	/^    SESSION_DIR = '*'$/;"	kind:variable	line:21
+SESSION_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    SESSION_FILE = 'SS3_EDIT_*.SESSION'$/;"	kind:variable	line:26
+ScrubPicker	../demo/scrubber_picker_demo.py	/^from tk_canvas_renderers.scrub_picker import ScrubPicker$/;"	kind:namespace	line:6
+ScrubPicker	../tests/test_scrubber.py	/^from tk_canvas_renderers.scrub_picker import ScrubPicker$/;"	kind:namespace	line:7
+ScrubPicker	../tk_canvas_renderers/scrub_picker.py	/^class ScrubPicker(Scrubber):$/;"	kind:class	line:6
+Scrubber	../tk_canvas_renderers/scrub_picker.py	/^from tk_canvas_renderers.scrubber import Scrubber # pylint: disable=C0413$/;"	kind:namespace	line:4
+Scrubber	../tk_canvas_renderers/scrubber.py	/^class Scrubber:$/;"	kind:class	line:13
+SimpleID	../computer_vision.py	/^from simple_uid import SimpleID$/;"	kind:namespace	line:1
+SimpleID	../simple_uid.py	/^class SimpleID:$/;"	kind:class	line:1
+SimpleID	../tests/test_simple_uid.py	/^from simple_uid import SimpleID$/;"	kind:namespace	line:4
+SimpleUID	../simple_uid.py	/^def SimpleUID():$/;"	kind:function	line:24
+SimpleUID	../viewable_object.py	/^from simple_uid import SimpleUID$/;"	kind:namespace	line:5
+SingleImageCanvas	../tk_canvas_renderers/single_image_canvas.py	/^class SingleImageCanvas:$/;"	kind:class	line:11
+SingleImageCanvas	../tk_canvas_renderers/vertical_image_list.py	/^from tk_canvas_renderers.single_image_canvas import SingleImageCanvas$/;"	kind:namespace	line:8
+StationaryObject	../tests/test_camera.py	/^from viewable_object import StationaryObject$/;"	kind:namespace	line:4
+StationaryObject	../tests/test_image_generator.py	/^from viewable_object import StationaryObject$/;"	kind:namespace	line:8
+StationaryObject	../tests/test_image_renderer.py	/^from viewable_object import StationaryObject, RandomlyMovingObject, RandomlyMovingTag$/;"	kind:namespace	line:8
+StationaryObject	../tests/test_object_universe.py	/^from viewable_object import RandomlyMovingObject, StationaryObject$/;"	kind:namespace	line:4
+StationaryObject	../tests/test_viewable_object.py	/^from viewable_object import RandomlyMovingObject, StationaryObject$/;"	kind:namespace	line:4
+StationaryObject	../tests/test_viewable_object_renderer.py	/^from viewable_object import StationaryObject$/;"	kind:namespace	line:6
+StationaryObject	../viewable_object.py	/^class StationaryObject(ViewableObject):$/;"	kind:class	line:68
+TAG_NPZ_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    TAG_NPZ_FIELDS = [$/;"	kind:variable	line:56
+TAG_NPZ_FILE	../tests/test_legacy_data/test_input_data_structure.py	/^    TAG_NPZ_FILE = 'tag.npz'$/;"	kind:variable	line:31
+TAG_TIME_FIELD	../tests/test_legacy_data/test_input_data_structure.py	/^    TAG_TIME_FIELD = 'tag_time'$/;"	kind:variable	line:54
+TEST_CACHE_DIR_PATH	../tests/test_image_from_video_grabber.py	/^    TEST_CACHE_DIR_PATH = Path('.') \/ 'data\/test_data\/test_cache'$/;"	kind:variable	line:14
+TEST_CACHE_DIR_PATH	../tests/test_vertical_image_list.py	/^    TEST_CACHE_DIR_PATH = Path('.') \/ 'data\/test_data\/test_cache'$/;"	kind:variable	line:15
+TEST_IMAGE_PATH	../tests/test_image_cache.py	/^    TEST_IMAGE_PATH = Path('.') \/ 'data\/test_data\/test_images\/photo.jpg'$/;"	kind:variable	line:13
+TEST_VIDEO_PATH	../tests/test_image_from_video_grabber.py	/^    TEST_VIDEO_PATH = Path('.') \/ 'data\/test_data\/test_videos\/video.mp4'$/;"	kind:variable	line:13
+TEST_VIDEO_PATH	../tests/test_scrubber.py	/^    TEST_VIDEO_PATH = Path('.') \/ 'data\/test_data\/test_videos\/video.mp4'$/;"	kind:variable	line:12
+TEST_VIDEO_PATH	../tests/test_vertical_image_list.py	/^    TEST_VIDEO_PATH = Path('.') \/ 'data\/test_data\/test_videos\/video.mp4'$/;"	kind:variable	line:14
+TIME_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    TIME_FIELDS = [$/;"	kind:variable	line:74
+TIME_PER	../video_and_photo_tools/video_image_benchmarker.py	/^    TIME_PER = 'time_per'$/;"	kind:variable	line:173
+TKRenderer	../experiments/image.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:4
+TKRenderer	../tests/test_boundary_renderer.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:4
+TKRenderer	../tests/test_camera_renderer.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:7
+TKRenderer	../tests/test_moving_object_renderer.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:4
+TKRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+TKRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+TKRenderer	../tests/test_viewable_object_renderer.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:4
+TKRenderer	../tk_canvas_renderers/animator.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:1
+TKRenderer	../tk_canvas_renderers/element_renderers.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:9
+TKRenderer	../tk_canvas_renderers/render_orchestrator.py	/^from tk_canvas_renderers.tk_renderer import TKRenderer$/;"	kind:namespace	line:6
+TKRenderer	../tk_canvas_renderers/tk_renderer.py	/^def TKRenderer(**kargs):$/;"	kind:function	line:119
+TOP_LEVEL_DIR	../tests/test_legacy_data/test_input_data_structure.py	/^    TOP_LEVEL_DIR = 'SESSION_DB'$/;"	kind:variable	line:18
+TOP_LEVEL_DIR_PATH	../tests/test_legacy_data/test_input_data_structure.py	/^    TOP_LEVEL_DIR_PATH = HEAD_PATH \/ TOP_LEVEL_DIR$/;"	kind:variable	line:19
+TOTAL_TIME	../video_and_photo_tools/video_image_benchmarker.py	/^    TOTAL_TIME = 'total_time'$/;"	kind:variable	line:171
+TRACK_DIR	../tests/test_legacy_data/test_input_data_structure.py	/^    TRACK_DIR = 'Track*'$/;"	kind:variable	line:23
+Tag	../demo/deprecated_discover_circumcircle_demo.py	/^class Tag:$/;"	kind:class	line:67
+TagPositionAnalyzer	../base_angle_calibrator.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:7
+TagPositionAnalyzer	../base_position_calibrator.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:7
+TagPositionAnalyzer	../object_motion_analyzer.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:3
+TagPositionAnalyzer	../object_stats_processor.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:2
+TagPositionAnalyzer	../tag_position_analyzer.py	/^class TagPositionAnalyzer:$/;"	kind:class	line:4
+TagPositionAnalyzer	../tests/test_tag_position_analyzer.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:4
+TagPositionAnalyzer	../tk_canvas_renderers/element_renderers.py	/^from tag_position_analyzer import TagPositionAnalyzer$/;"	kind:namespace	line:12
+Tags	../demo/deprecated_discover_circumcircle_demo.py	/^def Tags():$/;"	kind:function	line:357
+Test	../demo/deprecated_isosceles_demo.py	/^def Test():$/;"	kind:function	line:45
+TestBaseAngleCalibrator	../demo/base_angle_calibrator_demo.py	/^from tests.test_base_angle_calibrator import TestBaseAngleCalibrator$/;"	kind:namespace	line:3
+TestBaseAngleCalibrator	../tests/test_base_angle_calibrator.py	/^class TestBaseAngleCalibrator(unittest.TestCase):$/;"	kind:class	line:15
+TestBasePositionCalibrator	../demo/base_position_calibrator_demo.py	/^from tests.test_base_position_calibrator import TestBasePositionCalibrator$/;"	kind:namespace	line:4
+TestBasePositionCalibrator	../tests/test_base_position_calibrator.py	/^class TestBasePositionCalibrator(unittest.TestCase):$/;"	kind:class	line:14
+TestBoundaryRenderer	../demo/bounary_renderer_demo.py	/^from tests.test_boundary_renderer import TestBoundaryRenderer$/;"	kind:namespace	line:3
+TestBoundaryRenderer	../tests/test_boundary_renderer.py	/^class TestBoundaryRenderer(unittest.TestCase):$/;"	kind:class	line:8
+TestCamera	../tests/test_camera.py	/^class TestCamera(unittest.TestCase):$/;"	kind:class	line:8
+TestCameraRenderer	../demo/camera_renderer_demo.py	/^from tests.test_camera_renderer import TestCameraRenderer$/;"	kind:namespace	line:3
+TestCameraRenderer	../tests/test_camera_renderer.py	/^class TestCameraRenderer(unittest.TestCase):$/;"	kind:class	line:9
+TestComputerVision	../tests/test_computer_vision.py	/^class TestComputerVision(unittest.TestCase):$/;"	kind:class	line:9
+TestGeometryUtilsIsosceles	../tests/test_geometry_utils.py	/^class TestGeometryUtilsIsosceles(unittest.TestCase):$/;"	kind:class	line:7
+TestImageAnalyzer	../tests/test_image_analyzer.py	/^class TestImageAnalyzer(unittest.TestCase):$/;"	kind:class	line:9
+TestImageCache	../tests/test_image_cache.py	/^class TestImageCache(unittest.TestCase):$/;"	kind:class	line:11
+TestImageExtension	../tests/test_pil_image_extensions.py	/^class TestImageExtension(unittest.TestCase):$/;"	kind:class	line:9
+TestImageFromVideoGrabber	../tests/test_image_from_video_grabber.py	/^class TestImageFromVideoGrabber(unittest.TestCase):$/;"	kind:class	line:11
+TestImageGenerator	../tests/test_image_generator.py	/^class TestImageGenerator(unittest.TestCase):$/;"	kind:class	line:10
+TestImageGeneratorZeroAngle	../tests/test_image_generator.py	/^class TestImageGeneratorZeroAngle(unittest.TestCase):$/;"	kind:class	line:71
+TestImageRenderer	../demo/image_render_demo.py	/^from tests.test_image_renderer import TestImageRenderer$/;"	kind:namespace	line:3
+TestImageRenderer	../tests/test_image_renderer.py	/^class TestImageRenderer(unittest.TestCase):$/;"	kind:class	line:14
+TestInputDataStructure	../tests/test_legacy_data/test_input_data_structure.py	/^class TestInputDataStructure(unittest.TestCase):$/;"	kind:class	line:10
+TestMovingObjectAndBoundary	../tests/test_viewable_object.py	/^class TestMovingObjectAndBoundary(unittest.TestCase):$/;"	kind:class	line:35
+TestMovingObjectRenderer	../demo/moving_object_renderer_demo.py	/^from tests.test_moving_object_renderer import TestMovingObjectRenderer$/;"	kind:namespace	line:5
+TestMovingObjectRenderer	../tests/test_moving_object_renderer.py	/^class TestMovingObjectRenderer(unittest.TestCase):$/;"	kind:class	line:10
+TestNumpyNdarrayExtensions	../tests/test_numpy_ndarray_extensions.py	/^class TestNumpyNdarrayExtensions(unittest.TestCase):$/;"	kind:class	line:13
+TestObjectMotionAnalyzer	../tests/test_object_motion_analyzer.py	/^class TestObjectMotionAnalyzer(unittest.TestCase):$/;"	kind:class	line:16
+TestObjectStatsProcessor	../tests/test_object_stats_processor.py	/^class TestObjectStatsProcessor(unittest.TestCase):$/;"	kind:class	line:14
+TestObjectUniverse	../tests/test_object_universe.py	/^class TestObjectUniverse(unittest.TestCase):$/;"	kind:class	line:8
+TestScrubber	../demo/scrubber_picker_demo.py	/^from tests.test_scrubber import TestScrubber$/;"	kind:namespace	line:5
+TestScrubber	../tests/test_scrubber.py	/^class TestScrubber(unittest.TestCase):$/;"	kind:class	line:10
+TestSimpleID	../tests/test_simple_uid.py	/^class TestSimpleID(unittest.TestCase):$/;"	kind:class	line:6
+TestStationaryObject	../tests/test_viewable_object.py	/^class TestStationaryObject(unittest.TestCase):$/;"	kind:class	line:10
+TestTagPositionAnalyzer	../tests/test_tag_position_analyzer.py	/^class TestTagPositionAnalyzer(unittest.TestCase):$/;"	kind:class	line:9
+TestVerticalImageList	../demo/vertical_image_list_demo.py	/^from tests.test_vertical_image_list import TestVerticalImageList$/;"	kind:namespace	line:5
+TestVerticalImageList	../tests/test_vertical_image_list.py	/^class TestVerticalImageList(unittest.TestCase):$/;"	kind:class	line:12
+TestVideoPostionIndicator	../tests/test_video_position_indicator.py	/^class TestVideoPostionIndicator(unittest.TestCase):$/;"	kind:class	line:11
+TestViewableObjectRenderer	../demo/viewable_object_camera_renderer_demo.py	/^from tests.test_viewable_object_renderer import TestViewableObjectRenderer$/;"	kind:namespace	line:3
+TestViewableObjectRenderer	../tests/test_viewable_object_renderer.py	/^class TestViewableObjectRenderer(unittest.TestCase):$/;"	kind:class	line:8
+UNIMPLEMENTED_FIELDS	../tests/test_legacy_data/test_input_data_structure.py	/^    UNIMPLEMENTED_FIELDS = [$/;"	kind:variable	line:80
+VALID_SUFFIXES	../video_and_photo_tools/image_cache.py	/^    VALID_SUFFIXES = [$/;"	kind:variable	line:9
+VIDEO_PATH	../video_and_photo_tools/video_image_benchmarker.py	/^    VIDEO_PATH = Path('.') \/ 'data\/test_data\/test_videos\/video.mp4'$/;"	kind:variable	line:13
+VIDEO_PATH_STR	../video_and_photo_tools/video_image_benchmarker.py	/^    VIDEO_PATH_STR = str(VIDEO_PATH.resolve())$/;"	kind:variable	line:14
+VectorUtils	../demo/deprecated_discover_circumcircle_demo.py	/^class VectorUtils:$/;"	kind:class	line:365
+VerticalImageList	../tests/test_vertical_image_list.py	/^from tk_canvas_renderers.vertical_image_list import VerticalImageList$/;"	kind:namespace	line:8
+VerticalImageList	../tk_canvas_renderers/vertical_image_list.py	/^class VerticalImageList:$/;"	kind:class	line:12
+VideoImageBenchmarkRunner	../video_and_photo_tools/video_image_benchmarker.py	/^def VideoImageBenchmarkRunner():$/;"	kind:function	line:228
+VideoImageBenchmarks	../video_and_photo_tools/video_image_benchmarker.py	/^def VideoImageBenchmarks():$/;"	kind:function	line:236
+VideoPositionIndicator	../tests/test_video_position_indicator.py	/^from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator$/;"	kind:namespace	line:8
+VideoPositionIndicator	../tk_canvas_renderers/scrubber.py	/^from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator # pylint: disable=C0413$/;"	kind:namespace	line:11
+VideoPositionIndicator	../tk_canvas_renderers/video_postion_indicator.py	/^class VideoPositionIndicator:$/;"	kind:class	line:6
+ViewTriangle	../camera.py	/^from view_triangle import ViewTriangle$/;"	kind:namespace	line:4
+ViewTriangle	../view_triangle.py	/^class ViewTriangle(Polygon):$/;"	kind:class	line:4
+ViewableObject	../base_position_calibrator.py	/^from viewable_object import ViewableObject$/;"	kind:namespace	line:8
+ViewableObject	../tests/test_computer_vision.py	/^from viewable_object import ViewableObject$/;"	kind:namespace	line:6
+ViewableObject	../tests/test_image_analyzer.py	/^from viewable_object import ViewableObject$/;"	kind:namespace	line:6
+ViewableObject	../tests/test_tag_position_analyzer.py	/^from viewable_object import ViewableObject$/;"	kind:namespace	line:6
+ViewableObject	../viewable_object.py	/^class ViewableObject:$/;"	kind:class	line:7
+ViewableObjects	../object_universe.py	/^from viewable_object import ViewableObjects$/;"	kind:namespace	line:1
+ViewableObjects	../tk_canvas_renderers/render_orchestrator.py	/^from viewable_object import ViewableObjects$/;"	kind:namespace	line:11
+ViewableObjects	../viewable_object.py	/^class ViewableObjects:$/;"	kind:class	line:151
+ViewableObjectsRenderer	../tests/test_moving_object_renderer.py	/^from tk_canvas_renderers.element_renderers import ViewableObjectsRenderer, BoundaryRenderer$/;"	kind:namespace	line:5
+ViewableObjectsRenderer	../tests/test_object_motion_analyzer.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:13
+ViewableObjectsRenderer	../tests/test_object_stats_processor.py	/^from tk_canvas_renderers.element_renderers import BoundaryRenderer, CameraRenderer, ViewableObjectsRenderer, ImageRenderer, TKRenderer, BasePositionCalibratorRenderer$/;"	kind:namespace	line:11
+ViewableObjectsRenderer	../tests/test_viewable_object_renderer.py	/^from tk_canvas_renderers.element_renderers import ViewableObjectsRenderer$/;"	kind:namespace	line:5
+ViewableObjectsRenderer	../tk_canvas_renderers/element_renderers.py	/^class ViewableObjectsRenderer(ElementRenderer):$/;"	kind:class	line:60
+W0611	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+_CameraSingleton	../demo/deprecated_discover_circumcircle_demo.py	/^class _CameraSingleton:$/;"	kind:class	line:31
+_DemoSingleton	../demo/circumcircle_demo.py	/^class _DemoSingleton:$/;"	kind:class	line:24
+_DemoSingleton	../demo/moving_object_demo.py	/^class _DemoSingleton:$/;"	kind:class	line:23
+_SimpleUIDSingleton	../simple_uid.py	/^class _SimpleUIDSingleton:$/;"	kind:class	line:14
+_TKRenderer	../tk_canvas_renderers/tk_renderer.py	/^class _TKRenderer:$/;"	kind:class	line:9
+_TagsSingleton	../demo/deprecated_discover_circumcircle_demo.py	/^class _TagsSingleton:$/;"	kind:class	line:325
+_TestSingleton	../demo/deprecated_isosceles_demo.py	/^class _TestSingleton:$/;"	kind:class	line:20
+_VideoImageBenchmarkRunner	../video_and_photo_tools/video_image_benchmarker.py	/^class _VideoImageBenchmarkRunner:$/;"	kind:class	line:169
+_VideoImageBenchmarks	../video_and_photo_tools/video_image_benchmarker.py	/^class _VideoImageBenchmarks:$/;"	kind:class	line:11
+__init__	../base_angle_calibrator.py	/^    def __init__(self, base_position_calibrator):$/;"	kind:member	line:11
+__init__	../base_position_calibrator.py	/^    def __init__(self, camera, tag, tag_gps_angle_threshold=math.radians(3)):$/;"	kind:member	line:12
+__init__	../camera.py	/^    def __init__(self,$/;"	kind:member	line:10
+__init__	../computer_vision.py	/^    def __init__(self):$/;"	kind:member	line:5
+__init__	../demo/camera_cv_moving_objects_demo.py	/^    def __init__(self):$/;"	kind:member	line:13
+__init__	../demo/circumcircle_demo.py	/^    def __init__(self):$/;"	kind:member	line:25
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self):$/;"	kind:member	line:326
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, possible_camera_positions):$/;"	kind:member	line:290
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, tags):$/;"	kind:member	line:106
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, tags):$/;"	kind:member	line:138
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, tags):$/;"	kind:member	line:196
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, tags):$/;"	kind:member	line:205
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, x, y):$/;"	kind:member	line:32
+__init__	../demo/deprecated_discover_circumcircle_demo.py	/^    def __init__(self, x, y, n):$/;"	kind:member	line:68
+__init__	../demo/deprecated_isosceles_demo.py	/^    def __init__(self):$/;"	kind:member	line:21
+__init__	../demo/moving_object_demo.py	/^    def __init__(self):$/;"	kind:member	line:24
+__init__	../experiments/temp.py	/^    def __init__(self):$/;"	kind:member	line:2
+__init__	../image_analyzer.py	/^    def __init__(self, camera):$/;"	kind:member	line:25
+__init__	../image_generator.py	/^    def __init__(self, image_width=640):$/;"	kind:member	line:63
+__init__	../object_motion_analyzer.py	/^    def __init__(self, camera, tag, tag_gps_angle_threshold=math.radians(3)):$/;"	kind:member	line:9
+__init__	../object_motion_analyzer.py	/^    def __init__(self, early_postion, late_position, theta_rad, error_circle_center, error_circle_radius):$/;"	kind:member	line:148
+__init__	../object_stats_processor.py	/^    def __init__(self, object_motion_analyzer):$/;"	kind:member	line:12
+__init__	../object_universe.py	/^    def __init__(self, num_timestamps=1000):$/;"	kind:member	line:5
+__init__	../simple_uid.py	/^    def __init__(self):$/;"	kind:member	line:15
+__init__	../simple_uid.py	/^    def __init__(self, prefix=""):$/;"	kind:member	line:2
+__init__	../tag_position_analyzer.py	/^    def __init__(self, tag, camera):$/;"	kind:member	line:6
+__init__	../tk_canvas_renderers/animator.py	/^    def __init__(self, element_renderers=[], num_timestamps=0, seconds_per_timestamp=1):$/;"	kind:member	line:5
+__init__	../tk_canvas_renderers/canvas_position_picker.py	/^    def __init__(self,$/;"	kind:member	line:5
+__init__	../tk_canvas_renderers/canvas_utils.py	/^    def __init__(self, canvas):$/;"	kind:member	line:4
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, **kargs):$/;"	kind:member	line:16
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, base_position_calibrator, **kargs):$/;"	kind:member	line:256
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, boundary, **kargs):$/;"	kind:member	line:51
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, camera, **kargs):$/;"	kind:member	line:191
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, image):$/;"	kind:member	line:313
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, image_generator, object_stats_processor=None, **kargs):$/;"	kind:member	line:130
+__init__	../tk_canvas_renderers/element_renderers.py	/^    def __init__(self, viewable_objects=[], computer_vision=None, **kargs):$/;"	kind:member	line:61
+__init__	../tk_canvas_renderers/render_orchestrator.py	/^    def __init__(self, num_timestamps, renderable_objects, seconds_per_timestamp=0.2, canvas_width=1000, canvas_height=900, scale=1):$/;"	kind:member	line:18
+__init__	../tk_canvas_renderers/scrub_picker.py	/^    def __init__(self,$/;"	kind:member	line:12
+__init__	../tk_canvas_renderers/scrubber.py	/^    def __init__(self,$/;"	kind:member	line:15
+__init__	../tk_canvas_renderers/single_image_canvas.py	/^    def __init__(self,$/;"	kind:member	line:13
+__init__	../tk_canvas_renderers/tk_renderer.py	/^    def __init__(self, scale=1, canvas_width=500, canvas_height=500, font_size=9, mouse_click_callback=None):$/;"	kind:member	line:11
+__init__	../tk_canvas_renderers/vertical_image_list.py	/^    def __init__(self, images_from_video: List[ImageFromVideo],$/;"	kind:member	line:14
+__init__	../tk_canvas_renderers/video_postion_indicator.py	/^    def __init__(self,$/;"	kind:member	line:8
+__init__	../video_and_photo_tools/image_cache.py	/^    def __init__(self, cache_dir_path=None):$/;"	kind:member	line:15
+__init__	../video_and_photo_tools/image_from_video.py	/^    def __init__(self,$/;"	kind:member	line:6
+__init__	../video_and_photo_tools/image_from_video_grabber.py	/^    def __init__(self,$/;"	kind:member	line:23
+__init__	../video_and_photo_tools/video_image_benchmarker.py	/^    def __init__(self):$/;"	kind:member	line:176
+__init__	../video_and_photo_tools/video_image_benchmarker.py	/^    def __init__(self):$/;"	kind:member	line:27
+__init__	../viewable_object.py	/^    def __init__(self, $/;"	kind:member	line:80
+__init__	../viewable_object.py	/^    def __init__(self, **kwds):$/;"	kind:member	line:146
+__init__	../viewable_object.py	/^    def __init__(self, position, **kwds):$/;"	kind:member	line:70
+__init__	../viewable_object.py	/^    def __init__(self, viewable_objects=[]):$/;"	kind:member	line:152
+__init__	../viewable_object.py	/^    def __init__(self,$/;"	kind:member	line:8
+__ndarray_dx2	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_dx2(self):$/;"	kind:function	line:26
+__ndarray_local_maxima	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_local_maxima(self):$/;"	kind:function	line:5
+__ndarray_local_minima	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_local_minima(self):$/;"	kind:function	line:8
+__ndarray_negative_zero_crossings	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_negative_zero_crossings(self):$/;"	kind:function	line:21
+__ndarray_positive_zero_crossings	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_positive_zero_crossings(self):$/;"	kind:function	line:16
+__ndarray_zero_crossings	../numpy_extensions/numpy_ndarray_extensions.py	/^def __ndarray_zero_crossings(self):$/;"	kind:function	line:11
+_add_camera_renderer	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_camera_renderer(self, camera):$/;"	kind:member	line:73
+_add_circumcircles_for_objects_in_frame	../object_motion_analyzer.py	/^    def _add_circumcircles_for_objects_in_frame(self, frame):$/;"	kind:member	line:88
+_add_image_render	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_image_render(self, image_generator, computer_vision):$/;"	kind:member	line:87
+_add_objects_angles_to_frame	../object_motion_analyzer.py	/^    def _add_objects_angles_to_frame(self, frame):$/;"	kind:member	line:130
+_add_renderer_for_object	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_renderer_for_object(self, renderable_object, renderer):$/;"	kind:member	line:69
+_add_renderers_for_objects	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_renderers_for_objects(self):$/;"	kind:member	line:29
+_add_renders_for_object	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_renders_for_object(self, renderable_object):$/;"	kind:member	line:34
+_add_single_image_canvases	../tk_canvas_renderers/vertical_image_list.py	/^    def _add_single_image_canvases(self):$/;"	kind:member	line:52
+_add_viewable_objects_renderer	../tk_canvas_renderers/render_orchestrator.py	/^    def _add_viewable_objects_renderer(self, viewable_objects, computer_vision):$/;"	kind:member	line:77
+_adust_image_width_mode	../video_and_photo_tools/image_from_video_grabber.py	/^    def _adust_image_width_mode(self, image):$/;"	kind:member	line:93
+_analyze_frame	../object_motion_analyzer.py	/^    def _analyze_frame(self, frame):$/;"	kind:member	line:77
+_analyze_frames	../object_motion_analyzer.py	/^    def _analyze_frames(self):$/;"	kind:member	line:56
+_angle_between_timestamps	../tag_position_analyzer.py	/^    def _angle_between_timestamps(self, timestamp1, timestamp2):$/;"	kind:member	line:152
+_angle_to_tag	../tag_position_analyzer.py	/^    def _angle_to_tag(self, timestamp):$/;"	kind:member	line:10
+_button_1_click	../tk_canvas_renderers/scrub_picker.py	/^    def _button_1_click(self):$/;"	kind:member	line:40
+_button_1_click	../tk_canvas_renderers/scrubber.py	/^    def _button_1_click(self):$/;"	kind:member	line:126
+_button_2_click	../tk_canvas_renderers/scrub_picker.py	/^    def _button_2_click(self):$/;"	kind:member	line:45
+_button_2_click	../tk_canvas_renderers/scrubber.py	/^    def _button_2_click(self):$/;"	kind:member	line:130
+_calc_d	../image_analyzer.py	/^    def _calc_d(self):$/;"	kind:member	line:79
+_camera_singleton	../demo/deprecated_discover_circumcircle_demo.py	/^_camera_singleton = None$/;"	kind:variable	line:54
+_canvas	../demo/circumcircle_demo.py	/^_canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)$/;"	kind:variable	line:19
+_canvas	../demo/deprecated_discover_circumcircle_demo.py	/^_canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)$/;"	kind:variable	line:26
+_canvas	../demo/deprecated_isosceles_demo.py	/^_canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)$/;"	kind:variable	line:16
+_canvas	../demo/moving_object_demo.py	/^_canvas = tk.Canvas(_root, width=_canvasWidth, height=_canvasHeight)$/;"	kind:variable	line:18
+_canvasHeight	../demo/circumcircle_demo.py	/^_canvasHeight = 500$/;"	kind:variable	line:17
+_canvasHeight	../demo/deprecated_discover_circumcircle_demo.py	/^_canvasHeight = 500$/;"	kind:variable	line:24
+_canvasHeight	../demo/deprecated_isosceles_demo.py	/^_canvasHeight = 500$/;"	kind:variable	line:14
+_canvasHeight	../demo/moving_object_demo.py	/^_canvasHeight = 500$/;"	kind:variable	line:16
+_canvasWidth	../demo/circumcircle_demo.py	/^_canvasWidth = 500$/;"	kind:variable	line:16
+_canvasWidth	../demo/deprecated_discover_circumcircle_demo.py	/^_canvasWidth = 500$/;"	kind:variable	line:23
+_canvasWidth	../demo/deprecated_isosceles_demo.py	/^_canvasWidth = 500$/;"	kind:variable	line:13
+_canvasWidth	../demo/moving_object_demo.py	/^_canvasWidth = 500$/;"	kind:variable	line:15
+_canvas_utils	../demo/circumcircle_demo.py	/^_canvas_utils = CUtils.CanvasUtils(_canvas)$/;"	kind:variable	line:20
+_canvas_utils	../demo/deprecated_discover_circumcircle_demo.py	/^_canvas_utils = CUtils.CanvasUtils(_canvas)$/;"	kind:variable	line:27
+_canvas_utils	../demo/moving_object_demo.py	/^_canvas_utils = CanvasUtils(_canvas)$/;"	kind:variable	line:19
+_clear_button	../demo/circumcircle_demo.py	/^_clear_button = tk.Button(_root, text="Clear", command=Demo().clear)$/;"	kind:variable	line:65
+_clear_button	../demo/moving_object_demo.py	/^_clear_button = tk.Button(_root, text="Clear", command=Demo().clear)$/;"	kind:variable	line:50
+_crosses_q1_4_boundary	../tag_position_analyzer.py	/^    def _crosses_q1_4_boundary(self, quadrants):$/;"	kind:member	line:159
+_demo_singleton	../demo/circumcircle_demo.py	/^_demo_singleton = None$/;"	kind:variable	line:56
+_demo_singleton	../demo/moving_object_demo.py	/^_demo_singleton = None$/;"	kind:variable	line:41
+_display_current_photo	../tk_canvas_renderers/scrubber.py	/^    def _display_current_photo(self):$/;"	kind:member	line:183
+_display_photo	../tk_canvas_renderers/scrubber.py	/^    def _display_photo(self, idx, override_frozen=False):$/;"	kind:member	line:187
+_distance_between_positions	../tag_position_analyzer.py	/^    def _distance_between_positions(self, timestamp1, timestamp2):$/;"	kind:member	line:145
+_done_click	../tk_canvas_renderers/scrubber.py	/^    def _done_click(self):$/;"	kind:member	line:215
+_eliminated_time_is_before_timestamp	../object_stats_processor.py	/^    def _eliminated_time_is_before_timestamp(self, obj_timestamp_tuple):$/;"	kind:member	line:169
+_ensure_cache_dir	../video_and_photo_tools/image_cache.py	/^    def _ensure_cache_dir(self):$/;"	kind:member	line:41
+_enter	../tk_canvas_renderers/scrubber.py	/^    def _enter(self, event):$/;"	kind:member	line:221
+_first_time_after_timestamp_where_range_of_angles_exceeds_threshold	../tag_position_analyzer.py	/^    def _first_time_after_timestamp_where_range_of_angles_exceeds_threshold(self, timestamp, threshold):$/;"	kind:member	line:56
+_freeze	../tk_canvas_renderers/scrubber.py	/^    def _freeze(self):$/;"	kind:member	line:224
+_get_actual_camera_angle	../base_angle_calibrator.py	/^    def _get_actual_camera_angle(self):$/;"	kind:member	line:65
+_get_all_circumcircle_objects	../base_position_calibrator.py	/^    def _get_all_circumcircle_objects(self):$/;"	kind:member	line:81
+_get_angle_relative_to_center_with_obj_timestamp_rad	../image_analyzer.py	/^    def _get_angle_relative_to_center_with_obj_timestamp_rad(self, obj, timestamp):$/;"	kind:member	line:65
+_get_angle_relative_to_center_with_x_rad	../image_analyzer.py	/^    def _get_angle_relative_to_center_with_x_rad(self, x):$/;"	kind:member	line:62
+_get_camera_motor_angle	../base_angle_calibrator.py	/^    def _get_camera_motor_angle(self):$/;"	kind:member	line:50
+_get_camera_position	../base_angle_calibrator.py	/^    def _get_camera_position(self):$/;"	kind:member	line:47
+_get_cap_array	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_cap_array(self):$/;"	kind:member	line:131
+_get_center_of_canvas_coords	../tk_canvas_renderers/scrubber.py	/^    def _get_center_of_canvas_coords(self):$/;"	kind:member	line:139
+_get_center_x	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_center_x(self):$/;"	kind:member	line:48
+_get_center_y	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_center_y(self):$/;"	kind:member	line:51
+_get_crosshair_text	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_crosshair_text(self):$/;"	kind:member	line:100
+_get_current_image_from_video	../tk_canvas_renderers/scrubber.py	/^    def _get_current_image_from_video(self):$/;"	kind:member	line:180
+_get_early_late_points	../tk_canvas_renderers/element_renderers.py	/^    def _get_early_late_points(self):$/;"	kind:member	line:297
+_get_filename	../video_and_photo_tools/image_cache.py	/^    def _get_filename(self, video_id, width, mode, frame_num, image_format):$/;"	kind:member	line:50
+_get_filepath	../video_and_photo_tools/image_cache.py	/^    def _get_filepath(self, video_id, width, mode, frame_num, image_format):$/;"	kind:member	line:53
+_get_first_image	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_first_image(self):$/;"	kind:member	line:87
+_get_frame	../base_angle_calibrator.py	/^    def _get_frame(self):$/;"	kind:member	line:53
+_get_frame_in_view_object_angles	../object_motion_analyzer.py	/^    def _get_frame_in_view_object_angles(self, frame):$/;"	kind:member	line:68
+_get_frame_ms_label_text	../tk_canvas_renderers/scrubber.py	/^    def _get_frame_ms_label_text(self):$/;"	kind:member	line:136
+_get_frame_num_label_text	../tk_canvas_renderers/scrubber.py	/^    def _get_frame_num_label_text(self):$/;"	kind:member	line:133
+_get_frame_rotation_same_as_tag	../object_motion_analyzer.py	/^    def _get_frame_rotation_same_as_tag(self, frame):$/;"	kind:member	line:63
+_get_frames	../tk_canvas_renderers/element_renderers.py	/^    def _get_frames(self):$/;"	kind:member	line:294
+_get_gps_angle_from_camera_to_tag_360	../base_angle_calibrator.py	/^    def _get_gps_angle_from_camera_to_tag_360(self):$/;"	kind:member	line:62
+_get_hash_for_obj	../object_stats_processor.py	/^    def _get_hash_for_obj(self, obj):$/;"	kind:member	line:91
+_get_horiz_crosshair	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_horiz_crosshair(self):$/;"	kind:member	line:82
+_get_horiz_crosshair_coords	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_horiz_crosshair_coords(self):$/;"	kind:member	line:74
+_get_i_c	../image_generator.py	/^    def _get_i_c(self, timestamp):$/;"	kind:member	line:104
+_get_idx_from_cursor_x	../tk_canvas_renderers/scrubber.py	/^    def _get_idx_from_cursor_x(self, cursor_x):$/;"	kind:member	line:166
+_get_image_analyzer	../object_motion_analyzer.py	/^    def _get_image_analyzer(self):$/;"	kind:member	line:71
+_get_image_at_current_frame	../video_and_photo_tools/image_from_video_grabber.py	/^    def _get_image_at_current_frame(self):$/;"	kind:member	line:125
+_get_image_filename	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_image_filename(self, mode, width, image_format):$/;"	kind:member	line:118
+_get_image_from_video_object	../video_and_photo_tools/image_from_video_grabber.py	/^    def _get_image_from_video_object(self, image, time_ms, frame_num, from_cache):$/;"	kind:member	line:104
+_get_image_height	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_image_height(self):$/;"	kind:member	line:78
+_get_image_path	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_image_path(self, mode, width, image_format):$/;"	kind:member	line:110
+_get_image_path_with_filename	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_image_path_with_filename(self, image_filename):$/;"	kind:member	line:115
+_get_image_path_with_image	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_image_path_with_image(self, image, image_format):$/;"	kind:member	line:121
+_get_image_width	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_image_width(self):$/;"	kind:member	line:75
+_get_instructions	../tk_canvas_renderers/scrub_picker.py	/^    def _get_instructions(self):$/;"	kind:member	line:50
+_get_instructions	../tk_canvas_renderers/scrubber.py	/^    def _get_instructions(self):$/;"	kind:member	line:110
+_get_l_image_640	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_l_image_640(self) -> PIL.Image.Image:$/;"	kind:member	line:162
+_get_l_image_large	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_l_image_large(self) -> PIL.Image.Image:$/;"	kind:member	line:145
+_get_left_scrub_bound	../tk_canvas_renderers/scrubber.py	/^    def _get_left_scrub_bound(self):$/;"	kind:member	line:160
+_get_left_x	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_left_x(self):$/;"	kind:member	line:56
+_get_num_images	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_num_images(self):$/;"	kind:member	line:84
+_get_num_images_from_video	../tk_canvas_renderers/scrubber.py	/^    def _get_num_images_from_video(self):$/;"	kind:member	line:230
+_get_object_motion_analyzer	../tk_canvas_renderers/element_renderers.py	/^    def _get_object_motion_analyzer(self):$/;"	kind:member	line:282
+_get_oval_coords	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_oval_coords(self):$/;"	kind:member	line:68
+_get_photos_height	../tk_canvas_renderers/scrubber.py	/^    def _get_photos_height(self):$/;"	kind:member	line:154
+_get_photos_width	../tk_canvas_renderers/scrubber.py	/^    def _get_photos_width(self):$/;"	kind:member	line:151
+_get_points_where_error_circle_intersections_intersect_each_other	../base_position_calibrator.py	/^    def _get_points_where_error_circle_intersections_intersect_each_other(self):$/;"	kind:member	line:63
+_get_renderers	../tk_canvas_renderers/render_orchestrator.py	/^    def _get_renderers(self):$/;"	kind:member	line:93
+_get_result	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_result(self, total_time, num_runs):$/;"	kind:member	line:203
+_get_rgb_image_640	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_rgb_image_640(self) -> PIL.Image.Image:$/;"	kind:member	line:152
+_get_rgb_image_large	../video_and_photo_tools/video_image_benchmarker.py	/^    def _get_rgb_image_large(self) -> PIL.Image.Image:$/;"	kind:member	line:140
+_get_right_scrub_bound	../tk_canvas_renderers/scrubber.py	/^    def _get_right_scrub_bound(self):$/;"	kind:member	line:163
+_get_right_x	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_right_x(self):$/;"	kind:member	line:59
+_get_selected_point	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_selected_point(self):$/;"	kind:member	line:60
+_get_single_image_canvases	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_single_image_canvases(self) -> List[SingleImageCanvas]:$/;"	kind:member	line:63
+_get_subtended_angle_with_obj_timestamps_rad	../image_analyzer.py	/^    def _get_subtended_angle_with_obj_timestamps_rad(self, obj, timestamp1, timestamp2):$/;"	kind:member	line:48
+_get_subtended_angle_with_x_rad	../image_analyzer.py	/^    def _get_subtended_angle_with_x_rad(self, x1, x2):$/;"	kind:member	line:57
+_get_tag	../base_angle_calibrator.py	/^    def _get_tag(self):$/;"	kind:member	line:41
+_get_tag_angle_relative_to_center_in_image	../base_angle_calibrator.py	/^    def _get_tag_angle_relative_to_center_in_image(self):$/;"	kind:member	line:59
+_get_tag_position	../base_angle_calibrator.py	/^    def _get_tag_position(self):$/;"	kind:member	line:56
+_get_tag_position_analyzer	../tk_canvas_renderers/element_renderers.py	/^    def _get_tag_position_analyzer(self):$/;"	kind:member	line:288
+_get_theta_rad	../image_generator.py	/^    def _get_theta_rad(self, obj, timestamp):$/;"	kind:member	line:98
+_get_timestamp	../base_angle_calibrator.py	/^    def _get_timestamp(self):$/;"	kind:member	line:44
+_get_tk_photo	../tk_canvas_renderers/single_image_canvas.py	/^    def _get_tk_photo(self):$/;"	kind:member	line:71
+_get_tk_photos	../tk_canvas_renderers/scrubber.py	/^    def _get_tk_photos(self):$/;"	kind:member	line:174
+_get_total_images_height	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_total_images_height(self):$/;"	kind:member	line:81
+_get_vert_crosshair	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_vert_crosshair(self):$/;"	kind:member	line:91
+_get_vert_crosshair_coords	../tk_canvas_renderers/canvas_position_picker.py	/^    def _get_vert_crosshair_coords(self):$/;"	kind:member	line:78
+_get_video_path	../tk_canvas_renderers/scrubber.py	/^    def _get_video_path(self):$/;"	kind:member	line:148
+_get_window_height	../tk_canvas_renderers/vertical_image_list.py	/^    def _get_window_height(self):$/;"	kind:member	line:70
+_get_x_for_all_inview_objects_at_timestamp	../image_generator.py	/^    def _get_x_for_all_inview_objects_at_timestamp(self, timestamp):$/;"	kind:member	line:85
+_get_x_for_inview_object_at_timestamp	../image_generator.py	/^    def _get_x_for_inview_object_at_timestamp(self, obj, timestamp):$/;"	kind:member	line:92
+_get_x_pos_with_percent	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_x_pos_with_percent(self, percent):$/;"	kind:member	line:53
+_get_x_width	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_x_width(self):$/;"	kind:member	line:62
+_get_x_with_object_and_timestamp	../image_analyzer.py	/^    def _get_x_with_object_and_timestamp(self, obj, timestamp):$/;"	kind:member	line:45
+_get_y	../tk_canvas_renderers/video_postion_indicator.py	/^    def _get_y(self):$/;"	kind:member	line:65
+_handle_frozen	../tk_canvas_renderers/scrubber.py	/^    def _handle_frozen(self, idx):$/;"	kind:member	line:197
+_is_exist_cache_dir	../video_and_photo_tools/image_cache.py	/^    def _is_exist_cache_dir(self):$/;"	kind:member	line:38
+_is_exist_file	../video_and_photo_tools/image_cache.py	/^    def _is_exist_file(self, filepath):$/;"	kind:member	line:35
+_label_font	../demo/circumcircle_demo.py	/^_label_font = ("arial", 10, "normal")$/;"	kind:variable	line:18
+_label_font	../demo/deprecated_discover_circumcircle_demo.py	/^_label_font = ("arial", 10, "normal")$/;"	kind:variable	line:25
+_label_font	../demo/deprecated_isosceles_demo.py	/^_label_font = ("arial", 10, "normal")$/;"	kind:variable	line:15
+_label_font	../demo/moving_object_demo.py	/^_label_font = ("arial", 10, "normal")$/;"	kind:variable	line:17
+_leave	../tk_canvas_renderers/scrubber.py	/^    def _leave(self, _):$/;"	kind:member	line:218
+_left_click	../tk_canvas_renderers/canvas_position_picker.py	/^    def _left_click(self, event):$/;"	kind:member	line:54
+_left_click	../tk_canvas_renderers/scrub_picker.py	/^    def _left_click(self, _):$/;"	kind:member	line:56
+_left_click	../tk_canvas_renderers/scrubber.py	/^    def _left_click(self, _):$/;"	kind:member	line:114
+_list_of_angles_between_timestamps	../tag_position_analyzer.py	/^    def _list_of_angles_between_timestamps(self, timestamp1, timestamp2):$/;"	kind:member	line:44
+_mark_objects_with_rotation_same_as_tag_in_frame	../object_motion_analyzer.py	/^    def _mark_objects_with_rotation_same_as_tag_in_frame(self, frame):$/;"	kind:member	line:83
+_motion	../tk_canvas_renderers/scrubber.py	/^    def _motion(self, event):$/;"	kind:member	line:157
+_open_image	../video_and_photo_tools/video_image_benchmarker.py	/^    def _open_image(self, mode, width, image_format):$/;"	kind:member	line:104
+_outer_canvas	../experiments/image3.py	/^_outer_canvas = tk.Canvas(_outer_frame, scrollregion=(0, 0, 1000, 1000), background='blue')$/;"	kind:variable	line:16
+_outer_frame	../experiments/image3.py	/^_outer_frame = tk.Frame(root)$/;"	kind:variable	line:13
+_process_intersection	../object_stats_processor.py	/^    def _process_intersection(self):$/;"	kind:member	line:43
+_process_moved_opposite	../object_stats_processor.py	/^    def _process_moved_opposite(self):$/;"	kind:member	line:38
+_process_objects	../object_stats_processor.py	/^    def _process_objects(self):$/;"	kind:member	line:33
+_q4_adjusted_angle_to_tag	../tag_position_analyzer.py	/^    def _q4_adjusted_angle_to_tag(self, timestamp):$/;"	kind:member	line:14
+_quadrant_to_tag	../tag_position_analyzer.py	/^    def _quadrant_to_tag(self, timestamp):$/;"	kind:member	line:20
+_range_of_angles_between_timestamps	../tag_position_analyzer.py	/^    def _range_of_angles_between_timestamps(self, timestamp1, timestamp2):$/;"	kind:member	line:24
+_resize_image	../video_and_photo_tools/video_image_benchmarker.py	/^    def _resize_image(self, image: PIL.Image.Image):$/;"	kind:member	line:125
+_right_click	../tk_canvas_renderers/scrub_picker.py	/^    def _right_click(self, _):$/;"	kind:member	line:64
+_right_click	../tk_canvas_renderers/scrubber.py	/^    def _right_click(self, _):$/;"	kind:member	line:118
+_root	../demo/circumcircle_demo.py	/^_root = tk.Tk()$/;"	kind:variable	line:13
+_root	../demo/deprecated_discover_circumcircle_demo.py	/^_root = tk.Tk()$/;"	kind:variable	line:20
+_root	../demo/deprecated_isosceles_demo.py	/^_root = tk.Tk()$/;"	kind:variable	line:10
+_root	../demo/moving_object_demo.py	/^_root = tk.Tk()$/;"	kind:variable	line:12
+_run_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def _run_benchmark(self, benchmark_name: str):$/;"	kind:member	line:187
+_save_image	../video_and_photo_tools/video_image_benchmarker.py	/^    def _save_image(self, image, image_format):$/;"	kind:member	line:107
+_set_animator	../tk_canvas_renderers/render_orchestrator.py	/^    def _set_animator(self):$/;"	kind:member	line:96
+_set_button_1_text	../tk_canvas_renderers/scrubber.py	/^    def _set_button_1_text(self, text):$/;"	kind:member	line:142
+_set_button_2_text	../tk_canvas_renderers/scrubber.py	/^    def _set_button_2_text(self, text):$/;"	kind:member	line:145
+_set_button_text	../tk_canvas_renderers/scrub_picker.py	/^    def _set_button_text(self):$/;"	kind:member	line:32
+_set_didnt_intersect_error_circle	../object_stats_processor.py	/^    def _set_didnt_intersect_error_circle(self, frame, obj):$/;"	kind:member	line:63
+_set_eliminated_for_all_moved_same_as_tag_which_are_not_top_ranked_object	../object_stats_processor.py	/^    def _set_eliminated_for_all_moved_same_as_tag_which_are_not_top_ranked_object(self):$/;"	kind:member	line:78
+_set_moved_opposite_to_tag	../object_stats_processor.py	/^    def _set_moved_opposite_to_tag(self, frame, obj):$/;"	kind:member	line:51
+_set_object_stats_processor_in_image_renderer	../tk_canvas_renderers/render_orchestrator.py	/^    def _set_object_stats_processor_in_image_renderer(self):$/;"	kind:member	line:65
+_setup_ui	../tk_canvas_renderers/canvas_position_picker.py	/^    def _setup_ui(self):$/;"	kind:member	line:29
+_setup_ui	../tk_canvas_renderers/single_image_canvas.py	/^    def _setup_ui(self):$/;"	kind:member	line:29
+_setup_ui	../tk_canvas_renderers/vertical_image_list.py	/^    def _setup_ui(self):$/;"	kind:member	line:27
+_simple_uid_singleton	../simple_uid.py	/^_simple_uid_singleton = None$/;"	kind:variable	line:22
+_start_extent_mid	../demo/deprecated_discover_circumcircle_demo.py	/^    def _start_extent_mid(self):$/;"	kind:member	line:157
+_store_in_cache	../video_and_photo_tools/image_from_video_grabber.py	/^    def _store_in_cache(self, image, frame_num):$/;"	kind:member	line:97
+_tags_singleton	../demo/deprecated_discover_circumcircle_demo.py	/^_tags_singleton = None $/;"	kind:variable	line:355
+_test_singleton	../demo/deprecated_isosceles_demo.py	/^_test_singleton = None$/;"	kind:variable	line:43
+_time_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def _time_benchmark(self, benchmark_name: str):$/;"	kind:member	line:197
+_timestamp_of_max_angle_in_frame	../tag_position_analyzer.py	/^    def _timestamp_of_max_angle_in_frame(self, timestamp1, timestamp2):$/;"	kind:member	line:36
+_timestamp_of_min_angle_in_frame	../tag_position_analyzer.py	/^    def _timestamp_of_min_angle_in_frame(self, timestamp1, timestamp2):$/;"	kind:member	line:28
+_tk_renderer	../tk_canvas_renderers/tk_renderer.py	/^_tk_renderer = None$/;"	kind:variable	line:117
+_un_freeze	../tk_canvas_renderers/scrubber.py	/^    def _un_freeze(self):$/;"	kind:member	line:227
+_upate_crosshairs	../tk_canvas_renderers/canvas_position_picker.py	/^    def _upate_crosshairs(self):$/;"	kind:member	line:64
+_update_canvas_overlay	../tk_canvas_renderers/scrub_picker.py	/^    def _update_canvas_overlay(self):$/;"	kind:member	line:75
+_update_canvas_overlay	../tk_canvas_renderers/scrubber.py	/^    def _update_canvas_overlay(self):$/;"	kind:member	line:122
+_update_frame_num_and_ms_text	../tk_canvas_renderers/scrubber.py	/^    def _update_frame_num_and_ms_text(self):$/;"	kind:member	line:206
+_update_video_position_indicator	../tk_canvas_renderers/scrubber.py	/^    def _update_video_position_indicator(self):$/;"	kind:member	line:210
+_vbar	../experiments/image3.py	/^_vbar = tk.Scrollbar(_outer_frame, orient=tk.VERTICAL)$/;"	kind:variable	line:25
+_video_image_benchmark_runner	../video_and_photo_tools/video_image_benchmarker.py	/^_video_image_benchmark_runner = None$/;"	kind:variable	line:226
+_video_image_benchmarks	../video_and_photo_tools/video_image_benchmarker.py	/^_video_image_benchmarks = None$/;"	kind:variable	line:234
+abc	../tk_canvas_renderers/scrubber.py	/^import abc$/;"	kind:namespace	line:3
+add_angle_between_tags	../demo/deprecated_discover_circumcircle_demo.py	/^    def add_angle_between_tags(self, tags):$/;"	kind:member	line:344
+add_camera	../object_universe.py	/^    def add_camera(self, camera):$/;"	kind:member	line:11
+add_computer_vision_if_none	../camera.py	/^    def add_computer_vision_if_none(self):$/;"	kind:member	line:119
+add_element_renderers	../tk_canvas_renderers/animator.py	/^    def add_element_renderers(self, element_renderers):$/;"	kind:member	line:21
+add_image_generator_if_none	../camera.py	/^    def add_image_generator_if_none(self):$/;"	kind:member	line:105
+add_line_between_tags	../demo/deprecated_discover_circumcircle_demo.py	/^    def add_line_between_tags(self, tags):$/;"	kind:member	line:339
+add_moving_object	../demo/moving_object_demo.py	/^    def add_moving_object(self):$/;"	kind:member	line:29
+add_point	../demo/circumcircle_demo.py	/^    def add_point(self, p):$/;"	kind:member	line:32
+add_point_to_history	../viewable_object.py	/^    def add_point_to_history(self):$/;"	kind:member	line:111
+add_tag	../demo/deprecated_discover_circumcircle_demo.py	/^    def add_tag(self, x, y):$/;"	kind:member	line:331
+add_viewable_objects	../object_universe.py	/^    def add_viewable_objects(self, viewable_objects):$/;"	kind:member	line:34
+adjust_state_history_to_num_timestamps	../camera.py	/^    def adjust_state_history_to_num_timestamps(self):$/;"	kind:member	line:141
+angel_of_vector_between_points_360_rad	../geometry_utils.py	/^def angel_of_vector_between_points_360_rad(p1,p2):$/;"	kind:function	line:76
+angle	../demo/deprecated_discover_circumcircle_demo.py	/^    def angle(vector):$/;"	kind:member	line:423
+angle360	../demo/deprecated_discover_circumcircle_demo.py	/^    def angle360(vector):$/;"	kind:member	line:428
+angle_of_vector	../geometry_utils.py	/^def angle_of_vector(coords):$/;"	kind:function	line:53
+angle_of_vector_360_rad	../geometry_utils.py	/^def angle_of_vector_360_rad(coords):$/;"	kind:function	line:69
+angle_of_vector_between_points	../geometry_utils.py	/^def angle_of_vector_between_points(p1, p2):$/;"	kind:function	line:50
+angle_to_centroid	../boundary.py	/^    def angle_to_centroid(self, point):$/;"	kind:member	line:10
+animator	../experiments/image.py	/^animator = Animator([image_renderer])$/;"	kind:variable	line:15
+animator.py	../tk_canvas_renderers/animator.py	1;"	kind:file	line:1
+arc_box	../demo/deprecated_discover_circumcircle_demo.py	/^    def arc_box(self):$/;"	kind:member	line:151
+atan	../calibration_utils.py	/^from sympy import symbols, tan, atan, solve$/;"	kind:namespace	line:1
+b_marks	../video_and_photo_tools/video_image_benchmarker.py	/^    b_marks = [$/;"	kind:variable	line:244
+base_alt	../data/data_formats.py	/^         base_alt=dummy_data,$/;"	kind:variable	line:16
+base_angle_calibrator.py	../base_angle_calibrator.py	1;"	kind:file	line:1
+base_angle_calibrator_demo.py	../demo/base_angle_calibrator_demo.py	1;"	kind:file	line:1
+base_lat	../data/data_formats.py	/^         base_lat=dummy_data,$/;"	kind:variable	line:14
+base_long	../data/data_formats.py	/^         base_long=dummy_data,$/;"	kind:variable	line:15
+base_npz	../data/data_formats.py	/^base_npz = np.load(BASE_NPZ_PATH)$/;"	kind:variable	line:22
+base_position_calibrator.py	../base_position_calibrator.py	1;"	kind:file	line:1
+base_position_calibrator_demo.py	../demo/base_position_calibrator_demo.py	1;"	kind:file	line:1
+base_roll_at_current_pan_angle	../data/data_formats.py	/^         base_roll_at_current_pan_angle=dummy_data,$/;"	kind:variable	line:18
+base_tilt_at_current_pan_angle	../data/data_formats.py	/^         base_tilt_at_current_pan_angle=dummy_data,$/;"	kind:variable	line:17
+bounary_renderer_demo.py	../demo/bounary_renderer_demo.py	1;"	kind:file	line:1
+boundary.py	../boundary.py	1;"	kind:file	line:1
+bounded_frame_num	../video_and_photo_tools/image_from_video_grabber.py	/^    def bounded_frame_num(self, frame_num):$/;"	kind:member	line:130
+build	../experiments/google_drive.py	/^from googleapiclient.discovery import build$/;"	kind:namespace	line:3
+cProfile	../profile_shapely.py	/^import cProfile, pstats, io $/;"	kind:namespace	line:3
+calc	../demo/deprecated_discover_circumcircle_demo.py	/^    def calc(self):$/;"	kind:member	line:220
+calc_max_BC	../demo/deprecated_discover_circumcircle_demo.py	/^    def calc_max_BC(self):$/;"	kind:member	line:271
+calibration_utils.py	../calibration_utils.py	1;"	kind:file	line:1
+cam_pitch	../data/data_formats.py	/^         cam_pitch=dummy_data,$/;"	kind:variable	line:19
+camera.py	../camera.py	1;"	kind:file	line:1
+camera_cv_moving_objects_demo.py	../demo/camera_cv_moving_objects_demo.py	1;"	kind:file	line:1
+camera_label	../demo/deprecated_discover_circumcircle_demo.py	/^    def camera_label(self):$/;"	kind:member	line:47
+camera_num_timestamps_changed	../computer_vision.py	/^    def camera_num_timestamps_changed(self):$/;"	kind:member	line:22
+camera_renderer_demo.py	../demo/camera_renderer_demo.py	1;"	kind:file	line:1
+canvas	../experiments/canvas_with_scroll.py	/^canvas=Canvas(frame,bg='#FFFFFF',width=300,height=300,scrollregion=(0,0,500,500))$/;"	kind:variable	line:5
+canvas	../experiments/image2.py	/^canvas = tk.Canvas(root, width=800, height=600, bg='blue')$/;"	kind:variable	line:6
+canvas_position_picker.py	../tk_canvas_renderers/canvas_position_picker.py	1;"	kind:file	line:1
+canvas_utils.py	../tk_canvas_renderers/canvas_utils.py	1;"	kind:file	line:1
+canvas_with_scroll.py	../experiments/canvas_with_scroll.py	1;"	kind:file	line:1
+cap	../experiments/video.py	/^cap = cv2.VideoCapture('\/Volumes\/WD\/soloshot_video\/park.mp4')$/;"	kind:variable	line:5
+circumcenters	../geometry_utils.py	/^def circumcenters(p1, p2, theta_rad):$/;"	kind:function	line:13
+circumcircle_demo.py	../demo/circumcircle_demo.py	1;"	kind:file	line:1
+circumdiameter	../geometry_utils.py	/^def circumdiameter(p1, p2, theta_rad):$/;"	kind:function	line:22
+circumradius	../geometry_utils.py	/^def circumradius(p1, p2, theta_rad):$/;"	kind:function	line:19
+clear	../demo/circumcircle_demo.py	/^    def clear(self):$/;"	kind:member	line:48
+clear	../demo/deprecated_isosceles_demo.py	/^    def clear(self):$/;"	kind:member	line:36
+clear	../demo/moving_object_demo.py	/^    def clear(self):$/;"	kind:member	line:33
+clear_cache	../video_and_photo_tools/image_cache.py	/^    def clear_cache(self):$/;"	kind:member	line:60
+clear_cv_ids_of_out_of_view_objects	../computer_vision.py	/^    def clear_cv_ids_of_out_of_view_objects(self, timestamp):$/;"	kind:member	line:34
+clear_postion_history	../viewable_object.py	/^    def clear_postion_history(self):$/;"	kind:member	line:43
+clear_viewable_objects	../object_universe.py	/^    def clear_viewable_objects(self):$/;"	kind:member	line:50
+client	../experiments/google_drive.py	/^from oauth2client import file, client, tools$/;"	kind:namespace	line:5
+closed_window_callback	../tk_canvas_renderers/tk_renderer.py	/^    def closed_window_callback(self):$/;"	kind:member	line:49
+color	../tk_canvas_renderers/element_renderers.py	/^    def color(self, obj, timestamp):$/;"	kind:member	line:119
+colors	../tk_canvas_renderers/canvas_utils.py	/^    def colors():$/;"	kind:member	line:26
+computer_vision.py	../computer_vision.py	1;"	kind:file	line:1
+convert_640_l_to_tk_image_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def convert_640_l_to_tk_image_benchmark(self):$/;"	kind:member	line:75
+convert_640_rgb_to_tk_image_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def convert_640_rgb_to_tk_image_benchmark(self):$/;"	kind:member	line:70
+convert_array_to_image_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def convert_array_to_image_benchmark(self):$/;"	kind:member	line:56
+convert_rgb_to_l_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def convert_rgb_to_l_benchmark(self):$/;"	kind:member	line:60
+create_circle_with_center_and_radius	../tk_canvas_renderers/canvas_utils.py	/^    def create_circle_with_center_and_radius(self, c, r, **kargs):$/;"	kind:member	line:18
+create_circle_with_center_and_radius	../tk_canvas_renderers/tk_renderer.py	/^    def create_circle_with_center_and_radius(self, c, r, **kargs):$/;"	kind:member	line:101
+create_dot	../tk_canvas_renderers/canvas_utils.py	/^    def create_dot(self, p, radius=1, **kargs):$/;"	kind:member	line:8
+create_dot	../tk_canvas_renderers/tk_renderer.py	/^    def create_dot(self, crds, size=1, **kargs):$/;"	kind:member	line:93
+create_dot_label	../tk_canvas_renderers/canvas_utils.py	/^    def create_dot_label(self, x, y, text, **kargs):$/;"	kind:member	line:11
+create_dot_label	../tk_canvas_renderers/tk_renderer.py	/^    def create_dot_label(self, crds, text, anchor='se', **kargs):$/;"	kind:member	line:97
+create_line	../tk_canvas_renderers/tk_renderer.py	/^    def create_line(self, points, **kargs):$/;"	kind:member	line:106
+create_photo	../tk_canvas_renderers/tk_renderer.py	/^    def create_photo(self, position, image, **kargs):$/;"	kind:member	line:110
+create_polygon	../tk_canvas_renderers/tk_renderer.py	/^    def create_polygon(self, crds, **kargs):$/;"	kind:member	line:90
+create_position_history	../viewable_object.py	/^    def create_position_history(self):$/;"	kind:member	line:39
+create_position_history	../viewable_object.py	/^    def create_position_history(self):$/;"	kind:member	line:75
+create_postion_history	../viewable_object.py	/^    def create_postion_history(self):$/;"	kind:member	line:99
+curse	../numpy_extensions/numpy_ndarray_extensions.py	/^from forbiddenfruit import curse$/;"	kind:namespace	line:2
+cv2	../experiments/video.py	/^import cv2$/;"	kind:namespace	line:2
+cv2	../tests/test_image_from_video_grabber.py	/^import cv2$/;"	kind:namespace	line:7
+cv2	../tests/test_legacy_data/test_input_data_structure.py	/^import cv2$/;"	kind:namespace	line:7
+cv2	../video_and_photo_tools/image_from_video_grabber.py	/^import cv2$/;"	kind:namespace	line:5
+cv2	../video_and_photo_tools/video_image_benchmarker.py	/^import cv2$/;"	kind:namespace	line:7
+cv2_read_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def cv2_read_benchmark(self):$/;"	kind:member	line:51
+cv2_read_benchmark_setup	../video_and_photo_tools/video_image_benchmarker.py	/^    def cv2_read_benchmark_setup(self):$/;"	kind:member	line:48
+cv_id_for_object	../tk_canvas_renderers/element_renderers.py	/^    def cv_id_for_object(self, obj, timestamp):$/;"	kind:member	line:103
+data	../data/data_formats.py	/^    data = base_npz[field]$/;"	kind:variable	line:37
+data_formats.py	../data/data_formats.py	1;"	kind:file	line:1
+delete_all_rendered_elements	../tk_canvas_renderers/element_renderers.py	/^    def delete_all_rendered_elements(self):$/;"	kind:member	line:46
+delete_elements	../tk_canvas_renderers/tk_renderer.py	/^    def delete_elements(self, elements):$/;"	kind:member	line:76
+delete_moving_rendered_elements	../tk_canvas_renderers/element_renderers.py	/^    def delete_moving_rendered_elements(self):$/;"	kind:member	line:37
+delete_stationary_rendered_elements	../tk_canvas_renderers/element_renderers.py	/^    def delete_stationary_rendered_elements(self):$/;"	kind:member	line:42
+delta_x	../demo/deprecated_discover_circumcircle_demo.py	/^    def delta_x(vector):$/;"	kind:member	line:384
+delta_y	../demo/deprecated_discover_circumcircle_demo.py	/^    def delta_y(vector):$/;"	kind:member	line:388
+deprecated_discover_circumcircle_demo.py	../demo/deprecated_discover_circumcircle_demo.py	1;"	kind:file	line:1
+deprecated_isosceles_demo.py	../demo/deprecated_isosceles_demo.py	1;"	kind:file	line:1
+destroy_cache_dir	../video_and_photo_tools/image_cache.py	/^    def destroy_cache_dir(self):$/;"	kind:member	line:67
+didnt_intersect_error_circle_n	../object_stats_processor.py	/^    didnt_intersect_error_circle_n = 'didnt_intersect_n'$/;"	kind:variable	line:7
+didnt_intersect_error_circle_t	../object_stats_processor.py	/^    didnt_intersect_error_circle_t = 'didnt_intersect_t'$/;"	kind:variable	line:8
+disable	../tk_canvas_renderers/scrub_picker.py	/^from tk_canvas_renderers.scrubber import Scrubber # pylint: disable=C0413$/;"	kind:namespace	line:4
+disable	../tk_canvas_renderers/scrubber.py	/^from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator # pylint: disable=C0413$/;"	kind:namespace	line:11
+disable	../tk_canvas_renderers/scrubber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+disable	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_cache import ImageCache # pylint: disable=C0413$/;"	kind:namespace	line:11
+disable	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+disable	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+distance_between_points	../geometry_utils.py	/^def distance_between_points(p1, p2):$/;"	kind:function	line:82
+django-admin.py	../bin/django-admin.py	1;"	kind:file	line:1
+dummy_data	../data/data_formats.py	/^dummy_data = np.arange(15)$/;"	kind:variable	line:8
+dump_results	../video_and_photo_tools/video_image_benchmarker.py	/^    def dump_results(self):$/;"	kind:member	line:222
+element_renderers.py	../tk_canvas_renderers/element_renderers.py	1;"	kind:file	line:1
+eliminated	../object_stats_processor.py	/^    eliminated = 'eliminated'$/;"	kind:variable	line:9
+elimination_t	../object_stats_processor.py	/^    elimination_t = 'elimination_t'$/;"	kind:variable	line:10
+epylint	../bin/epylint	1;"	kind:file	line:1
+extend_state_history	../camera.py	/^    def extend_state_history(self):$/;"	kind:member	line:148
+f	../experiments/temp.py	/^f = foo()$/;"	kind:variable	line:16
+fetch	../video_and_photo_tools/image_cache.py	/^    def fetch(self, video_id, width, mode, frame_num, image_format):$/;"	kind:member	line:25
+fields	../data/data_formats.py	/^fields = base_npz.files$/;"	kind:variable	line:24
+file	../experiments/google_drive.py	/^from oauth2client import file, client, tools$/;"	kind:namespace	line:5
+foo	../experiments/temp.py	/^class foo:$/;"	kind:class	line:1
+frame	../experiments/canvas_with_scroll.py	/^frame=Frame(root,width=300,height=300)$/;"	kind:variable	line:3
+geometry_utils.py	../geometry_utils.py	1;"	kind:file	line:1
+get_actual_pan_angle_deg	../camera.py	/^    def get_actual_pan_angle_deg(self, timestamp):$/;"	kind:member	line:191
+get_actual_pan_angle_rad	../camera.py	/^    def get_actual_pan_angle_rad(self, timestamp):$/;"	kind:member	line:194
+get_actual_position	../camera.py	/^    def get_actual_position(self):$/;"	kind:member	line:56
+get_all_eliminated	../object_stats_processor.py	/^    def get_all_eliminated(self):$/;"	kind:member	line:138
+get_all_eliminated_before_timestamp	../object_stats_processor.py	/^    def get_all_eliminated_before_timestamp(self, timestamp):$/;"	kind:member	line:165
+get_all_error_circle_intersections	../base_position_calibrator.py	/^    def get_all_error_circle_intersections(self):$/;"	kind:member	line:76
+get_all_moved_oposite	../object_stats_processor.py	/^    def get_all_moved_oposite(self):$/;"	kind:member	line:144
+get_all_no_intersect	../object_stats_processor.py	/^    def get_all_no_intersect(self):$/;"	kind:member	line:147
+get_all_npz_file_paths	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_all_npz_file_paths(self):$/;"	kind:member	line:261
+get_all_that_always_moved_same_direction_as_tag	../object_stats_processor.py	/^    def get_all_that_always_moved_same_direction_as_tag(self):$/;"	kind:member	line:141
+get_anchor	../tk_canvas_renderers/element_renderers.py	/^    def get_anchor(self, obj, timestamp):$/;"	kind:member	line:170
+get_angle	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_angle(self):$/;"	kind:member	line:144
+get_angle_between_points	../tests/test_tag_position_analyzer.py	/^    def get_angle_between_points(self, n):$/;"	kind:member	line:86
+get_angle_between_positions	../tag_position_analyzer.py	/^    def get_angle_between_positions(self, frame):$/;"	kind:member	line:130
+get_angles_relative_to_center_for_all_objects	../image_analyzer.py	/^    def get_angles_relative_to_center_for_all_objects(self, timestamp):$/;"	kind:member	line:73
+get_aspect	../video_and_photo_tools/pil_image_extensions.py	/^    def get_aspect(self):$/;"	kind:member	line:14
+get_base_angle_error	../base_angle_calibrator.py	/^    def get_base_angle_error(self):$/;"	kind:member	line:17
+get_base_position	../base_position_calibrator.py	/^    def get_base_position(self):$/;"	kind:member	line:53
+get_base_position_point	../base_position_calibrator.py	/^    def get_base_position_point(self):$/;"	kind:member	line:50
+get_c1_error_circle_intersection	../object_motion_analyzer.py	/^    def get_c1_error_circle_intersection(self):$/;"	kind:member	line:229
+get_c1_high_def	../object_motion_analyzer.py	/^    def get_c1_high_def(self):$/;"	kind:member	line:206
+get_c1_intersects_error_circle	../object_motion_analyzer.py	/^    def get_c1_intersects_error_circle(self):$/;"	kind:member	line:216
+get_c1_low_def	../object_motion_analyzer.py	/^    def get_c1_low_def(self):$/;"	kind:member	line:196
+get_c2_error_circle_intersection	../object_motion_analyzer.py	/^    def get_c2_error_circle_intersection(self):$/;"	kind:member	line:234
+get_c2_high_def	../object_motion_analyzer.py	/^    def get_c2_high_def(self):$/;"	kind:member	line:211
+get_c2_intersects_error_circle	../object_motion_analyzer.py	/^    def get_c2_intersects_error_circle(self):$/;"	kind:member	line:221
+get_c2_low_def	../object_motion_analyzer.py	/^    def get_c2_low_def(self):$/;"	kind:member	line:201
+get_camera	../base_angle_calibrator.py	/^    def get_camera(self):$/;"	kind:member	line:35
+get_camera	../base_position_calibrator.py	/^    def get_camera(self):$/;"	kind:member	line:29
+get_camera	../computer_vision.py	/^    def get_camera(self):$/;"	kind:member	line:19
+get_camera	../object_universe.py	/^    def get_camera(self):$/;"	kind:member	line:16
+get_canvas	../tk_canvas_renderers/single_image_canvas.py	/^    def get_canvas(self):$/;"	kind:member	line:68
+get_canvas	../tk_canvas_renderers/tk_renderer.py	/^    def get_canvas(self):$/;"	kind:member	line:53
+get_circumcenters	../object_motion_analyzer.py	/^    def get_circumcenters(self):$/;"	kind:member	line:176
+get_circumcircles	../object_motion_analyzer.py	/^    def get_circumcircles(self, frame):$/;"	kind:member	line:106
+get_circumcircles_for_object_for_all_frames	../object_motion_analyzer.py	/^    def get_circumcircles_for_object_for_all_frames(self, obj):$/;"	kind:member	line:114
+get_circumcircles_for_object_in_frame	../object_motion_analyzer.py	/^    def get_circumcircles_for_object_in_frame(self, frame, obj):$/;"	kind:member	line:111
+get_circumradius	../object_motion_analyzer.py	/^    def get_circumradius(self):$/;"	kind:member	line:181
+get_compass_error_rad	../camera.py	/^    def get_compass_error_rad(self):$/;"	kind:member	line:95
+get_complete_frames	../object_motion_analyzer.py	/^    def get_complete_frames(self):$/;"	kind:member	line:38
+get_computer_vision	../camera.py	/^    def get_computer_vision(self):$/;"	kind:member	line:130
+get_computer_vision	../tk_canvas_renderers/element_renderers.py	/^    def get_computer_vision(self):$/;"	kind:member	line:73
+get_cv_id_for_obj_at_timestamp	../computer_vision.py	/^    def get_cv_id_for_obj_at_timestamp(self, obj, timestamp):$/;"	kind:member	line:57
+get_cv_id_for_object_in_prev_timestamp	../computer_vision.py	/^    def get_cv_id_for_object_in_prev_timestamp(self, obj, timestamp):$/;"	kind:member	line:46
+get_d	../image_analyzer.py	/^    def get_d(self):$/;"	kind:member	line:82
+get_did_move_opposite_to_tag	../object_stats_processor.py	/^    def get_did_move_opposite_to_tag(self, obj):$/;"	kind:member	line:106
+get_didnt_intersect_error_circle	../object_stats_processor.py	/^    def get_didnt_intersect_error_circle(self, obj):$/;"	kind:member	line:122
+get_didnt_intersect_error_circle_n	../object_stats_processor.py	/^    def get_didnt_intersect_error_circle_n(self, obj):$/;"	kind:member	line:112
+get_didnt_intersect_error_circle_t	../object_stats_processor.py	/^    def get_didnt_intersect_error_circle_t(self, obj):$/;"	kind:member	line:117
+get_didnt_move_opposite_to_tag	../object_stats_processor.py	/^    def get_didnt_move_opposite_to_tag(self, obj):$/;"	kind:member	line:109
+get_distance_between_points	../tests/test_tag_position_analyzer.py	/^    def get_distance_between_points(self, n):$/;"	kind:member	line:89
+get_distance_between_positions	../tag_position_analyzer.py	/^    def get_distance_between_positions(self, frame):$/;"	kind:member	line:121
+get_dot	../tk_canvas_renderers/element_renderers.py	/^    def get_dot(self, coords, obj, timestamp):$/;"	kind:member	line:98
+get_dot_label	../tk_canvas_renderers/element_renderers.py	/^    def get_dot_label(self, coords, obj, timestamp, **kargs):$/;"	kind:member	line:93
+get_duration_in_ms_for_npz_with_a_time_field	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_duration_in_ms_for_npz_with_a_time_field(self, npz_path):$/;"	kind:member	line:291
+get_duration_ms_of_video_at_path	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_duration_ms_of_video_at_path(self, video_path):$/;"	kind:member	line:284
+get_early_angle_relative_to_center	../object_motion_analyzer.py	/^    def get_early_angle_relative_to_center(self, frame):$/;"	kind:member	line:138
+get_early_angle_relative_to_center_for_object_in_frame	../object_motion_analyzer.py	/^    def get_early_angle_relative_to_center_for_object_in_frame(self, obj, frame):$/;"	kind:member	line:143
+get_early_min_max_timestamp	../tag_position_analyzer.py	/^    def get_early_min_max_timestamp(self, frame):$/;"	kind:member	line:100
+get_early_position	../tag_position_analyzer.py	/^    def get_early_position(self, frame):$/;"	kind:member	line:88
+get_element_renderers	../tk_canvas_renderers/animator.py	/^    def get_element_renderers(self):$/;"	kind:member	line:18
+get_eliminated	../object_stats_processor.py	/^    def get_eliminated(self, obj):$/;"	kind:member	line:130
+get_eliminated	../tk_canvas_renderers/element_renderers.py	/^    def get_eliminated(self, obj, timestamp):$/;"	kind:member	line:176
+get_elimination_t	../object_stats_processor.py	/^    def get_elimination_t(self, obj):$/;"	kind:member	line:125
+get_error_circle_disk	../object_motion_analyzer.py	/^    def get_error_circle_disk(self):$/;"	kind:member	line:191
+get_error_circle_exterior	../object_motion_analyzer.py	/^    def get_error_circle_exterior(self):$/;"	kind:member	line:186
+get_error_circle_intersection	../object_motion_analyzer.py	/^    def get_error_circle_intersection(self):$/;"	kind:member	line:239
+get_first_complete_frame	../object_motion_analyzer.py	/^    def get_first_complete_frame(self):$/;"	kind:member	line:41
+get_first_frame_with_object	../object_motion_analyzer.py	/^    def get_first_frame_with_object(self, obj):$/;"	kind:member	line:47
+get_formatted_frame_num	../video_and_photo_tools/image_from_video.py	/^    def get_formatted_frame_num(self):$/;"	kind:member	line:51
+get_formatted_time_ms	../video_and_photo_tools/image_from_video.py	/^    def get_formatted_time_ms(self):$/;"	kind:member	line:57
+get_fov_deg	../camera.py	/^    def get_fov_deg(self):$/;"	kind:member	line:81
+get_fov_rad	../camera.py	/^    def get_fov_rad(self):$/;"	kind:member	line:88
+get_frame_bounds	../tag_position_analyzer.py	/^    def get_frame_bounds(self, frame):$/;"	kind:member	line:118
+get_frame_count	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_frame_count(self):$/;"	kind:member	line:212
+get_frame_end_timestamp	../tag_position_analyzer.py	/^    def get_frame_end_timestamp(self, frame):$/;"	kind:member	line:115
+get_frame_includes_object	../object_motion_analyzer.py	/^    def get_frame_includes_object(self, frame, obj):$/;"	kind:member	line:53
+get_frame_num	../video_and_photo_tools/image_from_video.py	/^    def get_frame_num(self):$/;"	kind:member	line:48
+get_frame_num_for_time_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_frame_num_for_time_ms(self, time_ms):$/;"	kind:member	line:117
+get_frame_rate	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_frame_rate(self):$/;"	kind:member	line:193
+get_frame_start_timestamp	../tag_position_analyzer.py	/^    def get_frame_start_timestamp(self, frame):$/;"	kind:member	line:112
+get_frames	../object_motion_analyzer.py	/^    def get_frames(self):$/;"	kind:member	line:32
+get_frames_where_range_exceeds_threshold	../tag_position_analyzer.py	/^    def get_frames_where_range_exceeds_threshold(self, threshold_rad):$/;"	kind:member	line:65
+get_from_cache	../video_and_photo_tools/image_from_video.py	/^    def get_from_cache(self) -> bool:$/;"	kind:member	line:66
+get_gps_max_error	../camera.py	/^    def get_gps_max_error(self):$/;"	kind:member	line:74
+get_gps_position	../camera.py	/^    def get_gps_position(self):$/;"	kind:member	line:67
+get_h	../experiments/temp.py	/^    def get_h(self):$/;"	kind:member	line:6
+get_had_same_didnt_intersect_n_as_top_ranked	../object_stats_processor.py	/^    def get_had_same_didnt_intersect_n_as_top_ranked(self, obj):$/;"	kind:member	line:157
+get_height	../tk_canvas_renderers/single_image_canvas.py	/^    def get_height(self):$/;"	kind:member	line:65
+get_id	../simple_uid.py	/^    def get_id(self):$/;"	kind:member	line:10
+get_id	../simple_uid.py	/^    def get_id(self):$/;"	kind:member	line:18
+get_id	../tests/test_object_stats_processor.py	/^    def get_id(self, obj):$/;"	kind:member	line:65
+get_image	../video_and_photo_tools/image_from_video.py	/^    def get_image(self) -> PIL.Image:$/;"	kind:member	line:45
+get_image_at_frame_num	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_image_at_frame_num(self, frame_num) -> ImageFromVideo:$/;"	kind:member	line:47
+get_image_from_cache_at_frame_num	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_image_from_cache_at_frame_num(self, frame_num, time_ms=None) -> ImageFromVideo:$/;"	kind:member	line:55
+get_image_from_video_at_frame_num	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_image_from_video_at_frame_num(self, frame_num) -> ImageFromVideo:$/;"	kind:member	line:80
+get_image_from_video_at_time_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_image_from_video_at_time_ms(self, time_ms):$/;"	kind:member	line:114
+get_image_generator	../camera.py	/^    def get_image_generator(self):$/;"	kind:member	line:116
+get_image_width	../image_generator.py	/^    def get_image_width(self):$/;"	kind:member	line:66
+get_image_width	../tk_canvas_renderers/element_renderers.py	/^    def get_image_width(self):$/;"	kind:member	line:149
+get_images_around_frame_number	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_images_around_frame_number(self, frame_num, before=10, after=10):$/;"	kind:member	line:201
+get_images_around_time_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_images_around_time_ms(self, time_ms, before=10, after=10):$/;"	kind:member	line:207
+get_images_from_video_at_frame_nums	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_images_from_video_at_frame_nums(self, frame_nums: list) -> List[ImageFromVideo]:$/;"	kind:member	line:145
+get_images_from_video_at_times_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_images_from_video_at_times_ms(self, times_ms: list) -> List[ImageFromVideo]:$/;"	kind:member	line:141
+get_in_view_objects	../object_motion_analyzer.py	/^    def get_in_view_objects(self, frame):$/;"	kind:member	line:99
+get_int_magnitude	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_int_magnitude(self):$/;"	kind:member	line:134
+get_intersects_error_circle	../object_motion_analyzer.py	/^    def get_intersects_error_circle(self):$/;"	kind:member	line:226
+get_is_tag	../viewable_object.py	/^    def get_is_tag(self):$/;"	kind:member	line:20
+get_last_complete_frame	../tag_position_analyzer.py	/^    def get_last_complete_frame(self):$/;"	kind:member	line:133
+get_late_min_max_timestamp	../tag_position_analyzer.py	/^    def get_late_min_max_timestamp(self, frame):$/;"	kind:member	line:106
+get_late_position	../tag_position_analyzer.py	/^    def get_late_position(self, frame):$/;"	kind:member	line:94
+get_magnitude	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_magnitude(self):$/;"	kind:member	line:131
+get_motor_pan_angle_deg	../camera.py	/^    def get_motor_pan_angle_deg(self, timestamp):$/;"	kind:member	line:174
+get_motor_pan_angle_rad	../camera.py	/^    def get_motor_pan_angle_rad(self, timestamp):$/;"	kind:member	line:181
+get_moved_opposite_to_tag_n	../object_stats_processor.py	/^    def get_moved_opposite_to_tag_n(self, obj):$/;"	kind:member	line:96
+get_moved_opposite_to_tag_t	../object_stats_processor.py	/^    def get_moved_opposite_to_tag_t(self, obj):$/;"	kind:member	line:101
+get_n	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_n(self):$/;"	kind:member	line:85
+get_name	../viewable_object.py	/^    def get_name(self):$/;"	kind:member	line:65
+get_not_eliminated	../object_stats_processor.py	/^    def get_not_eliminated(self, obj):$/;"	kind:member	line:135
+get_npz_file_paths	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_npz_file_paths(self, session_dir):$/;"	kind:member	line:257
+get_npz_filenames	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_npz_filenames(self):$/;"	kind:member	line:254
+get_num_images_from_video_after_start_n	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_num_images_from_video_after_start_n(self, start_n, num):$/;"	kind:member	line:150
+get_num_tags	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_num_tags(self):$/;"	kind:member	line:349
+get_num_timestamps	../camera.py	/^    def get_num_timestamps(self):$/;"	kind:member	line:47
+get_num_timestamps	../object_universe.py	/^    def get_num_timestamps(self):$/;"	kind:member	line:31
+get_num_timestamps	../viewable_object.py	/^    def get_num_timestamps(self):$/;"	kind:member	line:36
+get_num_viewable_objects	../object_universe.py	/^    def get_num_viewable_objects(self):$/;"	kind:member	line:54
+get_object_motion_analyzer	../base_angle_calibrator.py	/^    def get_object_motion_analyzer(self):$/;"	kind:member	line:23
+get_object_motion_analyzer	../base_position_calibrator.py	/^    def get_object_motion_analyzer(self):$/;"	kind:member	line:38
+get_object_motion_analyzer	../object_stats_processor.py	/^    def get_object_motion_analyzer(self):$/;"	kind:member	line:30
+get_object_stats_processor	../base_position_calibrator.py	/^    def get_object_stats_processor(self):$/;"	kind:member	line:44
+get_object_universe	../camera.py	/^    def get_object_universe(self):$/;"	kind:member	line:102
+get_objects_in_view	../camera.py	/^    def get_objects_in_view(self, timestamp):$/;"	kind:member	line:203
+get_objects_out_view	../camera.py	/^    def get_objects_out_view(self, timestamp):$/;"	kind:member	line:209
+get_pan_angle_deg	../camera.py	/^    def get_pan_angle_deg(self, timestamp):$/;"	kind:member	line:250
+get_pan_angle_rad	../camera.py	/^    def get_pan_angle_rad(self, timestamp):$/;"	kind:member	line:253
+get_position	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_position(self):$/;"	kind:member	line:38
+get_position	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_position(self):$/;"	kind:member	line:76
+get_position_at_timestamp	../viewable_object.py	/^    def get_position_at_timestamp(self, timestamp):$/;"	kind:member	line:53
+get_position_history	../viewable_object.py	/^    def get_position_history(self):$/;"	kind:member	line:47
+get_position_history_len	../viewable_object.py	/^    def get_position_history_len(self):$/;"	kind:member	line:50
+get_processed_objects	../object_stats_processor.py	/^    def get_processed_objects(self):$/;"	kind:member	line:25
+get_range	../camera.py	/^    def get_range(self):$/;"	kind:member	line:44
+get_ranked_objects	../object_stats_processor.py	/^    def get_ranked_objects(self):$/;"	kind:member	line:160
+get_rendered_x_for_x	../tk_canvas_renderers/element_renderers.py	/^    def get_rendered_x_for_x(self, x):$/;"	kind:member	line:182
+get_results	../video_and_photo_tools/video_image_benchmarker.py	/^    def get_results(self):$/;"	kind:member	line:219
+get_rotation_same_as_tag	../object_motion_analyzer.py	/^    def get_rotation_same_as_tag(self, frame, obj):$/;"	kind:member	line:102
+get_scale	../tk_canvas_renderers/tk_renderer.py	/^    def get_scale(self):$/;"	kind:member	line:56
+get_seconds_per_timestamp	../tk_canvas_renderers/animator.py	/^    def get_seconds_per_timestamp(self):$/;"	kind:member	line:38
+get_session_dirs	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_session_dirs(self):$/;"	kind:member	line:250
+get_state_at_timestamp	../camera.py	/^    def get_state_at_timestamp(self, timestamp):$/;"	kind:member	line:161
+get_state_history	../camera.py	/^    def get_state_history(self):$/;"	kind:member	line:158
+get_state_history_at_time	../camera.py	/^    def get_state_history_at_time(self, timestamp):$/;"	kind:member	line:188
+get_state_history_len	../camera.py	/^    def get_state_history_len(self):$/;"	kind:member	line:155
+get_subtended_angles_for_all_objects	../image_analyzer.py	/^    def get_subtended_angles_for_all_objects(self, timestamp1, timestamp2):$/;"	kind:member	line:34
+get_tag	../base_position_calibrator.py	/^    def get_tag(self):$/;"	kind:member	line:32
+get_tag	../object_motion_analyzer.py	/^    def get_tag(self, frame):$/;"	kind:member	line:123
+get_tag_candidate	../base_position_calibrator.py	/^    def get_tag_candidate(self):$/;"	kind:member	line:57
+get_tag_gps_angle_threshold	../base_position_calibrator.py	/^    def get_tag_gps_angle_threshold(self):$/;"	kind:member	line:35
+get_tag_gps_angle_threshold	../object_motion_analyzer.py	/^    def get_tag_gps_angle_threshold(self):$/;"	kind:member	line:17
+get_tag_position_analyzer	../base_angle_calibrator.py	/^    def get_tag_position_analyzer(self):$/;"	kind:member	line:29
+get_tag_position_analyzer	../object_motion_analyzer.py	/^    def get_tag_position_analyzer(self):$/;"	kind:member	line:24
+get_tag_position_analyzer	../object_stats_processor.py	/^    def get_tag_position_analyzer(self):$/;"	kind:member	line:19
+get_tags	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_tags(self):$/;"	kind:member	line:352
+get_time_ms	../video_and_photo_tools/image_from_video.py	/^    def get_time_ms(self):$/;"	kind:member	line:54
+get_time_ms_for_frame_num	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_time_ms_for_frame_num(self, frame_num):$/;"	kind:member	line:121
+get_time_per_frame_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_time_per_frame_ms(self):$/;"	kind:member	line:198
+get_timestamp_of_max_angle	../tag_position_analyzer.py	/^    def get_timestamp_of_max_angle(self, frame):$/;"	kind:member	line:124
+get_timestamp_of_min_angle	../tag_position_analyzer.py	/^    def get_timestamp_of_min_angle(self, frame):$/;"	kind:member	line:127
+get_top_ranked_object	../object_stats_processor.py	/^    def get_top_ranked_object(self):$/;"	kind:member	line:150
+get_top_ranked_objects	../object_stats_processor.py	/^    def get_top_ranked_objects(self):$/;"	kind:member	line:154
+get_track_dir	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_track_dir(self, session_dir):$/;"	kind:member	line:281
+get_track_dirs	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_track_dirs(self):$/;"	kind:member	line:278
+get_vector	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_vector(self):$/;"	kind:member	line:128
+get_video_duration_ms	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_video_duration_ms(self):$/;"	kind:member	line:221
+get_video_id	../video_and_photo_tools/image_from_video.py	/^    def get_video_id(self) -> str:$/;"	kind:member	line:63
+get_video_id	../video_and_photo_tools/image_from_video_grabber.py	/^    def get_video_id(self):$/;"	kind:member	line:44
+get_video_path	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_video_path(self, session_dir):$/;"	kind:member	line:272
+get_video_path	../video_and_photo_tools/image_from_video.py	/^    def get_video_path(self) -> Path:$/;"	kind:member	line:60
+get_video_paths	../tests/test_legacy_data/test_input_data_structure.py	/^    def get_video_paths(self):$/;"	kind:member	line:267
+get_view_triangle	../camera.py	/^    def get_view_triangle(self, timestamp):$/;"	kind:member	line:215
+get_viewable_object_id_history	../computer_vision.py	/^    def get_viewable_object_id_history(self):$/;"	kind:member	line:11
+get_viewable_objects	../object_universe.py	/^    def get_viewable_objects(self):$/;"	kind:member	line:44
+get_viewable_objects	../tk_canvas_renderers/element_renderers.py	/^    def get_viewable_objects(self):$/;"	kind:member	line:80
+get_viewable_objects	../viewable_object.py	/^    def get_viewable_objects(self):$/;"	kind:member	line:162
+get_viewable_objects_as_viewable_objects_class	../object_universe.py	/^    def get_viewable_objects_as_viewable_objects_class(self):$/;"	kind:member	line:47
+get_width	../tk_canvas_renderers/single_image_canvas.py	/^    def get_width(self):$/;"	kind:member	line:62
+get_x	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_x(self):$/;"	kind:member	line:41
+get_x	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_x(self):$/;"	kind:member	line:79
+get_x_for_all_inview_objects_for_all_camera_time	../image_generator.py	/^    def get_x_for_all_inview_objects_for_all_camera_time(self):$/;"	kind:member	line:78
+get_y	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_y(self):$/;"	kind:member	line:44
+get_y	../demo/deprecated_discover_circumcircle_demo.py	/^    def get_y(self):$/;"	kind:member	line:82
+google_drive.py	../experiments/google_drive.py	1;"	kind:file	line:1
+hbar	../experiments/canvas_with_scroll.py	/^hbar=Scrollbar(frame,orient=HORIZONTAL)$/;"	kind:variable	line:6
+i	../experiments/image2.py	/^i = PIL.Image.open(url)$/;"	kind:variable	line:9
+i	../experiments/image2.py	/^i = i.resize((400,300))$/;"	kind:variable	line:10
+i	../experiments/image3.py	/^i = PIL.Image.open(url)$/;"	kind:variable	line:9
+i	../experiments/image3.py	/^i = i.resize((400,300))$/;"	kind:variable	line:10
+image	../experiments/image.py	/^image = PIL.Image.open(photo_url)$/;"	kind:variable	line:12
+image.py	../experiments/image.py	1;"	kind:file	line:1
+image2.py	../experiments/image2.py	1;"	kind:file	line:1
+image3.py	../experiments/image3.py	1;"	kind:file	line:1
+image_analyzer.py	../image_analyzer.py	1;"	kind:file	line:1
+image_cache.py	../video_and_photo_tools/image_cache.py	1;"	kind:file	line:1
+image_from_video.py	../video_and_photo_tools/image_from_video.py	1;"	kind:file	line:1
+image_from_video_grabber.py	../video_and_photo_tools/image_from_video_grabber.py	1;"	kind:file	line:1
+image_generator.py	../image_generator.py	1;"	kind:file	line:1
+image_r	../experiments/image.py	/^image_r = image.resize((400,300))$/;"	kind:variable	line:13
+image_render_demo.py	../demo/image_render_demo.py	1;"	kind:file	line:1
+image_renderer	../experiments/image.py	/^image_renderer = PhotoRenderer(image_r)$/;"	kind:variable	line:14
+init_state_history	../camera.py	/^    def init_state_history(self):$/;"	kind:member	line:133
+init_viewable_object_id_history	../computer_vision.py	/^    def init_viewable_object_id_history(self):$/;"	kind:member	line:8
+inner_canvas	../experiments/image3.py	/^inner_canvas = tk.Canvas(master=_outer_canvas, bg='red')$/;"	kind:variable	line:19
+int_magnitude	../demo/deprecated_discover_circumcircle_demo.py	/^    def int_magnitude(vector):$/;"	kind:member	line:404
+int_mean	../demo/deprecated_discover_circumcircle_demo.py	/^    def int_mean(numbers):$/;"	kind:member	line:372
+io	../profile_shapely.py	/^import cProfile, pstats, io $/;"	kind:namespace	line:3
+is_detected_by_cv	../tk_canvas_renderers/element_renderers.py	/^    def is_detected_by_cv(self, obj, timestamp):$/;"	kind:member	line:111
+is_not_terminal_frame	../object_motion_analyzer.py	/^    def is_not_terminal_frame(self, frame):$/;"	kind:member	line:117
+is_not_terminal_frame	../tag_position_analyzer.py	/^    def is_not_terminal_frame(self, frame):$/;"	kind:member	line:139
+is_object_in_view	../camera.py	/^    def is_object_in_view(self, obj, timestamp):$/;"	kind:member	line:197
+is_out_of_bounds	../boundary.py	/^    def is_out_of_bounds(self, point):$/;"	kind:member	line:13
+is_terminal_frame	../object_motion_analyzer.py	/^    def is_terminal_frame(self, frame):$/;"	kind:member	line:120
+is_terminal_frame	../tag_position_analyzer.py	/^    def is_terminal_frame(self, frame):$/;"	kind:member	line:142
+label_text	../demo/deprecated_discover_circumcircle_demo.py	/^    def label_text(self):$/;"	kind:member	line:125
+last_angle	../viewable_object.py	/^    def last_angle(self):$/;"	kind:member	line:125
+last_point	../viewable_object.py	/^    def last_point(self):$/;"	kind:member	line:134
+last_segment	../viewable_object.py	/^    def last_segment(self):$/;"	kind:member	line:128
+left_of_frame_angle_deg	../camera.py	/^    def left_of_frame_angle_deg(self, timestamp):$/;"	kind:member	line:223
+left_of_frame_angle_point	../camera.py	/^    def left_of_frame_angle_point(self, timestamp):$/;"	kind:member	line:232
+left_of_frame_angle_rad	../camera.py	/^    def left_of_frame_angle_rad(self, timestamp):$/;"	kind:member	line:220
+log_image_sizes	../video_and_photo_tools/video_image_benchmarker.py	/^    def log_image_sizes(self):$/;"	kind:member	line:210
+lower_element	../tk_canvas_renderers/tk_renderer.py	/^    def lower_element(self, element):$/;"	kind:member	line:85
+magnitude	../demo/deprecated_discover_circumcircle_demo.py	/^    def magnitude(vector):$/;"	kind:member	line:398
+main	../experiments/google_drive.py	/^def main():$/;"	kind:function	line:10
+management	../bin/django-admin.py	/^from django.core import management$/;"	kind:namespace	line:2
+math	../base_angle_calibrator.py	/^import math$/;"	kind:namespace	line:1
+math	../base_position_calibrator.py	/^import math$/;"	kind:namespace	line:1
+math	../calibration_utils.py	/^import math as math$/;"	kind:namespace	line:2
+math	../camera.py	/^import math $/;"	kind:namespace	line:1
+math	../demo/deprecated_discover_circumcircle_demo.py	/^import math as math$/;"	kind:namespace	line:2
+math	../geometry_utils.py	/^import math$/;"	kind:namespace	line:1
+math	../image_analyzer.py	/^import math$/;"	kind:namespace	line:1
+math	../image_generator.py	/^import math$/;"	kind:namespace	line:3
+math	../object_motion_analyzer.py	/^import math$/;"	kind:namespace	line:1
+math	../tag_position_analyzer.py	/^import math$/;"	kind:namespace	line:1
+math	../tests/test_base_angle_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+math	../tests/test_base_position_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+math	../tests/test_geometry_utils.py	/^import math$/;"	kind:namespace	line:5
+math	../tests/test_image_analyzer.py	/^import math, unittest$/;"	kind:namespace	line:3
+math	../tests/test_image_generator.py	/^import unittest, math, sys$/;"	kind:namespace	line:1
+math	../tests/test_image_renderer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+math	../tests/test_object_motion_analyzer.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+math	../tests/test_object_stats_processor.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+math	../tests/test_tag_position_analyzer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+math	../tests/test_viewable_object.py	/^import math$/;"	kind:namespace	line:7
+math	../viewable_object.py	/^import math as math$/;"	kind:namespace	line:1
+matplotlib	../demo/plot_demo.py	/^import matplotlib$/;"	kind:namespace	line:1
+matplotlib	../demo/plot_demo.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:2
+matplotlib	../tests/test_numpy_ndarray_extensions.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:6
+mean	../demo/deprecated_discover_circumcircle_demo.py	/^    def mean(numbers):$/;"	kind:member	line:368
+midpoint	../demo/deprecated_discover_circumcircle_demo.py	/^    def midpoint(vector):$/;"	kind:member	line:394
+minimum_uncalibrated_distance	../calibration_utils.py	/^def minimum_uncalibrated_distance(max_base_gps_error_radius, $/;"	kind:function	line:4
+motor_time	../data/data_formats.py	/^         motor_time=dummy_data,$/;"	kind:variable	line:11
+mouse_click	../demo/circumcircle_demo.py	/^def mouse_click(e):$/;"	kind:function	line:9
+mouse_click	../demo/deprecated_discover_circumcircle_demo.py	/^def mouse_click(e):$/;"	kind:function	line:7
+mouse_click	../demo/deprecated_isosceles_demo.py	/^def mouse_click(e):$/;"	kind:function	line:6
+mouse_click	../demo/moving_object_demo.py	/^def mouse_click(e):$/;"	kind:function	line:9
+moved_opposite_to_tag_n	../object_stats_processor.py	/^    moved_opposite_to_tag_n = 'moved_opposite_to_tag_n'$/;"	kind:variable	line:5
+moved_opposite_to_tag_t	../object_stats_processor.py	/^    moved_opposite_to_tag_t = 'moved_opposite_to_tag_t'$/;"	kind:variable	line:6
+moving_object_demo.py	../demo/moving_object_demo.py	1;"	kind:file	line:1
+moving_object_renderer_demo.py	../demo/moving_object_renderer_demo.py	1;"	kind:file	line:1
+notify_computer_vision_of_timestamp_adjustment	../camera.py	/^    def notify_computer_vision_of_timestamp_adjustment(self):$/;"	kind:member	line:137
+np	../data/data_formats.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../demo/plot_demo.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../numpy_extensions/numpy_ndarray_extensions.py	/^import numpy as np$/;"	kind:namespace	line:3
+np	../tests/test_legacy_data/test_input_data_structure.py	/^import numpy as np$/;"	kind:namespace	line:6
+np	../tests/test_numpy_ndarray_extensions.py	/^import numpy as np$/;"	kind:namespace	line:5
+numpy_extensions	../tests/test_numpy_ndarray_extensions.py	/^import numpy_extensions.numpy_ndarray_extensions$/;"	kind:namespace	line:9
+numpy_ndarray_extensions	../tests/test_numpy_ndarray_extensions.py	/^import numpy_extensions.numpy_ndarray_extensions$/;"	kind:namespace	line:9
+numpy_ndarray_extensions.py	../numpy_extensions/numpy_ndarray_extensions.py	1;"	kind:file	line:1
+object_is_in_view	../view_triangle.py	/^    def object_is_in_view(self, obj, timestamp):$/;"	kind:member	line:14
+object_is_out_view	../view_triangle.py	/^    def object_is_out_view(self, obj, timestamp):$/;"	kind:member	line:17
+object_motion_analyzer.py	../object_motion_analyzer.py	1;"	kind:file	line:1
+object_stats_processor.py	../object_stats_processor.py	1;"	kind:file	line:1
+object_universe.py	../object_universe.py	1;"	kind:file	line:1
+objects_in_view	../view_triangle.py	/^    def objects_in_view(self, timestamp, object_universe):$/;"	kind:member	line:6
+objects_out_view	../view_triangle.py	/^    def objects_out_view(self, timestamp, object_universe):$/;"	kind:member	line:10
+open_bmp_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def open_bmp_benchmark(self):$/;"	kind:member	line:98
+open_jpg_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def open_jpg_benchmark(self):$/;"	kind:member	line:92
+open_png_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def open_png_benchmark(self):$/;"	kind:member	line:95
+open_ppm_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def open_ppm_benchmark(self):$/;"	kind:member	line:101
+os	../demo/moving_object_renderer_demo.py	/^import os$/;"	kind:namespace	line:3
+os	../demo/scrubber_picker_demo.py	/^import os$/;"	kind:namespace	line:3
+os	../demo/vertical_image_list_demo.py	/^import os$/;"	kind:namespace	line:3
+os	../experiments/image.py	/^import sys, os$/;"	kind:namespace	line:1
+os	../tests/test_image_cache.py	/^import os$/;"	kind:namespace	line:2
+os	../tests/test_image_from_video_grabber.py	/^import os$/;"	kind:namespace	line:2
+os	../tests/test_legacy_data/test_input_data_structure.py	/^import os$/;"	kind:namespace	line:2
+os	../tests/test_numpy_ndarray_extensions.py	/^import os$/;"	kind:namespace	line:3
+os	../tests/test_pil_image_extensions.py	/^import os$/;"	kind:namespace	line:2
+os	../tests/test_scrubber.py	/^import os$/;"	kind:namespace	line:3
+os	../tests/test_vertical_image_list.py	/^import os$/;"	kind:namespace	line:3
+os	../tests/test_video_position_indicator.py	/^import os$/;"	kind:namespace	line:3
+os	../tk_canvas_renderers/element_renderers.py	/^import sys, os$/;"	kind:namespace	line:1
+os	../tk_canvas_renderers/scrub_picker.py	/^import os$/;"	kind:namespace	line:1
+os	../tk_canvas_renderers/scrubber.py	/^import os$/;"	kind:namespace	line:2
+os	../tk_canvas_renderers/single_image_canvas.py	/^import os$/;"	kind:namespace	line:2
+os	../tk_canvas_renderers/vertical_image_list.py	/^import os$/;"	kind:namespace	line:2
+os	../tk_canvas_renderers/video_postion_indicator.py	/^import os$/;"	kind:namespace	line:2
+os	../video_and_photo_tools/image_cache.py	/^import os$/;"	kind:namespace	line:1
+os	../video_and_photo_tools/image_from_video_grabber.py	/^import os$/;"	kind:namespace	line:2
+os	../video_and_photo_tools/video_image_benchmarker.py	/^import os$/;"	kind:namespace	line:2
+p	../experiments/image2.py	/^p = PIL.ImageTk.PhotoImage(image=i)$/;"	kind:variable	line:11
+p	../experiments/image3.py	/^p = PIL.ImageTk.PhotoImage(image=i)$/;"	kind:variable	line:11
+p1	../experiments/video.py	/^p1 = PIL.Image.fromarray(im1)$/;"	kind:variable	line:14
+p2	../experiments/video.py	/^p2 = PIL.Image.fromarray(im2)$/;"	kind:variable	line:15
+pan_motor_read	../data/data_formats.py	/^         pan_motor_read=dummy_data,$/;"	kind:variable	line:12
+photo_url	../experiments/image.py	/^photo_url = os.getcwd() + '\/data\/images\/will.jpg'$/;"	kind:variable	line:11
+pil_image_extensions	../tests/test_image_cache.py	/^import video_and_photo_tools.pil_image_extensions$/;"	kind:namespace	line:9
+pil_image_extensions	../tests/test_pil_image_extensions.py	/^import video_and_photo_tools.pil_image_extensions$/;"	kind:namespace	line:7
+pil_image_extensions	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+pil_image_extensions.py	../video_and_photo_tools/pil_image_extensions.py	1;"	kind:file	line:1
+play	../tk_canvas_renderers/animator.py	/^    def play(self, *pargs, **kargs):$/;"	kind:member	line:41
+plot_demo.py	../demo/plot_demo.py	1;"	kind:file	line:1
+plt	../demo/plot_demo.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:2
+plt	../tests/test_numpy_ndarray_extensions.py	/^import matplotlib.pyplot as plt$/;"	kind:namespace	line:6
+point_with_angle_and_distance_from_point	../geometry_utils.py	/^def point_with_angle_and_distance_from_point(point, angle_rad, d):$/;"	kind:function	line:79
+poly	../profile_shapely.py	/^poly = Polygon([(0,0), (100,0), (100,100), (0,100)])$/;"	kind:variable	line:7
+pr	../profile_shapely.py	/^pr = cProfile.Profile()$/;"	kind:variable	line:5
+print_function	../experiments/google_drive.py	/^from __future__ import print_function$/;"	kind:namespace	line:1
+profile_shapely.py	../profile_shapely.py	1;"	kind:file	line:1
+ps	../profile_shapely.py	/^ps = pstats.Stats(pr, stream=s).sort_stats(sortby)$/;"	kind:variable	line:31
+pstats	../profile_shapely.py	/^import cProfile, pstats, io $/;"	kind:namespace	line:3
+pylint	../bin/pylint	1;"	kind:file	line:1
+pylint	../tk_canvas_renderers/scrub_picker.py	/^from tk_canvas_renderers.scrubber import Scrubber # pylint: disable=C0413$/;"	kind:namespace	line:4
+pylint	../tk_canvas_renderers/scrubber.py	/^from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator # pylint: disable=C0413$/;"	kind:namespace	line:11
+pylint	../tk_canvas_renderers/scrubber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+pylint	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_cache import ImageCache # pylint: disable=C0413$/;"	kind:namespace	line:11
+pylint	../video_and_photo_tools/image_from_video_grabber.py	/^from video_and_photo_tools.image_from_video import ImageFromVideo # pylint: disable=C0413$/;"	kind:namespace	line:10
+pylint	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+pyreverse	../bin/pyreverse	1;"	kind:file	line:1
+quadrant	../demo/deprecated_discover_circumcircle_demo.py	/^    def quadrant(vector):$/;"	kind:member	line:408
+quadrant_of_vector	../geometry_utils.py	/^def quadrant_of_vector(p1, p2):$/;"	kind:function	line:35
+raise_element	../tk_canvas_renderers/tk_renderer.py	/^    def raise_element(self, element):$/;"	kind:member	line:81
+random	../boundary.py	/^import random$/;"	kind:namespace	line:3
+random	../profile_shapely.py	/^import random$/;"	kind:namespace	line:2
+random	../tk_canvas_renderers/canvas_utils.py	/^import random$/;"	kind:namespace	line:1
+random	../viewable_object.py	/^import random as random$/;"	kind:namespace	line:3
+random_angle	../viewable_object.py	/^    def random_angle(self):$/;"	kind:member	line:121
+random_color	../tk_canvas_renderers/canvas_utils.py	/^    def random_color():$/;"	kind:member	line:22
+random_distance	../viewable_object.py	/^    def random_distance(self):$/;"	kind:member	line:140
+random_point	../boundary.py	/^    def random_point(self):$/;"	kind:member	line:7
+random_point	../profile_shapely.py	/^def random_point():$/;"	kind:function	line:10
+random_start_point	../viewable_object.py	/^    def random_start_point(self):$/;"	kind:member	line:137
+re	../bin/epylint	/^import re$/;"	kind:namespace	line:4
+re	../bin/pylint	/^import re$/;"	kind:namespace	line:4
+re	../bin/pyreverse	/^import re$/;"	kind:namespace	line:4
+re	../bin/symilar	/^import re$/;"	kind:namespace	line:4
+re_analyze	../object_motion_analyzer.py	/^    def re_analyze(self):$/;"	kind:member	line:27
+render	../demo/deprecated_discover_circumcircle_demo.py	/^    def render(self):$/;"	kind:member	line:110
+render	../demo/deprecated_discover_circumcircle_demo.py	/^    def render(self):$/;"	kind:member	line:147
+render	../demo/deprecated_discover_circumcircle_demo.py	/^    def render(self):$/;"	kind:member	line:293
+render	../tk_canvas_renderers/element_renderers.py	/^    def render(self, timestamp=None, **kargs):$/;"	kind:member	line:21
+render_angle	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_angle(self):$/;"	kind:member	line:168
+render_camera	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_camera(self):$/;"	kind:member	line:50
+render_camera	../tk_canvas_renderers/element_renderers.py	/^    def render_camera(self):$/;"	kind:member	line:212
+render_camera_gps	../tk_canvas_renderers/element_renderers.py	/^    def render_camera_gps(self):$/;"	kind:member	line:225
+render_circumcircles	../demo/circumcircle_demo.py	/^    def render_circumcircles(self, p1, p2):$/;"	kind:member	line:40
+render_gps_error_circle	../tk_canvas_renderers/element_renderers.py	/^    def render_gps_error_circle(self):$/;"	kind:member	line:236
+render_inview_object	../tk_canvas_renderers/element_renderers.py	/^    def render_inview_object(self, obj, timestamp):$/;"	kind:member	line:164
+render_inview_objects	../tk_canvas_renderers/element_renderers.py	/^    def render_inview_objects(self, timestamp):$/;"	kind:member	line:160
+render_label	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_label(self):$/;"	kind:member	line:119
+render_label	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_label(self):$/;"	kind:member	line:182
+render_line	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_line(self):$/;"	kind:member	line:114
+render_line	../tk_canvas_renderers/element_renderers.py	/^    def render_line(self):$/;"	kind:member	line:185
+render_line_to_camera	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_line_to_camera(self):$/;"	kind:member	line:98
+render_moving_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_moving_elements(self, timestamp):$/;"	kind:member	line:156
+render_moving_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_moving_elements(self, timestamp):$/;"	kind:member	line:207
+render_moving_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_moving_elements(self, timestamp):$/;"	kind:member	line:274
+render_moving_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_moving_elements(self, timestamp):$/;"	kind:member	line:34
+render_moving_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_moving_elements(self, timestamp):$/;"	kind:member	line:83
+render_orchestrator.py	../tk_canvas_renderers/render_orchestrator.py	1;"	kind:file	line:1
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:152
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:200
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:266
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:30
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:317
+render_stationary_elements	../tk_canvas_renderers/element_renderers.py	/^    def render_stationary_elements(self):$/;"	kind:member	line:56
+render_stationary_sub_elements	../tk_canvas_renderers/animator.py	/^    def render_stationary_sub_elements(self):$/;"	kind:member	line:28
+render_tag	../demo/deprecated_discover_circumcircle_demo.py	/^    def render_tag(self): $/;"	kind:member	line:94
+render_view_triangle	../tk_canvas_renderers/element_renderers.py	/^    def render_view_triangle(self, timestamp):$/;"	kind:member	line:244
+render_viewable_object	../tk_canvas_renderers/element_renderers.py	/^    def render_viewable_object(self, obj, timestamp):$/;"	kind:member	line:88
+resize_l_image_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def resize_l_image_benchmark(self):$/;"	kind:member	line:67
+resize_rgb_image_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def resize_rgb_image_benchmark(self):$/;"	kind:member	line:64
+resize_with_height_preserve_aspect	../video_and_photo_tools/pil_image_extensions.py	/^    def resize_with_height_preserve_aspect(self, height, resample=PIL.Image.ANTIALIAS, **kw):$/;"	kind:member	line:10
+resize_with_width_preserve_aspect	../video_and_photo_tools/pil_image_extensions.py	/^    def resize_with_width_preserve_aspect(self, width, resample=PIL.Image.ANTIALIAS, **kw):$/;"	kind:member	line:6
+right_of_frame_angle_deg	../camera.py	/^    def right_of_frame_angle_deg(self, timestamp):$/;"	kind:member	line:229
+right_of_frame_angle_point	../camera.py	/^    def right_of_frame_angle_point(self, timestamp):$/;"	kind:member	line:237
+right_of_frame_angle_rad	../camera.py	/^    def right_of_frame_angle_rad(self, timestamp):$/;"	kind:member	line:226
+root	../experiments/canvas_with_scroll.py	/^root=Tk()$/;"	kind:variable	line:2
+root	../experiments/image2.py	/^root = tk.Tk()$/;"	kind:variable	line:5
+root	../experiments/image3.py	/^root = tk.Tk()$/;"	kind:variable	line:6
+run	../tk_canvas_renderers/render_orchestrator.py	/^    def run(self):$/;"	kind:member	line:101
+run	../tk_canvas_renderers/scrubber.py	/^    def run(self):$/;"	kind:member	line:233
+run	../tk_canvas_renderers/vertical_image_list.py	/^    def run(self):$/;"	kind:member	line:90
+run_benchmarks	../video_and_photo_tools/video_image_benchmarker.py	/^    def run_benchmarks(self, benchmarks):$/;"	kind:member	line:181
+run_epylint	../bin/epylint	/^from pylint import run_epylint$/;"	kind:namespace	line:7
+run_pylint	../bin/pylint	/^from pylint import run_pylint$/;"	kind:namespace	line:7
+run_pyreverse	../bin/pyreverse	/^from pylint import run_pyreverse$/;"	kind:namespace	line:7
+run_symilar	../bin/symilar	/^from pylint import run_symilar$/;"	kind:namespace	line:7
+run_test	../profile_shapely.py	/^def run_test(n):$/;"	kind:function	line:20
+s	../demo/plot_demo.py	/^s = 1 + np.sin(2 * np.pi * t)$/;"	kind:variable	line:7
+s	../profile_shapely.py	/^s = io.StringIO()$/;"	kind:variable	line:29
+save_bmp_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def save_bmp_benchmark(self):$/;"	kind:member	line:89
+save_jpg_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def save_jpg_benchmark(self):$/;"	kind:member	line:80
+save_png_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def save_png_benchmark(self):$/;"	kind:member	line:86
+save_ppm_benchmark	../video_and_photo_tools/video_image_benchmarker.py	/^    def save_ppm_benchmark(self):$/;"	kind:member	line:83
+scale_coords	../tk_canvas_renderers/tk_renderer.py	/^    def scale_coords(self, crds):$/;"	kind:member	line:73
+scale_distance	../tk_canvas_renderers/tk_renderer.py	/^    def scale_distance(self, distance):$/;"	kind:member	line:70
+scale_tuple	../tk_canvas_renderers/tk_renderer.py	/^    def scale_tuple(self, tpl):$/;"	kind:member	line:67
+scrub_picker.py	../tk_canvas_renderers/scrub_picker.py	1;"	kind:file	line:1
+scrubber.py	../tk_canvas_renderers/scrubber.py	1;"	kind:file	line:1
+scrubber_picker_demo.py	../demo/scrubber_picker_demo.py	1;"	kind:file	line:1
+setUp	../tests/test_base_angle_calibrator.py	/^    def setUp(self, tag_gps_angle_threshold=6, compass_err_deg=3.7):$/;"	kind:member	line:17
+setUp	../tests/test_base_position_calibrator.py	/^    def setUp(self, num_randomly_moving_objects=10, tag_gps_angle_threshold=6):$/;"	kind:member	line:16
+setUp	../tests/test_boundary_renderer.py	/^    def setUp(self):$/;"	kind:member	line:10
+setUp	../tests/test_camera.py	/^    def setUp(self): $/;"	kind:member	line:10
+setUp	../tests/test_camera_renderer.py	/^    def setUp(self):$/;"	kind:member	line:11
+setUp	../tests/test_computer_vision.py	/^    def setUp(self):$/;"	kind:member	line:11
+setUp	../tests/test_image_analyzer.py	/^    def setUp(self):$/;"	kind:member	line:11
+setUp	../tests/test_image_cache.py	/^    def setUp(self):$/;"	kind:member	line:16
+setUp	../tests/test_image_from_video_grabber.py	/^    def setUp(self):$/;"	kind:member	line:16
+setUp	../tests/test_image_generator.py	/^    def setUp(self):$/;"	kind:member	line:12
+setUp	../tests/test_image_generator.py	/^    def setUp(self):$/;"	kind:member	line:73
+setUp	../tests/test_image_renderer.py	/^    def setUp(self, num_randomly_moving_objects=0):$/;"	kind:member	line:16
+setUp	../tests/test_legacy_data/test_input_data_structure.py	/^    def setUp(self):$/;"	kind:member	line:113
+setUp	../tests/test_moving_object_renderer.py	/^    def setUp(self):$/;"	kind:member	line:12
+setUp	../tests/test_numpy_ndarray_extensions.py	/^    def setUp(self):$/;"	kind:member	line:15
+setUp	../tests/test_object_motion_analyzer.py	/^    def setUp(self, num_randomly_moving_objects=10):$/;"	kind:member	line:18
+setUp	../tests/test_object_stats_processor.py	/^    def setUp(self):$/;"	kind:member	line:16
+setUp	../tests/test_object_universe.py	/^    def setUp(self):$/;"	kind:member	line:10
+setUp	../tests/test_pil_image_extensions.py	/^    def setUp(self):$/;"	kind:member	line:13
+setUp	../tests/test_scrubber.py	/^    def setUp(self, selector_type=ScrubPicker.SELECT_RANGE):$/;"	kind:member	line:15
+setUp	../tests/test_simple_uid.py	/^    def setUp(self):$/;"	kind:member	line:8
+setUp	../tests/test_tag_position_analyzer.py	/^    def setUp(self):$/;"	kind:member	line:11
+setUp	../tests/test_vertical_image_list.py	/^    def setUp(self):$/;"	kind:member	line:17
+setUp	../tests/test_video_position_indicator.py	/^    def setUp(self):$/;"	kind:member	line:13
+setUp	../tests/test_viewable_object.py	/^    def setUp(self): $/;"	kind:member	line:37
+setUp	../tests/test_viewable_object.py	/^    def setUp(self):$/;"	kind:member	line:11
+setUp	../tests/test_viewable_object_renderer.py	/^    def setUp(self):$/;"	kind:member	line:10
+set_actual_position	../camera.py	/^    def set_actual_position(self, actual_position):$/;"	kind:member	line:59
+set_camera	../computer_vision.py	/^    def set_camera(self, camera):$/;"	kind:member	line:14
+set_camera	../image_generator.py	/^    def set_camera(self, camera):$/;"	kind:member	line:69
+set_canvas_height	../tk_canvas_renderers/tk_renderer.py	/^    def set_canvas_height(self, height):$/;"	kind:member	line:33
+set_canvas_width	../tk_canvas_renderers/tk_renderer.py	/^    def set_canvas_width(self, width):$/;"	kind:member	line:29
+set_compass_error_rad	../camera.py	/^    def set_compass_error_rad(self, angle_rad):$/;"	kind:member	line:91
+set_computer_vision	../camera.py	/^    def set_computer_vision(self, computer_vision):$/;"	kind:member	line:124
+set_computer_vision	../tk_canvas_renderers/element_renderers.py	/^    def set_computer_vision(self, cv):$/;"	kind:member	line:69
+set_cv_id_for_obj_at_timestamp	../computer_vision.py	/^    def set_cv_id_for_obj_at_timestamp(self, obj, timestamp, cv_id):$/;"	kind:member	line:52
+set_cv_ids_for_all_camera_time	../computer_vision.py	/^    def set_cv_ids_for_all_camera_time(self):$/;"	kind:member	line:25
+set_cv_ids_for_objects_at_timestamp	../computer_vision.py	/^    def set_cv_ids_for_objects_at_timestamp(self, timestamp):$/;"	kind:member	line:30
+set_cv_ids_of_in_view_objects	../computer_vision.py	/^    def set_cv_ids_of_in_view_objects(self, timestamp):$/;"	kind:member	line:38
+set_element_renderers	../tk_canvas_renderers/animator.py	/^    def set_element_renderers(self, element_renderers):$/;"	kind:member	line:13
+set_font_size	../tk_canvas_renderers/tk_renderer.py	/^    def set_font_size(self, font_size):$/;"	kind:member	line:37
+set_fov_deg	../camera.py	/^    def set_fov_deg(self, fov_deg):$/;"	kind:member	line:77
+set_fov_rad	../camera.py	/^    def set_fov_rad(self, fov_rad):$/;"	kind:member	line:84
+set_frame_num	../video_and_photo_tools/image_from_video.py	/^    def set_frame_num(self, frame_num):$/;"	kind:member	line:25
+set_from_cache	../video_and_photo_tools/image_from_video.py	/^    def set_from_cache(self, from_cache):$/;"	kind:member	line:41
+set_gps_max_error	../camera.py	/^    def set_gps_max_error(self, gps_max_error):$/;"	kind:member	line:70
+set_gps_position	../camera.py	/^    def set_gps_position(self, gps_position):$/;"	kind:member	line:63
+set_h	../experiments/temp.py	/^    def set_h(self, value):$/;"	kind:member	line:11
+set_image	../video_and_photo_tools/image_from_video.py	/^    def set_image(self, image: PIL.Image.Image):$/;"	kind:member	line:21
+set_image_generator	../camera.py	/^    def set_image_generator(self, image_generator):$/;"	kind:member	line:110
+set_images	../image_analyzer.py	/^    def set_images(self, images):$/;"	kind:member	line:30
+set_mouse_click_callback	../tk_canvas_renderers/tk_renderer.py	/^    def set_mouse_click_callback(self, mouse_click_callback):$/;"	kind:member	line:45
+set_num_timestamps	../camera.py	/^    def set_num_timestamps(self, n):$/;"	kind:member	line:50
+set_num_timestamps	../object_universe.py	/^    def set_num_timestamps(self, n):$/;"	kind:member	line:22
+set_num_timestamps	../viewable_object.py	/^    def set_num_timestamps(self, n):$/;"	kind:member	line:23
+set_object_stats_processor	../tk_canvas_renderers/element_renderers.py	/^    def set_object_stats_processor(self, object_stats_processor):$/;"	kind:member	line:145
+set_object_universe	../camera.py	/^    def set_object_universe(self, object_universe):$/;"	kind:member	line:98
+set_pan_angle_deg	../camera.py	/^    def set_pan_angle_deg(self, angle_deg, timestamp):$/;"	kind:member	line:242
+set_pan_angle_rad	../camera.py	/^    def set_pan_angle_rad(self, angle_rad, timestamp):$/;"	kind:member	line:246
+set_percent	../tk_canvas_renderers/video_postion_indicator.py	/^    def set_percent(self, percent):$/;"	kind:member	line:47
+set_position_at_timestamp	../viewable_object.py	/^    def set_position_at_timestamp(self, pos, timestamp):$/;"	kind:member	line:61
+set_prefix	../simple_uid.py	/^    def set_prefix(self, prefix):$/;"	kind:member	line:6
+set_range	../camera.py	/^    def set_range(self, range):$/;"	kind:member	line:40
+set_scale	../tk_canvas_renderers/tk_renderer.py	/^    def set_scale(self, scale):$/;"	kind:member	line:41
+set_seconds_per_timestamp	../tk_canvas_renderers/animator.py	/^    def set_seconds_per_timestamp(self, seconds):$/;"	kind:member	line:34
+set_state_of_pan_motor_angle_at_timestamp	../camera.py	/^    def set_state_of_pan_motor_angle_at_timestamp(self, angle_deg, timestamp):$/;"	kind:member	line:168
+set_state_of_pan_motor_angle_at_timestamp_rad	../camera.py	/^    def set_state_of_pan_motor_angle_at_timestamp_rad(self, angle_rad, timestamp):$/;"	kind:member	line:164
+set_tag_gps_angle_threshold	../object_motion_analyzer.py	/^    def set_tag_gps_angle_threshold(self, theta_rad):$/;"	kind:member	line:20
+set_time_ms	../video_and_photo_tools/image_from_video.py	/^    def set_time_ms(self, time_ms):$/;"	kind:member	line:29
+set_video_id	../video_and_photo_tools/image_from_video.py	/^    def set_video_id(self, video_id):$/;"	kind:member	line:37
+set_video_path	../video_and_photo_tools/image_from_video.py	/^    def set_video_path(self, video_path):$/;"	kind:member	line:33
+set_viewable_objects	../tk_canvas_renderers/element_renderers.py	/^    def set_viewable_objects(self, vo_s):$/;"	kind:member	line:76
+set_viewable_objects	../viewable_object.py	/^    def set_viewable_objects(self, viewable_objects):$/;"	kind:member	line:155
+setup	../video_and_photo_tools/video_image_benchmarker.py	/^    def setup(self):$/;"	kind:member	line:36
+setup_for_camera	../image_generator.py	/^    def setup_for_camera(self):$/;"	kind:member	line:72
+setup_ui	../tk_canvas_renderers/scrub_picker.py	/^    def setup_ui(self):$/;"	kind:member	line:23
+setup_ui	../tk_canvas_renderers/scrubber.py	/^    def setup_ui(self):$/;"	kind:member	line:47
+setup_ui	../tk_canvas_renderers/video_postion_indicator.py	/^    def setup_ui(self):$/;"	kind:member	line:29
+signed_subtended_angle_from_p1_to_p2_rad	../geometry_utils.py	/^def signed_subtended_angle_from_p1_to_p2_rad(v, p1, p2):$/;"	kind:function	line:25
+simple_uid.py	../simple_uid.py	1;"	kind:file	line:1
+single_image_canvas.py	../tk_canvas_renderers/single_image_canvas.py	1;"	kind:file	line:1
+solve	../calibration_utils.py	/^from sympy import symbols, tan, atan, solve$/;"	kind:namespace	line:1
+sortby	../profile_shapely.py	/^sortby = 'cumulative'$/;"	kind:variable	line:30
+start_tk_event_loop	../tk_canvas_renderers/tk_renderer.py	/^    def start_tk_event_loop(self):$/;"	kind:member	line:63
+store	../video_and_photo_tools/image_cache.py	/^    def store(self, video_id, image: PIL.Image, frame_num, image_format):$/;"	kind:member	line:22
+store_images	../tests/test_image_cache.py	/^    def store_images(self):$/;"	kind:member	line:45
+str_position	../demo/deprecated_discover_circumcircle_demo.py	/^    def str_position(self):$/;"	kind:member	line:88
+symbols	../calibration_utils.py	/^from sympy import symbols, tan, atan, solve$/;"	kind:namespace	line:1
+symilar	../bin/symilar	1;"	kind:file	line:1
+sys	../bin/epylint	/^import sys$/;"	kind:namespace	line:5
+sys	../bin/pylint	/^import sys$/;"	kind:namespace	line:5
+sys	../bin/pyreverse	/^import sys$/;"	kind:namespace	line:5
+sys	../bin/symilar	/^import sys$/;"	kind:namespace	line:5
+sys	../demo/base_angle_calibrator_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../demo/base_position_calibrator_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/bounary_renderer_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../demo/camera_cv_moving_objects_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/camera_renderer_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../demo/circumcircle_demo.py	/^import sys$/;"	kind:namespace	line:3
+sys	../demo/deprecated_isosceles_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../demo/image_render_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../demo/moving_object_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/moving_object_renderer_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/scrubber_picker_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/vertical_image_list_demo.py	/^import sys$/;"	kind:namespace	line:2
+sys	../demo/viewable_object_camera_renderer_demo.py	/^import sys$/;"	kind:namespace	line:1
+sys	../experiments/image.py	/^import sys, os$/;"	kind:namespace	line:1
+sys	../numpy_extensions/numpy_ndarray_extensions.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_base_angle_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+sys	../tests/test_base_position_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+sys	../tests/test_boundary_renderer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_camera.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_camera_renderer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_computer_vision.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_geometry_utils.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_image_analyzer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_image_cache.py	/^import sys$/;"	kind:namespace	line:3
+sys	../tests/test_image_from_video_grabber.py	/^import sys$/;"	kind:namespace	line:3
+sys	../tests/test_image_generator.py	/^import unittest, math, sys$/;"	kind:namespace	line:1
+sys	../tests/test_image_renderer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+sys	../tests/test_legacy_data/test_input_data_structure.py	/^import sys$/;"	kind:namespace	line:3
+sys	../tests/test_moving_object_renderer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_numpy_ndarray_extensions.py	/^import sys$/;"	kind:namespace	line:2
+sys	../tests/test_object_motion_analyzer.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+sys	../tests/test_object_stats_processor.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+sys	../tests/test_object_universe.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_pil_image_extensions.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_scrubber.py	/^import sys$/;"	kind:namespace	line:2
+sys	../tests/test_simple_uid.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_tag_position_analyzer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+sys	../tests/test_vertical_image_list.py	/^import sys$/;"	kind:namespace	line:2
+sys	../tests/test_video_position_indicator.py	/^import sys$/;"	kind:namespace	line:2
+sys	../tests/test_viewable_object.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tests/test_viewable_object_renderer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tk_canvas_renderers/element_renderers.py	/^import sys, os$/;"	kind:namespace	line:1
+sys	../tk_canvas_renderers/render_orchestrator.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tk_canvas_renderers/scrub_picker.py	/^import sys$/;"	kind:namespace	line:2
+sys	../tk_canvas_renderers/scrubber.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tk_canvas_renderers/single_image_canvas.py	/^import sys$/;"	kind:namespace	line:3
+sys	../tk_canvas_renderers/tk_renderer.py	/^import sys$/;"	kind:namespace	line:1
+sys	../tk_canvas_renderers/vertical_image_list.py	/^import sys$/;"	kind:namespace	line:3
+sys	../tk_canvas_renderers/video_postion_indicator.py	/^import sys$/;"	kind:namespace	line:1
+sys	../video_and_photo_tools/image_from_video_grabber.py	/^import sys$/;"	kind:namespace	line:1
+t	../demo/plot_demo.py	/^t = np.arange(0.0, 2.0, 0.01)$/;"	kind:variable	line:6
+tag_gps_angle_threshold	../demo/base_position_calibrator_demo.py	/^                                   tag_gps_angle_threshold=10).visualize()$/;"	kind:variable	line:7
+tag_label	../demo/deprecated_discover_circumcircle_demo.py	/^    def tag_label(self): $/;"	kind:member	line:91
+tag_position_analyzer.py	../tag_position_analyzer.py	1;"	kind:file	line:1
+tail	../demo/deprecated_discover_circumcircle_demo.py	/^    def tail(vector):$/;"	kind:member	line:456
+tan	../calibration_utils.py	/^from sympy import symbols, tan, atan, solve$/;"	kind:namespace	line:1
+temp.py	../experiments/temp.py	1;"	kind:file	line:1
+test	../demo/deprecated_isosceles_demo.py	/^    def test(self, p2, theta_deg=70):$/;"	kind:member	line:27
+test_all_children_of_top_level_dir_are_dirs	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_all_children_of_top_level_dir_are_dirs(self):$/;"	kind:member	line:126
+test_all_error_circle_intersections_interesect_each_other	../tests/test_base_position_calibrator.py	/^    def test_all_error_circle_intersections_interesect_each_other(self):$/;"	kind:member	line:81
+test_all_in_view_objects_are_projected_within_image_width	../tests/test_image_renderer.py	/^    def test_all_in_view_objects_are_projected_within_image_width(self):$/;"	kind:member	line:56
+test_all_objects_eliminated_for_opposite_are_marked_eliminated_with_same_time_as_opposite_time	../tests/test_object_stats_processor.py	/^    def test_all_objects_eliminated_for_opposite_are_marked_eliminated_with_same_time_as_opposite_time(self):$/;"	kind:member	line:76
+test_all_objects_never_moved_in_opposite_direction_are_marked_eliminated_if_they_have_fewer_intersections_than_top_ranked_objects	../tests/test_object_stats_processor.py	/^    def test_all_objects_never_moved_in_opposite_direction_are_marked_eliminated_if_they_have_fewer_intersections_than_top_ranked_objects(self):$/;"	kind:member	line:87
+test_all_ranked_objects_always_moved_same_direction_as_tag	../tests/test_object_stats_processor.py	/^    def test_all_ranked_objects_always_moved_same_direction_as_tag(self):$/;"	kind:member	line:71
+test_angel_of_vector_between_points_360_rad	../tests/test_geometry_utils.py	/^    def test_angel_of_vector_between_points_360_rad(self):$/;"	kind:member	line:44
+test_angle_between_positions_is_greater_than_threshold	../tests/test_object_motion_analyzer.py	/^    def test_angle_between_positions_is_greater_than_threshold(self):$/;"	kind:member	line:98
+test_angle_betwen_points_clockwise_rotation	../tests/test_tag_position_analyzer.py	/^    def test_angle_betwen_points_clockwise_rotation(self):$/;"	kind:member	line:75
+test_angle_betwen_points_counter_clockwise_rotation	../tests/test_tag_position_analyzer.py	/^    def test_angle_betwen_points_counter_clockwise_rotation(self):$/;"	kind:member	line:67
+test_angle_of_vector	../tests/test_geometry_utils.py	/^    def test_angle_of_vector(self):$/;"	kind:member	line:19
+test_angle_to_centroid	../tests/test_viewable_object.py	/^    def test_angle_to_centroid(self):$/;"	kind:member	line:53
+test_angles	../tests/test_image_analyzer.py	/^    def test_angles(self):$/;"	kind:member	line:58
+test_at_least_one_session_dir_exists	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_at_least_one_session_dir_exists(self):$/;"	kind:member	line:119
+test_base_angle_calibrator.py	../tests/test_base_angle_calibrator.py	1;"	kind:file	line:1
+test_base_angle_calibrator_result_is_almost_equal_to_compass_error	../tests/test_base_angle_calibrator.py	/^    def test_base_angle_calibrator_result_is_almost_equal_to_compass_error(self):$/;"	kind:member	line:55
+test_base_position_calibrator.py	../tests/test_base_position_calibrator.py	1;"	kind:file	line:1
+test_boundary_renderer.py	../tests/test_boundary_renderer.py	1;"	kind:file	line:1
+test_bounded_frame_number_gives_last_retrievable_frame_num_for_inputs_greater_than_frame_count	../tests/test_image_from_video_grabber.py	/^    def test_bounded_frame_number_gives_last_retrievable_frame_num_for_inputs_greater_than_frame_count(self):$/;"	kind:member	line:65
+test_camera.py	../tests/test_camera.py	1;"	kind:file	line:1
+test_camera_has_correct_number_of_timestamps	../tests/test_computer_vision.py	/^    def test_camera_has_correct_number_of_timestamps(self):$/;"	kind:member	line:52
+test_camera_not_viewable_objects	../tests/test_camera.py	/^    def test_camera_not_viewable_objects(self):$/;"	kind:member	line:37
+test_camera_renderer.py	../tests/test_camera_renderer.py	1;"	kind:file	line:1
+test_camera_state_history_length_changes_when_object_universe_num_timestamps_changes	../tests/test_camera.py	/^    def test_camera_state_history_length_changes_when_object_universe_num_timestamps_changes(self):$/;"	kind:member	line:42
+test_camera_viewable_objects	../tests/test_camera.py	/^    def test_camera_viewable_objects(self):$/;"	kind:member	line:32
+test_changing_univererse_lifespan_changes_history_for_all_included_viewable_objects	../tests/test_object_universe.py	/^    def test_changing_univererse_lifespan_changes_history_for_all_included_viewable_objects(self):$/;"	kind:member	line:29
+test_circumcircles_added_for_each_viewable_object_in_each_frame	../tests/test_object_motion_analyzer.py	/^    def test_circumcircles_added_for_each_viewable_object_in_each_frame(self):$/;"	kind:member	line:89
+test_computer_vision.py	../tests/test_computer_vision.py	1;"	kind:file	line:1
+test_contains	../profile_shapely.py	/^def test_contains(p):$/;"	kind:function	line:17
+test_d	../tests/test_image_generator.py	/^    def test_d(self):$/;"	kind:member	line:101
+test_d_calculation_for_image_generator	../tests/test_image_generator.py	/^    def test_d_calculation_for_image_generator(self):$/;"	kind:member	line:44
+test_default_image_width_is_640	../tests/test_image_renderer.py	/^    def test_default_image_width_is_640(self):$/;"	kind:member	line:52
+test_destroy_cache_dir	../tests/test_image_cache.py	/^    def test_destroy_cache_dir(self):$/;"	kind:member	line:29
+test_didnt_intersect_t_is_an_int_or_none	../tests/test_object_stats_processor.py	/^    def test_didnt_intersect_t_is_an_int_or_none(self):$/;"	kind:member	line:82
+test_directory_structure_correct	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_directory_structure_correct(self):$/;"	kind:member	line:133
+test_distance_between_points	../tests/test_geometry_utils.py	/^    def test_distance_between_points(self):$/;"	kind:member	line:160
+test_distance_in_frame	../tests/test_tag_position_analyzer.py	/^    def test_distance_in_frame(self):$/;"	kind:member	line:59
+test_fetch	../tests/test_image_cache.py	/^    def test_fetch(self):$/;"	kind:member	line:55
+test_first_time_after_timestamp_where_range_exceeds_threshold	../tests/test_tag_position_analyzer.py	/^    def test_first_time_after_timestamp_where_range_exceeds_threshold(self):$/;"	kind:member	line:36
+test_fov	../tests/test_image_generator.py	/^    def test_fov(self):$/;"	kind:member	line:97
+test_geometry_utils.py	../tests/test_geometry_utils.py	1;"	kind:file	line:1
+test_get_all_circumcircle_objects_gets_only_cc_objects	../tests/test_base_position_calibrator.py	/^    def test_get_all_circumcircle_objects_gets_only_cc_objects(self):$/;"	kind:member	line:54
+test_get_all_circumcircle_objects_returns_circumcircle_objects_for_the_tag	../tests/test_base_position_calibrator.py	/^    def test_get_all_circumcircle_objects_returns_circumcircle_objects_for_the_tag(self):$/;"	kind:member	line:93
+test_get_all_cirumcircles_for_object_for_all_frames_returns_list_of_cc_objects	../tests/test_object_motion_analyzer.py	/^    def test_get_all_cirumcircles_for_object_for_all_frames_returns_list_of_cc_objects(self):$/;"	kind:member	line:82
+test_get_all_eliminated_before_timestamp	../tests/test_object_stats_processor.py	/^    def test_get_all_eliminated_before_timestamp(self):$/;"	kind:member	line:53
+test_get_all_error_circle_intersections_gets_a_list_of_linestrings	../tests/test_base_position_calibrator.py	/^    def test_get_all_error_circle_intersections_gets_a_list_of_linestrings(self):$/;"	kind:member	line:87
+test_get_aspect	../tests/test_pil_image_extensions.py	/^    def test_get_aspect(self):$/;"	kind:member	line:29
+test_get_base_position_returns_close_to_actual_base_position	../tests/test_base_position_calibrator.py	/^    def test_get_base_position_returns_close_to_actual_base_position(self):$/;"	kind:member	line:66
+test_get_c1_high_def_returns_a_linear_ring	../tests/test_object_motion_analyzer.py	/^    def test_get_c1_high_def_returns_a_linear_ring(self):$/;"	kind:member	line:56
+test_get_c1_low_def_returns_a_linear_ring	../tests/test_object_motion_analyzer.py	/^    def test_get_c1_low_def_returns_a_linear_ring(self):$/;"	kind:member	line:61
+test_get_c2_high_def_returns_a_linear_ring	../tests/test_object_motion_analyzer.py	/^    def test_get_c2_high_def_returns_a_linear_ring(self):$/;"	kind:member	line:66
+test_get_c2_low_def_returns_a_linear_ring	../tests/test_object_motion_analyzer.py	/^    def test_get_c2_low_def_returns_a_linear_ring(self):$/;"	kind:member	line:71
+test_get_frame_returns_a_complete_frame	../tests/test_base_angle_calibrator.py	/^    def test_get_frame_returns_a_complete_frame(self):$/;"	kind:member	line:60
+test_get_image_at_frame_saves_and_retrieves_from_cache	../tests/test_image_from_video_grabber.py	/^    def test_get_image_at_frame_saves_and_retrieves_from_cache(self):$/;"	kind:member	line:30
+test_get_image_from_video_at_frame_after_end_returns_last	../tests/test_image_from_video_grabber.py	/^    def test_get_image_from_video_at_frame_after_end_returns_last(self):$/;"	kind:member	line:60
+test_get_image_from_video_at_frame_returns_the_correct_data	../tests/test_image_from_video_grabber.py	/^    def test_get_image_from_video_at_frame_returns_the_correct_data(self):$/;"	kind:member	line:53
+test_get_intersection_points_returns_a_multipoint	../tests/test_base_position_calibrator.py	/^    def test_get_intersection_points_returns_a_multipoint(self):$/;"	kind:member	line:76
+test_get_left_x	../tests/test_video_position_indicator.py	/^    def test_get_left_x(self):$/;"	kind:member	line:27
+test_get_n_gets_the_right_frames	../tests/test_image_from_video_grabber.py	/^    def test_get_n_gets_the_right_frames(self):$/;"	kind:member	line:72
+test_get_n_retrieves_from_cache	../tests/test_image_from_video_grabber.py	/^    def test_get_n_retrieves_from_cache(self):$/;"	kind:member	line:86
+test_get_right_x	../tests/test_video_position_indicator.py	/^    def test_get_right_x(self):$/;"	kind:member	line:30
+test_get_tag_angle_relative_to_center_in_image_returns_an_angle	../tests/test_base_angle_calibrator.py	/^    def test_get_tag_angle_relative_to_center_in_image_returns_an_angle(self):$/;"	kind:member	line:65
+test_get_to_ranked_objects_returns_all_with_same_didnt_intersect_n_as_top_ranked_object	../tests/test_object_stats_processor.py	/^    def test_get_to_ranked_objects_returns_all_with_same_didnt_intersect_n_as_top_ranked_object(self):$/;"	kind:member	line:100
+test_get_video_id	../tests/test_image_from_video_grabber.py	/^    def test_get_video_id(self):$/;"	kind:member	line:25
+test_get_x_for_all_inview_objects_for_all_camera_time	../tests/test_image_generator.py	/^    def test_get_x_for_all_inview_objects_for_all_camera_time(self):$/;"	kind:member	line:53
+test_get_x_for_distant_objects_at_edge_of_view_remain_in_image_width	../tests/test_image_generator.py	/^    def test_get_x_for_distant_objects_at_edge_of_view_remain_in_image_width(self):$/;"	kind:member	line:61
+test_get_x_remain_in_image_width	../tests/test_image_generator.py	/^    def test_get_x_remain_in_image_width(self):$/;"	kind:member	line:105
+test_image_analyzer.py	../tests/test_image_analyzer.py	1;"	kind:file	line:1
+test_image_cache.py	../tests/test_image_cache.py	1;"	kind:file	line:1
+test_image_from_video_grabber.py	../tests/test_image_from_video_grabber.py	1;"	kind:file	line:1
+test_image_generator.py	../tests/test_image_generator.py	1;"	kind:file	line:1
+test_image_renderer.py	../tests/test_image_renderer.py	1;"	kind:file	line:1
+test_image_width_default	../tests/test_image_generator.py	/^    def test_image_width_default(self):$/;"	kind:member	line:112
+test_implemented_fields_have_no_nones	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_implemented_fields_have_no_nones(self):$/;"	kind:member	line:192
+test_input_data_structure.py	../tests/test_legacy_data/test_input_data_structure.py	1;"	kind:file	line:1
+test_intersection_with_error_circle_for_tag_always_returns_linestring	../tests/test_object_motion_analyzer.py	/^    def test_intersection_with_error_circle_for_tag_always_returns_linestring(self):$/;"	kind:member	line:76
+test_it_ids_objects_that_come_into_view	../tests/test_computer_vision.py	/^    def test_it_ids_objects_that_come_into_view(self):$/;"	kind:member	line:65
+test_it_re_ids_objects_that_come_back_in_view	../tests/test_computer_vision.py	/^    def test_it_re_ids_objects_that_come_back_in_view(self):$/;"	kind:member	line:85
+test_it_removes_ids_of_objects_that_leave_view	../tests/test_computer_vision.py	/^    def test_it_removes_ids_of_objects_that_leave_view(self):$/;"	kind:member	line:81
+test_it_retains_ids_of_objects_that_remain_in_view	../tests/test_computer_vision.py	/^    def test_it_retains_ids_of_objects_that_remain_in_view(self):$/;"	kind:member	line:76
+test_line_between_circumcenters_is_perpendicular_to_line_between_points	../tests/test_geometry_utils.py	/^    def test_line_between_circumcenters_is_perpendicular_to_line_between_points(self):$/;"	kind:member	line:9
+test_local_minima	../tests/test_numpy_ndarray_extensions.py	/^    def test_local_minima(self):$/;"	kind:member	line:18
+test_min_and_max_positions_in_frame	../tests/test_tag_position_analyzer.py	/^    def test_min_and_max_positions_in_frame(self):$/;"	kind:member	line:48
+test_moving_object_renderer.py	../tests/test_moving_object_renderer.py	1;"	kind:file	line:1
+test_negative_zero_crossings	../tests/test_numpy_ndarray_extensions.py	/^    def test_negative_zero_crossings(self):$/;"	kind:member	line:42
+test_no_extra_files_in_npz_dirs	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_no_extra_files_in_npz_dirs(self):$/;"	kind:member	line:139
+test_non_implemented_fields_are_full_of_nones	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_non_implemented_fields_are_full_of_nones(self):$/;"	kind:member	line:181
+test_npz_fields_exist_with_no_extras	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_npz_fields_exist_with_no_extras(self):$/;"	kind:member	line:147
+test_npz_fields_have_the_same_length	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_npz_fields_have_the_same_length(self):$/;"	kind:member	line:159
+test_numpy_ndarray_extensions.py	../tests/test_numpy_ndarray_extensions.py	1;"	kind:file	line:1
+test_object_motion_analyzer.py	../tests/test_object_motion_analyzer.py	1;"	kind:file	line:1
+test_object_stats_processor.py	../tests/test_object_stats_processor.py	1;"	kind:file	line:1
+test_object_universe.py	../tests/test_object_universe.py	1;"	kind:file	line:1
+test_object_universe_has_correct_num_timestamps	../tests/test_object_universe.py	/^    def test_object_universe_has_correct_num_timestamps(self):$/;"	kind:member	line:17
+test_object_universe_has_correct_objects	../tests/test_camera.py	/^    def test_object_universe_has_correct_objects(self):$/;"	kind:member	line:23
+test_objects_that_never_are_in_view_never_get_id	../tests/test_computer_vision.py	/^    def test_objects_that_never_are_in_view_never_get_id(self):$/;"	kind:member	line:61
+test_params_are_passed_to_tk_renderer_singleton	../tests/test_boundary_renderer.py	/^    def test_params_are_passed_to_tk_renderer_singleton(self):$/;"	kind:member	line:19
+test_pil_image_extensions.py	../tests/test_pil_image_extensions.py	1;"	kind:file	line:1
+test_point_with_angle_and_distance_to_point	../tests/test_geometry_utils.py	/^    def test_point_with_angle_and_distance_to_point(self):$/;"	kind:member	line:69
+test_point_with_angle_and_distance_to_point_for_angle_over_2_pi	../tests/test_geometry_utils.py	/^    def test_point_with_angle_and_distance_to_point_for_angle_over_2_pi(self):$/;"	kind:member	line:100
+test_position_history	../tests/test_viewable_object.py	/^    def test_position_history(self):$/;"	kind:member	line:61
+test_positive_zero_crossings	../tests/test_numpy_ndarray_extensions.py	/^    def test_positive_zero_crossings(self):$/;"	kind:member	line:33
+test_quadrant	../tests/test_geometry_utils.py	/^    def test_quadrant(self):$/;"	kind:member	line:110
+test_random_distance	../tests/test_viewable_object.py	/^    def test_random_distance(self):$/;"	kind:member	line:56
+test_random_point_on_boundary_is_on_boundary	../tests/test_viewable_object.py	/^    def test_random_point_on_boundary_is_on_boundary(self):$/;"	kind:member	line:49
+test_range_of_angles_between_timestamps	../tests/test_tag_position_analyzer.py	/^    def test_range_of_angles_between_timestamps(self):$/;"	kind:member	line:30
+test_range_of_angles_in_frame_just_exeeds_threshold	../tests/test_tag_position_analyzer.py	/^    def test_range_of_angles_in_frame_just_exeeds_threshold(self):$/;"	kind:member	line:40
+test_resize_with_height	../tests/test_pil_image_extensions.py	/^    def test_resize_with_height(self):$/;"	kind:member	line:17
+test_resize_with_width	../tests/test_pil_image_extensions.py	/^    def test_resize_with_width(self):$/;"	kind:member	line:23
+test_returns_image_with_correct_width_and_mode	../tests/test_image_from_video_grabber.py	/^    def test_returns_image_with_correct_width_and_mode(self):$/;"	kind:member	line:47
+test_rotation_same_as_tag_for_tag	../tests/test_object_motion_analyzer.py	/^    def test_rotation_same_as_tag_for_tag(self):$/;"	kind:member	line:104
+test_sationary_object_updates_postion_history_when_num_timestamps_changes	../tests/test_viewable_object.py	/^    def test_sationary_object_updates_postion_history_when_num_timestamps_changes(self):$/;"	kind:member	line:22
+test_scrubber.py	../tests/test_scrubber.py	1;"	kind:file	line:1
+test_setup	../tests/test_image_cache.py	/^    def test_setup(self):$/;"	kind:member	line:25
+test_signed_subtended_angle_from_p1_to_p2_rad	../tests/test_geometry_utils.py	/^    def test_signed_subtended_angle_from_p1_to_p2_rad(self):$/;"	kind:member	line:118
+test_simple_id_gets_prefix_and_sequential_ids	../tests/test_simple_uid.py	/^    def test_simple_id_gets_prefix_and_sequential_ids(self):$/;"	kind:member	line:12
+test_simple_uid.py	../tests/test_simple_uid.py	1;"	kind:file	line:1
+test_stationary_object_get_same_postion_for_entire_postion_history_when_created	../tests/test_viewable_object.py	/^    def test_stationary_object_get_same_postion_for_entire_postion_history_when_created(self):$/;"	kind:member	line:16
+test_stationary_object_updates_its_num_timestamps_to_match_object_universe_it_gets_added_to	../tests/test_viewable_object.py	/^    def test_stationary_object_updates_its_num_timestamps_to_match_object_universe_it_gets_added_to(self):$/;"	kind:member	line:28
+test_store	../tests/test_image_cache.py	/^    def test_store(self):$/;"	kind:member	line:42
+test_tag_always_intersects	../tests/test_object_stats_processor.py	/^    def test_tag_always_intersects(self):$/;"	kind:member	line:95
+test_tag_candidate_is_always_the_tag	../tests/test_base_position_calibrator.py	/^    def test_tag_candidate_is_always_the_tag(self):$/;"	kind:member	line:63
+test_tag_circumcircles_always_intersect_error_circle	../tests/test_object_motion_analyzer.py	/^    def test_tag_circumcircles_always_intersect_error_circle(self):$/;"	kind:member	line:113
+test_tag_is_top_ranked_object	../tests/test_object_stats_processor.py	/^    def test_tag_is_top_ranked_object(self):$/;"	kind:member	line:68
+test_tag_position_analyzer.py	../tests/test_tag_position_analyzer.py	1;"	kind:file	line:1
+test_theta_calculation_for_image_generator	../tests/test_image_generator.py	/^    def test_theta_calculation_for_image_generator(self):$/;"	kind:member	line:48
+test_time_fields_duration_same_as_video_duration	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_time_fields_duration_same_as_video_duration(self):$/;"	kind:member	line:208
+test_time_ms_field_in_returned_image_is_correct	../tests/test_image_from_video_grabber.py	/^    def test_time_ms_field_in_returned_image_is_correct(self):$/;"	kind:member	line:39
+test_top_level_dir_exists	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_top_level_dir_exists(self):$/;"	kind:member	line:116
+test_vertical_image_list.py	../tests/test_vertical_image_list.py	1;"	kind:file	line:1
+test_video_file_can_be_opened_with_cv2	../tests/test_legacy_data/test_input_data_structure.py	/^    def test_video_file_can_be_opened_with_cv2(self):$/;"	kind:member	line:203
+test_video_position_indicator.py	../tests/test_video_position_indicator.py	1;"	kind:file	line:1
+test_viewable_object.py	../tests/test_viewable_object.py	1;"	kind:file	line:1
+test_viewable_object_renderer.py	../tests/test_viewable_object_renderer.py	1;"	kind:file	line:1
+test_viewable_objects_get_history_len_from_universe_they_are_addded_to	../tests/test_object_universe.py	/^    def test_viewable_objects_get_history_len_from_universe_they_are_addded_to(self):$/;"	kind:member	line:24
+test_viewable_objects_have_correct_num_initial_timestamps	../tests/test_object_universe.py	/^    def test_viewable_objects_have_correct_num_initial_timestamps(self):$/;"	kind:member	line:20
+test_viewable_objects_have_correct_number_of_timestamps	../tests/test_computer_vision.py	/^    def test_viewable_objects_have_correct_number_of_timestamps(self):$/;"	kind:member	line:56
+test_when_viewable_object_position_history_is_reduced_it_is_a_truncated_version_of_original_postion_history	../tests/test_object_universe.py	/^    def test_when_viewable_object_position_history_is_reduced_it_is_a_truncated_version_of_original_postion_history(self):$/;"	kind:member	line:35
+test_winfo_width	../tests/test_video_position_indicator.py	/^    def test_winfo_width(self):$/;"	kind:member	line:33
+test_zero_crossings	../tests/test_numpy_ndarray_extensions.py	/^    def test_zero_crossings(self):$/;"	kind:member	line:24
+that_it_prefixes_the_ids_with_cv	../tests/test_computer_vision.py	/^    def that_it_prefixes_the_ids_with_cv(self):$/;"	kind:member	line:73
+tilt_motor_read	../data/data_formats.py	/^         tilt_motor_read=dummy_data,$/;"	kind:variable	line:13
+time	../demo/deprecated_discover_circumcircle_demo.py	/^import time as time$/;"	kind:namespace	line:3
+time	../tk_canvas_renderers/animator.py	/^import time$/;"	kind:namespace	line:2
+timeit	../video_and_photo_tools/video_image_benchmarker.py	/^import timeit$/;"	kind:namespace	line:5
+tip	../demo/deprecated_discover_circumcircle_demo.py	/^    def tip(vector):$/;"	kind:member	line:452
+title	../demo/plot_demo.py	/^       title='About as simple as it gets, folks')$/;"	kind:variable	line:13
+tk	../demo/circumcircle_demo.py	/^import tkinter as tk$/;"	kind:namespace	line:5
+tk	../demo/deprecated_discover_circumcircle_demo.py	/^import tkinter as tk$/;"	kind:namespace	line:1
+tk	../demo/deprecated_isosceles_demo.py	/^import tkinter as tk$/;"	kind:namespace	line:3
+tk	../demo/moving_object_demo.py	/^import tkinter as tk$/;"	kind:namespace	line:1
+tk	../experiments/image2.py	/^import tkinter as tk$/;"	kind:namespace	line:1
+tk	../experiments/image3.py	/^import tkinter as tk$/;"	kind:namespace	line:1
+tk	../tests/test_video_position_indicator.py	/^import tkinter as tk$/;"	kind:namespace	line:5
+tk	../tk_canvas_renderers/canvas_position_picker.py	/^import tkinter as tk$/;"	kind:namespace	line:1
+tk	../tk_canvas_renderers/element_renderers.py	/^import tkinter as tk$/;"	kind:namespace	line:4
+tk	../tk_canvas_renderers/scrubber.py	/^import tkinter as tk$/;"	kind:namespace	line:5
+tk	../tk_canvas_renderers/single_image_canvas.py	/^import tkinter as tk$/;"	kind:namespace	line:4
+tk	../tk_canvas_renderers/tk_renderer.py	/^import tkinter as tk$/;"	kind:namespace	line:4
+tk	../tk_canvas_renderers/vertical_image_list.py	/^import tkinter as tk$/;"	kind:namespace	line:5
+tk	../tk_canvas_renderers/video_postion_indicator.py	/^import tkinter as tk$/;"	kind:namespace	line:3
+tk_canvas_renderers	../demo/circumcircle_demo.py	/^import tk_canvas_renderers.canvas_utils as CUtils$/;"	kind:namespace	line:7
+tk_canvas_renderers	../demo/deprecated_discover_circumcircle_demo.py	/^import tk_canvas_renderers.canvas_utils as CUtils$/;"	kind:namespace	line:4
+tk_canvas_renderers	../tk_canvas_renderers/render_orchestrator.py	/^import tk_canvas_renderers.element_renderers as ER$/;"	kind:namespace	line:4
+tk_renderer.py	../tk_canvas_renderers/tk_renderer.py	1;"	kind:file	line:1
+tkinter	../video_and_photo_tools/video_image_benchmarker.py	/^import tkinter$/;"	kind:namespace	line:6
+tools	../experiments/google_drive.py	/^from oauth2client import file, client, tools$/;"	kind:namespace	line:5
+truncate_state_history	../camera.py	/^    def truncate_state_history(self):$/;"	kind:member	line:152
+unittest	../tests/test_base_angle_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+unittest	../tests/test_base_position_calibrator.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+unittest	../tests/test_boundary_renderer.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_camera.py	/^import unittest$/;"	kind:namespace	line:6
+unittest	../tests/test_camera_renderer.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_computer_vision.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_geometry_utils.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_image_analyzer.py	/^import math, unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_image_cache.py	/^import unittest$/;"	kind:namespace	line:5
+unittest	../tests/test_image_from_video_grabber.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_image_generator.py	/^import unittest, math, sys$/;"	kind:namespace	line:1
+unittest	../tests/test_image_renderer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+unittest	../tests/test_legacy_data/test_input_data_structure.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_moving_object_renderer.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_numpy_ndarray_extensions.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_object_motion_analyzer.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+unittest	../tests/test_object_stats_processor.py	/^import sys, math, unittest$/;"	kind:namespace	line:1
+unittest	../tests/test_object_universe.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_pil_image_extensions.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_scrubber.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_simple_uid.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_tag_position_analyzer.py	/^import sys, unittest, math$/;"	kind:namespace	line:1
+unittest	../tests/test_vertical_image_list.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_video_position_indicator.py	/^import unittest$/;"	kind:namespace	line:4
+unittest	../tests/test_viewable_object.py	/^import unittest$/;"	kind:namespace	line:3
+unittest	../tests/test_viewable_object_renderer.py	/^import unittest$/;"	kind:namespace	line:3
+update	../tk_canvas_renderers/tk_renderer.py	/^    def update(self):$/;"	kind:member	line:59
+url	../experiments/image2.py	/^url = '\/Users\/Sani\/dev\/soloshot\/data\/test_data\/test_images\/photo.jpg'$/;"	kind:variable	line:8
+url	../experiments/image3.py	/^url = '\/Users\/Sani\/dev\/soloshot\/data\/test_data\/test_images\/photo.jpg'$/;"	kind:variable	line:8
+vbar	../experiments/canvas_with_scroll.py	/^vbar=Scrollbar(frame,orient=VERTICAL)$/;"	kind:variable	line:9
+vector_from_camera	../demo/deprecated_discover_circumcircle_demo.py	/^    def vector_from_camera(self):$/;"	kind:member	line:101
+vector_with_angle_and_magnitude	../demo/deprecated_discover_circumcircle_demo.py	/^    def vector_with_angle_and_magnitude(tail, angle, magnitude):$/;"	kind:member	line:444
+verify_directory_and_sub_directories	../tests/test_legacy_data/test_input_data_structure.py	/^    def verify_directory_and_sub_directories(self, dir_structure, path: Path):$/;"	kind:member	line:230
+verify_wild_path_exists	../tests/test_legacy_data/test_input_data_structure.py	/^    def verify_wild_path_exists(self, path, dir_or_file_with_wild_chars):$/;"	kind:member	line:240
+vertical_image_list.py	../tk_canvas_renderers/vertical_image_list.py	1;"	kind:file	line:1
+vertical_image_list_demo.py	../demo/vertical_image_list_demo.py	1;"	kind:file	line:1
+video.py	../experiments/video.py	1;"	kind:file	line:1
+video_and_photo_tools	../tests/test_image_cache.py	/^import video_and_photo_tools.pil_image_extensions$/;"	kind:namespace	line:9
+video_and_photo_tools	../tests/test_pil_image_extensions.py	/^import video_and_photo_tools.pil_image_extensions$/;"	kind:namespace	line:7
+video_and_photo_tools	../video_and_photo_tools/image_from_video_grabber.py	/^import video_and_photo_tools.pil_image_extensions # pylint: disable=C0413, W0611$/;"	kind:namespace	line:12
+video_image_benchmarker.py	../video_and_photo_tools/video_image_benchmarker.py	1;"	kind:file	line:1
+video_postion_indicator.py	../tk_canvas_renderers/video_postion_indicator.py	1;"	kind:file	line:1
+view_triangle.py	../view_triangle.py	1;"	kind:file	line:1
+viewable_object.py	../viewable_object.py	1;"	kind:file	line:1
+viewable_object_camera_renderer_demo.py	../demo/viewable_object_camera_renderer_demo.py	1;"	kind:file	line:1
+visualize	../tests/test_base_angle_calibrator.py	/^    def visualize(self):$/;"	kind:member	line:69
+visualize	../tests/test_base_position_calibrator.py	/^    def visualize(self):$/;"	kind:member	line:99
+visualize	../tests/test_boundary_renderer.py	/^    def visualize(self):$/;"	kind:member	line:23
+visualize	../tests/test_camera_renderer.py	/^    def visualize(self):$/;"	kind:member	line:29
+visualize	../tests/test_image_renderer.py	/^    def visualize(self):$/;"	kind:member	line:64
+visualize	../tests/test_moving_object_renderer.py	/^    def visualize(self):$/;"	kind:member	line:28
+visualize	../tests/test_object_motion_analyzer.py	/^    def visualize(self):$/;"	kind:member	line:120
+visualize	../tests/test_object_stats_processor.py	/^    def visualize(self):$/;"	kind:member	line:121
+visualize	../tests/test_scrubber.py	/^    def visualize(self):$/;"	kind:member	line:28
+visualize	../tests/test_vertical_image_list.py	/^    def visualize(self):$/;"	kind:member	line:26
+visualize	../tests/test_video_position_indicator.py	/^    def visualize(self):$/;"	kind:member	line:36
+visualize	../tests/test_viewable_object_renderer.py	/^    def visualize(self):$/;"	kind:member	line:19
+x_s	../demo/deprecated_discover_circumcircle_demo.py	/^    def x_s(vector):$/;"	kind:member	line:376
+y_s	../demo/deprecated_discover_circumcircle_demo.py	/^    def y_s(vector):$/;"	kind:member	line:380
+yaml	../video_and_photo_tools/video_image_benchmarker.py	/^import yaml$/;"	kind:namespace	line:3
