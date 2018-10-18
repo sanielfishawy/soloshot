@@ -61,6 +61,7 @@ class TestInputDataStructure(unittest.TestCase):
         TAG_TIME_FIELD,
         'tag_latitude',
         'tag_longitude',
+        'tag_acceleration',
         'tag_altitude_gps',
         'tag_altitude_barometer',
     ]
