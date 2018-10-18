@@ -37,10 +37,6 @@ class TestInputDataStructure(unittest.TestCase):
         BASE_TIME_FIELD,
         'pan_motor_read',
         'tilt_motor_read',
-        'base_latitude',
-        'base_longitude',
-        'base_altitude_gps',
-        'base_altitude_barometer',
         'base_tilt_at_current_pan_angle',
         'base_roll_at_current_pan_angle',
         'cam_pitch',
@@ -64,6 +60,10 @@ class TestInputDataStructure(unittest.TestCase):
         'tag_acceleration',
         'tag_altitude_gps',
         'tag_altitude_barometer',
+        'base_latitude',
+        'base_longitude',
+        'base_altitude_gps',
+        'base_altitude_barometer',
     ]
 
     CAMERA_NPZ_FIELDS = [
