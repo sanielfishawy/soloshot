@@ -145,7 +145,7 @@ class ImageFromVideoGrabber:
     def get_images_from_video_at_frame_nums(self, frame_nums: list) -> List[ImageFromVideo]:
         return [self.get_image_at_frame_num(num) for num in frame_nums]
 
-    # Usef for multi image grabs
+    # Use for multi image grabs
     # Fast because doing continuous reads
     def get_num_images_from_video_after_start_n(self, start_n, num):
         result = []

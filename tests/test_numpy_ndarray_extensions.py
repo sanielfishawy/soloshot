@@ -16,7 +16,7 @@ class TestNumpyNdarrayExtensions(unittest.TestCase):
     def setUp(self):
         pass
 
-    def test_local_maxima_on_motor_data(self):
+    def visualize_local_maxima_on_motor_data(self):
         npz_path = Path('.') / 'data/test_data/test_npz/tag_toss_base.npz'
         npz_data = np.load(npz_path)
         motor_data = npz_data['pan_motor_read']
