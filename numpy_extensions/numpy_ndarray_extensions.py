@@ -29,6 +29,14 @@ def __ndarray_is_monotonic_around_peak_or_trough(self, idx, band):
     diff_sign_diff = np.diff(sign_diff_no_zero)
     return len([el for el in diff_sign_diff if el != 0]) <= 1
 
+def __ndarray_get_shoulder_steepness_around_idx(self, idx, band):
+    dx1 = np.ediff1d(self)
+    idx_range = np.clip(np.array([idx - band, idx + band]), 0, dx1.size)
+    return np.take(dx1, idx_range)
+
+def __ndarray_has_steep_shoulders_around_idx(self, idx, band, threshold):
+    return np.all(np.abs(self.get_shoulder_steepness_around_idx(idx, band)) > threshold)
+
 def __ndarray_local_maxima_sorted_by_peakyness(self):
     return self.sort_indexes_by_peakyness(self.local_maxima())
 
@@ -46,6 +54,30 @@ def __ndarray_local_minima_sorted_by_peakyness_and_monotonic(self, band):
     return np.array([minimum
                      for minimum in minima
                      if self.is_monotonic_around_peak_or_trough(minimum, band)])
+
+def __ndarray_local_maxima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(self,
+                                                                                  monotonic_band,
+                                                                                  shoulder_band,
+                                                                                  threshold
+                                                                                  ):
+    maxima = self.local_maxima_sorted_by_peakyness_and_monotonic(monotonic_band)
+    return np.array([maximum
+                     for maximum in maxima
+                     if self.has_steep_shoulders_around_idx(maximum, shoulder_band, threshold)
+                    ]
+                   )
+
+def __ndarray_local_minima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(self,
+                                                                                  monotonic_band,
+                                                                                  shoulder_band,
+                                                                                  threshold
+                                                                                  ):
+    minima = self.local_minima_sorted_by_peakyness_and_monotonic(monotonic_band)
+    return np.array([minimum
+                     for minimum in minima
+                     if self.has_steep_shoulders_around_idx(minimum, shoulder_band, threshold)
+                    ]
+                   )
 
 def __ndarray_zero_crossings(self):
     sign = np.sign(self)

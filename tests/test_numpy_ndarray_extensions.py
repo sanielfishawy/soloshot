@@ -31,6 +31,21 @@ class TestNumpyNdarrayExtensions(unittest.TestCase):
 
         plt.show()
 
+    def test_local_maxima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(self):
+        arr = np.sin(np.logspace(0, 20*np.pi, num=20*360, base=1.06))
+        maxima = arr.\
+                 local_maxima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(8, 10, .001)
+
+        self.assertEqual(maxima.size, 3)
+
+    def test_has_steep_shoulders(self):
+        arr = np.sin(np.logspace(0, 20*np.pi, num=20*360, base=1.06))
+        maxima = arr.local_maxima_sorted_by_peakyness_and_monotonic(8)
+        has_steep_shoulders = np.array([arr.has_steep_shoulders_around_idx(maximum, 10, .001)
+                                        for maximum in maxima])
+        np.testing.assert_array_equal(has_steep_shoulders,
+                                      np.array([True, True, True, False, False, False]))
+
     def test_is_monotonic_around_peak_or_trough(self):
         up = np.arange(10)
         down = np.flip(np.arange(10))

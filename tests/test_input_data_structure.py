@@ -142,6 +142,17 @@ class TestInputDataStructure(unittest.TestCase):
                                     )
                                )
 
+    def test_maximum_time_tick_size(self):
+        for session_dir in self.ldfh.get_session_dirs():
+            for field_name, data  in self.ldfh.get_npz_time_fields(session_dir).items():
+                max_tick_size = np.max(np.diff(data))
+                # min_tick_size = np.min(np.diff(data))
+                self.assertLess(max_tick_size, 340,
+                                msg=(f'{session_dir.name}: {field_name}: '
+                                     f'max tick size to large ({max_tick_size})'
+                                    )
+                               )
+
     def verify_directory_and_sub_directories(self, dir_structure, path: Path):
         if isinstance(dir_structure, dict):
             for child in dir_structure.keys():

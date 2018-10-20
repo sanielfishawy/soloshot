@@ -39,9 +39,9 @@ class ImageCache:
         return os.path.isdir(self.cache_dir_path)
 
     def _ensure_cache_dir(self):
-        relative_to_py_root = self.cache_dir_path.relative_to(Path('.'))
-        path = Path('.')
-        for part in relative_to_py_root.parts:
+        relative_to_root = self.cache_dir_path.relative_to(Path('/'))
+        path = Path('/')
+        for part in relative_to_root.parts:
             path = path / part
             if not os.path.isdir(path):
                 os.mkdir(path)

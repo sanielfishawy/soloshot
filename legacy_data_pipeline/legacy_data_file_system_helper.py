@@ -24,10 +24,11 @@ class LegacyDataFileSystemHelper:
     CAMERA_NPZ_FILE = 'camera.npz'
 
     BASE_TIME_FIELD = 'base_time'
+    PAN_MOTOR_READ_FIELD = 'pan_motor_read'
 
     BASE_NPZ_FIELDS = [
         BASE_TIME_FIELD,
-        'pan_motor_read',
+        PAN_MOTOR_READ_FIELD,
         'tilt_motor_read',
         'base_tilt_at_current_pan_angle',
         'base_roll_at_current_pan_angle',
@@ -113,11 +114,20 @@ class LegacyDataFileSystemHelper:
         r = list(self.top_level_dir_path.iterdir())
         return [directory for directory in r if 'DS_Store' not in directory.name]
 
+    def get_npz_dir_path(self, session_dir):
+        return session_dir / self.__class__.NPZ_DIR
+
+    def get_npz_file_path(self, session_dir, filename):
+        return self.get_npz_dir_path(session_dir) / filename
+
+    def get_field_from_npz_file(self, session_dir, filename, fieldname):
+        return np.load(self.get_npz_file_path(session_dir, filename))[fieldname]
+
     def get_npz_filenames(self):
         return self.__class__.NPZ_FIELDS.keys()
 
     def get_npz_file_paths(self, session_dir):
-        return [session_dir / self.__class__.NPZ_DIR / npz_filename
+        return [self.get_npz_dir_path(session_dir) / npz_filename
                 for npz_filename in self.get_npz_filenames()]
 
     def get_npz_fields(self, session_dir):
