@@ -117,7 +117,7 @@ class TestInputDataStructure(unittest.TestCase):
             assert video_path is not None,\
                    (f'No video found in {session_dir.name} '
                     f'cannot run {self.test_time_fields_duration_same_as_video_duration.__name__}')
-            video_duration = self.ldfh.get_duration_ms_of_video_at_path(video_path)
+            video_duration = self.get_duration_ms_of_video_at_path(video_path)
 
             for npz_path in self.ldfh.get_npz_file_paths(session_dir):
                 npz_duration = self.get_duration_in_ms_for_npz_with_a_time_field(npz_path)
