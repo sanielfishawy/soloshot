@@ -11,7 +11,7 @@ Fov characterization
  - Factor legacy_data_filesystem_helper from test_input_data_structure
 
  - legacy_data_pipeline.PanMotorTimeBaseAlignment
-    - Operates on session_dir
+    x Operates on session_dir
     - Outputs results to a separate parallel directory
         - results
             - local_max motor time in ms
@@ -21,8 +21,14 @@ Fov characterization
             - Picks points from results file
             - Shows scrubber with pre selection for those points
         - results file doesnt exist
-            - Finds local_maxima in pan motor movement
-            - Shows scrubber without pre selection for those points
+            x Finds local_maxima in pan motor movement
+            x Shows scrubber without pre selection for those points
+    - Todo
+        - Add callback to scrubber_picker sends selected image_from_video back
+        - Create a list of saved times and image times
+        - Save to a yml file
+        - Check the yml file existence or create a new one
+
 
 
  - Find all pan direction changes with high rate of change
