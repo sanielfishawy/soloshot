@@ -17,7 +17,7 @@ class Scrubber:
                  callback=None,
                 ):
         '''
-        :param photos Iterable[ImageFromVideo]: pics have equal dimensions typically extracted using VideoHelper
+        :param photos Iterable[ImageFromVideo]: pics have equal dims typically extracted using VideoHelper
         '''
         assert (images_from_video is not None), 'images_from_video_parameter must be provided'
         self._images_from_video = images_from_video

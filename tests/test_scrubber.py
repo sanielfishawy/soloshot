@@ -21,12 +21,16 @@ class TestScrubber(unittest.TestCase):
 
         self.scrub_picker = ScrubPicker(images_from_video=self.images_from_video,
                                         selector_type=selector_type,
+                                        callback=self.callback,
                                        )
 
         return self
 
     def visualize(self):
         self.scrub_picker.run()
+
+    def callback(self, images):
+        print(images)
 
 if __name__ == '__main__':
     unittest.main()

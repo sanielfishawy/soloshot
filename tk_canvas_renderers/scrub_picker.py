@@ -82,3 +82,9 @@ class ScrubPicker(Scrubber):
             self._canvas.itemconfigure(self._selected_text, text='End', fill='red')
         else:
             self._canvas.itemconfigure(self._selected_text, text='')
+
+    def _done_click(self):
+        if self._callback is not None:
+            self._callback([self._images_from_video[self._selected_start_idx],
+                            self._images_from_video[self._selected_end_idx]])
+        super()._done_click()
