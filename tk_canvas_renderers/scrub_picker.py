@@ -85,6 +85,18 @@ class ScrubPicker(Scrubber):
 
     def _done_click(self):
         if self._callback is not None:
-            self._callback([self._images_from_video[self._selected_start_idx],
-                            self._images_from_video[self._selected_end_idx]])
+            self._callback([self._get_selected_start_ifv(),
+                            self._get_selected_end_ifv(),
+                           ]
+                          )
         super()._done_click()
+
+    def _get_selected_start_ifv(self):
+        if self._selected_start_idx is None:
+            return None
+        return self._images_from_video[self._selected_start_idx]
+
+    def _get_selected_end_ifv(self):
+        if self._selected_end_idx is None:
+            return None
+        return self._images_from_video[self._selected_end_idx]

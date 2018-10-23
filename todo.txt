@@ -12,10 +12,10 @@ Fov characterization
 
  - legacy_data_pipeline.PanMotorTimeBaseAlignment
     x Operates on session_dir
-    - Outputs results to a separate parallel directory
-        - results
-            - local_max motor time in ms
-            - corresponding frame time in ms
+    x Outputs results to a separate parallel directory
+        x results
+            x local_max motor time in ms
+            x corresponding frame time in ms
     - Modes
         - results file exists
             - Picks points from results file
@@ -24,10 +24,31 @@ Fov characterization
             x Finds local_maxima in pan motor movement
             x Shows scrubber without pre selection for those points
     - Todo
-        - Add callback to scrubber_picker sends selected image_from_video back
-        - Create a list of saved times and image times
-        - Save to a yml file
-        - Check the yml file existence or create a new one
+        x Add callback to scrubber_picker sends selected image_from_video back
+        x Create a list of saved times and image times
+        x Save to a yml file
+        x Add result delay_motor_to_video
+        x Add aggregation
+            x pan_local_minima:
+                x n
+                x data
+                x min
+                x max
+                x mean
+            x pan_local_maxima:
+                x n
+                x data
+                x min
+                x max
+                x mean
+            x pan_combined:
+                x n
+                x data
+                x min
+                x max
+                x mean
+
+        x Create CalibrationDataFiler
 
 
 

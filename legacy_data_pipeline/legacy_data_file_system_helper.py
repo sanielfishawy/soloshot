@@ -114,40 +114,43 @@ class LegacyDataFileSystemHelper:
         r = list(self.top_level_dir_path.iterdir())
         return [directory for directory in r if 'DS_Store' not in directory.name]
 
-    def get_npz_dir_path(self, session_dir):
-        return session_dir / self.__class__.NPZ_DIR
+    def get_session_dir_path(self, session_dir_name):
+        return self.top_level_dir_path / session_dir_name
 
-    def get_npz_file_path(self, session_dir, filename):
-        return self.get_npz_dir_path(session_dir) / filename
+    def get_npz_dir_path(self, session_dir_name):
+        return self.get_session_dir_path(session_dir_name) / self.__class__.NPZ_DIR
 
-    def get_field_from_npz_file(self, session_dir, filename, fieldname):
-        return np.load(self.get_npz_file_path(session_dir, filename))[fieldname]
+    def get_npz_file_path(self, session_dir_name, filename):
+        return self.get_npz_dir_path(session_dir_name) / filename
+
+    def get_field_from_npz_file(self, session_dir_name, filename, fieldname):
+        return np.load(self.get_npz_file_path(session_dir_name, filename))[fieldname]
 
     def get_npz_filenames(self):
         return self.__class__.NPZ_FIELDS.keys()
 
-    def get_npz_file_paths(self, session_dir):
-        return [self.get_npz_dir_path(session_dir) / npz_filename
+    def get_npz_file_paths(self, session_dir_name):
+        return [self.get_npz_dir_path(session_dir_name) / npz_filename
                 for npz_filename in self.get_npz_filenames()]
 
-    def get_npz_fields(self, session_dir):
+    def get_npz_fields(self, session_dir_name):
         r = {}
-        for npz_file_path in self.get_npz_file_paths(session_dir):
+        for npz_file_path in self.get_npz_file_paths(session_dir_name):
             npz_data = np.load(npz_file_path)
             for field in npz_data.files:
                 r[field] = npz_data[field]
         return r
 
-    def get_npz_time_fields(self, session_dir):
-        all_npz_fields = self.get_npz_fields(session_dir)
+    def get_npz_time_fields(self, session_dir_name):
+        all_npz_fields = self.get_npz_fields(session_dir_name)
         return {key: all_npz_fields[key]
                 for key in all_npz_fields.keys() # pylint: disable=C0201
                 if key in self.__class__.TIME_FIELDS}
 
     def get_all_npz_file_paths(self):
         r = []
-        for session_dir in self.get_session_dirs():
-            r += self.get_npz_file_paths(session_dir)
+        for session_dir_name in self.get_session_dirs():
+            r += self.get_npz_file_paths(session_dir_name)
         return r
 
     def get_video_paths(self):
@@ -162,7 +165,10 @@ class LegacyDataFileSystemHelper:
         return video_files[0]
 
     def get_track_dirs(self):
-        return [self.get_track_dir(session_dir) for session_dir in self.get_session_dirs()]
+        return [self.get_track_dir(self.get_session_dir_path(session_dir_name))
+                for session_dir_name
+                in self.get_session_dirs()
+               ]
 
-    def get_track_dir(self, session_dir):
-        return list(session_dir.glob(self.__class__.TRACK_DIR))[0]
+    def get_track_dir(self, session_dir_name):
+        return list(self.get_session_dir_path(session_dir_name).glob(self.__class__.TRACK_DIR))[0]

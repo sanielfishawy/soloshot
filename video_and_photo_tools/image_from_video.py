@@ -1,7 +1,14 @@
+from typing import Dict
 from pathlib import Path
 import PIL.Image
 
 class ImageFromVideo:
+
+    # Keys
+    FRAME_NUM = 'frame_num'
+    TIME_MS = 'time_ms'
+    VIDEO_URL = 'video_url'
+    VIDEO_ID = 'video_id'
 
     def __init__(self,
                  image: PIL.Image.Image,
@@ -65,3 +72,11 @@ class ImageFromVideo:
 
     def get_from_cache(self) -> bool:
         return self._from_cache
+
+    def get_as_dict(self) -> Dict:
+        return {
+            self.__class__.FRAME_NUM: self.get_frame_num(),
+            self.__class__.TIME_MS: self.get_time_ms(),
+            self.__class__.VIDEO_URL: str(self.get_video_path().resolve()),
+            self.__class__.VIDEO_ID: self.get_video_id(),
+        }

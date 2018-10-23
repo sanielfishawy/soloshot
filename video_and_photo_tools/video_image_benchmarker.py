@@ -1,9 +1,9 @@
-# pylint: disable=protected-access
+# pylint: disable=protected-access, C0103, W0603
 import os
-import yaml
 from pathlib import Path
 import timeit
 import tkinter
+import yaml
 import cv2
 import PIL.Image
 import PIL.ImageTk
@@ -154,7 +154,8 @@ class _VideoImageBenchmarks:
             width = self._get_rgb_image_large().width
             aspect = width / self._get_rgb_image_large().height
             height = int(640 / aspect)
-            self._rgb_image_640 = self._get_rgb_image_large().resize((640, height), resample=PIL.Image.ANTIALIAS)
+            self._rgb_image_640 = self._get_rgb_image_large().resize((640, height),
+                                                                     resample=PIL.Image.ANTIALIAS)
             assert self._rgb_image_640.mode == 'RGB', 'Problem getting RGB 640'
             assert self._rgb_image_640.width == 640, 'Problem getting RGB 640'
         return self._rgb_image_640
