@@ -1,4 +1,4 @@
-# pylint: disable=C0413
+# pylint: disable=C0413, W0212
 import os
 import sys
 import unittest
@@ -28,7 +28,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
         self.pmta.show_scrub_picker_for_minima()
 
     def dont_test_get_images_around_time(self):
-        times = self.pmta.get_time_at_maxima()
+        times = self.pmta._get_time_at_maxima()
         images_around_times = [self.pmta.get_images_around_time(time)
                                for time in times]
         for images in images_around_times:
@@ -37,7 +37,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
 
     def test_run(self):
         self.pmta.show_scrub_picker_for_min_and_max()
-        self.pmta.log_data()
+        self.pmta.save_results()
 
 if __name__ == '__main__':
     unittest.main()

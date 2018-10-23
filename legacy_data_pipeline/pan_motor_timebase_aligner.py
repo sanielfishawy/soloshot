@@ -1,4 +1,4 @@
-# pylint: disable=C0413
+# pylint: disable=C0413, C0301
 import sys
 import os
 from pathlib import Path
@@ -29,8 +29,8 @@ class PanMotorTimeBaseAligner:
     DATA = 'data'
 
     DELAY_MOTOR_TO_VIDEO = 'delay_motor_to_video'
-
     BASE_TIME = 'base_time'
+    MOTOR_IDX = 'motor_idx'
 
     PAN_LOCAL_MINIMA = 'pan_local_minima'
     PAN_LOCAL_MAXIMA = 'pan_local_maxima'
@@ -43,7 +43,7 @@ class PanMotorTimeBaseAligner:
                  input_data_head_path=Path('/Volumes/WD'),
                  results_head_path=Path('.')  / 'data/calibration_data',
                  cache_dir_path=Path('/Volumes/WD/image_cache'),
-                 num_points=6,
+                 num_points=1,
                 ):
         self._session_dir = session_dir
         self._input_data_head_path = input_data_head_path
@@ -59,13 +59,20 @@ class PanMotorTimeBaseAligner:
         self.fontsize = 8
 
         # Lazy initializers
-        self.pan_motor_read_data = None
-        self.base_time = None
-        self.motor_local_maxima = None
-        self.motor_local_minima = None
+        self._pan_motor_read_data_series = None
+        self._base_time_series = None
+        self._motor_maxima = None
+        self._motor_minima = None
+        self._motor_maxima_from_series = None
+        self._motor_minima_from_series = None
+        self._motor_maxima_from_archive = None
+        self._motor_minima_from_archive = None
+        self._archived_results = None
+        self._selected_frames_from_archive = None
 
         # State
         self._base_time = None
+        self._motor_idx = None
         self._min_or_max = None
         self._alignment_results = []
 
@@ -76,7 +83,7 @@ class PanMotorTimeBaseAligner:
         # maxima_shoulder_steepness = [self.get_motor_data().get_shoulder_steepness_around_idx(maximum, 4)
         #                              for maximum in self.get_motor_maxima()]
 
-        for idx, val in enumerate(self.get_motor_values_at_maxima()):
+        for idx, val in enumerate(self._get_motor_values_at_maxima()):
             axis.text(self.get_normalized_base_time()[self.get_motor_maxima()[idx]],
                       val,
                       str(idx),
@@ -84,7 +91,7 @@ class PanMotorTimeBaseAligner:
                       fontsize=self.fontsize,
                       )
 
-        for idx, val in enumerate(self.get_motor_values_at_minima()):
+        for idx, val in enumerate(self._get_motor_values_at_minima()):
             axis.text(self.get_normalized_base_time()[self.get_motor_minima()[idx]],
                       val,
                       str(idx),
@@ -95,72 +102,93 @@ class PanMotorTimeBaseAligner:
         plt.show()
 
     def get_motor_maxima(self):
-        if self.motor_local_maxima is None:
-            self.motor_local_maxima = self.get_motor_data().\
-                                           local_maxima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(8, 4, 2) # pylint: disable=C0301
-        return self.motor_local_maxima[:self._num_points]
+        if self._motor_maxima is None:
+            if self._get_motor_maxima_from_archived_results() is not None \
+                        and self._get_motor_maxima_from_archived_results().size == self._num_points:
+                self._motor_maxima = self._get_motor_maxima_from_archived_results()
+            else:
+                self._motor_maxima = self._get_motor_maxima_from_series()
+        return self._motor_maxima
 
-    def get_motor_values_at_maxima(self):
+    def _get_motor_maxima_from_series(self):
+        if self._motor_maxima_from_series is None:
+            self._motor_maxima_from_series = self.get_motor_data().\
+                                           local_maxima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(8, 4, 2) # pylint: disable=C0301
+        return self._motor_maxima_from_series[:self._num_points]
+
+    def _get_motor_values_at_maxima(self):
         return np.array([self.get_motor_data()[idx] for idx in self.get_motor_maxima()])
 
-    def get_time_at_maxima(self):
-        return np.array([self.get_normalized_base_time()[maximum]
-                         for maximum in self.get_motor_maxima()])
+    def _get_time_at_maxima(self):
+        return [(maximum, self.get_normalized_base_time()[maximum])
+                for maximum in self.get_motor_maxima()]
 
     def get_motor_minima(self):
-        if self.motor_local_minima is None:
-            self.motor_local_minima = self.get_motor_data().\
-                                           local_minima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(8, 4, 2) # pylint: disable=C0301
-        return self.motor_local_minima[:self._num_points]
+        if self._motor_minima is None:
+            if self._get_motor_minima_from_archived_results() is not None and \
+               self._get_motor_minima_from_archived_results().size == self._num_points:
+                self._motor_minima = self._get_motor_minima_from_archived_results()
+            else:
+                self._motor_minima = self._get_motor_minima_from_series()
+        return self._motor_minima
 
-    def get_motor_values_at_minima(self):
+    def _get_motor_minima_from_series(self):
+        if self._motor_minima_from_series is None:
+            self._motor_minima_from_series = self.get_motor_data().\
+                                           local_minima_sorted_by_peakyness_and_monotonic_with_steep_shoulders(8, 4, 2) # pylint: disable=C0301
+        return self._motor_minima_from_series[:self._num_points]
+
+    def _get_motor_values_at_minima(self):
         return np.array([self.get_motor_data()[idx] for idx in self.get_motor_minima()])
 
-    def get_time_at_minima(self):
-        return np.array([self.get_normalized_base_time()[minimum]
-                         for minimum in self.get_motor_minima()])
+    def _get_time_at_minima(self):
+        return [(minimum, self.get_normalized_base_time()[minimum])
+                for minimum in self.get_motor_minima()]
 
     def show_scrub_picker_for_maxima(self):
         self._min_or_max = self.__class__.MAX
-        for time in self.get_time_at_maxima():
+        for idx, time in self._get_time_at_maxima():
+            self._motor_idx = idx
             self._base_time = time
-            self.show_scrub_picker_for_time(time)
+            self.show_scrub_picker_for_time(idx, time)
 
     def show_scrub_picker_for_minima(self):
         self._min_or_max = self.__class__.MIN
-        for time in self.get_time_at_minima():
+        for idx, time in self._get_time_at_minima():
+            self._motor_idx = idx
             self._base_time = time
-            self.show_scrub_picker_for_time(time)
+            self.show_scrub_picker_for_time(idx, time)
 
     def show_scrub_picker_for_min_and_max(self):
         self.show_scrub_picker_for_minima()
         self.show_scrub_picker_for_maxima()
 
-    def show_scrub_picker_for_time(self, time):
+    def show_scrub_picker_for_time(self, motor_idx, time):
         ScrubPicker(images_from_video=self.get_images_around_time(time),
                     selector_type=ScrubPicker.SELECT_SINGLE_IMAGE,
                     callback=self._scrubber_callback,
+                    selected_start_frame_num=self._get_selected_frame_num_for_motor_idx(motor_idx)
                     ).run()
-
 
     def get_images_around_time(self, time):
         return self.get_ifv_grabber().get_images_around_time_ms(time, before=40, after=40)
 
     def get_motor_data(self) -> np.ndarray:
-        if self.pan_motor_read_data is None:
-            self.pan_motor_read_data = self._ldfh.get_field_from_npz_file(self._session_dir,
-                                                                          LDFH.BASE_NPZ_FILE,
-                                                                          LDFH.PAN_MOTOR_READ_FIELD,
-                                                                          )
-        return self.pan_motor_read_data
+        if self._pan_motor_read_data_series is None:
+            self._pan_motor_read_data_series = \
+                self._ldfh.get_field_from_npz_file(self._session_dir,
+                                                   LDFH.BASE_NPZ_FILE,
+                                                   LDFH.PAN_MOTOR_READ_FIELD,
+                                                  )
+        return self._pan_motor_read_data_series
 
     def get_base_time(self):
-        if self.base_time is None:
-            self.base_time = self._ldfh.get_field_from_npz_file(self._session_dir,
-                                                                LDFH.BASE_NPZ_FILE,
-                                                                LDFH.BASE_TIME_FIELD,
-                                                               )
-        return self.base_time
+        if self._base_time_series is None:
+            self._base_time_series = self._ldfh.get_field_from_npz_file(self._session_dir,
+                                                                        LDFH.BASE_NPZ_FILE,
+                                                                        LDFH.BASE_TIME_FIELD,
+                                                                       )
+        return self._base_time_series
 
     def get_normalized_base_time(self):
         return self.get_base_time() - self.get_base_time()[0]
@@ -179,6 +207,7 @@ class PanMotorTimeBaseAligner:
         ifv = images_from_video[0]
         r = ifv.get_as_dict()
         r[self.__class__.MIN_OR_MAX] = self._min_or_max
+        r[self.__class__.MOTOR_IDX] = int(self._motor_idx)
         r[self.__class__.BASE_TIME] = int(self._base_time)
         r[self.__class__.DELAY_MOTOR_TO_VIDEO] = ifv.get_time_ms() - int(self._base_time)
         self._alignment_results.append(r)
@@ -216,12 +245,61 @@ class PanMotorTimeBaseAligner:
         r[self.__class__.AGGREGATE_RESULTS] = self._get_aggregate_data()
         return r
 
-    def log_data(self):
+    def save_results(self):
         self._calibration_data_filer.save_as_yml(self._get_results_object(),
                                                  self._session_dir,
                                                  CalibrationDataFiler.PAN_MOTOR_TIMEBASE_ALIGNMENT,
                                                 )
 
+
+    def _get_archived_results(self):
+        if self._archived_results is None:
+            self._archived_results = self._calibration_data_filer.load(self._session_dir,
+                                                                       CalibrationDataFiler.PAN_MOTOR_TIMEBASE_ALIGNMENT, # pylint: disable=C0301
+                                                                      )
+        return self._archived_results
+
+    def _get_motor_idxs_from_archived_results(self, min_or_max: str):
+        if self._get_archived_results() is None:
+            return None
+
+        results = self._get_archived_results()[self.__class__.RAW_RESULTS]
+        return [result[self.__class__.MOTOR_IDX]
+                for result in results
+                if result[self.__class__.MIN_OR_MAX] == min_or_max
+               ]
+
+    def _get_motor_maxima_from_archived_results(self):
+        if self._motor_maxima_from_archive is None:
+            self._motor_maxima_from_archive = self._get_motor_idxs_from_archived_results(self.__class__.MAX)
+            if self._motor_maxima_from_archive is not None:
+                self._motor_maxima_from_archive = np.array(self._motor_maxima_from_archive)[:self._num_points]
+        return self._motor_maxima_from_archive
+
+    def _get_motor_minima_from_archived_results(self):
+        if self._motor_minima_from_archive is None:
+            self._motor_minima_from_archive = self._get_motor_idxs_from_archived_results(self.__class__.MIN)
+            if self._motor_minima_from_archive is not None:
+                self._motor_minima_from_archive = np.array(self._motor_minima_from_archive)[:self._num_points]
+        return self._motor_minima_from_archive
+
+    def _get_selected_frames_from_archived_results(self):
+        if self._selected_frames_from_archive is None:
+            self._selected_frames_from_archive = {}
+            if self._get_archived_results() is not None:
+                results = self._get_archived_results()[self.__class__.RAW_RESULTS]
+                for result in results:
+                    self._selected_frames_from_archive[result[self.__class__.MOTOR_IDX]] = \
+                            result[ImageFromVideo.FRAME_NUM]
+        return self._selected_frames_from_archive
+
+    def _get_selected_frame_num_for_motor_idx(self, motor_idx):
+        if motor_idx not in self._get_selected_frames_from_archived_results():
+            return None
+        else:
+            return self._get_selected_frames_from_archived_results()[motor_idx]
+
     def run(self):
         self.show_scrub_picker_for_min_and_max()
-        self.log_data()
+        self.save_results()
+

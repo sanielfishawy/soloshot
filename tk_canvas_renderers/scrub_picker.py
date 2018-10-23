@@ -11,14 +11,20 @@ class ScrubPicker(Scrubber):
 
     def __init__(self,
                  selector_type=0,
+                 selected_start_frame_num=None,
+                 selected_end_frame_num=None,
                  **kw):
 
         self._selector_type = selector_type
+        self._selected_start_frame_num = selected_start_frame_num
+        self._selected_end_frame_num = selected_end_frame_num
         self._selected_start_idx = None
         self._selected_end_idx = None
         self._selected_text = None
 
         super().__init__(**kw)
+
+        self._init_selected_start_stop_idx_and_current_photo()
 
     def setup_ui(self):
         super().setup_ui()
@@ -28,6 +34,25 @@ class ScrubPicker(Scrubber):
                                                       )
         self._canvas.tag_raise(self._selected_text)
         self._set_button_text()
+
+        self._display_current_photo()
+
+    def _init_selected_start_stop_idx_and_current_photo(self):
+        self._selected_start_idx = self._get_idx_from_frame_num(self._selected_start_frame_num)
+        self._selected_end_idx = self._get_idx_from_frame_num(self._selected_end_frame_num)
+        if self._selected_start_idx is not None:
+            self._current_photo_idx = self._selected_start_idx
+        elif self._selected_end_idx is not None:
+            self._current_photo_idx = self._selected_end_idx
+
+    def _get_idx_from_frame_num(self, frame_num):
+        r = [idx
+             for idx, ifv in enumerate(self._images_from_video)
+             if ifv.get_frame_num() == frame_num]
+        if not r:
+            return None
+        else:
+            return r[0]
 
     def _set_button_text(self):
         if self._selector_type == ScrubPicker.SELECT_RANGE:

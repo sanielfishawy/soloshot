@@ -22,6 +22,9 @@ class CalibrationDataFiler:
             yaml.dump(obj, yaml_file, default_flow_style=False)
 
     def load(self, data_dir_name: str, calibration_filename: str):
+        filepath = self._get_file_path(data_dir_name, calibration_filename)
+        if not filepath.is_file():
+            return None
         with open(self._get_file_path(data_dir_name, calibration_filename), 'r') as stream:
             return yaml.load(stream)
 

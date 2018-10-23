@@ -41,6 +41,9 @@ class TestCalibrationDataFiler(unittest.TestCase):
         obj = self.load()
         self.assertDictEqual(obj, self.__class__.TEST_OBJ)
 
+    def test_load_with_no_file_returns_none(self):
+        self.assertIsNone(self.load())
+
     def remove_data_dir_and_top_level_dir(self):
         if self.DATA_DIR_PATH.is_dir():
             for file_path in self.__class__.DATA_DIR_PATH.iterdir():
