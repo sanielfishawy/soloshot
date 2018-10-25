@@ -45,6 +45,13 @@ class FovTimebaseAligner:
     ALIGNMENT = 'alignment'
     DELAY_FOV_TO_VIDEO = 'delay_fov_to_video'
 
+    ALIGNMENT_STATS = 'alignment_stats'
+    MIN_DELAY = 'min_delay'
+    MAX_DELAY = 'max_delay'
+    MEAN_DELAY = 'mean_delay'
+    MIN_DURATION = 'min_duration'
+    MAX_DURATION = 'max_duration'
+    MEAN_DURATION = 'mean_duration'
 
 
     def __init__(self,
@@ -75,6 +82,8 @@ class FovTimebaseAligner:
 
         # state
         self._alignment_results = {}
+        self._alignment_stats_delays = []
+        self._alignment_stats_durations = []
         self._current_transition = None
 
     def visualize(self):
@@ -170,11 +179,25 @@ class FovTimebaseAligner:
         return self._ldfh.get_video_path(self._session_dir)
 
     def _get_aggregate_data(self):
-        r = {}
-        r[self.__class__.UNIQUE_FOVS] = self.get_unique_fovs().tolist()
-        r[self.__class__.UNIQUE_TRANSITIONS] = [self._get_name_for_transition(transition)
-                                                for _, transition in self.get_unique_transitions().items()]
+        r = {
+            self.__class__.UNIQUE_FOVS: self.get_unique_fovs().tolist(),
+            self.__class__.UNIQUE_TRANSITIONS:
+                [self._get_name_for_transition(transition)
+                 for _, transition in self.get_unique_transitions().items()],
+            self.__class__.ALIGNMENT_STATS: self._get_alignment_stats(),
+        }
         return r
+
+    def _get_alignment_stats(self):
+        return {
+            self.__class__.MIN_DELAY: int(np.min(np.array(self._alignment_stats_delays))),
+            self.__class__.MAX_DELAY: int(np.max(np.array(self._alignment_stats_delays))),
+            self.__class__.MEAN_DELAY: int(np.mean(np.array(self._alignment_stats_delays))),
+
+            self.__class__.MIN_DURATION: int(np.min(np.array(self._alignment_stats_durations))),
+            self.__class__.MAX_DURATION: int(np.max(np.array(self._alignment_stats_durations))),
+            self.__class__.MEAN_DURATION: int(np.mean(np.array(self._alignment_stats_durations))),
+        }
 
     def _get_results_object(self):
         r = {}
@@ -189,12 +212,17 @@ class FovTimebaseAligner:
                                                 )
 
     def _scrubber_callback(self, selection: list):
+        delay_fov_to_video = \
+            int(selection[0].get_time_ms() - self._current_transition[self.__class__.TRANSITION_TIME]),
+
+        duration = self._get_duration_ms(selection[0], selection[1])
+
         r = {
             self.__class__.VIDEO_DATA: {
                 self.__class__.BEGIN: self._get_ifv_info(selection[0]),
                 self.__class__.END: self._get_ifv_info(selection[1]),
                 self.__class__.DURATION: {
-                    self.__class__.TIME_MS: self._get_duration_ms(selection[0], selection[1]),
+                    self.__class__.TIME_MS: duration,
                     self.__class__.FRAMES: self._get_duration_frames(selection[0], selection[1]),
                 },
             },
@@ -203,11 +231,12 @@ class FovTimebaseAligner:
                 self.__class__.TRANSITION_TIME: int(self._current_transition[self.__class__.TRANSITION_TIME]),
             },
             self.__class__.ALIGNMENT: {
-                self.__class__.DELAY_FOV_TO_VIDEO:
-                    int(selection[0].get_time_ms() - self._current_transition[self.__class__.TRANSITION_TIME]),
+                self.__class__.DELAY_FOV_TO_VIDEO: delay_fov_to_video,
             },
         }
         self._alignment_results[self._get_name_for_transition(self._current_transition)] = r
+        self._alignment_stats_delays.append(delay_fov_to_video)
+        self._alignment_stats_durations.append(duration)
 
     def _get_ifv_info(self, ivf):
         return {
