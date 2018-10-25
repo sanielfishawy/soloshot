@@ -120,6 +120,14 @@ class TestNumpyNdarrayExtensions(unittest.TestCase):
         exp = [1, 3]
         np.testing.assert_array_equal(arr.negative_zero_crossings(), exp)
 
+    def test_transitions(self):
+        arr = np.array([0, 0, 0, 0, 1, 1, 1, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 4])
+        np.testing.assert_array_equal(arr.transitions(), np.array([3, 6, 8, 11, 14]))
+
+    def test_levels_around_transitions(self):
+        arr = np.array([0, 0, 0, 0, 1, 1, 1, 0, 0, 2, 2, 2, 3, 3, 3, 4, 4, 4])
+        self.assertEqual(arr.levels_around_transitions(arr.transitions()),
+                         [[0, 1], [1, 0], [0, 2], [2, 3], [3, 4]])
 
 if __name__ == '__main__':
     unittest.main()

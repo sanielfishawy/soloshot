@@ -3,63 +3,47 @@
     - Add a done button at the top
     - Callback with results from position_pickers
 
-- ScrubPicker
-    - Add ability to pass callback((Start, End), or (picked frame))
-        - Add callback
 
-Fov characterization
- - Factor legacy_data_filesystem_helper from test_input_data_structure
+x FrameRateCalculator
+    x Use video of clock
+    x Show the 10th
+    x Show the last frame -10
 
- - legacy_data_pipeline.PanMotorTimeBaseAlignment
-    x Operates on session_dir
-    x Outputs results to a separate parallel directory
-        x results
-            x local_max motor time in ms
-            x corresponding frame time in ms
-    - Modes
-        - results file exists
-            - Picks points from results file
-            - Shows scrubber with pre selection for those points
-        - results file doesnt exist
-            x Finds local_maxima in pan motor movement
-            x Shows scrubber without pre selection for those points
-    - Todo
-        x Add callback to scrubber_picker sends selected image_from_video back
-        x Create a list of saved times and image times
-        x Save to a yml file
-        x Add result delay_motor_to_video
-        x Add aggregation
-            x pan_local_minima:
-                x n
-                x data
-                x min
-                x max
-                x mean
-            x pan_local_maxima:
-                x n
-                x data
-                x min
-                x max
-                x mean
-            x pan_combined:
-                x n
-                x data
-                x min
-                x max
-                x mean
+- PanMotorToFovConsistencyChecker
+    - Visualize FOV
+    - Choose regions with fixed FOV and large pan
+    - Show an image from extremes
+    - Ask the user to pick the same object in each image
+    - Calculate angle
+    - Compare to pan
 
-        x Create CalibrationDataFiler
+- TagGpsTimebaseAligner
+  - Show plan view with map and scrubber
+  - Show video with scrubber
+  - Scrub to same point on map and video
 
+- FovTimebaseAligner
+    x Find all the levels
+    - Find all the transitions
+    - Rank by how long the minimum num samples of before and after the transition
 
-
- - Find all pan direction changes with high rate of change
-    - Times at which
-        - First deriviative crosses zero
-        - Second derivative is high
-    - Show those on scrub and ask user to pick point at which pan direction changes
-    - Get the offsets beteen frame time and pan direction change time
-
- - Present the two photos for the frame and pick the same point on both frames
- - Save
-
-
+    - Find FOV transitions
+        - Zoom in
+        - Zoom out
+    - Show start stop scrubpicker for transitions
+    - stats
+        - Fov_data
+            - transition_idx
+            - transition_time_ms
+        - Video_data
+            - begin
+                - frame_num
+                - time_ms
+            - end
+                - frame_num
+                - time_ms
+            - duration
+                - frames
+                - time_ms
+        - Alignment
+            - delay_fov_to_video

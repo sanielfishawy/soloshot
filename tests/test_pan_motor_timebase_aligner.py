@@ -16,9 +16,10 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
 
     def setUp(self):
         self.ldfh = LDFH(self.__class__.HEAD_PATH)
-        self.pmta = PanMotorTimeBaseAligner(self.__class__.TEST_SESSION_DIR_NAME)
+        self.pmta = PanMotorTimeBaseAligner(self.__class__.TEST_SESSION_DIR_NAME,
+                                            num_points=6)
 
-    def dont_test_visualize_peaks(self):
+    def test_visualize_peaks(self):
         self.pmta.visualize_motor_local_maxima_and_minima()
 
     def dont_test_show_scrubber_for_maxima(self):

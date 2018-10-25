@@ -110,8 +110,20 @@ def __ndarray_peakyness_at_index(self, idx):
 
 def __ndarray_sort_indexes_by_peakyness(self, indexes):
     idx_list = list(indexes)
-    idx_list.sort(key=lambda idx: self.peakyness_at_index(idx))
+    idx_list.sort(key=lambda idx: self.peakyness_at_index(idx)) # pylint: disable:W0108
     return np.flip(np.array(idx_list))
+
+def __ndarray_transitions(self):
+    '''Get the indices of transition points where the value in a series changes'''
+    diff = np.diff(self)
+    sign = np.sign(diff)
+    indices_of_non_zero = np.nonzero(sign)
+    return indices_of_non_zero[0]
+
+def __ndarray_levels_around_transitions(self, transition_indices):
+    '''Get the levels from the series before and after a transition'''
+    idxs = np.select([transition_indices < self.size - 2], [transition_indices])
+    return [[self[idx], self[idx+1]] for idx in idxs]
 
 for method in [meth
                for meth in dir(sys.modules[__name__])

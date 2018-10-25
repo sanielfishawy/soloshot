@@ -36,8 +36,6 @@ class PanMotorTimeBaseAligner:
     PAN_LOCAL_MAXIMA = 'pan_local_maxima'
     PAN_COMBINED = 'pan_combined'
 
-
-
     def __init__(self,
                  session_dir: str,
                  input_data_head_path=Path('/Volumes/WD'),
@@ -302,4 +300,3 @@ class PanMotorTimeBaseAligner:
     def run(self):
         self.show_scrub_picker_for_min_and_max()
         self.save_results()
-

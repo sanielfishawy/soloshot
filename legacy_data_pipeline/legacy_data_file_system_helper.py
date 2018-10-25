@@ -37,10 +37,11 @@ class LegacyDataFileSystemHelper:
     ]
 
     LENS_TIME_FIELD = 'lens_time'
+    LENS_FOV_FIELD = 'lens_fov'
 
     LENS_NPZ_FIELDS = [
         LENS_TIME_FIELD,
-        'lens_fov',
+        LENS_FOV_FIELD,
         'lens_zoom',
     ]
 
