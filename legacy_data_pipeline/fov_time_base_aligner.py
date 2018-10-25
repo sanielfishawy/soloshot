@@ -2,7 +2,6 @@
 import sys
 import os
 from pathlib import Path
-from typing import List
 import numpy as np
 import matplotlib.pyplot as plt
 import numpy_extensions.numpy_ndarray_extensions # pylint: disable=W0611
@@ -33,6 +32,7 @@ class FovTimebaseAligner:
     BEGIN = 'begin'
     END = 'end'
 
+    ALL = 'all'
     ZOOM_IN = 'zoom_in'
     ZOOM_OUT = 'zoom_out'
 
@@ -46,13 +46,11 @@ class FovTimebaseAligner:
     DELAY_FOV_TO_VIDEO = 'delay_fov_to_video'
 
     ALIGNMENT_STATS = 'alignment_stats'
-    MIN_DELAY = 'min_delay'
-    MAX_DELAY = 'max_delay'
-    MEAN_DELAY = 'mean_delay'
-    MIN_DURATION = 'min_duration'
-    MAX_DURATION = 'max_duration'
-    MEAN_DURATION = 'mean_duration'
-
+    DURATION = 'duration'
+    DELAY = 'delay'
+    MIN = 'min'
+    MAX = 'max'
+    MEAN = 'mean'
 
     def __init__(self,
                  session_dir: str,
@@ -82,9 +80,13 @@ class FovTimebaseAligner:
 
         # state
         self._alignment_results = {}
+        self._current_transition = None
         self._alignment_stats_delays = []
         self._alignment_stats_durations = []
-        self._current_transition = None
+        self._alignment_stats_zoom_out_delays = []
+        self._alignment_stats_zoom_out_durations = []
+        self._alignment_stats_zoom_in_delays = []
+        self._alignment_stats_zoom_in_durations = []
 
     def visualize(self):
         fig, axis = plt.subplots() # pylint: disable=W0612
@@ -129,7 +131,7 @@ class FovTimebaseAligner:
     def get_fov_transition_indexes(self):
         if self._transition_indexes is None:
             self._transition_indexes = self.get_fov_data_series().transitions()
-        return self._transition_indexes[:2]
+        return self._transition_indexes
 
     def get_fov_transition_levels(self):
         if self._transition_levels is None:
@@ -190,13 +192,42 @@ class FovTimebaseAligner:
 
     def _get_alignment_stats(self):
         return {
-            self.__class__.MIN_DELAY: int(np.min(np.array(self._alignment_stats_delays))),
-            self.__class__.MAX_DELAY: int(np.max(np.array(self._alignment_stats_delays))),
-            self.__class__.MEAN_DELAY: int(np.mean(np.array(self._alignment_stats_delays))),
-
-            self.__class__.MIN_DURATION: int(np.min(np.array(self._alignment_stats_durations))),
-            self.__class__.MAX_DURATION: int(np.max(np.array(self._alignment_stats_durations))),
-            self.__class__.MEAN_DURATION: int(np.mean(np.array(self._alignment_stats_durations))),
+            self.__class__.ALL: {
+                self.__class__.DELAY: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_delays))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_delays))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_delays))),
+                },
+                self.__class__.DURATION: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_durations))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_durations))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_durations))),
+                },
+            },
+            self.__class__.ZOOM_IN: {
+                self.__class__.DELAY: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_zoom_in_delays))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_zoom_in_delays))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_zoom_in_delays))),
+                },
+                self.__class__.DURATION: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_zoom_in_durations))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_zoom_in_durations))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_zoom_in_durations))),
+                },
+            },
+            self.__class__.ZOOM_OUT: {
+                self.__class__.DELAY: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_zoom_out_delays))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_zoom_out_delays))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_zoom_out_delays))),
+                },
+                self.__class__.DURATION: {
+                    self.__class__.MIN: int(np.min(np.array(self._alignment_stats_zoom_out_durations))),
+                    self.__class__.MAX: int(np.max(np.array(self._alignment_stats_zoom_out_durations))),
+                    self.__class__.MEAN: int(np.mean(np.array(self._alignment_stats_zoom_out_durations))),
+                },
+            },
         }
 
     def _get_results_object(self):
@@ -213,7 +244,7 @@ class FovTimebaseAligner:
 
     def _scrubber_callback(self, selection: list):
         delay_fov_to_video = \
-            int(selection[0].get_time_ms() - self._current_transition[self.__class__.TRANSITION_TIME]),
+            int(selection[0].get_time_ms() - self._current_transition[self.__class__.TRANSITION_TIME])
 
         duration = self._get_duration_ms(selection[0], selection[1])
 
@@ -237,6 +268,14 @@ class FovTimebaseAligner:
         self._alignment_results[self._get_name_for_transition(self._current_transition)] = r
         self._alignment_stats_delays.append(delay_fov_to_video)
         self._alignment_stats_durations.append(duration)
+
+        if self._get_zoom_type_for_transition(self._current_transition) == self.__class__.ZOOM_IN:
+            self._alignment_stats_zoom_in_delays.append(delay_fov_to_video)
+            self._alignment_stats_zoom_in_durations.append(duration)
+        else:
+            self._alignment_stats_zoom_out_delays.append(delay_fov_to_video)
+            self._alignment_stats_zoom_out_durations.append(duration)
+
 
     def _get_ifv_info(self, ivf):
         return {
