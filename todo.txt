@@ -4,11 +4,6 @@
     - Callback with results from position_pickers
 
 
-x FrameRateCalculator
-    x Use video of clock
-    x Show the 10th
-    x Show the last frame -10
-
 - PanMotorToFovConsistencyChecker
     - Visualize FOV
     - Choose regions with fixed FOV and large pan
@@ -19,40 +14,27 @@ x FrameRateCalculator
 
 - TagGpsTimebaseAligner
   - Show plan view with map and scrubber
+    - Get extents of lat long data
+    - Get map of area with extents
+
   - Show video with scrubber
   - Scrub to same point on map and video
 
-- FovTimebaseAligner
-    x Find all the levels
-    - Find all the transitions
-    - Rank by how long the minimum num samples of before and after the transition
+- GeoMapper
+    x Save image in a directory with params as the filename
+    x Check if image exists before making the request
+    x Get gps location from tag data
+    - At the tightest zoom figure out
 
-    - Find FOV transitions
-        - Zoom in
-        - Zoom out
-    - Show start stop scrubpicker for transitions
-    - stats
-        - Individual_data
-            - Fov_data
-                - transition_idx
-                - transition_time_ms
-            - Video_data
-                - begin
-                    - frame_num
-                    - time_ms
-                - end
-                    - frame_num
-                    - time_ms
-                - duration
-                    - frames
-                    - time_ms
-            - Alignment
-                - delay_fov_to_video
-        - Aggregate_data
-            - Alignment_stats
-                - Min_delay
-                - Max_delay
-                - Mean_delay
-                - Min_duration
-                - Max_duration
-                - Mean_duration
+    - For zoom
+        - 20
+        - 21
+    - Figure deg lat per pixel
+    - Calculate deg long per pixel based on latitude
+    - For a set of points
+        - Get the corners
+        - Add 10 foot border
+        - Get the center
+        - Determine zoom for best fit given 640x640 is max size
+        - Determine the dimensions to get best fit
+

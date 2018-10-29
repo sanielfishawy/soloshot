@@ -46,11 +46,13 @@ class LegacyDataFileSystemHelper:
     ]
 
     TAG_TIME_FIELD = 'tag_time'
+    TAG_LATITUDE_FIELD = 'tag_latitude'
+    TAG_LONGITUDE_FIELD = 'tag_longitude'
 
     TAG_NPZ_FIELDS = [
         TAG_TIME_FIELD,
-        'tag_latitude',
-        'tag_longitude',
+        TAG_LATITUDE_FIELD,
+        TAG_LONGITUDE_FIELD,
         'tag_acceleration',
         'tag_altitude_gps',
         'tag_altitude_barometer',
