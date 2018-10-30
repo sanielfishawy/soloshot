@@ -4,6 +4,7 @@ import urllib
 import math
 import requests
 import yaml
+import numpy as np
 
 class GeoMapper:
 
@@ -12,8 +13,6 @@ class GeoMapper:
     MAPS_URL = 'https://maps.googleapis.com/maps/api/staticmap'
 
     MAP_CACHE_DIR_PATH = Path('./data/maps')
-
-
 
     def __init__(self,
                  center_latitude=None,
@@ -55,7 +54,7 @@ class GeoMapper:
                         )
 
         assert r.status_code == 200,\
-               f'Gota non 200 status ({r.status_code}) from http request for google maps.'
+               f'Got a non 200 status ({r.status_code}) from http request for google maps.'
 
         with open(self._get_map_image_path(), 'wb') as image_file:
             r.raw.decode_content = True
@@ -172,3 +171,116 @@ class LatLongToPixelConverter:
 
     def _long_vs_lat_scale_factor(self, latitude_deg):
         return 1 / math.cos(math.radians(latitude_deg))
+
+    def deg_latitude_per_foot(self):
+        return 1/(12000*5280/90)
+
+    def deg_longitude_per_foot(self, latitude):
+        return self._long_vs_lat_scale_factor(latitude) * self.deg_latitude_per_foot()
+
+
+class MapFitter:
+
+    # From google static maps api.
+    MAX_MAP_HEIGHT_PIXELS = 640
+    MAX_MAP_WIDTH_PIXELS = 640
+    MIN_DIMENSION = 400
+
+    def __init__(self, latitude_series, longitude_series, border_feet=10):
+        self._latitude_series = np.array(latitude_series)
+        self._longitude_series = np.array(longitude_series)
+        self._border_feet = border_feet
+
+        # lazy init
+        self._zoom_to_fit = None
+
+    def _get_center_latitude(self):
+        return 0.5 * (self._get_max_latitude() + self._get_min_latitude())
+
+    def _get_center_longitude(self):
+        return 0.5 * (self._get_max_longitude() + self._get_min_longitude())
+
+    def _get_max_latitude(self):
+        return np.max(self._latitude_series)
+
+    def _get_min_latitude(self):
+        return np.min(self._latitude_series)
+
+    def _get_max_longitude(self):
+        return np.max(self._longitude_series)
+
+    def _get_min_longitude(self):
+        return np.min(self._longitude_series)
+
+    def _get_max_map_latitude_extent(self, zoom):
+        return self.__class__.MAX_MAP_HEIGHT_PIXELS * \
+               LatLongToPixelConverter().get_latitude_deg_per_pixel(zoom, 1)
+
+    def _get_max_map_longitude_extent(self, zoom):
+        return self.__class__.MAX_MAP_WIDTH_PIXELS * \
+               LatLongToPixelConverter().get_longitude_deg_per_pixel(self._get_center_latitude(),
+                                                                     zoom,
+                                                                     1,
+                                                                    )
+
+    def _get_border_long_deg(self):
+        return self._border_feet * \
+               LatLongToPixelConverter().deg_longitude_per_foot(self._get_center_latitude())
+
+    def _get_border_lat_deg(self):
+        return self._border_feet * \
+               LatLongToPixelConverter().deg_latitude_per_foot()
+
+    def _get_data_longitude_extent(self):
+        return abs(self._get_max_longitude() - self._get_min_longitude()) +\
+               2 * self._get_border_long_deg()
+
+    def _get_data_latitude_extent(self):
+        return abs(self._get_max_latitude() - self._get_min_latitude()) +\
+               2 * self._get_border_lat_deg()
+
+    def _get_zoom_to_fit(self):
+        if self._zoom_to_fit is None:
+            lat_extent = self._get_data_latitude_extent()
+            long_extent = self._get_data_longitude_extent()
+
+            zooms = list(range(22))
+            zooms.reverse()
+            for zoom in zooms:
+                if self._get_max_map_latitude_extent(zoom) > lat_extent and \
+                   self._get_max_map_longitude_extent(zoom) > long_extent:
+
+                    self._zoom_to_fit = zoom
+                    return self._zoom_to_fit
+
+            assert True, 'Error: no zoom_to_fit found'
+
+        return self._zoom_to_fit
+
+    def _get_map_width_pixels(self):
+        return int(self.__class__.MAX_MAP_WIDTH_PIXELS * \
+               (self._get_data_longitude_extent() / self._get_max_map_longitude_extent(self._get_zoom_to_fit()))) # pylint: disable=C0301
+
+    def _get_map_height_pixels(self):
+        return int(self.__class__.MAX_MAP_HEIGHT_PIXELS * \
+               (self._get_data_latitude_extent() / self._get_max_map_latitude_extent(self._get_zoom_to_fit()))) # pylint: disable=C0301
+
+    def _get_scale(self):
+        if self._get_map_width_pixels() < self.__class__.MIN_DIMENSION and \
+           self._get_map_width_pixels() < self.__class__.MIN_DIMENSION:
+            return 2
+        return 1
+
+    def get_map(self):
+        return GeoMapper(center_latitude=self._get_center_latitude(),
+                         center_longitude=self._get_center_longitude(),
+                         size=f'{self._get_map_width_pixels()}x{self._get_map_height_pixels()}',
+                         zoom=self._get_zoom_to_fit(),
+                         scale=self._get_scale(),
+                        ).get_map()
+
+    def get_map_scaled_width(self):
+        return self._get_scale() * self._get_map_width_pixels()
+
+    def get_map_scaled_height(self):
+        return self._get_scale() * self._get_map_height_pixels()

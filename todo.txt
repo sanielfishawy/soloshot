@@ -21,20 +21,12 @@
   - Scrub to same point on map and video
 
 - GeoMapper
-    x Save image in a directory with params as the filename
-    x Check if image exists before making the request
-    x Get gps location from tag data
-    - At the tightest zoom figure out
-
-    - For zoom
-        - 20
-        - 21
-    - Figure deg lat per pixel
-    - Calculate deg long per pixel based on latitude
-    - For a set of points
-        - Get the corners
-        - Add 10 foot border
+    - MapFitter
+        - For a set of lat long datapoints
+        - Get extents of lat and long
+        - Add a border
         - Get the center
-        - Determine zoom for best fit given 640x640 is max size
-        - Determine the dimensions to get best fit
+        - Determine maximim zoom which still fits
+        - Determine width and heigth in pixels for correct fit with border
+        - Determine whether to use scale 1 or 2 depending whether image max dim < 400
 

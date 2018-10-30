@@ -5,8 +5,9 @@ import unittest
 from pathlib import Path
 
 sys.path.insert(0, os.getcwd())
-from geo_mapping.geo_mapper import GeoMapper, LatLongToPixelConverter
+from geo_mapping.geo_mapper import GeoMapper, LatLongToPixelConverter, MapFitter
 from legacy_data_pipeline.tag_gps_timebase_aligner import TagGpsTimebaseAligner
+from tk_canvas_renderers.tk_geo_mapper import TkGeoMapper
 
 class TestGeoMapper(unittest.TestCase):
 
@@ -16,6 +17,16 @@ class TestGeoMapper(unittest.TestCase):
     def setUp(self):
         self.tgta = TagGpsTimebaseAligner(self.__class__.TEST_SESSION_DIR_NAME)
         self.lat_long = self.tgta._get_first_lat_long()
+        self.latitude_series = self.tgta.get_latitude_series()
+        self.longitude_series = self.tgta.get_longitude_series()
+
+    def test_map_fitter(self):
+        map_fitter = MapFitter(self.latitude_series, self.longitude_series)
+        map_fitter.get_map()
+
+    def test_visualize_with_tk_geo_mapper(self):
+        tk_geo_mapper = TkGeoMapper(self.latitude_series, self.longitude_series)
+        tk_geo_mapper.run()
 
     def test_get_api_key(self):
         self.assertTrue(isinstance(GeoMapper()._get_google_maps_api_key(), str))
