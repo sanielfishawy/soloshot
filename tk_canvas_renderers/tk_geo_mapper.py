@@ -13,11 +13,14 @@ class TkGeoMapper:
                  latitude_series: np.ndarray,
                  longitude_series: np.ndarray,
                  marker_positions=None,
+                 track_color='red'
                 ):
 
         self._latitude_series = latitude_series
         self._longitude_series = longitude_series
         self._marker_positions = marker_positions
+        self._track_color = track_color
+
         if self._marker_positions is None:
             self._add_markers = False
         else:
@@ -61,7 +64,9 @@ class TkGeoMapper:
 
         self._canvas.itemconfig(self._map_on_canvas, image=self._get_map_image())
 
-        self._canvas.create_line(*self._get_x_y_series_flattened())
+        self._canvas.create_line(*self._get_x_y_series_flattened(),
+                                 fill=self._track_color,
+                                )
 
         self._add_marker_dots()
 

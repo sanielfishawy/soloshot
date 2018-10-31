@@ -14,42 +14,11 @@
 
 - TagGpsTimebaseAligner
   - Show plan view with map and scrubber
-    - Get extents of lat long data
-    - Get map of area with extents
-
   - Show video with scrubber
   - Scrub to same point on map and video
 
-- GeoMapper
-    - MapFitter
-        - For a set of lat long datapoints
-        - Get extents of lat and long
-        - Add a border
-        - Get the center
-        - Determine maximim zoom which still fits
-        - Determine width and heigth in pixels for correct fit with border
-        - Determine whether to use scale 1 or 2 depending whether image max dim < 400
-
-- TkGeoMapper
-    - debug
-        - Test 1
-            - Show 21 zoom map 640 by 640
-            - Place markers at the markers
-            - RESULT: markers align
-        - Test 2
-            - Show 20 zoom map 640 by 640
-            - RESULT: markers align
-        - Test 3
-            - Show 20 zoom map 400 x 640
-            - RESULT: markers align
-        - Test 4
-            - Show 19 zoom 400 x 640
-            - Markers dont align
-        CONCLUSION: Maps do not exactly double with zoom.
-        SOLUTION: Get empirical data for zoom 17, 18, 19, 20, 21
-        - Test zoom 19
-        - Test zoom 18
-        - Test zoom 17
-        CONCLUSION - Now it works
-
+- GeoMapScrubber
+  - Add GeoMap to the scrolling canvas
+  - Add a scrubber on top
+  - Scrubs the line
 

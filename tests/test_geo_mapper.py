@@ -38,7 +38,7 @@ class TestGeoMapper(unittest.TestCase):
         tk_geo_mapper.run()
 
 
-    def dont_test_map_coordinate_transformer_places_center_lat_long_in_center_of_map(self):
+    def test_map_coordinate_transformer_places_center_lat_long_in_center_of_map(self):
         for width in [200, 300, 640]:
             for height in [200, 300, 640]:
                 for zoom in [18, 19, 20, 21]:
@@ -69,7 +69,7 @@ class TestGeoMapper(unittest.TestCase):
                         self.assertEqual(int(width/2), center_x)
                         self.assertEqual(int(height/2), center_y)
 
-    def dont_test_get_api_key(self):
+    def test_get_api_key(self):
         self.assertTrue(isinstance(GeoMapper()._get_google_maps_api_key(), str))
 
     def dont_test_get_map(self):
@@ -92,7 +92,7 @@ class TestGeoMapper(unittest.TestCase):
         for zoom in info:
             print('zoom=', zoom, 'multiple=', info[zoom]/info[21])
 
-    def dont_test_lat_long_to_pixel_converter(self):
+    def test_lat_long_to_pixel_converter(self):
         lat_long_to_pixel_converter = LatLongToPixelConverter()
 
         latitude_deg = LatLongToPixelConverter.LATITUDE
