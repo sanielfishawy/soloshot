@@ -30,3 +30,26 @@
         - Determine width and heigth in pixels for correct fit with border
         - Determine whether to use scale 1 or 2 depending whether image max dim < 400
 
+- TkGeoMapper
+    - debug
+        - Test 1
+            - Show 21 zoom map 640 by 640
+            - Place markers at the markers
+            - RESULT: markers align
+        - Test 2
+            - Show 20 zoom map 640 by 640
+            - RESULT: markers align
+        - Test 3
+            - Show 20 zoom map 400 x 640
+            - RESULT: markers align
+        - Test 4
+            - Show 19 zoom 400 x 640
+            - Markers dont align
+        CONCLUSION: Maps do not exactly double with zoom.
+        SOLUTION: Get empirical data for zoom 17, 18, 19, 20, 21
+        - Test zoom 19
+        - Test zoom 18
+        - Test zoom 17
+        CONCLUSION - Now it works
+
+
