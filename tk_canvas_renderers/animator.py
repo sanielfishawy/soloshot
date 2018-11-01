@@ -14,7 +14,7 @@ class Animator:
         self.element_renderers = element_renderers
         self.render_stationary_sub_elements()
         return self
-        
+
     def get_element_renderers(self):
         return self.element_renderers
 
@@ -24,11 +24,11 @@ class Animator:
         self.element_renderers += element_renderers
         self.render_stationary_sub_elements()
         return self
-        
+
     def render_stationary_sub_elements(self):
         for element in self.element_renderers:
             element.render()
-            
+
         self.tk_renderer.update()
 
     def set_seconds_per_timestamp(self, seconds):
@@ -45,8 +45,8 @@ class Animator:
                 self.tk_renderer.update()
                 time.sleep(self.seconds_per_timestamp)
 
-                
 
 
-        
+
+
 

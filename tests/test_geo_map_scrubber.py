@@ -1,3 +1,4 @@
+# pylint: disable=C0413
 import sys
 import os
 from pathlib import Path
@@ -26,7 +27,11 @@ class TestGeoMapScrubber(unittest.TestCase):
         )
 
     def test_visualize(self):
-        GeoMapScrubber(self.latitude_series, self.longitude_series).run()
+        GeoMapScrubber(
+            self.latitude_series,
+            self.longitude_series,
+            height=800,
+        ).run()
 
 
 if __name__ == '__main__':

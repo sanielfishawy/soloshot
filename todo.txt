@@ -18,7 +18,5 @@
   - Scrub to same point on map and video
 
 - GeoMapScrubber
-  - Add GeoMap to ScrollableCanvas
-  - Add a slider (VideoPositionIndicator) on top
-  - Scrubs the track
+    -
 

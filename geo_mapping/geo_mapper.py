@@ -313,6 +313,12 @@ class MapFitter:
         return int(self.__class__.MAX_MAP_HEIGHT_PIXELS * \
                (self._get_data_latitude_extent() / self._get_max_map_latitude_extent(self._get_zoom_to_fit()))) # pylint: disable=C0301
 
+    def get_latitude_series(self):
+        return self._latitude_series
+
+    def get_longitude_series(self):
+        return self._longitude_series
+
     def get_scale(self):
         if self._get_map_width_pixels() < self.__class__.MIN_DIMENSION and \
            self._get_map_height_pixels() < self.__class__.MIN_DIMENSION:

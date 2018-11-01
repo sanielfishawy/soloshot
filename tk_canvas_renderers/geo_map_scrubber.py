@@ -6,10 +6,11 @@ import numpy as np
 from PIL import Image, ImageTk
 
 sys.path.insert(0, os.getcwd())
-from tk_canvas_renderers.tk_geo_mapper import TkGeoMapper
 from tk_canvas_renderers.scrollable_canvas import ScrollableCanvas
 from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator
-from geo_mapping.geo_mapper import MapFitter
+from tk_canvas_renderers.slider_mouse_handler import SliderMouseHandler
+from tk_canvas_renderers.geo_track_highlighter import GeoTrackHighlighter
+from geo_mapping.geo_mapper import MapFitter, MapCoordinateTransformer
 
 class GeoMapScrubber:
     '''Visualizes a geo map with a track. A slider (VideoPositionIndicator) allows you
@@ -32,15 +33,20 @@ class GeoMapScrubber:
         self._track_head_color = track_head_color
 
         # lazy inits
+        self._map_fitter = None
+        self._map_coordinate_transformer = None
         self._slider_canvas = None
         self._slider = None
+        self._slider_mouse_handler = None
         self._map_image = None
         self._scrollable_canvas_obj = None
         self._map_canvas = None
         self._map_frame = None
         self._map_on_canvas = None
+        self._geo_track_hilighter = None
 
     def get_ui(self, master):
+        slider_margin_pixels = 50
 
         self._slider_canvas = tk.Canvas(
             master=master,
@@ -51,8 +57,14 @@ class GeoMapScrubber:
 
         self._slider = VideoPositionIndicator(
             self._slider_canvas,
-            50,
+            slider_margin_pixels,
         ).setup_ui()
+
+        self._slider_mouse_handler = SliderMouseHandler(
+            self._slider_canvas,
+            slider_margin_pixels,
+            self._slider_mouse_handler_callback,
+        )
 
         self._scrollable_canvas_obj = ScrollableCanvas(
             master,
@@ -69,11 +81,43 @@ class GeoMapScrubber:
         self._map_on_canvas = self._map_canvas.create_image(0, 0, anchor='nw')
         self._map_canvas.itemconfig(self._map_on_canvas, image=self._get_map_image())
 
-    def _get_map_image(self):
+        self._geo_track_hilighter = GeoTrackHighlighter(
+            self._map_canvas,
+            self._latitude_series,
+            self._longitude_series,
+            self._get_map_coordinate_transformer(),
+        ).setup_ui()
+
+    def _get_map_image(self) -> ImageTk.PhotoImage:
         if self._map_image is None:
-            map_path = MapFitter(self._latitude_series, self._longitude_series).get_map()
+            map_path = self._get_map_fitter().get_map()
             self._map_image = ImageTk.PhotoImage(Image.open(map_path))
         return self._map_image
+
+    def _get_map_fitter(self) -> MapFitter:
+        if self._map_fitter is None:
+            self._map_fitter = MapFitter(self._latitude_series, self._longitude_series)
+        return self._map_fitter
+
+    def _get_map_coordinate_transformer(self) -> MapCoordinateTransformer:
+        if self._map_coordinate_transformer is None:
+            self._map_coordinate_transformer = MapCoordinateTransformer(
+                self._get_map_fitter().get_center_latitude(),
+                self._get_map_fitter().get_center_longitude(),
+                self._get_map_fitter().get_map_scaled_width(),
+                self._get_map_fitter().get_map_scaled_height(),
+                self._get_map_fitter().get_zoom(),
+                self._get_map_fitter().get_scale(),
+            )
+        return self._map_coordinate_transformer
+
+    def _slider_mouse_handler_callback(self, percent):
+        self._slider.set_percent(percent)
+        self._geo_track_hilighter.set_highlight_idx(self._get_idx_from_percent(percent))
+
+    def _get_idx_from_percent(self, percent):
+        return int(round((self._latitude_series.size - 1) * percent))
+
 
     def run(self):
         master = tk.Tk()

@@ -1,10 +1,8 @@
-import sys, os
+# pylint: disable=C0413
+import sys
+import os
 sys.path.insert(0, os.getcwd())
 
-import tkinter as tk
-import PIL
-import PIL.Image
-import PIL.ImageTk
 
 from tk_canvas_renderers.tk_renderer import TKRenderer
 from base_position_calibrator import BasePositionCalibrator
@@ -19,26 +17,26 @@ class ElementRenderer:
         self.stationary_rendered_elements = []
 
     def render(self, timestamp=None, **kargs):
-        if timestamp == None:
+        if timestamp is None:
             self.render_stationary_elements()
         else:
             self.render_moving_elements(timestamp)
 
         return self
-    
+
     # implement in child class
     def render_stationary_elements(self):
-        pass  
+        pass
 
     # implement in child class
     def render_moving_elements(self, timestamp):
-        pass  
+        pass
 
     def delete_moving_rendered_elements(self):
         self.tk_renderer.delete_elements(self.moving_rendered_elements)
         self.moving_rendered_elements = []
         return self
-    
+
     def delete_stationary_rendered_elements(self):
         self.tk_renderer.delete_elements(self.stationary_rendered_elements)
         return self
@@ -52,7 +50,7 @@ class BoundaryRenderer(ElementRenderer):
         self.tk_renderer = TKRenderer()
         self.boundary = boundary
         super().__init__(**kargs)
-    
+
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
         self.stationary_rendered_elements.append(self.tk_renderer.create_polygon(self.boundary.exterior.coords, fill='', outline='orange'))
@@ -72,7 +70,7 @@ class ViewableObjectsRenderer(ElementRenderer):
 
     def get_computer_vision(self):
         return self.computer_vision
-    
+
     def set_viewable_objects(self, vo_s):
         self.viewable_objects = vo_s
         return self
@@ -84,7 +82,7 @@ class ViewableObjectsRenderer(ElementRenderer):
         self.delete_moving_rendered_elements()
         for obj in self.viewable_objects:
             self.render_viewable_object(obj, timestamp)
-        
+
     def render_viewable_object(self, obj, timestamp):
         self.moving_rendered_elements.append(self.get_dot(      obj.get_position_at_timestamp(timestamp), obj, timestamp))
 
@@ -98,7 +96,7 @@ class ViewableObjectsRenderer(ElementRenderer):
     def get_dot(self, coords, obj, timestamp):
         return self.tk_renderer.create_dot(coords,
                                            outline=self.color(obj, timestamp),
-                                           fill=self.color(obj,timestamp)) 
+                                           fill=self.color(obj,timestamp))
 
     def cv_id_for_object(self, obj, timestamp):
         if obj.get_is_tag():
@@ -148,11 +146,11 @@ class ImageRenderer(ViewableObjectsRenderer):
 
     def get_image_width(self):
         return self.image_width
-        
+
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
         self.render_line()
-    
+
     def render_moving_elements(self, timestamp):
         self.delete_moving_rendered_elements()
         self.render_inview_objects(timestamp)
@@ -160,7 +158,7 @@ class ImageRenderer(ViewableObjectsRenderer):
     def render_inview_objects(self, timestamp):
         for obj in self.x_for_all_inview_objects_for_all_camera_time[timestamp].keys():
             self.render_inview_object(obj, timestamp)
-    
+
     def render_inview_object(self, obj, timestamp):
         x = self.x_for_all_inview_objects_for_all_camera_time[timestamp][obj]
         coords = (self.get_rendered_x_for_x(x), self.y_of_line)
@@ -172,7 +170,7 @@ class ImageRenderer(ViewableObjectsRenderer):
             return 'ne'
         else:
             return 'se'
-     
+
     def get_eliminated(self, obj, timestamp):
         if self.object_stats_processor == None:
             return False
@@ -180,10 +178,10 @@ class ImageRenderer(ViewableObjectsRenderer):
             return obj in self.object_stats_processor.get_all_eliminated_before_timestamp(timestamp)
 
     def get_rendered_x_for_x(self, x):
-        return self.center_x_of_line - x  
+        return self.center_x_of_line - x
 
     def render_line(self):
-        self.stationary_rendered_elements.append(self.tk_renderer.create_line([self.origin, 
+        self.stationary_rendered_elements.append(self.tk_renderer.create_line([self.origin,
                                                                               (self.x_of_line + self.image_width, self.y_of_line)] ))
 
 class CameraRenderer(ElementRenderer):
@@ -213,7 +211,7 @@ class CameraRenderer(ElementRenderer):
         pos = self.camera.get_actual_position()
         text = 'c' + str(pos)
         self.stationary_rendered_elements.append(
-            self.tk_renderer.create_dot(pos, fill=self.camera_color, 
+            self.tk_renderer.create_dot(pos, fill=self.camera_color,
                                              outline=self.camera_color)
         )
         self.stationary_rendered_elements.append(
@@ -225,25 +223,25 @@ class CameraRenderer(ElementRenderer):
     def render_camera_gps(self):
         pos = self.camera.get_gps_position()
         label_text = 'gps' + str(self.camera.get_gps_position())
-        self.stationary_rendered_elements.append(self.tk_renderer.create_dot(pos, 
-                                                 outline=self.camera_gps_color, 
+        self.stationary_rendered_elements.append(self.tk_renderer.create_dot(pos,
+                                                 outline=self.camera_gps_color,
                                                  fill=self.camera_gps_color))
-        self.stationary_rendered_elements.append(self.tk_renderer.create_dot_label(pos, 
+        self.stationary_rendered_elements.append(self.tk_renderer.create_dot_label(pos,
                                                  text=label_text,
-                                                 fill=self.camera_gps_color))                                                
-        return self                                                
+                                                 fill=self.camera_gps_color))
+        return self
 
     def render_gps_error_circle(self):
         err = self.camera.get_gps_max_error()
         self.stationary_rendered_elements.append(
-             self.tk_renderer.create_circle_with_center_and_radius(self.camera.get_gps_position(), 
+             self.tk_renderer.create_circle_with_center_and_radius(self.camera.get_gps_position(),
                                                                    err,
                                                                    outline=self.gps_err_color))
         return self
 
     def render_view_triangle(self, timestamp):
         vt = self.camera.get_view_triangle(timestamp).exterior.coords
-        rvt = self.tk_renderer.create_polygon(vt, fill=self.view_triangle_color, 
+        rvt = self.tk_renderer.create_polygon(vt, fill=self.view_triangle_color,
                                                   outline=self.view_triangle_color)
 
         self.tk_renderer.lower_element(rvt)
@@ -262,7 +260,7 @@ class BasePositionCalibratorRenderer(ElementRenderer):
         self.dot_color = 'blue'
         self.early_late_points = None
         super().__init__(**kargs)
-    
+
     def render_stationary_elements(self):
         self.delete_stationary_rendered_elements()
         for isect in self.base_position_calibrator.get_all_error_circle_intersections():
@@ -274,7 +272,7 @@ class BasePositionCalibratorRenderer(ElementRenderer):
     def render_moving_elements(self, timestamp):
         self.delete_moving_rendered_elements()
         if timestamp in self._get_early_late_points():
-            self.stationary_rendered_elements.append(self.tk_renderer.create_dot(self.early_late_points[timestamp], 
+            self.stationary_rendered_elements.append(self.tk_renderer.create_dot(self.early_late_points[timestamp],
                                                                              fill=self.dot_color,
                                                                              outline=self.dot_color,
                                                                              size=3))
@@ -313,6 +311,6 @@ class PhotoRenderer(ElementRenderer):
     def __init__(self, image):
         self.image = image
         super().__init__()
-    
+
     def render_stationary_elements(self):
         self.stationary_rendered_elements.append(self.tk_renderer.create_photo((0,0), self.image))
