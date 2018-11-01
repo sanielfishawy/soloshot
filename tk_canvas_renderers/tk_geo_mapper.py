@@ -9,6 +9,16 @@ sys.path.insert(0, os.getcwd())
 from geo_mapping.geo_mapper import MapFitter, MapCoordinateTransformer
 
 class TkGeoMapper:
+    '''
+    Given a latitude and longitude series describing a track.
+    Fetches a map that fits the data. Adds the map to a canvas. Draws
+    the track on the canvas overlaying the map.
+
+    This was used for MapFitter images and other geo mapper classes.
+
+    Look at GeoMapScrubber for a more useful widget that allows scrubbing
+    forward and backward on a track in a map.
+    '''
     def __init__(self,
                  latitude_series: np.ndarray,
                  longitude_series: np.ndarray,

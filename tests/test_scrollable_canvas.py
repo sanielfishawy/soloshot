@@ -12,7 +12,7 @@ class TestScrollableCanvas(unittest.TestCase):
     def setUp(self):
         self.root = tk.Tk()
 
-    def dont_test_visualize_x_and_y_greater_than_scrollview(self):
+    def test_visualize_x_and_y_greater_than_scrollview(self):
         self.create_scrollable_canvas()
         self.root.mainloop()
 
@@ -56,7 +56,7 @@ class TestScrollableCanvas(unittest.TestCase):
             canvas_height,
             scrollview_width,
             scrollview_height,
-        ).get_canvas()
+        ).setup_ui().get_canvas()
 
         scrollable_canvas.create_rectangle(0, 0, 100, 100, fill='red')
 

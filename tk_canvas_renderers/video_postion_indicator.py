@@ -4,6 +4,8 @@ import tkinter as tk
 sys.path.insert(0, os.getcwd())
 
 class VideoPositionIndicator:
+    '''Widget that is a line with a dot which slides back and forth along the line
+       used to indicate where in a scrub the current position is'''
 
     def __init__(self,
                  canvas: tk.Canvas,

@@ -24,7 +24,7 @@ class ScrollableCanvas:
         self._vbar = None
         self._hbar = None
 
-    def get_canvas(self) -> tk.Canvas:
+    def setup_ui(self) -> tk.Canvas:
         self._frame = tk.Frame(self._master)
         self._frame.grid(row=0, column=0)
 
@@ -36,7 +36,6 @@ class ScrollableCanvas:
                 self._canvas_width,
                 self._canvas_height,
             ),
-            background='blue'
         )
 
         self._canvas.config(
@@ -62,4 +61,10 @@ class ScrollableCanvas:
             xscrollcommand=self._hbar.set,
         )
 
+        return self
+
+    def get_canvas(self):
         return self._canvas
+
+    def get_frame(self):
+        return self._frame
