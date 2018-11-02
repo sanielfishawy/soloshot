@@ -3,7 +3,6 @@
     - Add a done button at the top
     - Callback with results from position_pickers
 
-
 - PanMotorToFovConsistencyChecker
     - Visualize FOV
     - Choose regions with fixed FOV and large pan
@@ -13,10 +12,19 @@
     - Compare to pan
 
 - TagGpsTimebaseAligner
-  - Show plan view with map and scrubber
-  - Show video with scrubber
-  - Scrub to same point on map and video
+
+- VideoPlusMapScrubberPicker
+  - All in the same tkinter root
+    - Show plan view with map and scrubber
+    - Show video with scrubber
 
 - GeoMapScrubber
-    -
-
+    - scrolls in such a way as to keep the dot in the middle
+    - Put map in  the middle below the slider
+    - SliderMouseHandler
+        - Freeze
+    - Slider
+        - Button to jump to Selected
+    - TrackHighligher
+        - Shows selected on track.
+        - Shows trail on track.

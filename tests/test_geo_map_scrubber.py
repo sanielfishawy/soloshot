@@ -25,8 +25,9 @@ class TestGeoMapScrubber(unittest.TestCase):
             LegacyDataFileSystemHelper.TAG_NPZ_FILE,
             LegacyDataFileSystemHelper.TAG_LONGITUDE_FIELD,
         )
+        return self
 
-    def test_visualize(self):
+    def visualize(self):
         GeoMapScrubber(
             self.latitude_series,
             self.longitude_series,

@@ -14,11 +14,13 @@ class SliderMouseHandler:
             self,
             canvas: tk.Canvas,
             margin_pixels: int,
-            callback,
+            position_percent_callback=None,
+            selected_percent_callback=None,
     ):
         self._canvas = canvas
         self._margin_pixels = margin_pixels
-        self._callback = callback
+        self._position_percent_callback = position_percent_callback
+        self._selected_percent_callback = selected_percent_callback
 
         # lazy inits
         self._width = None
@@ -26,9 +28,27 @@ class SliderMouseHandler:
 
         # UI
         self._canvas.bind('<Motion>', self._motion)
+        self._canvas.bind('<Button-1>', self._left_click)
+        self._canvas.bind('<Button-2>', self._right_click)
+        self._canvas.bind('<Enter>', self._enter)
+        self._canvas.bind('<Leave>', self._leave)
 
     def _motion(self, event):
-        self._callback(self._get_percent_from_x(self._get_x_from_event(event)))
+        if self._position_percent_callback is not None:
+            self._position_percent_callback(self._get_percent_from_x(self._get_x_from_event(event)))
+
+    def _left_click(self, event):
+        if self._selected_percent_callback is not None:
+            self._selected_percent_callback(self._get_percent_from_x(self._get_x_from_event(event)))
+
+    def _right_click(self):
+        pass
+
+    def _enter(self, event):
+        pass
+
+    def _leave(self, event):
+        pass
 
     def _get_x_from_event(self, event):
         if event.x > self._get_right_x():

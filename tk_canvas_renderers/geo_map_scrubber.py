@@ -63,7 +63,8 @@ class GeoMapScrubber:
         self._slider_mouse_handler = SliderMouseHandler(
             self._slider_canvas,
             slider_margin_pixels,
-            self._slider_mouse_handler_callback,
+            position_percent_callback=self._slider_mouse_handler_position_callback,
+            selected_percent_callback=self._slider_mouse_handler_selected_callback,
         )
 
         self._scrollable_canvas_obj = ScrollableCanvas(
@@ -75,7 +76,10 @@ class GeoMapScrubber:
         ).setup_ui()
 
         self._map_frame = self._scrollable_canvas_obj.get_frame()
-        self._map_frame.grid(row=1, column=0)
+        self._map_frame.grid(
+            row=1,
+            column=0,
+        )
 
         self._map_canvas = self._scrollable_canvas_obj.get_canvas()
         self._map_on_canvas = self._map_canvas.create_image(0, 0, anchor='nw')
@@ -111,13 +115,15 @@ class GeoMapScrubber:
             )
         return self._map_coordinate_transformer
 
-    def _slider_mouse_handler_callback(self, percent):
+    def _slider_mouse_handler_position_callback(self, percent):
         self._slider.set_percent(percent)
         self._geo_track_hilighter.set_highlight_idx(self._get_idx_from_percent(percent))
 
+    def _slider_mouse_handler_selected_callback(self, percent):
+        self._slider.set_selected(percent)
+
     def _get_idx_from_percent(self, percent):
         return int(round((self._latitude_series.size - 1) * percent))
-
 
     def run(self):
         master = tk.Tk()
