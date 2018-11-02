@@ -26,8 +26,8 @@ class ScrubPicker(Scrubber):
 
         self._init_selected_start_stop_idx_and_current_photo()
 
-    def setup_ui(self):
-        super().setup_ui()
+    def setup_ui(self, master=None):
+        super().setup_ui(master)
         self._selected_text = self._canvas.create_text(self._get_center_of_canvas_coords()[0],
                                                        self._get_center_of_canvas_coords()[1],
                                                        font=ScrubPicker.SELECT_LABEL_FONT,

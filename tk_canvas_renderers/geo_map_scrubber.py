@@ -21,7 +21,7 @@ class GeoMapScrubber:
             latitude_series: np.ndarray,
             longitude_series: np.ndarray,
             width=800,
-            height=400,
+            height=800,
             track_color='orange',
             track_head_color='red',
     ):
@@ -45,7 +45,7 @@ class GeoMapScrubber:
         self._map_on_canvas = None
         self._geo_track_hilighter = None
 
-    def get_ui(self, master):
+    def setup_ui(self, master):
         slider_margin_pixels = 50
 
         self._slider_canvas = tk.Canvas(
@@ -127,5 +127,5 @@ class GeoMapScrubber:
 
     def run(self):
         master = tk.Tk()
-        self.get_ui(master)
+        self.setup_ui(master)
         master.mainloop()

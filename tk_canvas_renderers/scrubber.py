@@ -21,14 +21,18 @@ class Scrubber:
         '''
         assert (images_from_video is not None), 'images_from_video_parameter must be provided'
         self._images_from_video = images_from_video
-
-        self._margin_for_cursor_scrub = .2
         self._callback = callback
 
-        self._current_photo_idx = 0
-        self._tk_photos = None
+        # Constants
+        self._margin_for_cursor_scrub = .2
 
-        self._root = None
+        # State
+        self._current_photo_idx = 0
+        self._is_frozen = False
+
+        # Lazy init
+        self._master = None
+        self._tk_photos = None
         self._instructions_label = None
         self._frame_num_label = None
         self._frame_ms_label = None
@@ -38,32 +42,32 @@ class Scrubber:
         self._done_button = None
         self._button_1 = None
         self._button_2 = None
-
-        self._is_frozen = False
-
         self._video_position_indicator = None
 
     @abc.abstractmethod
-    def setup_ui(self):
-        self._root = tk.Tk()
-        self._root.title(str(self._get_video_path().resolve()))
+    def setup_ui(self, master=None):
+        assert master is not None, 'Must set master in setup_ui'
 
-        self._instructions_label = tk.Label(master=self._root,
+        self._master = master
+        if 'title' in dir(master):
+            master.title(str(self._get_video_path().resolve()))
+
+        self._instructions_label = tk.Label(master=master,
                                             text=self._get_instructions(),
                                            )
         self._instructions_label.grid(row=0, column=0, columnspan=3, pady=10)
 
-        self._frame_num_label = tk.Label(master=self._root,
+        self._frame_num_label = tk.Label(master=master,
                                          text=self._get_frame_num_label_text(),
                                         )
         self._frame_num_label.grid(row=1, column=0, sticky=tk.W, padx=10)
 
-        self._frame_ms_label = tk.Label(master=self._root,
+        self._frame_ms_label = tk.Label(master=master,
                                         text=self._get_frame_ms_label_text(),
                                        )
         self._frame_ms_label.grid(row=2, column=0, sticky=tk.W, padx=10)
 
-        self._canvas = tk.Canvas(master=self._root,
+        self._canvas = tk.Canvas(master=master,
                                  width=self._get_photos_width(),
                                  height=self._get_photos_height(),
                                 )
@@ -79,7 +83,7 @@ class Scrubber:
                                                                 self._get_left_scrub_bound()) # pylint: disable=C0301
         self._video_position_indicator.setup_ui()
 
-        self._done_button = tk.Button(master=self._root,
+        self._done_button = tk.Button(master=master,
                                       text="Done",
                                       command=self._done_click,
                                       padx=5,
@@ -87,7 +91,7 @@ class Scrubber:
                                      )
         self._done_button.grid(row=4, column=2, pady=(0, 10))
 
-        self._button_1 = tk.Button(master=self._root,
+        self._button_1 = tk.Button(master=master,
                                    text="Button 1",
                                    command=self._button_1_click,
                                    padx=5,
@@ -95,7 +99,7 @@ class Scrubber:
                                   )
         self._button_1.grid(row=4, column=0, pady=(0, 10))
 
-        self._button_2 = tk.Button(master=self._root,
+        self._button_2 = tk.Button(master=master,
                                    text="Button 2",
                                    command=self._button_2_click,
                                    padx=5,
@@ -104,7 +108,6 @@ class Scrubber:
         self._button_2.grid(row=4, column=1, pady=(0, 10))
 
         self._display_current_photo()
-        return self
 
     @abc.abstractmethod
     def _get_instructions(self):
@@ -191,7 +194,7 @@ class Scrubber:
             self._update_canvas_overlay()
             self._update_video_position_indicator()
             self._update_frame_num_and_ms_text()
-            self._root.update()
+            self._master.update()
         return self
 
     def _handle_frozen(self, idx):
@@ -213,7 +216,8 @@ class Scrubber:
         return self
 
     def _done_click(self):
-        self._root.destroy()
+        if 'destroy' in dir(self._master):
+            self._master.destroy()
 
     def _leave(self, _):
         self._freeze()
@@ -231,6 +235,7 @@ class Scrubber:
         return len(self._images_from_video)
 
     def run(self):
-        self.setup_ui()
-        self._root.mainloop()
+        master = tk.Tk()
+        self.setup_ui(master)
+        master.mainloop()
         return self
