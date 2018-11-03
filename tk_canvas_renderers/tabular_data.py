@@ -19,7 +19,7 @@ class TabularData:
 
     def __init__(
             self,
-            data: dict,
+            data: list,
     ):
         self._data = data
         self._column_frames = None
@@ -35,7 +35,7 @@ class TabularData:
             column_frame.grid(
                 column=column,
                 row=0,
-                sticky=tk.NE,
+                sticky=tk.NW,
             )
 
         for column in range(self._get_num_columns()):
@@ -46,7 +46,7 @@ class TabularData:
                 ).grid(
                     column=0,
                     row=row,
-                    sticky=tk.E,
+                    sticky=tk.W,
                 )
                 self._value_fields[label] = tk.Label(
                     self._column_frames[column],
@@ -54,9 +54,9 @@ class TabularData:
                 self._value_fields[label].grid(
                     column=1,
                     row=row,
-                    sticky=tk.E,
+                    sticky=tk.W,
                 )
-        self._update_values(data=self._data)
+        self.update_values(data=self._data)
 
     def _get_column_from_entry(self, entry: dict) -> int:
         if self.__class__.COLUMN in entry:
@@ -79,7 +79,7 @@ class TabularData:
                 r.append(entry[self.__class__.LABEL])
         return r
 
-    def _update_values(self, data):
+    def update_values(self, data):
         for entry in data:
             label = entry[self.__class__.LABEL]
             self._value_fields[label].config(

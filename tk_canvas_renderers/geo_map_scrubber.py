@@ -10,6 +10,7 @@ from tk_canvas_renderers.scrollable_canvas import ScrollableCanvas
 from tk_canvas_renderers.video_postion_indicator import VideoPositionIndicator
 from tk_canvas_renderers.slider_mouse_handler import SliderMouseHandler
 from tk_canvas_renderers.geo_track_highlighter import GeoTrackHighlighter
+from tk_canvas_renderers.tabular_data import TabularData
 from geo_mapping.geo_mapper import MapFitter, MapCoordinateTransformer
 
 class GeoMapScrubber:
@@ -35,6 +36,10 @@ class GeoMapScrubber:
         # lazy inits
         self._map_fitter = None
         self._map_coordinate_transformer = None
+
+        # tk widgets
+        self._tabular_info_frame = None
+        self._tablular_info = None
         self._slider_canvas = None
         self._slider = None
         self._slider_mouse_handler = None
@@ -46,14 +51,23 @@ class GeoMapScrubber:
         self._geo_track_hilighter = None
 
     def setup_ui(self, master):
-        slider_margin_pixels = 50
+        self._tabular_info_frame = tk.Frame(master=master)
+        self._tabular_info_frame.grid(
+            column=0,
+            row=0,
+            sticky=tk.W
+        )
+        self._tablular_info = TabularData(data=self._get_tabular_info())
+        self._tablular_info.setup_ui(master=self._tabular_info_frame)
 
+
+        slider_margin_pixels = 50
         self._slider_canvas = tk.Canvas(
             master=master,
             width=self._width,
             height=30,
         )
-        self._slider_canvas.grid(row=0, column=0)
+        self._slider_canvas.grid(row=1, column=0)
 
         self._slider = VideoPositionIndicator(
             self._slider_canvas,
@@ -77,7 +91,7 @@ class GeoMapScrubber:
 
         self._map_frame = self._scrollable_canvas_obj.get_frame()
         self._map_frame.grid(
-            row=1,
+            row=2,
             column=0,
         )
 
@@ -124,6 +138,29 @@ class GeoMapScrubber:
 
     def _get_idx_from_percent(self, percent):
         return int(round((self._latitude_series.size - 1) * percent))
+
+    def _get_tabular_info(self, idx=None, time=None, selected_idx=None, selected_time=None):
+        return [
+            {
+                TabularData.LABEL: 'Index:',
+                TabularData.VALUE: idx,
+            },
+            {
+                TabularData.LABEL: 'Time:',
+                TabularData.VALUE: time,
+            },
+            {
+                TabularData.LABEL: 'Selected Index:',
+                TabularData.VALUE: selected_idx,
+                TabularData.COLUMN: 1,
+            },
+            {
+                TabularData.LABEL: 'Selected Time:',
+                TabularData.VALUE: selected_time,
+                TabularData.COLUMN: 1,
+            },
+        ]
+
 
     def run(self):
         master = tk.Tk()
