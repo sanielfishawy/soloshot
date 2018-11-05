@@ -25,13 +25,18 @@ class TestGeoMapScrubber(unittest.TestCase):
             LegacyDataFileSystemHelper.TAG_NPZ_FILE,
             LegacyDataFileSystemHelper.TAG_LONGITUDE_FIELD,
         )
+        self.time_series = ldfh.get_field_from_npz_file(
+            self.__class__.SESSION_DIR_NAME,
+            LegacyDataFileSystemHelper.TAG_NPZ_FILE,
+            LegacyDataFileSystemHelper.TAG_TIME_FIELD,
+        )
         return self
 
     def visualize(self):
         GeoMapScrubber(
-            self.latitude_series,
-            self.longitude_series,
-            height=800,
+            latitude_series=self.latitude_series,
+            longitude_series=self.longitude_series,
+            time_series=self.time_series,
         ).run()
 
 

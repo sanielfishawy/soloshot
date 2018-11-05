@@ -39,9 +39,15 @@ class TestVideoPlusMapScrubber(unittest.TestCase):
             filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
             fieldname=LegacyDataFileSystemHelper.TAG_LONGITUDE_FIELD,
         )
+        time_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.TAG_TIME_FIELD,
+        )
         geo_map_scrubber = GeoMapScrubber(
             latitude_series=latitude_series,
             longitude_series=longitude_series,
+            time_series=time_series,
             width=700,
         )
 

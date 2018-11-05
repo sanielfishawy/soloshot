@@ -6,25 +6,40 @@ from pathlib import Path
 
 sys.path.insert(0, os.getcwd())
 from geo_mapping.geo_mapper import GeoMapper, LatLongToPixelConverter, MapFitter, MapCoordinateTransformer
-from legacy_data_pipeline.tag_gps_timebase_aligner import TagGpsTimebaseAligner
 from tk_canvas_renderers.tk_geo_mapper import TkGeoMapper
+from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
 
 class TestGeoMapper(unittest.TestCase):
 
     HEAD_PATH = Path('/Volumes/WD')
-    TEST_SESSION_DIR_NAME = 'Aug_17_Palo_Alto_High_2nd_time_B80_ottofillmore'
+    SESSION_DIR = 'Aug_17_Palo_Alto_High_2nd_time_B80_ottofillmore'
 
     def setUp(self):
-        self.tgta = TagGpsTimebaseAligner(self.__class__.TEST_SESSION_DIR_NAME)
-        self.lat_long = self.tgta._get_first_lat_long()
-        self.latitude_series = self.tgta.get_latitude_series()
-        self.longitude_series = self.tgta.get_longitude_series()
+        ldfh = LegacyDataFileSystemHelper(
+            head_path=self.__class__.HEAD_PATH,
+        )
+        self.latitude_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.TAG_LATITUDE_FIELD,
+        )
+        self.longitude_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.TAG_LONGITUDE_FIELD,
+        )
+        self.time_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.TAG_TIME_FIELD,
+        )
+        self.lat_long = self.latitude_series[0], self.longitude_series[0]
 
     def dont_test_map_fitter(self):
         map_fitter = MapFitter(self.latitude_series, self.longitude_series)
         map_fitter.get_map()
 
-    def test_visualize_with_tk_geo_mapper(self):
+    def dont_test_visualize_with_tk_geo_mapper(self):
         marker_positions = [
             [37.3865785, -122.11006499999999],
             [37.38673475, -122.10986187499999],

@@ -20,6 +20,8 @@
 
 - GeoMapScrubber
     - scrolls in such a way as to keep the dot in the middle
+    - pass in time_series
+    - update time in tabular_info
     - SliderMouseHandler
         - Freeze
     - Slider

@@ -21,13 +21,15 @@ class GeoMapScrubber:
             self,
             latitude_series: np.ndarray,
             longitude_series: np.ndarray,
-            width=800,
-            height=800,
+            time_series: np.ndarray,
+            width=700,
+            height=700,
             track_color='orange',
             track_head_color='red',
     ):
         self._latitude_series = latitude_series
         self._longitude_series = longitude_series
+        self._time_series = time_series
         self._width = width
         self._height = height
         self._track_color = track_color
@@ -133,14 +135,29 @@ class GeoMapScrubber:
     def _slider_mouse_handler_position_callback(self, idx):
         self._slider.set_percent(percent=self._get_percent_from_idx(idx))
         self._geo_track_hilighter.set_highlight_idx(idx)
+        self._tablular_info.update_values(
+            self._get_tabular_info(
+                idx=idx,
+                time=self._get_time_from_idx(idx),
+            )
+        )
 
     def _slider_mouse_handler_selected_callback(self, idx):
         self._slider.set_selected(percent=self._get_percent_from_idx(idx))
+        self._tablular_info.update_values(
+            self._get_tabular_info(
+                selected_idx=idx,
+                selected_time=self._get_time_from_idx(idx),
+            )
+        )
 
     def _get_percent_from_idx(self, idx):
         return idx / (self._latitude_series.size - 1)
 
-    def _get_tabular_info(self, idx='', time='', selected_idx='', selected_time=''):
+    def _get_time_from_idx(self, idx):
+        return self._time_series[idx] - self._time_series[0]
+
+    def _get_tabular_info(self, idx=None, time=None, selected_idx=None, selected_time=None):
         return [
             {
                 TabularData.LABEL: 'Index:',
