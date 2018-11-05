@@ -13,6 +13,7 @@ class VideoPositionIndicator:
                 ):
 
         self._canvas = canvas
+        self._canvas.config(highlightcolor='white')
         self._canvas.update_idletasks() # To update dimensions in winfo calls.
 
         self._left_right_margin = left_right_margin

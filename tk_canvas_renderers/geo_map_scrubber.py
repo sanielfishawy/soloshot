@@ -75,10 +75,11 @@ class GeoMapScrubber:
         ).setup_ui()
 
         self._slider_mouse_handler = SliderMouseHandler(
-            self._slider_canvas,
-            slider_margin_pixels,
-            position_percent_callback=self._slider_mouse_handler_position_callback,
-            selected_percent_callback=self._slider_mouse_handler_selected_callback,
+            canvas=self._slider_canvas,
+            margin_pixels=slider_margin_pixels,
+            num_points=self._latitude_series.size,
+            position_idx_callback=self._slider_mouse_handler_position_callback,
+            selected_idx_callback=self._slider_mouse_handler_selected_callback,
         )
 
         self._scrollable_canvas_obj = ScrollableCanvas(
@@ -129,17 +130,17 @@ class GeoMapScrubber:
             )
         return self._map_coordinate_transformer
 
-    def _slider_mouse_handler_position_callback(self, percent):
-        self._slider.set_percent(percent)
-        self._geo_track_hilighter.set_highlight_idx(self._get_idx_from_percent(percent))
+    def _slider_mouse_handler_position_callback(self, idx):
+        self._slider.set_percent(percent=self._get_percent_from_idx(idx))
+        self._geo_track_hilighter.set_highlight_idx(idx)
 
-    def _slider_mouse_handler_selected_callback(self, percent):
-        self._slider.set_selected(percent)
+    def _slider_mouse_handler_selected_callback(self, idx):
+        self._slider.set_selected(percent=self._get_percent_from_idx(idx))
 
-    def _get_idx_from_percent(self, percent):
-        return int(round((self._latitude_series.size - 1) * percent))
+    def _get_percent_from_idx(self, idx):
+        return idx / (self._latitude_series.size - 1)
 
-    def _get_tabular_info(self, idx=None, time=None, selected_idx=None, selected_time=None):
+    def _get_tabular_info(self, idx='', time='', selected_idx='', selected_time=''):
         return [
             {
                 TabularData.LABEL: 'Index:',
