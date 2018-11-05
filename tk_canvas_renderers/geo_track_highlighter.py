@@ -41,10 +41,14 @@ class GeoTrackHighlighter:
         self._track_line = None
         self._highlight_dot = None
         self._highlight_tail = None
+        self._selected_circle = None
 
         # constants
         self._dot_radius = 5
         self._tail_width = 3
+        self._selected_circle_color = 'cyan'
+        self._selected_circle_radius = 6
+        self._selected_circle_width = 2
 
     def setup_ui(self):
         self._track_line = self._canvas.create_line(
@@ -53,7 +57,10 @@ class GeoTrackHighlighter:
         )
 
         self._highlight_dot = self._canvas.create_oval(
-            self._get_dot_coords(),
+            self._get_oval_coords(
+                idx=self._highlighted_idx,
+                radius=self._dot_radius,
+            ),
             fill=self._highlight_color,
             outline=self._highlight_color,
         )
@@ -68,18 +75,42 @@ class GeoTrackHighlighter:
         return self
 
     def set_highlight_idx(self, idx: int):
-        assert idx >= 0 and idx < self._latitude_series.size
+        self._assert_idx_in_bounds(idx)
         self._previous_highligthed_idx = self._highlighted_idx
         self._highlighted_idx = idx
         self._move_highlight_dot()
         self._move_highlight_tail()
 
+    def set_selected_idx(self, idx: int):
+        self._assert_idx_in_bounds(idx)
+        if self._selected_circle is None:
+            self._selected_circle = self._canvas.create_oval(
+                self._get_oval_coords(
+                    idx=idx,
+                    radius=self._selected_circle_radius,
+                ),
+                outline=self._selected_circle_color,
+                width=self._selected_circle_width,
+            )
+        self._canvas.coords(
+            self._selected_circle,
+            self._get_oval_coords(
+                idx=idx,
+                radius=self._selected_circle_radius,
+            ),
+        )
+
+    def _assert_idx_in_bounds(self, idx):
+        assert idx >= 0 and idx < self._latitude_series.size
+
     def _move_highlight_dot(self):
         self._canvas.coords(
             self._highlight_dot,
-            self._get_dot_coords(),
+            self._get_oval_coords(
+                idx=self._highlighted_idx,
+                radius=self._dot_radius,
+            ),
         )
-
 
     def _move_highlight_tail(self):
         self._canvas.coords(
@@ -119,11 +150,11 @@ class GeoTrackHighlighter:
 
         return [x_1, y_1, x_2, y_2]
 
-    def _get_dot_coords(self):
-        x, y = self._get_x_y_from_idx(self._highlighted_idx)
+    def _get_oval_coords(self, idx, radius):
+        x, y = self._get_x_y_from_idx(idx)
         return [
-            x - self._dot_radius,
-            y - self._dot_radius,
-            x + self._dot_radius,
-            y + self._dot_radius,
+            x - radius,
+            y - radius,
+            x + radius,
+            y + radius,
         ]

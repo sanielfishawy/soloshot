@@ -150,6 +150,7 @@ class GeoMapScrubber:
                 selected_time=self._get_time_from_idx(idx),
             )
         )
+        self._geo_track_hilighter.set_selected_idx(idx)
 
     def _get_percent_from_idx(self, idx):
         return idx / (self._latitude_series.size - 1)
