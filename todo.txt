@@ -1,8 +1,3 @@
-- Tag
-    - Lat, long time and MapCoordinateTransformer
-    - get_position_at_timestamp
-    - get_x_y_position_at_timestamp
-
 - GeoMapScrubber
     - Add ability to click on map to get position in x, y and latitude and longitude
     - Get lat and long of the camera

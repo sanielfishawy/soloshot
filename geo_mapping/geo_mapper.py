@@ -368,6 +368,11 @@ class MapCoordinateTransformer:
         self._lat_top = None
         self._long_left = None
 
+    def get_latitude_for_y(self, y_pos):
+        return self._get_lat_of_top() - (self._get_lat_deg_per_px() * y_pos)
+
+    def get_longitude_for_x(self, x_pos):
+        return self._get_long_of_left() + (self._get_long_deg_per_px() * x_pos)
 
     def get_x_y_for_lat_long(self, latitude_deg, longitude_deg):
         return (self.get_x_for_longitude(longitude_deg), self.get_y_for_latitude(latitude_deg))

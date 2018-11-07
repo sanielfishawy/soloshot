@@ -103,6 +103,7 @@ class GeoMapScrubber:
         self._map_canvas = self._scrollable_canvas_obj.get_canvas()
         self._map_on_canvas = self._map_canvas.create_image(0, 0, anchor='nw')
         self._map_canvas.itemconfig(self._map_on_canvas, image=self._get_map_image())
+        self._map_canvas.bind('<Button-1>', self._map_left_click)
 
         self._geo_track_hilighter = GeoTrackHighlighter(
             self._map_canvas,
@@ -113,6 +114,14 @@ class GeoMapScrubber:
 
     def set_selected_callback(self, selected_callback):
         self._selected_callback = selected_callback
+
+    def _map_left_click(self, event):
+        print(
+            'x:', event.x,
+            'y:', event.y,
+            'latitude:', self._get_map_coordinate_transformer().get_latitude_for_y(event.y),
+            'longitude:', self._get_map_coordinate_transformer().get_longitude_for_x(event.x),
+        )
 
     def _get_map_image(self) -> ImageTk.PhotoImage:
         if self._map_image is None:
