@@ -22,6 +22,7 @@ class GeoMapScrubber:
             latitude_series: np.ndarray,
             longitude_series: np.ndarray,
             time_series: np.ndarray,
+            selected_callback=None,
             width=700,
             height=700,
             track_color='orange',
@@ -30,6 +31,7 @@ class GeoMapScrubber:
         self._latitude_series = latitude_series
         self._longitude_series = longitude_series
         self._time_series = time_series
+        self._selected_callback = selected_callback
         self._width = width
         self._height = height
         self._track_color = track_color
@@ -109,6 +111,9 @@ class GeoMapScrubber:
             self._get_map_coordinate_transformer(),
         ).setup_ui()
 
+    def set_selected_callback(self, selected_callback):
+        self._selected_callback = selected_callback
+
     def _get_map_image(self) -> ImageTk.PhotoImage:
         if self._map_image is None:
             map_path = self._get_map_fitter().get_map()
@@ -151,6 +156,8 @@ class GeoMapScrubber:
             )
         )
         self._geo_track_hilighter.set_selected_idx(idx)
+        if self._selected_callback is not None:
+            self._selected_callback(idx=idx, time=self._get_time_from_idx(idx))
 
     def _get_percent_from_idx(self, idx):
         return idx / (self._latitude_series.size - 1)

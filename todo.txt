@@ -3,7 +3,7 @@
     - Add a done button at the top
     - Callback with results from position_pickers
 
-- PanMotorToFovConsistencyChecker
+- PanMotorToFovConsistencyCheckers
     - Visualize FOV
     - Choose regions with fixed FOV and large pan
     - Show an image from extremes
@@ -11,23 +11,49 @@
     - Calculate angle
     - Compare to pan
 
-- TagGpsTimebaseAligner
+x TagGpsTimebaseAligner
+    x Handle load video button
+    - Done button saves data to yml
+    - yml format
+        {
+            aggregate_results:
+                {
+                    alignment_stats:
+                        {
+                            delay_tag_gps_to_video:
+                                {
+                                    max:
+                                    mean:
+                                    min:
+                                    num:
+                                }
+                        }
+                }
 
-- VideoPlusMapScrubberPicker
-  x All in the same tkinter root
-    x Show plan view with map and scrubber
-    x Show video with scrubber
+            individual_results:
+                [
+                    {
+                        delay_tag_gps_to_video:
+                        tag_data:
+                            {
+                                tag_idx:
+                                tag_time:
+                            }
+                        video_data:
+                            {
+                                frame_num:
+                                time_ms:
+                                video_id:
+                                video_url:
+                            }
+                    }
+
+                ]
+
 
 - GeoMapScrubber
     - scrolls in such a way as to keep the dot in the middle
-
     - SliderMouseHandler
         - Freeze
-    - Slider
-        - Button to jump to Selected
-    - TrackHighligher
-        - Shows selected on track.
-    - Indication of
-        - idx
-        - time
-        - Updates
+    x Slider
+        x 'p' keystroke to jump to Selected

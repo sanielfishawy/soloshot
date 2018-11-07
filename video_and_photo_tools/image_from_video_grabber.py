@@ -20,20 +20,22 @@ class ImageFromVideoGrabber:
     IMAGE_FORMAT_PPM = 'ppm'
     IMAGE_FORMAT_BMP = 'bmp'
 
-    def __init__(self,
-                 video_url,
-                 image_mode='L',
-                 image_width=640,
-                 image_format='jpg',
-                 use_cache=True,
-                 cache_dir_path=None):
+    def __init__(
+            self,
+            video_path,
+            image_mode='L',
+            image_width=640,
+            image_format='jpg',
+            use_cache=True,
+            cache_dir_path=Path('/Volumes/WD/image_cache'),
+    ):
 
-        self._video_url = Path(video_url)
+        self._video_path = Path(video_path)
         self._image_mode = image_mode
         self._image_width = image_width
         self._image_format = image_format
 
-        self._cap = cv2.VideoCapture(str(video_url.resolve()))
+        self._cap = cv2.VideoCapture(str(video_path.resolve()))
         self._frame_rate = None
         self._use_cache = use_cache
         self._cache_dir_path = cache_dir_path
@@ -42,7 +44,7 @@ class ImageFromVideoGrabber:
         self.get_frame_count()
 
     def get_video_id(self):
-        return self._video_url.name + '-' + str(os.path.getsize(self._video_url))
+        return self._video_path.name + '-' + str(os.path.getsize(self._video_path))
 
     def get_image_at_frame_num(self, frame_num) -> ImageFromVideo:
         i_f_v = self.get_image_from_cache_at_frame_num(frame_num)
@@ -105,7 +107,7 @@ class ImageFromVideoGrabber:
         return ImageFromVideo(image=image,
                               time_ms=int(time_ms),
                               frame_num=frame_num,
-                              video_url=self._video_url,
+                              video_url=self._video_path,
                               video_id=self.get_video_id(),
                               from_cache=from_cache,
                              )

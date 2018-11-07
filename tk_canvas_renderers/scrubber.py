@@ -110,6 +110,13 @@ class Scrubber:
         self._display_current_photo()
 
     @abc.abstractmethod
+    def reset_images_from_video(self, images_from_video):
+        self._images_from_video = images_from_video
+        self._tk_photos = None
+        self._current_photo_idx = 0
+        self._display_current_photo()
+
+    @abc.abstractmethod
     def _get_instructions(self):
         return 'Scrubber instructions'
 

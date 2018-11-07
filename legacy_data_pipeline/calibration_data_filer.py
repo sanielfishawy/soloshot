@@ -9,6 +9,7 @@ class CalibrationDataFiler:
     PAN_MOTOR_TIMEBASE_ALIGNMENT = 'pan_motor_timebase_alignment.yml'
     FOV_TIMEBASE_ALIGNMENT = 'fov_timebase_alignment.yml'
     FRAME_RATE_CALCULATION = 'frame_rate_calculation.yml'
+    TAG_GPS_TIMEBASE_ALIGNMENT = 'tag_gps_timebase_alignment.yml'
 
     def __init__(self, top_level_dir: Path):
         self._top_level_dir = top_level_dir

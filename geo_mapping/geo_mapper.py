@@ -373,11 +373,11 @@ class MapCoordinateTransformer:
 
     def get_y_for_latitude(self, latitude_deg):
         lat_diff = self._get_lat_of_top() - latitude_deg
-        return int(round(lat_diff / self._get_lat_deg_per_px()))
+        return round(lat_diff / self._get_lat_deg_per_px())
 
     def get_x_for_longitude(self, longitude_deg):
         long_diff = longitude_deg - self._get_long_of_left()
-        return int(round(long_diff / self._get_long_deg_per_px()))
+        return round(long_diff / self._get_long_deg_per_px())
 
     def _get_lat_deg_per_px(self):
         if self._lat_deg_per_px is None:

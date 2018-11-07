@@ -49,6 +49,7 @@ class PanMotorTimeBaseAligner:
         self._cache_dir_path = cache_dir_path
         self._num_points = num_points
 
+        # Helpers
         self._ldfh = LDFH(self._input_data_head_path)
         self._calibration_data_filer = CalibrationDataFiler(self._results_head_path)
 

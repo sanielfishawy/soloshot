@@ -37,6 +37,11 @@ class ScrubPicker(Scrubber):
 
         self._display_current_photo()
 
+    def reset_images_from_video(self, images_from_video):
+        self._selected_start_idx = None
+        self._selected_end_idx = None
+        super().reset_images_from_video(images_from_video=images_from_video)
+
     def _init_selected_start_stop_idx_and_current_photo(self):
         self._selected_start_idx = self._get_idx_from_frame_num(self._selected_start_frame_num)
         self._selected_end_idx = self._get_idx_from_frame_num(self._selected_end_frame_num)
@@ -51,8 +56,8 @@ class ScrubPicker(Scrubber):
              if ifv.get_frame_num() == frame_num]
         if not r:
             return None
-        else:
-            return r[0]
+
+        return r[0]
 
     def _set_button_text(self):
         if self._selector_type == ScrubPicker.SELECT_RANGE:
@@ -110,18 +115,18 @@ class ScrubPicker(Scrubber):
 
     def _done_click(self):
         if self._callback is not None:
-            self._callback([self._get_selected_start_ifv(),
-                            self._get_selected_end_ifv(),
+            self._callback([self.get_selected_start_ifv(),
+                            self.get_selected_end_ifv(),
                            ]
                           )
         super()._done_click()
 
-    def _get_selected_start_ifv(self):
+    def get_selected_start_ifv(self):
         if self._selected_start_idx is None:
             return None
         return self._images_from_video[self._selected_start_idx]
 
-    def _get_selected_end_ifv(self):
+    def get_selected_end_ifv(self):
         if self._selected_end_idx is None:
             return None
         return self._images_from_video[self._selected_end_idx]

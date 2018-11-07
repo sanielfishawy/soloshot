@@ -30,6 +30,7 @@ class SliderMouseHandler:
 
         # state
         self._current_idx = 0
+        self._selected_idx = None
 
         # UI
         self._canvas.bind('<Motion>', self._motion)
@@ -63,6 +64,8 @@ class SliderMouseHandler:
             self._step_forward()
         elif event.char == 'x':
             self._select_with_x()
+        elif event.char == 'p':
+            self._jump_to_selected()
 
     def _step_back(self):
         if self._current_idx > 0:
@@ -74,6 +77,10 @@ class SliderMouseHandler:
             self._current_idx = self._current_idx + 1
             self._callback_current_idx()
 
+    def _jump_to_selected(self):
+        self._current_idx = self._selected_idx
+        self._callback_current_idx()
+
     def _select_with_x(self):
         self._callback_selected_current_idx()
 
@@ -82,6 +89,7 @@ class SliderMouseHandler:
             self._position_idx_callback(self._current_idx)
 
     def _callback_selected_current_idx(self):
+        self._selected_idx = self._current_idx
         if self._selected_idx_callback is not None:
             self._selected_idx_callback(self._current_idx)
 

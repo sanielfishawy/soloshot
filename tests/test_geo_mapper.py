@@ -3,6 +3,7 @@ import sys
 import os
 import unittest
 from pathlib import Path
+import numpy as np
 
 sys.path.insert(0, os.getcwd())
 from geo_mapping.geo_mapper import GeoMapper, LatLongToPixelConverter, MapFitter, MapCoordinateTransformer
@@ -34,6 +35,15 @@ class TestGeoMapper(unittest.TestCase):
             fieldname=LegacyDataFileSystemHelper.TAG_TIME_FIELD,
         )
         self.lat_long = self.latitude_series[0], self.longitude_series[0]
+
+    def test_longitude_deg_per_pixel(self):
+        max_latitude = np.max(self.latitude_series)
+        min_latitude = np.min(self.latitude_series)
+        long_scale_factor_max_latitude = LatLongToPixelConverter()._long_vs_lat_scale_factor(max_latitude)
+        long_scale_factor_min_latitude = LatLongToPixelConverter()._long_vs_lat_scale_factor(min_latitude)
+        scale_factor_ratio = long_scale_factor_max_latitude / long_scale_factor_min_latitude
+        self.assertNotEqual(scale_factor_ratio, 1)
+        self.assertAlmostEqual(scale_factor_ratio, 1, places=4)
 
     def dont_test_map_fitter(self):
         map_fitter = MapFitter(self.latitude_series, self.longitude_series)
