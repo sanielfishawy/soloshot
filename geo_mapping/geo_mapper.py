@@ -346,14 +346,15 @@ class MapCoordinateTransformer:
        Assumes the canvas is sized to fit the map exactly. x is longitude. y
        is latituded. x=0, y=0 is top left of map image. y increases downwards.'''
 
-    def __init__(self,
-                 center_latitude,
-                 center_longitude,
-                 width_pixels,
-                 height_pixels,
-                 zoom,
-                 scale,
-                ):
+    def __init__(
+            self,
+            center_latitude,
+            center_longitude,
+            width_pixels,
+            height_pixels,
+            zoom,
+            scale,
+    ):
         self._center_latitude = center_latitude
         self._center_longitude = center_longitude
         self._width_pixels = width_pixels

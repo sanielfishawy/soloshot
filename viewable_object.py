@@ -1,7 +1,6 @@
-import math as math
+import math
+import random
 import geometry_utils as GU
-import random as random
-from shapely.geometry import Polygon, Point, LineString
 from simple_uid import SimpleUID
 
 class ViewableObject:
@@ -16,10 +15,10 @@ class ViewableObject:
         self.position_history = []
         self.create_position_history()
         self.is_tag = False
-    
+
     def get_is_tag(self):
         return self.is_tag
- 
+
     def set_num_timestamps(self, n):
         self.num_timestamps = n
         pos_len = self.get_position_history_len()
@@ -30,23 +29,23 @@ class ViewableObject:
             self.position_history = self.position_history[0: self.num_timestamps]
         elif pos_len < self.num_timestamps:
             self.create_position_history()
-        
+
         return self
-        
+
     def get_num_timestamps(self):
         return self.num_timestamps
 
     def create_position_history(self):
         self.position_history = [None] * self.num_timestamps
         return self
-    
+
     def clear_postion_history(self):
         self.position_history = []
         return self
-        
+
     def get_position_history(self):
         return self.position_history
-    
+
     def get_position_history_len(self):
         return len(self.get_position_history())
 
@@ -55,9 +54,9 @@ class ViewableObject:
             r = None
         else:
             r = self.position_history[timestamp]
-        
+
         return r
-    
+
     def set_position_at_timestamp(self, pos, timestamp):
         self.get_position_history()[timestamp] = pos
         return self
@@ -77,10 +76,10 @@ class StationaryObject(ViewableObject):
         return self
 
 class RandomlyMovingObject(ViewableObject):
-    def __init__(self, 
+    def __init__(self,
                  boundary=None, # Boundary
-                 max_dist_per_timestamp=10, 
-                 min_dist_per_timestamp=9, 
+                 max_dist_per_timestamp=10,
+                 min_dist_per_timestamp=9,
                  twistyness_deg_per_timestamp=45,
                  **kwds
                 ):
@@ -93,15 +92,15 @@ class RandomlyMovingObject(ViewableObject):
             raise "Moving object requires a boundary parameter of class Boundary"
         self.boundary = boundary
         super().__init__(**kwds)
-    
+
         self.create_postion_history()
 
     def create_postion_history(self):
         self.clear_postion_history()
         ps = self.random_start_point()
         self.position_history.append(ps)
-        self.position_history.append(GU.point_with_angle_and_distance_from_point(ps, 
-                                                                                 self.boundary.angle_to_centroid(ps), 
+        self.position_history.append(GU.point_with_angle_and_distance_from_point(ps,
+                                                                                 self.boundary.angle_to_centroid(ps),
                                                                                  self.random_distance()))
 
         for _ in range(2, self.num_timestamps):
@@ -113,7 +112,7 @@ class RandomlyMovingObject(ViewableObject):
             a = self.boundary.angle_to_centroid(self.last_point())
         else:
             a = self.random_angle()
-        
+
         d = self.random_distance()
         p = GU.point_with_angle_and_distance_from_point(self.last_point(), a, d)
         self.position_history.append(p)
@@ -136,10 +135,10 @@ class RandomlyMovingObject(ViewableObject):
 
     def random_start_point(self):
         return self.boundary.random_point()
-    
+
     def random_distance(self):
         return random.random() * (self.max_dist_per_timestamp - self.min_dist_per_timestamp) + self.min_dist_per_timestamp
-        
+
 
 class RandomlyMovingTag(RandomlyMovingObject):
 
@@ -158,6 +157,6 @@ class ViewableObjects:
         else:
             self._viewable_objects = viewable_objects
         return self
-    
+
     def get_viewable_objects(self):
         return self._viewable_objects

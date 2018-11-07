@@ -223,20 +223,31 @@ class CameraRenderer(ElementRenderer):
     def render_camera_gps(self):
         pos = self.camera.get_gps_position()
         label_text = 'gps' + str(self.camera.get_gps_position())
-        self.stationary_rendered_elements.append(self.tk_renderer.create_dot(pos,
-                                                 outline=self.camera_gps_color,
-                                                 fill=self.camera_gps_color))
-        self.stationary_rendered_elements.append(self.tk_renderer.create_dot_label(pos,
-                                                 text=label_text,
-                                                 fill=self.camera_gps_color))
+        self.stationary_rendered_elements.append(
+            self.tk_renderer.create_dot(
+                pos,
+                outline=self.camera_gps_color,
+                fill=self.camera_gps_color,
+            )
+        )
+        self.stationary_rendered_elements.append(
+            self.tk_renderer.create_dot_label(
+                pos,
+                text=label_text,
+                fill=self.camera_gps_color,
+            )
+        )
         return self
 
     def render_gps_error_circle(self):
         err = self.camera.get_gps_max_error()
         self.stationary_rendered_elements.append(
-             self.tk_renderer.create_circle_with_center_and_radius(self.camera.get_gps_position(),
-                                                                   err,
-                                                                   outline=self.gps_err_color))
+            self.tk_renderer.create_circle_with_center_and_radius(
+                self.camera.get_gps_position(),
+                err,
+                outline=self.gps_err_color,
+            )
+        )
         return self
 
     def render_view_triangle(self, timestamp):
