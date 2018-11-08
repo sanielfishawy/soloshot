@@ -19,7 +19,7 @@ class TagPositionAnalyzer:
 
     def _quadrant_to_tag(self, timestamp):
         tag_position = self.tag.get_position_at_timestamp(timestamp)
-        return GUtils.quadrant_of_vector(self.camera.gps_position, tag_position)
+        return GUtils.quadrant_of_vector(self.camera.get_gps_position(), tag_position)
 
     def _range_of_angles_between_timestamps(self, timestamp1, timestamp2):
         a = self._list_of_angles_between_timestamps(timestamp1, timestamp2)

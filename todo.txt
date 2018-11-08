@@ -1,9 +1,16 @@
 - GeoMapScrubber
-    - Add ability to click on map to get position in x, y and latitude and longitude
     - Get lat and long of the camera
+        - x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
 
-- Camera
-    - Add lat, long and MapCoordinateTransformer
+- Base
+    - lat, long
+    - MapCoordinateTransformer
+    - Pan_motor_angle_series
+    - Pan_motor_angle_time_series
+
+- Lens
+    - Fov_series
+    - fov_time_series
 
 - Run TagPositionAnalyzer on tag and camera
     - Display results on map.
