@@ -23,12 +23,16 @@ class Base:
             gps_longitude,
             actual_latitude=None,
             actual_longitude=None,
+            calibrated_latitude=None,
+            calibrated_longitude=None,
             pan_motor_angle_series: np.ndarray = None,
             base_time_series: np.ndarray = None,
             map_coordinate_transformer: MapCoordinateTransformer = None,
     ):
         self._actual_latitude = actual_latitude
         self._actual_longitude = actual_longitude
+        self._calibrated_latitude = calibrated_latitude
+        self._calibrated_longitude = calibrated_longitude
         self._pan_motor_angle_series = pan_motor_angle_series
         self._base_time_series = base_time_series
         self._gps_latitude = gps_latitude

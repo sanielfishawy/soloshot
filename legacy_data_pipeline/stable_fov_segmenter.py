@@ -18,6 +18,9 @@ class StableFovSegmenter:
 
     This tool takes Fov and Fov time. And returns a list of start and stop times in
     Fov time where Fov is certain to be stable and have settled.
+
+    Segments in video_time with these same start and stop times should have unchanging
+    Fov with wide enough guardbands i.e. 3000 ms before and 3000 ms after a transition.
     '''
 
     FOV = 'fov'

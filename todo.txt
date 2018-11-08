@@ -12,9 +12,13 @@
     - Fov_series
     - fov_time_series
 
-- FovAnalyzer
-    - Takes Fov series and fov time
-    - returns a list of segments with start and stop time in FOV time where FOV is stable
+- TagPositionInStableFovSegmentsAnalyzer:
+    - Get frames
+    - Mark the frames that cross fov segment
+    - Do not use lat long to calculate the angles
+
+- Tag
+    - Tag time series alignment to video
 
 - Run TagPositionAnalyzer on tag and camera
     - Display results on map.

@@ -20,11 +20,19 @@ class Tag:
             latitude_series,
             longitude_series,
             time_series,
+            alignment_offset_video_to_tag_ms: int = None,
             map_coordinate_transformer: MapCoordinateTransformer = None,
     ):
+        # params
         self._latitude_series = latitude_series
         self._longitude_series = longitude_series
         self._time_series = time_series
+        self._alignment_offset_video_to_tag_ms = alignment_offset_video_to_tag_ms
+
+        if self._alignment_offset_video_to_tag_ms is None:
+            # Emperical: see tag_gps_timebase_alignment_all_direction_changes.yml
+            self._alignment_offset_video_to_tag_ms = -57
+
         self._map_coordinate_transformer = map_coordinate_transformer
 
     def get_position_at_timestamp(self, timestamp):
@@ -54,6 +62,27 @@ class Tag:
             self._latitude_series[timestamp],
             self._longitude_series[timestamp]
         )
+
+    def get_idx_after_tag_time(self, tag_time_ms):
+        for idx, time in enumerate(self._time_series):
+            if time >= tag_time_ms:
+                return idx
+        return self._time_series.size - 1
+
+    def get_idx_before_tag_time(self, tag_time_ms):
+        for idx, time in enumerate(self._time_series):
+            if time >= tag_time_ms:
+                return min(0, idx - 1)
+        return 0
+
+    def get_tag_time_for_video_time(self, video_time):
+        return video_time + self._alignment_offset_video_to_tag_ms
+
+    def get_idx_after_video_time(self, video_time_ms):
+        return self.get_idx_after_tag_time(self.get_tag_time_for_video_time(video_time_ms))
+
+    def get_idx_before_video_time(self, video_time_ms):
+        return self.get_idx_before_tag_time(self.get_tag_time_for_video_time(video_time_ms))
 
     def _ensure_map_coordinate_transformer(self):
         assert self._map_coordinate_transformer is not None,\
