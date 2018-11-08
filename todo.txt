@@ -12,6 +12,10 @@
     - Fov_series
     - fov_time_series
 
+- FovAnalyzer
+    - Takes Fov series and fov time
+    - returns a list of segments with start and stop time in FOV time where FOV is stable
+
 - Run TagPositionAnalyzer on tag and camera
     - Display results on map.
 
