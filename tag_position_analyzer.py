@@ -65,7 +65,11 @@ class TagPositionAnalyzer:
 
         return angles_q4_adjusted if self._crosses_q1_4_boundary(quadrants) else angles
 
-    def _first_time_after_timestamp_where_range_of_angles_exceeds_threshold(self, timestamp, threshold):
+    def _first_time_after_timestamp_where_range_of_angles_exceeds_threshold(
+            self,
+            timestamp,
+            threshold
+    ):
         r = None
         for ts in range(timestamp, self.tag.get_num_timestamps()):
             if self._range_of_angles_between_timestamps(timestamp, ts) > threshold:
@@ -74,12 +78,15 @@ class TagPositionAnalyzer:
 
         return r
 
-    def get_frames_where_range_exceeds_threshold(self, threshold_rad):
+    def get_frames_where_range_exceeds_threshold(self, threshold_rad, limit=None):
         self._frames = []
         frame_start = 0
         frame_end = None
         for _ in range(self.tag.get_num_timestamps()):
-            frame_end = self._first_time_after_timestamp_where_range_of_angles_exceeds_threshold(frame_start, threshold_rad)
+            frame_end = self._first_time_after_timestamp_where_range_of_angles_exceeds_threshold(
+                timestamp=frame_start,
+                threshold=threshold_rad,
+            )
             frame = {}
             frame[self.__class__.FRAME] = (frame_start, frame_end)
             if frame_end is not None:
@@ -87,19 +94,22 @@ class TagPositionAnalyzer:
                 max_ts = self._timestamp_of_max_angle_in_frame(frame_start, frame_end)
                 frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] = min_ts
                 frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE] = max_ts
-                frame[self.__class__.DISTANCE_BETWEEN_POSITIONS] = self._distance_between_positions(min_ts, max_ts)
-                frame[self.__class__.ANGLE_BETWEEN_POSITIONS] = self._angle_between_timestamps(min_ts, max_ts)
+                frame[self.__class__.DISTANCE_BETWEEN_POSITIONS] = self._distance_between_positions(min_ts, max_ts) # pylint: disable=C0301
+                frame[self.__class__.ANGLE_BETWEEN_POSITIONS] = self._angle_between_timestamps(min_ts, max_ts) # pylint: disable=C0301
             self._frames.append(frame)
             frame_start = frame_end
 
-            if frame_end is None:
+            if frame_end is None or len(self._frames) == limit:
                 break
 
         return self._frames
 
-    def get_complete_frames_where_range_exceeds_threshold(self, threshold_rad):
+    def get_complete_frames_where_range_exceeds_threshold(self, threshold_rad, limit=None):
         return [
-            frame for frame in self.get_frames_where_range_exceeds_threshold(threshold_rad)
+            frame for frame in self.get_frames_where_range_exceeds_threshold(
+                threshold_rad=threshold_rad,
+                limit=limit,
+            )
             if self.is_not_terminal_frame(frame)
         ]
 
@@ -116,13 +126,13 @@ class TagPositionAnalyzer:
         return self.tag.get_position_at_timestamp(self.get_late_min_max_timestamp(frame))
 
     def get_early_min_max_timestamp(self, frame):
-        if frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] < frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]:
+        if frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] < frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]: # pylint: disable:C0301
             return frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE]
         else:
             return frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]
 
     def get_late_min_max_timestamp(self, frame):
-        if frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] > frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]:
+        if frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] > frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]: # pylint: disable:C0301
             return frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE]
         else:
             return frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE]

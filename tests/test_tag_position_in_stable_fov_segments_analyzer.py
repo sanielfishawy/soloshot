@@ -105,7 +105,11 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
         )
 
     def dont_test_visualize_tag_positions(self):
-        frames = self.tag_position_analyzer.get_frames_in_stable_fovs(np.radians(10))
+        limit = 20
+        frames = self.tag_position_analyzer.get_frames_in_stable_fovs(
+            angle_threshold_rad=np.radians(10),
+            limit=limit,
+        )
 
         master = tk.Tk()
         self.geo_map_scrubber.setup_ui(master)
