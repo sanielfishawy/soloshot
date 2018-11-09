@@ -7,7 +7,7 @@ import numpy_extensions.numpy_ndarray_extensions # pylint: disable=W0611
 sys.path.insert(0, os.getcwd())
 from tag import Tag
 from base import Base
-from stable_fov_segmenter import StableFovSegmenter
+from legacy_data_pipeline.stable_fov_segmenter import StableFovSegmenter
 from tag_position_analyzer import TagPositionAnalyzer
 
 

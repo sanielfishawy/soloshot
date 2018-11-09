@@ -37,6 +37,10 @@ class GeoMapScrubber:
         self._track_color = track_color
         self._track_head_color = track_head_color
 
+        # constants
+        self._marker_color = 'yellow'
+        self._marker_radius = 2
+
         # lazy inits
         self._map_fitter = None
         self._map_coordinate_transformer = None
@@ -114,6 +118,27 @@ class GeoMapScrubber:
 
     def set_selected_callback(self, selected_callback):
         self._selected_callback = selected_callback
+
+    def add_marker(self, latitude, longitude, text=None):
+        x_pos = self._get_map_coordinate_transformer().get_x_for_longitude(longitude)
+        y_pos = self._get_map_coordinate_transformer().get_y_for_latitude(latitude)
+        self._map_canvas.create_rectangle(
+            x_pos - self._marker_radius,
+            y_pos - self._marker_radius,
+            x_pos + self._marker_radius,
+            y_pos + self._marker_radius,
+            fill=self._marker_color,
+            outline=self._marker_color
+        )
+
+        if text is not None:
+            self._map_canvas.create_text(
+                x_pos,
+                y_pos,
+                text=text,
+                fill=self._marker_color,
+                anchor=tk.NW,
+            )
 
     def _map_left_click(self, event):
         print(
