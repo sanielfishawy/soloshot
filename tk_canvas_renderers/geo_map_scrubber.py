@@ -25,6 +25,7 @@ class GeoMapScrubber:
             selected_callback=None,
             width=700,
             height=700,
+            border_feet=10,
             track_color='orange',
             track_head_color='red',
     ):
@@ -34,6 +35,7 @@ class GeoMapScrubber:
         self._selected_callback = selected_callback
         self._width = width
         self._height = height
+        self._border_feet = border_feet
         self._track_color = track_color
         self._track_head_color = track_head_color
 
@@ -119,9 +121,16 @@ class GeoMapScrubber:
     def set_selected_callback(self, selected_callback):
         self._selected_callback = selected_callback
 
-    def add_marker(self, latitude, longitude, text=None):
+    def add_marker_lat_long(self, latitude, longitude, text=None):
         x_pos = self._get_map_coordinate_transformer().get_x_for_longitude(longitude)
         y_pos = self._get_map_coordinate_transformer().get_y_for_latitude(latitude)
+        self.add_marker_x_y(
+            x_pos=x_pos,
+            y_pos=y_pos,
+            text=text,
+        )
+
+    def add_marker_x_y(self, x_pos, y_pos, text=None):
         self._map_canvas.create_rectangle(
             x_pos - self._marker_radius,
             y_pos - self._marker_radius,
@@ -156,7 +165,11 @@ class GeoMapScrubber:
 
     def _get_map_fitter(self) -> MapFitter:
         if self._map_fitter is None:
-            self._map_fitter = MapFitter(self._latitude_series, self._longitude_series)
+            self._map_fitter = MapFitter(
+                latitude_series=self._latitude_series,
+                longitude_series=self._longitude_series,
+                border_feet=self._border_feet,
+            )
         return self._map_fitter
 
     def _get_map_coordinate_transformer(self) -> MapCoordinateTransformer:

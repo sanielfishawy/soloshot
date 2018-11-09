@@ -9,6 +9,7 @@ import numpy as np
 sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
+from legacy_data_pipeline.stable_fov_segmenter import StableFovSegmenter
 from geo_mapping.geo_mapper import MapCoordinateTransformer
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
 from tag import Tag
@@ -91,13 +92,41 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             base=self.actual_base,
         )
 
-    def test_stable_fov_segments(self):
+    def test_get_tag_idxs_for_stable_segment(self):
         segments = self.tag_position_analyzer._get_stable_fov_segments()
-        print('foo')
+        tag_idxs = self.tag_position_analyzer._get_tag_idxs_for_stable_segments()
+        num_not_too_short_segments = len([
+            segment for segment in segments
+            if not StableFovSegmenter.segment_is_too_short(segment)
+        ])
+        self.assertEqual(
+            num_not_too_short_segments,
+            len(tag_idxs),
+        )
 
     def dont_test_visualize_tag_positions(self):
-        frames = self.tag_position_analyzer._get_frames_marked_with_contained_in_stable_fov(np.radians(10))
-        print('foo')
+        frames = self.tag_position_analyzer.get_frames_in_stable_fovs(np.radians(10))
+
+        master = tk.Tk()
+        self.geo_map_scrubber.setup_ui(master)
+
+        for frame in frames:
+            early_x_y_pos = self.tag_position_analyzer.get_early_position(frame)
+            late_x_y_pos = self.tag_position_analyzer.get_late_position(frame)
+
+            self.geo_map_scrubber.add_marker_x_y(*early_x_y_pos)
+            self.geo_map_scrubber.add_marker_x_y(*late_x_y_pos)
+
+        master.mainloop()
+
+
+    def dont_test_visualize_base_track(self):
+        GeoMapScrubber(
+            latitude_series=self.base_latitude_series,
+            longitude_series=self.base_longitude_series,
+            time_series=self.tag_time_series,
+            border_feet=50,
+        ).run()
 
     def dont_test_visualize_mean_base_position(self):
         master = tk.Tk()
@@ -105,7 +134,7 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
 
         mean_base_latitude = np.mean(self.base_latitude_series)
         mean_base_longitude = np.mean(self.base_longitude_series)
-        self.geo_map_scrubber.add_marker(
+        self.geo_map_scrubber.add_marker_lat_long(
             latitude=mean_base_latitude,
             longitude=mean_base_longitude,
             text='mean_base_position',

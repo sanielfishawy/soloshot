@@ -11,7 +11,7 @@ from legacy_data_pipeline.stable_fov_segmenter import StableFovSegmenter
 from tag_position_analyzer import TagPositionAnalyzer
 
 
-class TagPositionInStableFovSegmentsAnalyzer:
+class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
     '''
     Uses StableFovSegmenter to find stable fov segments.
     Uses TagPositionAnalyser to get candidate frames with gps subtended
@@ -34,8 +34,7 @@ class TagPositionInStableFovSegmentsAnalyzer:
         self._tag = tag
         self._base = base
 
-        # helpers
-        self._tag_position_analyser = TagPositionAnalyzer(
+        super().__init__(
             tag=self._tag,
             camera=self._base,
         )
@@ -67,7 +66,7 @@ class TagPositionInStableFovSegmentsAnalyzer:
         if self._tag_idxs_for_stable_segments is None:
             self._tag_idxs_for_stable_segments = []
             for stable_segment in self._get_stable_fov_segments():
-                if not stable_segment[StableFovSegmenter.TOO_SHORT]:
+                if not StableFovSegmenter.segment_is_too_short(stable_segment):
                     self._tag_idxs_for_stable_segments.append(
                         self._get_tag_idxs_for_stable_segment(stable_segment)
                     )
@@ -81,18 +80,15 @@ class TagPositionInStableFovSegmentsAnalyzer:
             self.__class__.SEGMENT_END_TAG_IDX: self._get_tag_idx_before_fov_time(end_fov_time),
         }
 
-    def _get_complete_frames(self, angle_threshold_rad):
-        return self._tag_position_analyser.get_complete_frames_where_range_exceeds_threshold(angle_threshold_rad) # pylint: disable=C0301
-
     def _get_frames_marked_with_contained_in_stable_fov(self, angle_threshold_rad):
-        frames = self._get_complete_frames(angle_threshold_rad)
+        frames = self.get_complete_frames_where_range_exceeds_threshold(angle_threshold_rad)
         for frame in frames:
             frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT] = self._is_frame_contained_in_stable_segment(frame) # pylint: disable=C0301
         return frames
 
     def _is_frame_contained_in_stable_segment(self, frame):
-        early_idx = self._tag_position_analyser.get_early_min_max_timestamp(frame)
-        late_idx = self._tag_position_analyser.get_late_min_max_timestamp(frame)
+        early_idx = self.get_early_min_max_timestamp(frame)
+        late_idx = self.get_late_min_max_timestamp(frame)
         for segment in self._get_tag_idxs_for_stable_segments():
             start_idx = segment[self.__class__.SEGMENT_START_TAG_IDX]
             end_idx = segment[self.__class__.SEGMENT_END_TAG_IDX]
