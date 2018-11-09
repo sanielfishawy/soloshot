@@ -97,6 +97,12 @@ class TagPositionAnalyzer:
 
         return self._frames
 
+    def get_complete_frames_where_range_exceeds_threshold(self, threshold_rad):
+        return [
+            frame for frame in self.get_frames_where_range_exceeds_threshold(threshold_rad)
+            if self.is_not_terminal_frame(frame)
+        ]
+
     def get_early_position(self, frame):
         if self.is_terminal_frame(frame):
             return None
@@ -152,7 +158,7 @@ class TagPositionAnalyzer:
         return not self.is_terminal_frame(frame)
 
     def is_terminal_frame(self, frame):
-        return self.get_frame_end_timestamp(frame) == None
+        return self.get_frame_end_timestamp(frame) is None
 
     def _distance_between_positions(self, timestamp1, timestamp2):
         return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1),

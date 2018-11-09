@@ -35,6 +35,14 @@ class Tag:
 
         self._map_coordinate_transformer = map_coordinate_transformer
 
+        # lazy init
+        self._normalized_time_series = None
+
+    # compatability with ViewableObject and simulated calibation pipeline
+    def get_num_timestamps(self):
+        return self._latitude_series.size
+
+    # compatability with ViewableObject and simulated calibation pipeline
     def get_position_at_timestamp(self, timestamp):
         return self.get_x_y_postion_at_timestamp(timestamp)
 
@@ -64,15 +72,15 @@ class Tag:
         )
 
     def get_idx_after_tag_time(self, tag_time_ms):
-        for idx, time in enumerate(self._time_series):
+        for idx, time in enumerate(self._get_normalized_time_series()):
             if time >= tag_time_ms:
                 return idx
         return self._time_series.size - 1
 
     def get_idx_before_tag_time(self, tag_time_ms):
-        for idx, time in enumerate(self._time_series):
+        for idx, time in enumerate(self._get_normalized_time_series()):
             if time >= tag_time_ms:
-                return min(0, idx - 1)
+                return max(0, idx - 1)
         return 0
 
     def get_tag_time_for_video_time(self, video_time):
@@ -83,6 +91,11 @@ class Tag:
 
     def get_idx_before_video_time(self, video_time_ms):
         return self.get_idx_before_tag_time(self.get_tag_time_for_video_time(video_time_ms))
+
+    def _get_normalized_time_series(self):
+        if self._normalized_time_series is None:
+            self._normalized_time_series = self._time_series - self._time_series[0]
+        return self._normalized_time_series
 
     def _ensure_map_coordinate_transformer(self):
         assert self._map_coordinate_transformer is not None,\

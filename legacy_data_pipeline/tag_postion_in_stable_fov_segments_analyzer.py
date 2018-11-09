@@ -81,13 +81,14 @@ class TagPositionInStableFovSegmentsAnalyzer:
             self.__class__.SEGMENT_END_TAG_IDX: self._get_tag_idx_before_fov_time(end_fov_time),
         }
 
-    def _get_frames(self, angle_threshold_rad):
-        return self._tag_position_analyser.get_frames_where_range_exceeds_threshold(angle_threshold_rad) # pylint: disable=C0301
+    def _get_complete_frames(self, angle_threshold_rad):
+        return self._tag_position_analyser.get_complete_frames_where_range_exceeds_threshold(angle_threshold_rad) # pylint: disable=C0301
 
     def _get_frames_marked_with_contained_in_stable_fov(self, angle_threshold_rad):
-        frames = self._get_frames(angle_threshold_rad)
+        frames = self._get_complete_frames(angle_threshold_rad)
         for frame in frames:
             frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT] = self._is_frame_contained_in_stable_segment(frame) # pylint: disable=C0301
+        return frames
 
     def _is_frame_contained_in_stable_segment(self, frame):
         early_idx = self._tag_position_analyser.get_early_min_max_timestamp(frame)

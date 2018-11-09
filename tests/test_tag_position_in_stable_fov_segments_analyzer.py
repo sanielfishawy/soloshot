@@ -1,4 +1,4 @@
-# pylint: disable=C0413
+# pylint: disable=C0413, W0212
 import sys
 import os
 import unittest
@@ -9,6 +9,7 @@ import numpy as np
 sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
+from geo_mapping.geo_mapper import MapCoordinateTransformer
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
 from tag import Tag
 from base import Base
@@ -36,6 +37,19 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             fieldname=LegacyDataFileSystemHelper.TAG_TIME_FIELD,
         )
 
+        self.geo_map_scrubber = GeoMapScrubber(
+            latitude_series=self.tag_latitude_series,
+            longitude_series=self.tag_longitude_series,
+            time_series=self.tag_time_series,
+        )
+
+        self.tag = Tag(
+            latitude_series=self.tag_latitude_series,
+            longitude_series=self.tag_longitude_series,
+            time_series=self.tag_time_series,
+            map_coordinate_transformer=self.geo_map_scrubber._get_map_coordinate_transformer(),
+        )
+
         self.base_latitude_series = ldfh.get_field_from_npz_file(
             session_dir_name=self.__class__.SESSION_DIR,
             filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
@@ -47,19 +61,51 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             fieldname=LegacyDataFileSystemHelper.BASE_LONGITUDE_FIELD,
         )
 
-    def test_visualize_mean_base_latitude(self):
-        geo_map_scrubber = GeoMapScrubber(
-            latitude_series=self.tag_latitude_series,
-            longitude_series=self.tag_longitude_series,
-            time_series=self.tag_time_series,
+        # Base position we believe to be correct based on where we believe we set up
+        # the base on the field. Point picked on map using GeoMapScrubber
+        # x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
+        self.actual_base_latitude = 37.38639419602273
+        self.actual_base_longitude = -122.11008779357967
+
+        self.actual_base = Base(
+            gps_latitude=self.actual_base_latitude,
+            gps_longitude=self.actual_base_longitude,
+            map_coordinate_transformer=self.geo_map_scrubber._get_map_coordinate_transformer(),
         )
 
+        self.fov_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.LENS_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.LENS_FOV_FIELD,
+        )
+        self.fov_time_series = ldfh.get_field_from_npz_file(
+            session_dir_name=self.__class__.SESSION_DIR,
+            filename=LegacyDataFileSystemHelper.LENS_NPZ_FILE,
+            fieldname=LegacyDataFileSystemHelper.LENS_TIME_FIELD,
+        )
+
+        self.tag_position_analyzer = TagPositionInStableFovSegmentsAnalyzer(
+            fov_series=self.fov_series,
+            fov_time_series=self.fov_time_series,
+            tag=self.tag,
+            base=self.actual_base,
+        )
+
+    def test_stable_fov_segments(self):
+        segments = self.tag_position_analyzer._get_stable_fov_segments()
+        print('foo')
+
+    def dont_test_visualize_tag_positions(self):
+        frames = self.tag_position_analyzer._get_frames_marked_with_contained_in_stable_fov(np.radians(10))
+        print('foo')
+
+    def dont_test_visualize_mean_base_position(self):
         master = tk.Tk()
-        geo_map_scrubber.setup_ui(master)
+        self.geo_map_scrubber.setup_ui(master)
 
         mean_base_latitude = np.mean(self.base_latitude_series)
         mean_base_longitude = np.mean(self.base_longitude_series)
-        geo_map_scrubber.add_marker(
+        self.geo_map_scrubber.add_marker(
             latitude=mean_base_latitude,
             longitude=mean_base_longitude,
             text='mean_base_position',

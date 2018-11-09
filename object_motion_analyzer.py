@@ -1,7 +1,7 @@
 import math
 import geometry_utils as GU
 from tag_position_analyzer import TagPositionAnalyzer
-from image_analyzer import ImageAnalyzer 
+from image_analyzer import ImageAnalyzer
 from shapely.geometry import Point
 
 class ObjectMotionAnalyzer:
@@ -13,14 +13,14 @@ class ObjectMotionAnalyzer:
         self.tag_gps_angle_threshold = tag_gps_angle_threshold
         self.frames = None
         self.image_analyzer = None
-    
+
     def get_tag_gps_angle_threshold(self):
         return self.tag_gps_angle_threshold
 
     def set_tag_gps_angle_threshold(self, theta_rad):
         self.tag_gps_angle_threshold = theta_rad
         return self
-    
+
     def get_tag_position_analyzer(self):
         return self.tag_position_analyzer
 
@@ -32,24 +32,24 @@ class ObjectMotionAnalyzer:
     def get_frames(self):
         if self.frames == None:
             self._analyze_frames()
-        
+
         return self.frames
 
     def get_complete_frames(self):
         return list(filter(self.is_not_terminal_frame, self.get_frames()))
-    
+
     def get_first_complete_frame(self):
         f = self.get_complete_frames()
         if len(f) == 0:
             return None
         return f[0]
-    
+
     def get_first_frame_with_object(self, obj):
         for f in self.get_complete_frames():
             if self.get_frame_includes_object(f, obj):
                 return f
         return None
-    
+
     def get_frame_includes_object(self, frame, obj):
         return obj in self.get_in_view_objects(frame)
 
@@ -57,14 +57,14 @@ class ObjectMotionAnalyzer:
         self.frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold(self.tag_gps_angle_threshold)
         for frame in self.frames:
             self._analyze_frame(frame)
-        
+
         return self
 
     def _get_frame_rotation_same_as_tag(self, frame):
         if not 'rotation_same_as_tag' in frame:
             frame['rotation_same_as_tag'] = {}
         return frame['rotation_same_as_tag']
-    
+
     def _get_frame_in_view_object_angles(self, frame):
         return frame['in_view_objects_angles'] if not self.is_terminal_frame(frame) else None
 
@@ -73,13 +73,13 @@ class ObjectMotionAnalyzer:
             self.image_analyzer = ImageAnalyzer(self.camera)
             self.image_analyzer.set_images(self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time())
         return self.image_analyzer
-    
+
     def _analyze_frame(self, frame):
-        if not self.tag_position_analyzer.is_terminal_frame(frame): 
+        if not self.tag_position_analyzer.is_terminal_frame(frame):
             self._add_objects_angles_to_frame(frame)
             self._mark_objects_with_rotation_same_as_tag_in_frame(frame)
             self._add_circumcircles_for_objects_in_frame(frame)
-        
+
     def _mark_objects_with_rotation_same_as_tag_in_frame(self, frame):
         for obj in self._get_frame_in_view_object_angles(frame):
             self._get_frame_rotation_same_as_tag(frame)[obj] = (self.tag_position_analyzer.get_angle_between_positions(frame) > 0) == \
@@ -98,19 +98,19 @@ class ObjectMotionAnalyzer:
 
     def get_in_view_objects(self, frame):
         return self._get_frame_in_view_object_angles(frame).keys() if not self.is_terminal_frame(frame) else []
-    
+
     def get_rotation_same_as_tag(self, frame, obj):
         rot_s = self._get_frame_rotation_same_as_tag(frame)
         return rot_s[obj] if obj in rot_s else None
-    
+
     def get_circumcircles(self, frame):
         if 'circumcircles' not in frame:
             frame['circumcircles'] = {}
         return frame['circumcircles']
-    
+
     def get_circumcircles_for_object_in_frame(self, frame, obj):
-        return self.get_circumcircles(frame)[obj] if obj in self.get_circumcircles(frame) else None 
-        
+        return self.get_circumcircles(frame)[obj] if obj in self.get_circumcircles(frame) else None
+
     def get_circumcircles_for_object_for_all_frames(self, obj):
         return [self.get_circumcircles_for_object_in_frame(frame, obj) for frame in self.get_complete_frames()]
 
@@ -124,7 +124,7 @@ class ObjectMotionAnalyzer:
         for obj in self.get_in_view_objects(frame):
             if obj != None and obj.get_is_tag():
                 return obj
-        
+
         return None
 
     def _add_objects_angles_to_frame(self, frame):
@@ -134,12 +134,12 @@ class ObjectMotionAnalyzer:
         frame['in_view_objects_angle_relative_to_center_early'] = self._get_image_analyzer().get_angles_relative_to_center_for_all_objects(ts1)
         frame['in_view_objects_angle_relative_to_center_late']  = self._get_image_analyzer().get_angles_relative_to_center_for_all_objects(ts2)
         return self
-    
+
     def get_early_angle_relative_to_center(self, frame):
         if 'in_view_objects_angle_relative_to_center_early' not in frame:
             frame['in_view_objects_angle_relative_to_center_early'] = {}
         return frame['in_view_objects_angle_relative_to_center_early']
-        
+
     def get_early_angle_relative_to_center_for_object_in_frame(self, obj, frame):
         return self.get_early_angle_relative_to_center(frame)[obj] if obj in self.get_early_angle_relative_to_center(frame) else None
 
@@ -166,7 +166,7 @@ class Circumcircles:
 
         self.c2_high_def = None
         self.c2_low_def = None
-    
+
         self.c1_intersects_error_circle = None
         self.c2_intersects_error_circle = None
 
@@ -217,12 +217,12 @@ class Circumcircles:
         if self.c1_intersects_error_circle == None:
             self.c1_intersects_error_circle = self.get_c1_low_def().intersects(self.get_error_circle_exterior())
         return self.c1_intersects_error_circle
-    
+
     def get_c2_intersects_error_circle(self):
         if self.c2_intersects_error_circle == None:
             self.c2_intersects_error_circle = self.get_c2_low_def().intersects(self.get_error_circle_exterior())
         return self.c2_intersects_error_circle
-    
+
     def get_intersects_error_circle(self):
         return self.get_c1_intersects_error_circle() or self.get_c2_intersects_error_circle()
 
