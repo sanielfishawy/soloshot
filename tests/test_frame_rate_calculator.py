@@ -11,7 +11,7 @@ class TestFrameRateCalculator(unittest.TestCase):
     def setUp(self):
         self.frc = FrameRateCalculator()
 
-    def test_run(self):
+    def dont_test_run(self):
         self.frc.run()
 
     def dont_test_setup_results_file(self):

@@ -1,4 +1,4 @@
-# pylint: disable=C0413, W0212
+# pylint: disable=C0413, W0212, C0301
 import sys
 import os
 import unittest
@@ -10,7 +10,6 @@ sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
 from legacy_data_pipeline.stable_fov_segmenter import StableFovSegmenter
-from geo_mapping.geo_mapper import MapCoordinateTransformer
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
 from tag import Tag
 from base import Base

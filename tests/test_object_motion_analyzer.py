@@ -1,11 +1,13 @@
-import sys, math, unittest
-sys.path.insert(0, '/Users/sani/dev/soloshot')
-
+# pylint: disable=C0413, C0301, W0201
+import sys
+import os
+import math
+import unittest
 from shapely.geometry import LineString, LinearRing
 
+sys.path.insert(0, os.getcwd())
 from object_universe import ObjectUniverse
 from camera import Camera
-from image_analyzer import ImageAnalyzer
 from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
@@ -28,9 +30,9 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
                     set_gps_position((100,380)).\
                     set_gps_max_error(25).\
                     set_fov_rad(math.pi/2)
-    
+
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
-        
+
         self.tag = RandomlyMovingTag(boundary=self.boundary)
         self.viewable_objects = [self.tag]
 
@@ -42,11 +44,11 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
 
         for timestamp in range(self.num_timestamps):
             self.camera.set_state_of_pan_motor_angle_at_timestamp(0, timestamp)
-        
+
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.object_motion_analyzer = ObjectMotionAnalyzer(self.camera, 
-                                                           self.tag, 
+        self.object_motion_analyzer = ObjectMotionAnalyzer(self.camera,
+                                                           self.tag,
                                                            tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
         self.frames = self.object_motion_analyzer.get_complete_frames()
@@ -57,22 +59,22 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         for cc in ccs:
             self.assertEqual(type(cc.get_c1_high_def()), LinearRing)
-            
+
     def test_get_c1_low_def_returns_a_linear_ring(self):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         for cc in ccs:
             self.assertEqual(type(cc.get_c1_low_def()), LinearRing)
-            
+
     def test_get_c2_high_def_returns_a_linear_ring(self):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         for cc in ccs:
             self.assertEqual(type(cc.get_c2_high_def()), LinearRing)
-            
+
     def test_get_c2_low_def_returns_a_linear_ring(self):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         for cc in ccs:
             self.assertEqual(type(cc.get_c2_low_def()), LinearRing)
-            
+
     def test_intersection_with_error_circle_for_tag_always_returns_linestring(self):
         ccs = self.object_motion_analyzer.get_circumcircles_for_object_for_all_frames(self.tag)
         for cc in ccs:
@@ -92,13 +94,16 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
                 objs = self.object_motion_analyzer.get_in_view_objects(frame)
                 self.assertEqual(len(objs), self.num_randomly_moving_objects + 1)
                 for obj in self.object_motion_analyzer.get_in_view_objects(frame):
-                    self.assertIsInstance(self.object_motion_analyzer.get_circumcircles_for_object_in_frame(frame, obj), Circumcircles)
+                    self.assertIsInstance(
+                        self.object_motion_analyzer.get_circumcircles_for_object_in_frame(frame, obj),
+                        Circumcircles
+                    )
 
 
     def test_angle_between_positions_is_greater_than_threshold(self):
         for frame in self.frames:
             if not self.object_motion_analyzer.is_terminal_frame(frame):
-                self.assertGreater(abs(self.object_motion_analyzer.get_tag_position_analyzer().get_angle_between_positions(frame)), 
+                self.assertGreater(abs(self.object_motion_analyzer.get_tag_position_analyzer().get_angle_between_positions(frame)),
                                 self.tag_gps_angle_threshold)
 
     def test_rotation_same_as_tag_for_tag(self):
@@ -109,28 +114,31 @@ class TestObjectMotionAnalyzer(unittest.TestCase):
                 self.assertEqual(rot, None)
             else:
                 self.assertTrue(rot)
-    
+
     def test_tag_circumcircles_always_intersect_error_circle(self):
         for frame in self.frames:
             if not self.object_motion_analyzer.is_terminal_frame(frame):
                 tag = self.object_motion_analyzer.get_tag(frame)
                 isects = self.object_motion_analyzer.get_circumcircles(frame)[tag].get_intersects_error_circle()
                 self.assertTrue(isects)
-    
+
     def visualize(self):
         self.boundary_renderer = BoundaryRenderer(self.boundary)
         self.camera_renderer = CameraRenderer(self.camera)
-        self.viewable_objects_renderer = ViewableObjectsRenderer(self.viewable_objects, computer_vision=self.camera.get_computer_vision())
+        self.viewable_objects_renderer = ViewableObjectsRenderer(
+            self.viewable_objects,
+            computer_vision=self.camera.get_computer_vision()
+        )
         self.image_renderer = ImageRenderer(self.camera.get_image_generator())
         self.image_renderer.set_computer_vision(self.camera.get_computer_vision())
         self.circumcircle_renderer = BasePositionCalibratorRenderer(self.object_motion_analyzer)
 
         self.renderers = [
-                            self.camera_renderer,
-                            self.viewable_objects_renderer,
-                            self.boundary_renderer,
-                            self.image_renderer,
-                            self.circumcircle_renderer,
+            self.camera_renderer,
+            self.viewable_objects_renderer,
+            self.boundary_renderer,
+            self.image_renderer,
+            self.circumcircle_renderer,
         ]
 
         self.animator = Animator(element_renderers=self.renderers, num_timestamps=self.num_timestamps, seconds_per_timestamp=0.2)

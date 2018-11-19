@@ -1,6 +1,11 @@
-import sys, math, unittest
+# pylint: disable=C0413, W0212, C0103
+import sys
+import math
+import unittest
+
 sys.path.insert(0, '/Users/sani/dev/soloshot')
-from shapely.geometry import LineString, Point, MultiPoint
+
+from shapely.geometry import LineString, MultiPoint
 
 from base_position_calibrator import BasePositionCalibrator
 from object_universe import ObjectUniverse
@@ -26,14 +31,14 @@ class TestBasePositionCalibrator(unittest.TestCase):
                     set_gps_position((100,380)).\
                     set_gps_max_error(25).\
                     set_fov_rad(math.pi/2)
-    
+
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
-        
+
         self.tag = RandomlyMovingTag(boundary=self.boundary)
         self.r_objs = []
         for _ in range(self.num_randomly_moving_objects):
             self.r_objs.append(RandomlyMovingObject(boundary=self.boundary))
-        
+
         self.viewable_objects = [self.tag] + self.r_objs
 
         self.object_universe.add_camera(self.camera).\
@@ -41,16 +46,16 @@ class TestBasePositionCalibrator(unittest.TestCase):
 
         for timestamp in range(self.num_timestamps):
             self.camera.set_state_of_pan_motor_angle_at_timestamp(0, timestamp)
-        
+
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.base_position_calibrator = BasePositionCalibrator(self.camera, 
-                                              self.tag, 
+        self.base_position_calibrator = BasePositionCalibrator(self.camera,
+                                              self.tag,
                                               tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
 
         return self
-    
+
     def test_get_all_circumcircle_objects_gets_only_cc_objects(self):
         # Wrote this test while tracking down a bug which seems to be in ObjectPositionAnalyzer but which I discovered
         # when testing BaseAngleCalibrator. But I cant reproduce it here or in TestObjectMotionAnalyzer
@@ -89,25 +94,25 @@ class TestBasePositionCalibrator(unittest.TestCase):
         self.assertGreater(len(intersections), 0)
         for isect in intersections:
             self.assertEqual(type(isect), LineString)
-    
+
     def test_get_all_circumcircle_objects_returns_circumcircle_objects_for_the_tag(self):
         ccs = self.base_position_calibrator._get_all_circumcircle_objects()
         self.assertGreater(len(ccs), 0)
         for cc in ccs:
             self.assertEqual(type(cc), Circumcircles)
-        
+
     def visualize(self):
 
         renderable_objects = [
-                               self.boundary,
-                               self.object_universe,
-                               self.base_position_calibrator,
-                             ] 
+            self.boundary,
+            self.object_universe,
+            self.base_position_calibrator,
+        ]
 
-        RenderOrchestrator(self.num_timestamps, 
+        RenderOrchestrator(self.num_timestamps,
                            seconds_per_timestamp=0.2,
                            renderable_objects=renderable_objects).run()
-        
+
 
 if __name__ == '__main__':
     unittest.main()

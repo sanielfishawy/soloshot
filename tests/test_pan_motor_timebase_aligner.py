@@ -19,7 +19,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
         self.pmta = PanMotorTimeBaseAligner(self.__class__.TEST_SESSION_DIR_NAME,
                                             num_points=6)
 
-    def test_visualize_peaks(self):
+    def dont_test_visualize_peaks(self):
         self.pmta.visualize_motor_local_maxima_and_minima()
 
     def dont_test_show_scrubber_for_maxima(self):
@@ -36,7 +36,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
             for image in images:
                 self.assertIsInstance(image, ImageFromVideo)
 
-    def test_run(self):
+    def dont_test_run(self):
         self.pmta.show_scrub_picker_for_min_and_max()
         self.pmta.save_results()
 

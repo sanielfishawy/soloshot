@@ -1,8 +1,10 @@
+# pylint: disable=C0413, W0611
 import sys
 import os
 import unittest
 from pathlib import Path
 import PIL.Image
+
 sys.path.insert(0, os.getcwd())
 import video_and_photo_tools.pil_image_extensions
 

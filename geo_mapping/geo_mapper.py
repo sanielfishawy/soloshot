@@ -125,9 +125,9 @@ class GeoMapper:
 
         # print(f'Center latitude = {self._center_latitude}')
         # print(f'Center longitude = {self._center_longitude}')
-        print('zoom=', self._zoom, 'scale=', self._scale)
-        print(f'Latitude height = {2 * offset}')
-        print(f'Longitude width = {2 * (long_scale * offset)}')
+        # print('zoom=', self._zoom, 'scale=', self._scale)
+        # print(f'Latitude height = {2 * offset}')
+        # print(f'Longitude width = {2 * (long_scale * offset)}')
 
         r = (
             f'{self._center_latitude},{self._center_longitude}|'
@@ -137,7 +137,7 @@ class GeoMapper:
             f'{self._center_latitude - offset},{self._center_longitude - long_scale * offset}'
         )
 
-        print(f'Marker coords {r}')
+        # print(f'Marker coords {r}')
         return r
 
     def deg_lat_per_foot(self):

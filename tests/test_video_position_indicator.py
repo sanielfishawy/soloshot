@@ -19,9 +19,10 @@ class TestVideoPostionIndicator(unittest.TestCase):
                                 width=self.width,
                                 height=self.height,
                                )
-        self.canvas.pack()
+        self.canvas.grid(column=0, row=0)
 
         self.indicator = VideoPositionIndicator(self.canvas, self.margin)
+        self.root.update_idletasks()
         self.indicator.setup_ui()
 
     def test_get_left_x(self):
@@ -33,7 +34,7 @@ class TestVideoPostionIndicator(unittest.TestCase):
     def test_winfo_width(self):
         self.assertEqual(self.canvas.winfo_width(), self.width + 6)
 
-    def visualize(self):
+    def dont_test_visualize(self):
         self.root.mainloop()
 
 

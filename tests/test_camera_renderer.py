@@ -1,6 +1,9 @@
+# pylint: disable=C0413
 import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import os
 import unittest
+
+sys.path.insert(0, os.getcwd())
 from camera import Camera
 from tk_canvas_renderers.element_renderers import CameraRenderer
 from tk_canvas_renderers.animator import Animator
@@ -10,7 +13,7 @@ class TestCameraRenderer(unittest.TestCase):
 
     def setUp(self):
         self.num_timestamps = 180
-        self.tk_renderer = TKRenderer(canvas_width=1200, canvas_height=800, scale=2)         
+        self.tk_renderer = TKRenderer(canvas_width=1200, canvas_height=800, scale=2)
 
         self.camera = Camera()
         self.camera.set_actual_position((200,200)).\
@@ -22,7 +25,11 @@ class TestCameraRenderer(unittest.TestCase):
 
         self.camera_renderer = CameraRenderer(self.camera)
         self.camera_renderer.render()
-        self.animator = Animator([self.camera_renderer], num_timestamps=self.num_timestamps, seconds_per_timestamp=0.05)
+        self.animator = Animator(
+            [self.camera_renderer],
+            num_timestamps=self.num_timestamps,
+            seconds_per_timestamp=0.05
+        )
         self.tk_renderer.set_mouse_click_callback(self.animator.play)
         return self
 

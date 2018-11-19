@@ -1,11 +1,14 @@
+# pylint: disable=C0413, C0103
 import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import os
 import unittest
-import geometry_utils as GU
 import math
 
+sys.path.insert(0, os.getcwd())
+import geometry_utils as GU
+
 class TestGeometryUtilsIsosceles(unittest.TestCase):
-    
+
     def test_line_between_circumcenters_is_perpendicular_to_line_between_points(self):
         p1 = (0,0)
         p2 = (0,1)
@@ -20,13 +23,13 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         p0 = (0,0)
         p1_s = [(0,0),
                 (1,0),
-                (1,1), 
-                (0,1), 
-                (-1,1), 
-                (-1,0), 
-                (-1,-1), 
-                (0,-1), 
-                (1,-1)] 
+                (1,1),
+                (0,1),
+                (-1,1),
+                (-1,0),
+                (-1,-1),
+                (0,-1),
+                (1,-1)]
 
         results =  [None,
                     0,
@@ -37,7 +40,7 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                     -( 3 * math.pi / 4),
                     - math.pi / 2,
                     - math.pi / 4]
-        
+
         for i, p1 in enumerate(p1_s):
             self.assertAlmostEqual(GU.angle_of_vector([p0, p1]), results[i])
 
@@ -45,13 +48,13 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         p0 = (0,0)
         p1_s = [(0,0),
                 (1,0),
-                (1,1), 
-                (0,1), 
-                (-1,1), 
-                (-1,0), 
-                (-1,-1), 
-                (0,-1), 
-                (1,-1)] 
+                (1,1),
+                (0,1),
+                (-1,1),
+                (-1,0),
+                (-1,-1),
+                (0,-1),
+                (1,-1)]
 
         results =  [None,
                     0,
@@ -62,9 +65,9 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                     5 * math.pi / 4,
                     3 * math.pi / 2,
                     7 * math.pi / 4]
-        
+
         for i, p1 in enumerate(p1_s):
-            self.assertAlmostEqual(GU.angel_of_vector_between_points_360_rad(p0, p1), results[i]) 
+            self.assertAlmostEqual(GU.angel_of_vector_between_points_360_rad(p0, p1), results[i])
 
     def test_point_with_angle_and_distance_to_point(self):
 
@@ -78,25 +81,27 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                   math.pi / 2,
                   3 * math.pi / 4,
                   math.pi,
-                  -3 * math.pi / 4, 
+                  -3 * math.pi / 4,
                   -math.pi / 2,
                   -math.pi / 4]
-        
-        expect_s = [(2,1),
-                    (1 + rt2_2, 1 + rt2_2),
-                    (1, 2),
-                    (1 - rt2_2, 1 + rt2_2),
-                    (0, 1),
-                    (1 - rt2_2, 1 - rt2_2),
-                    (1, 0),
-                   (1 + rt2_2, 1 - rt2_2)]
-        
+
+        expect_s = [
+            (2,1),
+            (1 + rt2_2, 1 + rt2_2),
+            (1, 2),
+            (1 - rt2_2, 1 + rt2_2),
+            (0, 1),
+            (1 - rt2_2, 1 - rt2_2),
+            (1, 0),
+            (1 + rt2_2, 1 - rt2_2)
+        ]
+
         for i, angle in enumerate(angles):
             r = GU.point_with_angle_and_distance_from_point(p0, angle, d)
             expect = expect_s[i]
             self.assertAlmostEqual(r[0], expect[0])
             self.assertAlmostEqual(r[1], expect[1])
-    
+
     def test_point_with_angle_and_distance_to_point_for_angle_over_2_pi(self):
         a1 = math.pi / 4
         a2 = 9 * math.pi / 4
@@ -106,7 +111,7 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         p2a2 = GU.point_with_angle_and_distance_from_point(p1, a2, d)
         self.assertAlmostEqual(p2a1[0], p2a2[0])
         self.assertAlmostEqual(p2a1[1], p2a2[1])
-        
+
     def test_quadrant(self):
         v = (1,1)
         p1_s = [(2,2),(0,2),(0,0),(2,0)]
@@ -156,7 +161,7 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                         self.assertAlmostEqual(s_angle, -math.pi)
                     elif q2 == 3:
                         self.assertAlmostEqual(s_angle, -math.pi / 2)
-    
+
     def test_distance_between_points(self):
         p1 = (1,1)
         p2 = (4,5)

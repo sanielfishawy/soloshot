@@ -1,10 +1,12 @@
 import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import os
 import unittest
+
+sys.path.insert(0, os.getcwd())
 from simple_uid import SimpleID
 
 class TestSimpleID(unittest.TestCase):
-    
+
     def setUp(self):
         self.prefix = 'foo'
         self.si = SimpleID(prefix=self.prefix)

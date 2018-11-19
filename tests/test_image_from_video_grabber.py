@@ -5,6 +5,7 @@ import unittest
 from pathlib import Path
 import PIL.Image
 import cv2
+
 sys.path.insert(0, os.getcwd())
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 
@@ -39,9 +40,9 @@ class TestImageFromVideoGrabber(unittest.TestCase):
     def test_time_ms_field_in_returned_image_is_correct(self):
         self.image_from_video_grabber._image_cache.clear_cache()
         img = self.image_from_video_grabber.get_image_at_frame_num(self.mid_frame)
-        self.assertEqual(self.mid_time_ms, img.get_time_ms())
+        self.assertEqual(int(self.mid_time_ms), img.get_time_ms())
         img = self.image_from_video_grabber.get_image_at_frame_num(self.mid_frame)
-        self.assertAlmostEqual(self.mid_time_ms, img.get_time_ms())
+        self.assertAlmostEqual(int(self.mid_time_ms), img.get_time_ms())
         self.assertTrue(img.get_from_cache())
 
     def test_returns_image_with_correct_width_and_mode(self):
@@ -55,7 +56,7 @@ class TestImageFromVideoGrabber(unittest.TestCase):
         img = self.image_from_video_grabber.get_image_at_frame_num(frame_num)
         self.assertIsInstance(img.get_image(), PIL.Image.Image)
         self.assertEqual(img.get_frame_num(), frame_num)
-        self.assertEqual(img.get_time_ms(), self.image_from_video_grabber.get_time_ms_for_frame_num(frame_num))
+        self.assertEqual(img.get_time_ms(), int(self.image_from_video_grabber.get_time_ms_for_frame_num(frame_num)))
 
     def test_get_image_from_video_at_frame_after_end_returns_last(self):
         frame_num = self.image_from_video_grabber.get_frame_count()

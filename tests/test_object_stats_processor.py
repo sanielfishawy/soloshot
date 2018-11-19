@@ -1,5 +1,9 @@
-import sys, math, unittest
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+# pylint: disable=C0413, C0301
+import sys
+import os
+import math
+import unittest
+sys.path.insert(0, os.getcwd())
 
 from object_universe import ObjectUniverse
 from camera import Camera
@@ -24,14 +28,14 @@ class TestObjectStatsProcessor(unittest.TestCase):
                     set_gps_position((100,380)).\
                     set_gps_max_error(25).\
                     set_fov_rad(math.pi/2)
-    
+
         self.boundary = Boundary([(220,300), (420,100), (420,700), (220, 500)])
-        
+
         self.tag = RandomlyMovingTag(boundary=self.boundary)
         self.r_objs = []
         for _ in range(20):
             self.r_objs.append(RandomlyMovingObject(boundary=self.boundary))
-        
+
         self.viewable_objects = [self.tag] + self.r_objs
 
         self.object_universe.add_camera(self.camera).\
@@ -39,27 +43,27 @@ class TestObjectStatsProcessor(unittest.TestCase):
 
         for timestamp in range(self.num_timestamps):
             self.camera.set_state_of_pan_motor_angle_at_timestamp(0, timestamp)
-        
+
         self.camera.get_computer_vision().set_cv_ids_for_all_camera_time()
 
-        self.object_motion_analyzer = ObjectMotionAnalyzer(self.camera, 
-                                                           self.tag, 
+        self.object_motion_analyzer = ObjectMotionAnalyzer(self.camera,
+                                                           self.tag,
                                                            tag_gps_angle_threshold=self.tag_gps_angle_threshold)
 
         self.object_stats_processor = ObjectsStatsProcessor(self.object_motion_analyzer)
 
         return self
-    
+
     def test_get_all_eliminated_before_timestamp(self):
         for timestamp in range(self.num_timestamps):
             eliminated = []
             for obj in self.object_stats_processor.get_processed_objects():
                 if self.object_stats_processor.get_elimination_t(obj) != None and self.object_stats_processor.get_elimination_t(obj) <= timestamp:
                     eliminated.append(obj)
-            
+
             eliminated.sort(key=self.get_id)
             es = self.object_stats_processor.get_all_eliminated_before_timestamp(timestamp)
-            es.sort(key=self.get_id) 
+            es.sort(key=self.get_id)
             self.assertEqual(eliminated, es)
 
     def get_id(self, obj):
@@ -67,18 +71,18 @@ class TestObjectStatsProcessor(unittest.TestCase):
 
     def test_tag_is_top_ranked_object(self):
         self.assertEqual(self.object_stats_processor.get_top_ranked_object(), self.tag)
-    
+
     def test_all_ranked_objects_always_moved_same_direction_as_tag(self):
         ranked = self.object_stats_processor.get_ranked_objects()
         for obj in ranked:
             self.assertTrue(self.object_stats_processor.get_didnt_move_opposite_to_tag(obj))
-    
+
     def test_all_objects_eliminated_for_opposite_are_marked_eliminated_with_same_time_as_opposite_time(self):
         for obj in self.object_stats_processor.get_all_moved_oposite():
             self.assertTrue(self.object_stats_processor.get_did_move_opposite_to_tag(obj))
             self.assertEqual(self.object_stats_processor.get_moved_opposite_to_tag_t(obj),
                              self.object_stats_processor.get_elimination_t(obj))
-    
+
     def test_didnt_intersect_t_is_an_int_or_none(self):
         for obj in self.object_stats_processor.get_processed_objects():
             if self.object_stats_processor.get_didnt_intersect_error_circle_t(obj) != None:
@@ -91,16 +95,16 @@ class TestObjectStatsProcessor(unittest.TestCase):
                 last_frame = self.object_stats_processor.get_object_motion_analyzer().get_tag_position_analyzer().get_last_complete_frame()
                 early_time_of_last_frame = self.object_stats_processor.get_object_motion_analyzer().get_tag_position_analyzer().get_early_min_max_timestamp(last_frame)
                 self.assertEqual(early_time_of_last_frame, self.object_stats_processor.get_elimination_t(obj))
-        
+
     def test_tag_always_intersects(self):
         o = self.object_stats_processor.get_processed_objects()
         t = self.object_stats_processor.get_didnt_intersect_error_circle_n(self.tag)
         self.assertEqual(self.object_stats_processor.get_didnt_intersect_error_circle_n(self.tag), 0)
-        
+
     def test_get_to_ranked_objects_returns_all_with_same_didnt_intersect_n_as_top_ranked_object(self):
         top_ranked = self.object_stats_processor.get_top_ranked_object()
         top_ranked_n = self.object_stats_processor.get_didnt_intersect_error_circle_n(top_ranked)
-        
+
         ranked_objs = self.object_stats_processor.get_ranked_objects()
         num_ranked_objs = len(ranked_objs)
 

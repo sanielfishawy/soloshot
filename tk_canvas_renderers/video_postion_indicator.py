@@ -35,6 +35,7 @@ class VideoPositionIndicator:
 
 
     def setup_ui(self):
+        self._canvas.update_idletasks()
 
         self._line = self._canvas.create_line(self._get_left_x(),
                                               self._get_y(),

@@ -1,6 +1,9 @@
+# pylint: disable=C0413, C0301
 import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import os
 import unittest
+
+sys.path.insert(0, os.getcwd())
 from viewable_object import RandomlyMovingObject, StationaryObject
 from boundary import Boundary
 from object_universe import ObjectUniverse
@@ -16,7 +19,7 @@ class TestObjectUniverse(unittest.TestCase):
         self.object_universe = ObjectUniverse()
     def test_object_universe_has_correct_num_timestamps(self):
         self.assertEqual(self.object_universe.set_num_timestamps(50).get_num_timestamps(), 50)
-    
+
     def test_viewable_objects_have_correct_num_initial_timestamps(self):
         for vo in self.viewable_objects:
             self.assertEqual(vo.get_position_history_len(), self.initial_num_timestamps)
@@ -30,8 +33,8 @@ class TestObjectUniverse(unittest.TestCase):
         self.object_universe.set_num_timestamps(50).add_viewable_objects(self.viewable_objects)
         self.object_universe.set_num_timestamps(1000)
         for vo in self.object_universe.get_viewable_objects():
-            self.assertEqual(vo.get_position_history_len(), 1000) 
-    
+            self.assertEqual(vo.get_position_history_len(), 1000)
+
     def test_when_viewable_object_position_history_is_reduced_it_is_a_truncated_version_of_original_postion_history(self):
         self.object_universe.set_num_timestamps(50).add_viewable_objects(self.viewable_objects)
         for vo in self.object_universe.get_viewable_objects():

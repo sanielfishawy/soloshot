@@ -1,10 +1,13 @@
+# pylint: disable=C0301, C0413
 import sys
-sys.path.insert(0, '/Users/sani/dev/soloshot')
+import os
 import unittest
+import math
+from shapely.geometry import Point
+
+sys.path.insert(0, os.getcwd())
 from viewable_object import RandomlyMovingObject, StationaryObject
 from boundary import Boundary
-from shapely.geometry import Point
-import math
 from object_universe import ObjectUniverse
 
 class TestStationaryObject(unittest.TestCase):
@@ -12,7 +15,7 @@ class TestStationaryObject(unittest.TestCase):
         self.num_timestamps = 100
         self.pos = (0,0)
         self.so = StationaryObject(self.pos, num_timestamps=self.num_timestamps)
-    
+
     def test_stationary_object_get_same_postion_for_entire_postion_history_when_created(self):
         self.assertEqual(self.so.get_num_timestamps(), self.num_timestamps)
         self.assertEqual(self.so.get_position_history_len(), self.num_timestamps)
@@ -33,13 +36,15 @@ class TestStationaryObject(unittest.TestCase):
             self.assertEqual(self.so.get_position_at_timestamp(timestamp), self.pos)
 
 class TestMovingObjectAndBoundary(unittest.TestCase):
-    
-    def setUp(self): 
-        points = [(0,0),
-                  (100,0),
-                  (100,100),
-                  (0,100)]
-                  
+
+    def setUp(self):
+        points = [
+            (0 ,0),
+            (100 ,0),
+            (100 ,100),
+            (0 ,100),
+        ]
+
         self.boundary = Boundary(points)
         self.inside_point = (50, 10)
         self.outside_point = (110, 50)
@@ -57,9 +62,9 @@ class TestMovingObjectAndBoundary(unittest.TestCase):
         d = self.moving_object.random_distance()
         self.assertLessEqual(d, self.moving_object.max_dist_per_timestamp)
         self.assertGreaterEqual(d, self.moving_object.min_dist_per_timestamp)
-    
+
     def test_position_history(self):
-        self.moving_object.get_position_history() 
+        self.moving_object.get_position_history()
 
 if __name__ == '__main__':
     unittest.main()

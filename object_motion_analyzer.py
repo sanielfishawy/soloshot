@@ -1,8 +1,8 @@
 import math
+from shapely.geometry import Point
 import geometry_utils as GU
 from tag_position_analyzer import TagPositionAnalyzer
 from image_analyzer import ImageAnalyzer
-from shapely.geometry import Point
 
 class ObjectMotionAnalyzer:
 
@@ -30,7 +30,7 @@ class ObjectMotionAnalyzer:
         return self
 
     def get_frames(self):
-        if self.frames == None:
+        if self.frames is None:
             self._analyze_frames()
 
         return self.frames
@@ -69,7 +69,7 @@ class ObjectMotionAnalyzer:
         return frame['in_view_objects_angles'] if not self.is_terminal_frame(frame) else None
 
     def _get_image_analyzer(self):
-        if self.image_analyzer == None:
+        if self.image_analyzer is None:
             self.image_analyzer = ImageAnalyzer(self.camera)
             self.image_analyzer.set_images(self.camera.get_image_generator().get_x_for_all_inview_objects_for_all_camera_time())
         return self.image_analyzer
@@ -209,17 +209,17 @@ class Circumcircles:
         return self.c1_high_def
 
     def get_c2_high_def(self):
-        if self.c2_high_def == None:
+        if self.c2_high_def is None:
             self.c2_high_def = Point(self.get_circumcenters()[1]).buffer(self.get_circumradius(), self.high_def_res).exterior #pylint: disable=no-member
         return self.c2_high_def
 
     def get_c1_intersects_error_circle(self):
-        if self.c1_intersects_error_circle == None:
+        if self.c1_intersects_error_circle is None:
             self.c1_intersects_error_circle = self.get_c1_low_def().intersects(self.get_error_circle_exterior())
         return self.c1_intersects_error_circle
 
     def get_c2_intersects_error_circle(self):
-        if self.c2_intersects_error_circle == None:
+        if self.c2_intersects_error_circle is None:
             self.c2_intersects_error_circle = self.get_c2_low_def().intersects(self.get_error_circle_exterior())
         return self.c2_intersects_error_circle
 
@@ -227,16 +227,16 @@ class Circumcircles:
         return self.get_c1_intersects_error_circle() or self.get_c2_intersects_error_circle()
 
     def get_c1_error_circle_intersection(self):
-        if self.c1_error_circle_intersection == None and self.get_c1_intersects_error_circle():
+        if self.c1_error_circle_intersection is None and self.get_c1_intersects_error_circle():
             self.c1_error_circle_intersection = self.get_c1_high_def().intersection(self.get_error_circle_disk())
         return self.c1_error_circle_intersection
 
     def get_c2_error_circle_intersection(self):
-        if self.c2_error_circle_intersection == None and self.get_c2_intersects_error_circle():
+        if self.c2_error_circle_intersection is None and self.get_c2_intersects_error_circle():
             self.c2_error_circle_intersection = self.get_c2_high_def().intersection(self.get_error_circle_disk())
         return self.c2_error_circle_intersection
 
     def get_error_circle_intersection(self):
-        if self.get_c1_error_circle_intersection() != None:
+        if self.get_c1_error_circle_intersection() is not None:
             return self.get_c1_error_circle_intersection()
         return self.get_c2_error_circle_intersection()

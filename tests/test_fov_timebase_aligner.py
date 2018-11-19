@@ -7,7 +7,6 @@ from pathlib import Path
 sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.fov_time_base_aligner import FovTimebaseAligner
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper as LDFH
-from video_and_photo_tools.image_from_video import ImageFromVideo
 
 class TestPanMoterTimebaseAligner(unittest.TestCase):
 
@@ -24,7 +23,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
     def dont_test_unique_transitions(self):
         u = self.fovta.get_unique_transitions()
 
-    def test_run(self):
+    def dont_test_run(self):
         self.fovta.run()
 
 if __name__ == '__main__':

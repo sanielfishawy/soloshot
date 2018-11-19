@@ -2,29 +2,43 @@
     - Get lat and long of the camera
         - x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
 
-- Base
-    - lat, long
-    - MapCoordinateTransformer
-    - Pan_motor_angle_series
-    - Pan_motor_angle_time_series
+- Run all tests
 
-- Lens
-    - Fov_series
-    - fov_time_series
+- ImageAnalyzer
+    - Factor out VisualSubtendedAngleCalculator
+        - Given
+            - Width of screen
+            - FOV
+            - x_pos
+        - Returns
+            - angle_relative_to_center(x_pos)
+            - subtended_angle(x_pos1, x_pos2)
+    - Run
 
-- TagPositionInStableFovSegmentsAnalyzer:
-    - Get frames
-    - Mark the frames that cross fov segment
-    - Do not use lat long to calculate the angles
+- LegacyDataBasePositionCalibrator
+    - ManualVisualImageAnalyzer
+        - Shows video frames vertical viewer
+        - Manually mark the tag in the video frame
+        - Gives the visual angle between the images
 
-- Tag
-    - Tag time series alignment to video
 
-- Run TagPositionAnalyzer on tag and camera
-    - Display results on map.
+    - Params
+        - TagPositionInStableFovSegmentsAnalyzer
+            - FOV from frames
+            - Base for motor positions and time offset to pull motor positions
+            - Tag for time offset to pull frames
+        - Pull a pair of frames and show them in vertical viewer
+        - Get marked positions from the vertical viewer
+        - Calculate subtended angle taking into account
+            - Change in  motor position
+            - Change in position on screen (ImageAnalyzer)
+        - Add Circumcircles
+        - Show them on a map along with frames.
 
-Add camera to map
-    - Get postition of the point on the field where the camera is.
+- BaseRenderer
+    - Params
+        - Base
+        - FovSegmentAnalyzer
 
 - VerticalPhotoList
     - Add instructions at the top

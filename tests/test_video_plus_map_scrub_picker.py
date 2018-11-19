@@ -3,6 +3,7 @@ import sys
 import os
 import unittest
 from pathlib import Path
+
 sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
 from tk_canvas_renderers.video_plus_map_scrub_picker import VideoPlusMapScrubPicker
@@ -58,7 +59,7 @@ class TestVideoPlusMapScrubber(unittest.TestCase):
 
         return self
 
-    def test_visualize(self):
+    def dont_test_visualize(self):
         self.video_plus_map_scrub_picker.run()
 
     def callback(self, images):

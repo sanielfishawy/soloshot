@@ -89,7 +89,7 @@ class TestGeoMapper(unittest.TestCase):
 
                         center_x = map_coordinate_transformer.get_x_for_longitude(center_longitude)
                         center_y = map_coordinate_transformer.get_y_for_latitude(center_latitude)
-                        print('width', width, 'height', height, 'zoom', zoom, 'scale', scale, 'center_x', center_x, 'center_y', center_y)
+                        # print('width', width, 'height', height, 'zoom', zoom, 'scale', scale, 'center_x', center_x, 'center_y', center_y)
 
                         self.assertEqual(int(width/2), center_x)
                         self.assertEqual(int(height/2), center_y)
@@ -117,28 +117,6 @@ class TestGeoMapper(unittest.TestCase):
         for zoom in info:
             print('zoom=', zoom, 'multiple=', info[zoom]/info[21])
 
-    def test_lat_long_to_pixel_converter(self):
-        lat_long_to_pixel_converter = LatLongToPixelConverter()
-
-        latitude_deg = LatLongToPixelConverter.LATITUDE
-
-        measured_lat_height_pixels = lat_long_to_pixel_converter.LATITUDE_HEIGHT_PIXELS
-        lat_height_deg = lat_long_to_pixel_converter.LATITUDE_HEIGHT_DEG
-        measured_lat_deg_per_pix = lat_height_deg / measured_lat_height_pixels
-
-        measured_long_width_pixels = lat_long_to_pixel_converter.LONGITUDE_WIDTH_PIXELS
-        long_width_deg = lat_long_to_pixel_converter.LONGITUDE_WIDTH_DEG
-        measured_long_deg_per_pix = long_width_deg / measured_long_width_pixels
-
-        for scale in [1, 2]:
-            for zoom in [20, 21]:
-                m_lat_d_p_p = (22 - zoom) * (measured_lat_deg_per_pix / scale)
-                calculated_lat_deg_per_pix = lat_long_to_pixel_converter.get_latitude_deg_per_pixel(zoom, scale)
-                self.assertAlmostEqual(m_lat_d_p_p, calculated_lat_deg_per_pix)
-
-                m_long_d_p_p = (22 - zoom) * (measured_long_deg_per_pix / scale)
-                calculated_long_deg_per_pix = lat_long_to_pixel_converter.get_longitude_deg_per_pixel(latitude_deg, zoom, scale)
-                self.assertAlmostEqual(m_long_d_p_p, calculated_long_deg_per_pix)
 
 
 if __name__ == '__main__':

@@ -41,7 +41,6 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
 
         # lazy inits
         self._stable_fov_segments = None
-        self._tag_for_entire_span = None
         self._tag_idxs_for_stable_segments = None
         self._frames = None
         self._frames_marked_stable = None
