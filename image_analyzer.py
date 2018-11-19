@@ -1,6 +1,4 @@
-import math
-from image_generator import ImageGenerator
-
+import visual_angle_calculator as Vac
 #       |------------x1----------0----------------------x2-|
 #                     .          |                    .
 #                      .         |                  .
@@ -25,7 +23,9 @@ class ImageAnalyzer:
     def __init__(self, camera):
         self.camera = camera
         self.images = None
-        self.d = None
+
+        self._image_width = self.camera.get_image_generator().get_image_width()
+        self._fov_rad = self.camera.get_fov_rad()
 
     def set_images(self, images):
         self.images = images
@@ -46,40 +46,28 @@ class ImageAnalyzer:
         return self.images[timestamp][obj]
 
     def _get_subtended_angle_with_obj_timestamps_rad(self, obj, timestamp1, timestamp2):
-        x1 = self.images[timestamp1].get(obj, None)
-        x2 = self.images[timestamp2].get(obj, None)
+        x_1 = self.images[timestamp1].get(obj, None)
+        x_2 = self.images[timestamp2].get(obj, None)
 
-        if x1 == None or x2 == None:
+        if x_1 is None or x_2 is None:
             return None
         else:
-            return self._get_subtended_angle_with_x_rad(x1, x2)
-
-    def _get_subtended_angle_with_x_rad(self, x1, x2):
-        a1 = math.atan2(x1, self.get_d())
-        a2 = math.atan2(x2, self.get_d())
-        return a2 - a1
-
-    def _get_angle_relative_to_center_with_x_rad(self, x):
-        return math.atan2(x, self.get_d())
+            return Vac.get_subtended_angle_with_x_rad(x_1, x_2, self._image_width, self._fov_rad)
 
     def _get_angle_relative_to_center_with_obj_timestamp_rad(self, obj, timestamp):
-        x = self.images[timestamp][obj]
+        x_pos = self.images[timestamp][obj]
 
-        if x == None:
+        if x_pos is None:
             return None
         else:
-            return self._get_angle_relative_to_center_with_x_rad(x)
+            return Vac.get_angle_relative_to_center_with_x_rad(
+                x_pos=x_pos,
+                image_width=self._image_width,
+                fov_rad=self._fov_rad,
+            )
 
     def get_angles_relative_to_center_for_all_objects(self, timestamp):
         r = {}
         for obj in self.images[timestamp]:
             r[obj] = self._get_angle_relative_to_center_with_obj_timestamp_rad(obj, timestamp)
         return r
-
-    def _calc_d(self):
-        return self.camera.get_image_generator().get_image_width() / 2 / math.tan(self.camera.get_fov_rad() / 2)
-
-    def get_d(self):
-        if self.d is None:
-            self.d = self._calc_d()
-        return self.d
