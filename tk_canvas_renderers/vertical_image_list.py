@@ -11,24 +11,28 @@ from video_and_photo_tools.image_from_video import ImageFromVideo
 
 class VerticalImageList:
 
-    def __init__(self, images_from_video: List[ImageFromVideo],
-                 window_height=None,
-                ):
+    def __init__(
+            self,
+            images_from_video: List[ImageFromVideo],
+            window_height=None,
+    ):
 
         self._images_from_video = images_from_video
         self._window_height = window_height
 
-        self._root = None
         self._outer_frame = None
         self._outer_canvas = None
         self._vbar = None
         self._single_image_canvases = None
 
-    def _setup_ui(self):
-        self._root = tk.Tk()
-        self._root.title(self._images_from_video[0].get_video_path().resolve())
+    def _setup_ui(self, master):
+        try:
+            master.title(self._images_from_video[0].get_video_path().resolve())
+        except AttributeError:
+            pass
 
-        self._outer_frame = tk.Frame(self._root)
+
+        self._outer_frame = tk.Frame(master)
         self._outer_frame.grid(row=0, column=0)
 
         self._outer_canvas = tk.Canvas(self._outer_frame,
@@ -38,7 +42,7 @@ class VerticalImageList:
                                                      self._get_total_images_height()),
                                        background='blue')
         self._outer_canvas.config(width=self._get_image_width(),
-                                  height=self._get_window_height())
+                                  height=self._get_window_height(master))
 
         self._vbar = tk.Scrollbar(self._outer_frame, orient=tk.VERTICAL)
         self._vbar.pack(side=tk.RIGHT, fill=tk.Y)
@@ -67,10 +71,16 @@ class VerticalImageList:
                                            in self._images_from_video]
         return self._single_image_canvases
 
-    def _get_window_height(self):
+    def _get_window_height(self, widget):
         if self._window_height is None:
-            self._window_height = self._root.winfo_screenheight() - 75
+            self._window_height = self._get_root(widget).winfo_screenheight() - 75
         return self._window_height
+
+    def _get_root(self, widget):
+        root = widget.winfo_toplevel()
+        if root.master:
+            root = root.master
+        return root
 
     def _get_image_width(self):
         return self._get_first_image().get_image().width
@@ -88,5 +98,7 @@ class VerticalImageList:
         return self._images_from_video[0]
 
     def run(self):
-        self._setup_ui()
-        self._root.mainloop()
+        master = tk.Tk()
+        self._setup_ui(master)
+        master.mainloop()
+

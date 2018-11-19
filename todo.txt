@@ -2,24 +2,15 @@
     - Get lat and long of the camera
         - x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
 
-- Run all tests
-
-- ImageAnalyzer
-    - Factor out VisualAngleCalculator
-        - Given
-            - Width of screen
-            - FOV
-            - x_pos
-        - Returns
-            - angle_relative_to_center(x_pos)
-            - subtended_angle(x_pos1, x_pos2)
-    - Run
 
 - LegacyDataBasePositionCalibrator
     - ManualVisualImageAnalyzer
+        - Params
+            - Two ImageFromVideo
+            - Fov
         - Shows video frames vertical viewer
         - Manually mark the tag in the video frame
-        - Gives the visual angle between the images
+        - Returns visual subtended angle of the tag
 
 
     - Params
