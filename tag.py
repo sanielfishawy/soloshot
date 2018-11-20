@@ -83,6 +83,15 @@ class Tag:
                 return max(0, idx - 1)
         return 0
 
+    def get_tag_time_for_timestamp(self, timestamp):
+        return self._get_normalized_time_series()[timestamp]
+
+    def get_video_time_for_tag_time(self, tag_time):
+        return tag_time - self._alignment_offset_video_to_tag_ms
+
+    def get_video_time_for_timestamp(self, timestamp):
+        return self.get_video_time_for_tag_time(self.get_tag_time_for_timestamp(timestamp))
+
     def get_tag_time_for_video_time(self, video_time):
         return video_time + self._alignment_offset_video_to_tag_ms
 
