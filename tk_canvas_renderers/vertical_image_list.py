@@ -11,21 +11,28 @@ from video_and_photo_tools.image_from_video import ImageFromVideo
 
 class VerticalImageList:
 
+    IMAGE_FROM_VIDEO = 'image_from_video'
+    SELECTED_POINT = 'selected_point'
+
     def __init__(
             self,
             images_from_video: List[ImageFromVideo],
             window_height=None,
+            callback=None,
     ):
 
         self._images_from_video = images_from_video
         self._window_height = window_height
+        self._callback = callback
 
         self._outer_frame = None
         self._outer_canvas = None
         self._vbar = None
         self._single_image_canvases = None
+        self._master = None
 
     def _setup_ui(self, master):
+        self._master = master
         try:
             master.title(self._images_from_video[0].get_video_path().resolve())
         except AttributeError:
@@ -53,6 +60,38 @@ class VerticalImageList:
 
         self._add_single_image_canvases()
 
+        buttons_frame = tk.Frame(master)
+        buttons_frame.grid(
+            row=1,
+            column=0,
+            pady=5,
+        )
+        done_button = tk.Button(
+            master=buttons_frame,
+            text='Done',
+            command=self._done_click,
+            padx=5,
+            pady=5,
+        )
+        done_button.grid(row=0, column=0)
+
+    def _done_click(self):
+        if self._callback is not None:
+            self._callback(selected_points=self._get_selected_points())
+        self._get_root(self._master).destroy()
+
+    def _get_selected_points(self):
+        r = []
+        for idx, single_image_canvas in enumerate(self._get_single_image_canvases()):
+            selected_point = single_image_canvas.get_position_picker().get_selected_point()
+            r.append(
+                {
+                    self.__class__.SELECTED_POINT: selected_point,
+                    self.__class__.IMAGE_FROM_VIDEO: self._images_from_video[idx]
+                }
+            )
+        return r
+
     def _add_single_image_canvases(self):
         y_pos = 0
         for sic in self._get_single_image_canvases():
@@ -73,7 +112,7 @@ class VerticalImageList:
 
     def _get_window_height(self, widget):
         if self._window_height is None:
-            self._window_height = self._get_root(widget).winfo_screenheight() - 75
+            self._window_height = self._get_root(widget).winfo_screenheight() - 95
         return self._window_height
 
     def _get_root(self, widget):
@@ -101,4 +140,3 @@ class VerticalImageList:
         master = tk.Tk()
         self._setup_ui(master)
         master.mainloop()
-

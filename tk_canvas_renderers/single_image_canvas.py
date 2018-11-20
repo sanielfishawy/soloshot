@@ -68,6 +68,9 @@ class SingleImageCanvas:
     def get_canvas(self):
         return self._canvas
 
+    def get_position_picker(self) -> CanvasPositionPicker:
+        return self._position_picker
+
     def _get_tk_photo(self):
         if self._tk_photo is None:
             self._tk_photo = PIL.ImageTk.PhotoImage(image=self._image_from_video.get_image())

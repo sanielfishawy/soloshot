@@ -57,7 +57,9 @@ class CanvasPositionPicker:
         self._upate_crosshairs()
         self._canvas.update()
 
-    def _get_selected_point(self):
+    def get_selected_point(self):
+        if self._selected_pos_x is None or self._selected_pos_y is None:
+            return None
         return (self._selected_pos_x - self._get_center_x(),
                 self._get_center_y() - self._selected_pos_y)
 
@@ -69,7 +71,7 @@ class CanvasPositionPicker:
                             self._selected_pos_y + 5,
                            )
         self._canvas.itemconfig(self._get_crosshair_text(),
-                                text=str(self._get_selected_point()))
+                                text=str(self.get_selected_point()))
 
     def _get_horiz_crosshair_coords(self):
         return [self._selected_pos_x - self._crosshair_len, self._selected_pos_y,
@@ -101,7 +103,7 @@ class CanvasPositionPicker:
         if self._crosshair_text is None:
             self._crosshair_text = self._canvas.create_text(self._selected_pos_x,
                                                             self._selected_pos_y,
-                                                            text=str(self._get_selected_point()),
+                                                            text=str(self.get_selected_point()),
                                                             fill=self._crosshair_color,
                                                             anchor=tk.NW,
                                                             font=self._crosshair_font,
