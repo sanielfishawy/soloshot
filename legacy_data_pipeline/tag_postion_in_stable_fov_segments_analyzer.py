@@ -21,6 +21,7 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
     SEGMENT_START_TAG_IDX = 'segment_start_tag_idx'
     SEGMENT_END_TAG_IDX = 'segment_end_tag_idx'
     FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT = 'frame_contained_in_stable_fov_segment'
+    FRAME_FOV = 'frame_fov'
 
     def __init__(
             self,
@@ -74,10 +75,9 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
     def _get_tag_idxs_for_stable_segment(self, stable_segment):
         start_fov_time = stable_segment[StableFovSegmenter.START_GUARDED_FOV_TIME]
         end_fov_time = stable_segment[StableFovSegmenter.END_GUARDED_FOV_TIME]
-        return {
-            self.__class__.SEGMENT_START_TAG_IDX: self._get_tag_idx_after_fov_time(start_fov_time),
-            self.__class__.SEGMENT_END_TAG_IDX: self._get_tag_idx_before_fov_time(end_fov_time),
-        }
+        stable_segment[self.__class__.SEGMENT_START_TAG_IDX] = self._get_tag_idx_after_fov_time(start_fov_time) # pylint: disable=C0301
+        stable_segment[self.__class__.SEGMENT_END_TAG_IDX] = self._get_tag_idx_before_fov_time(end_fov_time) # pylint: disable=C0301
+        return stable_segment
 
     def _get_frames_marked_with_contained_in_stable_fov(self, angle_threshold_rad, limit=None):
         frames = self.get_complete_frames_where_range_exceeds_threshold(
@@ -85,10 +85,16 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
             limit=limit,
         )
         for frame in frames:
-            frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT] = self._is_frame_contained_in_stable_segment(frame) # pylint: disable=C0301
+            stable_segment = self._get_stable_segment_for_frame(frame)
+            if stable_segment is not None:
+                frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT] = True
+                frame[self.__class__.FRAME_FOV] = StableFovSegmenter.get_fov_for_segment(stable_segment) # pylint: disable=C0301
+            else:
+                frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT] = False
+                frame[self.__class__.FRAME_FOV] = None
         return frames
 
-    def _is_frame_contained_in_stable_segment(self, frame):
+    def _get_stable_segment_for_frame(self, frame):
         early_idx = self.get_early_min_max_timestamp(frame)
         late_idx = self.get_late_min_max_timestamp(frame)
         for segment in self._get_tag_idxs_for_stable_segments():
@@ -96,8 +102,8 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
             end_idx = segment[self.__class__.SEGMENT_END_TAG_IDX]
             if early_idx >= start_idx and early_idx <= end_idx and \
                late_idx >= start_idx and late_idx <= end_idx:
-                return True
-        return False
+                return segment
+        return None
 
     def get_frames_in_stable_fovs(self, angle_threshold_rad, limit=None):
         return [
@@ -109,3 +115,12 @@ class TagPositionInStableFovSegmentsAnalyzer(TagPositionAnalyzer):
             )
             if frame[self.__class__.FRAME_CONTAINED_IN_STABLE_FOV_SEGMENT]
         ]
+
+    def get_fov_for_frame(self, frame):
+        return frame[self.__class__.FRAME_FOV]
+
+    def get_tag(self):
+        return self._tag
+
+    def get_base(self):
+        return self._base

@@ -5,36 +5,26 @@
 
 - LegacyDataBasePositionCalibrator
     - ManualVisualImageAnalyzer
-        - Params
-            - Two ImageFromVideo
-            - Fov
-        - Shows video frames vertical viewer
-        - Manually mark the tag in the video frame
-        - Returns visual subtended angle of the tag
-
 
     - Params
         - TagPositionInStableFovSegmentsAnalyzer
             - FOV from frames
             - Base for motor positions and time offset to pull motor positions
             - Tag for time offset to pull frames
-        - Pull a pair of frames and show them in vertical viewer
+        - Pull a pair of images_from_video and show them in vertical viewer
         - Get marked positions from the vertical viewer
         - Calculate subtended angle taking into account
             - Change in  motor position
-            - Change in position on screen (ImageAnalyzer)
+            - Change visual angle ManualVisualImageAnalyzer
         - Add Circumcircles
         - Show them on a map along with frames.
+
 
 - BaseRenderer
     - Params
         - Base
         - FovSegmentAnalyzer
 
-- VerticalPhotoList
-    - Add instructions at the top
-    - Add a done button at the top
-    - Callback with results from position_pickers
 
 - PanMotorToFovConsistencyCheckers
     - Visualize FOV

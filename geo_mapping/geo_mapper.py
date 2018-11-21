@@ -368,6 +368,17 @@ class MapCoordinateTransformer:
         self._lat_top = None
         self._long_left = None
 
+    @classmethod
+    def init_with_map_fitter(cls, map_fitter):
+        return cls(
+            center_latitude=map_fitter.get_center_latitude(),
+            center_longitude=map_fitter.get_center_longitude(),
+            width_pixels=map_fitter.get_map_scaled_width(),
+            height_pixels=map_fitter.get_map_scaled_height(),
+            zoom=map_fitter.get_zoom(),
+            scale=map_fitter.get_scale(),
+        )
+
     def get_latitude_for_y(self, y_pos):
         return self._get_lat_of_top() - (self._get_lat_deg_per_px() * y_pos)
 
@@ -379,11 +390,11 @@ class MapCoordinateTransformer:
 
     def get_y_for_latitude(self, latitude_deg):
         lat_diff = self._get_lat_of_top() - latitude_deg
-        return round(lat_diff / self._get_lat_deg_per_px())
+        return int(round(lat_diff / self._get_lat_deg_per_px()))
 
     def get_x_for_longitude(self, longitude_deg):
         long_diff = longitude_deg - self._get_long_of_left()
-        return round(long_diff / self._get_long_deg_per_px())
+        return int(round(long_diff / self._get_long_deg_per_px()))
 
     def _get_lat_deg_per_px(self):
         if self._lat_deg_per_px is None:

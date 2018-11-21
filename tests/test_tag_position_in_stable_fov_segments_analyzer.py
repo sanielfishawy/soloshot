@@ -8,7 +8,7 @@ import numpy as np
 
 sys.path.insert(0, os.getcwd())
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer
-from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
+from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper as LDFH
 from legacy_data_pipeline.stable_fov_segmenter import StableFovSegmenter
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
 from tag import Tag
@@ -16,84 +16,99 @@ from base import Base
 
 class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
 
-    HEAD_PATH = Path('/Volumes/WD')
-    SESSION_DIR = 'Aug_17_Palo_Alto_High_2nd_time_B80_ottofillmore'
 
     def setUp(self):
-        ldfh = LegacyDataFileSystemHelper(self.__class__.HEAD_PATH)
-        self.tag_latitude_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.TAG_LATITUDE_FIELD,
+        head_path = Path('/Volumes/WD')
+        session_dir = 'Aug_17_Palo_Alto_High_2nd_time_B80_ottofillmore'
+
+        ldfh = LDFH(head_path)
+
+        tag_latitude_series = ldfh.get_field_from_npz_file(
+            session_dir_name=session_dir,
+            filename=LDFH.TAG_NPZ_FILE,
+            fieldname=LDFH.TAG_LATITUDE_FIELD,
         )
-        self.tag_longitude_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.TAG_LONGITUDE_FIELD,
+        tag_longitude_series = ldfh.get_field_from_npz_file(
+            session_dir_name=session_dir,
+            filename=LDFH.TAG_NPZ_FILE,
+            fieldname=LDFH.TAG_LONGITUDE_FIELD,
         )
         self.tag_time_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.TAG_TIME_FIELD,
+            session_dir_name=session_dir,
+            filename=LDFH.TAG_NPZ_FILE,
+            fieldname=LDFH.TAG_TIME_FIELD,
         )
 
         self.geo_map_scrubber = GeoMapScrubber(
-            latitude_series=self.tag_latitude_series,
-            longitude_series=self.tag_longitude_series,
+            latitude_series=tag_latitude_series,
+            longitude_series=tag_longitude_series,
             time_series=self.tag_time_series,
         )
 
-        self.tag = Tag(
-            latitude_series=self.tag_latitude_series,
-            longitude_series=self.tag_longitude_series,
+        tag = Tag(
+            latitude_series=tag_latitude_series,
+            longitude_series=tag_longitude_series,
             time_series=self.tag_time_series,
             map_coordinate_transformer=self.geo_map_scrubber._get_map_coordinate_transformer(),
         )
 
         self.base_latitude_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.BASE_LATITUDE_FIELD,
+            session_dir_name=session_dir,
+            filename=LDFH.TAG_NPZ_FILE,
+            fieldname=LDFH.BASE_LATITUDE_FIELD,
         )
         self.base_longitude_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.TAG_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.BASE_LONGITUDE_FIELD,
+            session_dir_name=session_dir,
+            filename=LDFH.TAG_NPZ_FILE,
+            fieldname=LDFH.BASE_LONGITUDE_FIELD,
+        )
+
+        reported_base = Base(
+            gps_latitude_series=self.base_latitude_series,
+            gps_longitude_series=self.base_longitude_series,
+            map_coordinate_transformer=self.geo_map_scrubber._get_map_coordinate_transformer(),
         )
 
         # Base position we believe to be correct based on where we believe we set up
         # the base on the field. Point picked on map using GeoMapScrubber
         # x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
-        self.actual_base_latitude = 37.38639419602273
-        self.actual_base_longitude = -122.11008779357967
+        actual_base_latitude_series = np.full(self.base_latitude_series.size, 37.38639419602273)
+        actual_base_longitude_series = np.full(self.base_longitude_series.size, -122.11008779357967)
 
-        self.actual_base = Base(
-            gps_latitude=self.actual_base_latitude,
-            gps_longitude=self.actual_base_longitude,
+        actual_base = Base(
+            gps_latitude_series=actual_base_latitude_series,
+            gps_longitude_series=actual_base_longitude_series,
             map_coordinate_transformer=self.geo_map_scrubber._get_map_coordinate_transformer(),
         )
 
-        self.fov_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.LENS_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.LENS_FOV_FIELD,
+        fov_series = ldfh.get_field_from_npz_file(
+            session_dir_name=session_dir,
+            filename=LDFH.LENS_NPZ_FILE,
+            fieldname=LDFH.LENS_FOV_FIELD,
         )
-        self.fov_time_series = ldfh.get_field_from_npz_file(
-            session_dir_name=self.__class__.SESSION_DIR,
-            filename=LegacyDataFileSystemHelper.LENS_NPZ_FILE,
-            fieldname=LegacyDataFileSystemHelper.LENS_TIME_FIELD,
-        )
-
-        self.tag_position_analyzer = TagPositionInStableFovSegmentsAnalyzer(
-            fov_series=self.fov_series,
-            fov_time_series=self.fov_time_series,
-            tag=self.tag,
-            base=self.actual_base,
+        fov_time_series = ldfh.get_field_from_npz_file(
+            session_dir_name=session_dir,
+            filename=LDFH.LENS_NPZ_FILE,
+            fieldname=LDFH.LENS_TIME_FIELD,
         )
 
-    def test_get_tag_idxs_for_stable_segment(self):
-        segments = self.tag_position_analyzer._get_stable_fov_segments()
-        tag_idxs = self.tag_position_analyzer._get_tag_idxs_for_stable_segments()
+        self.tag_position_analyzer_with_actual_base = TagPositionInStableFovSegmentsAnalyzer(
+            fov_series=fov_series,
+            fov_time_series=fov_time_series,
+            tag=tag,
+            base=actual_base,
+        )
+
+        self.tag_position_analyzer_with_reported_base = TagPositionInStableFovSegmentsAnalyzer(
+            fov_series=fov_series,
+            fov_time_series=fov_time_series,
+            tag=tag,
+            base=reported_base,
+        )
+
+    def dont_test_get_tag_idxs_for_stable_segment(self):
+        segments = self.tag_position_analyzer_with_actual_base._get_stable_fov_segments()
+        tag_idxs = self.tag_position_analyzer_with_actual_base._get_tag_idxs_for_stable_segments()
         num_not_too_short_segments = len([
             segment for segment in segments
             if not StableFovSegmenter.segment_is_too_short(segment)
@@ -103,9 +118,9 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             len(tag_idxs),
         )
 
-    def dont_test_visualize_tag_positions(self):
-        limit = 20
-        frames = self.tag_position_analyzer.get_frames_in_stable_fovs(
+    def test_visualize_tag_positions(self):
+        limit = 3
+        frames = self.tag_position_analyzer_with_reported_base.get_frames_in_stable_fovs(
             angle_threshold_rad=np.radians(10),
             limit=limit,
         )
@@ -114,14 +129,13 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
         self.geo_map_scrubber.setup_ui(master)
 
         for frame in frames:
-            early_x_y_pos = self.tag_position_analyzer.get_early_position(frame)
-            late_x_y_pos = self.tag_position_analyzer.get_late_position(frame)
+            early_x_y_pos = self.tag_position_analyzer_with_actual_base.get_early_position(frame)
+            late_x_y_pos = self.tag_position_analyzer_with_actual_base.get_late_position(frame)
 
             self.geo_map_scrubber.add_marker_x_y(*early_x_y_pos)
             self.geo_map_scrubber.add_marker_x_y(*late_x_y_pos)
 
         master.mainloop()
-
 
     def dont_test_visualize_base_track(self):
         GeoMapScrubber(

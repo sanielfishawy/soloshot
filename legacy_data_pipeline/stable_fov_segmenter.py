@@ -62,6 +62,10 @@ class StableFovSegmenter:
     def segment_is_too_short(cls, segment):
         return segment[cls.TOO_SHORT]
 
+    @classmethod
+    def get_fov_for_segment(cls, segment):
+        return segment[cls.FOV]
+
     def _get_stable_segment(self, start_idx, end_idx):
         start_guarded_time = self._get_guarded_fov_time_after_idx(start_idx)
         end_guarded_time = self._get_guarded_fov_time_before_idx(end_idx)

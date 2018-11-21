@@ -38,6 +38,7 @@ class Tag:
         # lazy init
         self._normalized_time_series = None
 
+
     # compatability with ViewableObject and simulated calibation pipeline
     def get_num_timestamps(self):
         return self._latitude_series.size
