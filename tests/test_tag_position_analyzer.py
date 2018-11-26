@@ -1,4 +1,4 @@
-# pylint: disable=C0413
+# pylint: disable=C0413, C0301, W0212
 import sys
 import os
 import unittest
@@ -31,6 +31,20 @@ class TestTagPositionAnalyzer(unittest.TestCase):
 
         for timestamp, pos in enumerate(self.positions):
             self.vo.set_position_at_timestamp(pos, timestamp)
+
+    def test_get_tag_angles(self):
+        angles = self.tag_position_analyzer._get_tag_angles()
+        self.assertEqual(angles.size, self.num_timestamps)
+        for n, angle in enumerate(angles):
+            self.assertAlmostEqual(angle, self.get_raw_angle_of_point(n))
+
+    def test_get_quadrants(self):
+        quads = self.tag_position_analyzer._get_tag_quadrants()
+        self.assertEqual(quads.size, self.num_timestamps)
+
+    def test_get_list_of_angles(self):
+        angles = self.tag_position_analyzer._list_of_angles_between_timestamps(0, self.num_timestamps)
+        self.assertEqual(angles.size, self.num_timestamps)
 
     def test_range_of_angles_between_timestamps(self):
         for i in range(40):
@@ -81,12 +95,20 @@ class TestTagPositionAnalyzer(unittest.TestCase):
         for timestamp, pos in enumerate(reversed(self.positions)):
             self.vo.set_position_at_timestamp(pos, timestamp)
 
-        for n in range(2,6):
-            frames = self.tag_position_analyzer.get_frames_where_range_exceeds_threshold((2 * n * math.pi / self.number_of_slices_of_circle) -.01)
+        tag_position_analyzer = TagPositionAnalyzer(self.vo, self.camera)
+
+        for n in range(2, 6):
+            frames = tag_position_analyzer.get_frames_where_range_exceeds_threshold((2 * n * math.pi / self.number_of_slices_of_circle) -.01)
             for frame in frames:
-                if self.tag_position_analyzer.get_frame_end_timestamp(frame) != None:
-                    self.assertAlmostEqual(self.tag_position_analyzer.get_angle_between_positions(frame),
+                if tag_position_analyzer.get_frame_end_timestamp(frame) is not None:
+                    self.assertAlmostEqual(tag_position_analyzer.get_angle_between_positions(frame),
                                            -self.get_angle_between_points(n))
+
+    def get_raw_angle_of_point(self, n):
+        r = n * 2 * math.pi / self.number_of_slices_of_circle
+        if r > 2 * math.pi:
+            r = r - ( 2* math.pi )
+        return r
 
     def get_angle_between_points(self, n):
         return n * 2 * math.pi / self.number_of_slices_of_circle

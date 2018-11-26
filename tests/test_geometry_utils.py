@@ -14,8 +14,8 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
         p2 = (0,1)
         theta = math.pi/8
         cc1, cc2 = GU.circumcenters(p1, p2, theta)
-        a1 = GU.angel_of_vector_between_points_360_rad(p1,p2)
-        a2 = GU.angel_of_vector_between_points_360_rad(cc2,cc1)
+        a1 = GU.angle_of_vector_between_points_360_rad(p1,p2)
+        a2 = GU.angle_of_vector_between_points_360_rad(cc2,cc1)
         diff = abs(a1-a2)
         self.assertAlmostEqual(diff, math.pi / 2)
 
@@ -67,7 +67,7 @@ class TestGeometryUtilsIsosceles(unittest.TestCase):
                     7 * math.pi / 4]
 
         for i, p1 in enumerate(p1_s):
-            self.assertAlmostEqual(GU.angel_of_vector_between_points_360_rad(p0, p1), results[i])
+            self.assertAlmostEqual(GU.angle_of_vector_between_points_360_rad(p0, p1), results[i])
 
     def test_point_with_angle_and_distance_to_point(self):
 

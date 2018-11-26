@@ -19,6 +19,16 @@
         - Add Circumcircles
         - Show them on a map along with frames.
 
+- TapPositionAnalyzer
+    - Rewrite to allow setting a minimum distance from the base.
+        - Pull tag_xy_position_series
+        - Create a series with angles
+            - One without q4 adjusted
+            - One with q4 adjusted
+        - Create a series with quadrants
+        - Create a series with distances
+        - Create
+
 
 - BaseRenderer
     - Params

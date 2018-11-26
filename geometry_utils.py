@@ -1,8 +1,8 @@
 import math
 from shapely.geometry import Point
 
-        
-#          Circum...        
+
+#          Circum...
 #            theta_deg
 #               /\
 #              /  \
@@ -18,7 +18,7 @@ def circumcenters(p1, p2, theta_rad):
 
 def circumradius(p1, p2, theta_rad):
     return 0.5 * circumdiameter(p1, p2, abs(theta_rad))
-    
+
 def circumdiameter(p1, p2, theta_rad):
     return abs( distance_between_points(p1, p2) / math.sin(theta_rad) )
 
@@ -28,14 +28,14 @@ def signed_subtended_angle_from_p1_to_p2_rad(v, p1, p2):
     r = a2 - a1
     if r > math.pi:
         r = - (2 * math.pi - r)
-    if r < -math.pi: 
+    if r < -math.pi:
         r = 2 * math.pi + r
     return r
 
 def quadrant_of_vector(p1, p2):
     p1_x, p1_y = p1
     p2_x, p2_y = p2
-    
+
     if (p2_x >= p1_x):
         if (p2_y >= p1_y):
             return 1
@@ -73,7 +73,7 @@ def angle_of_vector_360_rad(coords):
         angle = 2 * math.pi + angle
     return angle
 
-def angel_of_vector_between_points_360_rad(p1,p2):
+def angle_of_vector_between_points_360_rad(p1,p2):
     return angle_of_vector_360_rad((p1, p2))
 
 def point_with_angle_and_distance_from_point(point, angle_rad, d):

@@ -37,6 +37,7 @@ class Tag:
 
         # lazy init
         self._normalized_time_series = None
+        self._xy_position_series = None
 
 
     # compatability with ViewableObject and simulated calibation pipeline
@@ -47,8 +48,19 @@ class Tag:
     def get_position_at_timestamp(self, timestamp):
         return self.get_x_y_postion_at_timestamp(timestamp)
 
+    # compatability with ViewableObject and simulated calibation pipeline
+    def get_position_history(self):
+        return self.get_xy_position_series()
+
+    def get_xy_position_series(self):
+        if self._xy_position_series is None:
+            self._xy_position_series = [
+                self.get_x_y_postion_at_timestamp(timestamp) for timestamp
+                in range(self.get_num_timestamps())
+            ]
+        return self._xy_position_series
+
     def get_x_y_postion_at_timestamp(self, timestamp):
-        self._ensure_map_coordinate_transformer()
         return (
             self.get_x_position_at_timestamp(timestamp),
             self.get_y_position_at_timestamp(timestamp),

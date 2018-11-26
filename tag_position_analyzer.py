@@ -1,5 +1,6 @@
 import math
 import geometry_utils as GUtils
+import numpy as np
 
 class TagPositionAnalyzer:
 
@@ -14,14 +15,59 @@ class TagPositionAnalyzer:
         self.tag = tag
         self.camera = camera
 
+        # lazy init
+        self._tag_postions = None
+        self._tag_angles = None
+        self._tag_q4_adjusted_angles = None
+        self._tag_quadrants = None
         self._frames = None
 
+    def _get_tag_positions(self):
+        if self._tag_postions is None:
+            self._tag_postions = self.tag.get_position_history()
+        return self._tag_postions
+
+    def _get_tag_angles(self):
+        if self._tag_angles is None:
+            self._tag_angles = np.array(
+                [
+                    GUtils.angle_of_vector_between_points_360_rad(
+                        self.camera.get_gps_position(),
+                        tag_position,
+                    )
+                    for tag_position
+                    in self._get_tag_positions()
+                ]
+            )
+        return self._tag_angles
+
+    def _get_tag_q4_adjusted_angles(self):
+        if self._tag_q4_adjusted_angles is None:
+            self._tag_q4_adjusted_angles = np.array(
+                [
+                    self._q4_adjusted_angle_to_tag(timestamp)
+                    for timestamp
+                    in range(self.tag.get_num_timestamps())
+                ]
+            )
+        return self._tag_q4_adjusted_angles
+
+    def _get_tag_quadrants(self):
+        if self._tag_quadrants is None:
+            self._tag_quadrants = np.array(
+                [
+                    GUtils.quadrant_of_vector(
+                        self.camera.get_gps_position(),
+                        tag_position,
+                    )
+                    for tag_position
+                    in self._get_tag_positions()
+                ]
+            )
+        return self._tag_quadrants
+
     def _angle_to_tag(self, timestamp):
-        tag_position = self.tag.get_position_at_timestamp(timestamp)
-        return GUtils.angel_of_vector_between_points_360_rad(
-            self.camera.get_gps_position(),
-            tag_position
-        )
+        return self._get_tag_angles()[timestamp]
 
     def _q4_adjusted_angle_to_tag(self, timestamp):
         r = self._angle_to_tag(timestamp)
@@ -30,12 +76,11 @@ class TagPositionAnalyzer:
         return r
 
     def _quadrant_to_tag(self, timestamp):
-        tag_position = self.tag.get_position_at_timestamp(timestamp)
-        return GUtils.quadrant_of_vector(self.camera.get_gps_position(), tag_position)
+        return self._get_tag_quadrants()[timestamp]
 
     def _range_of_angles_between_timestamps(self, timestamp1, timestamp2):
         a = self._list_of_angles_between_timestamps(timestamp1, timestamp2)
-        return max(a) - min(a)
+        return np.max(a) - np.min(a)
 
     def _timestamp_of_min_angle_in_frame(self, timestamp1, timestamp2):
         a_s = self._list_of_angles_between_timestamps(timestamp1, timestamp2)
@@ -54,16 +99,10 @@ class TagPositionAnalyzer:
         return None
 
     def _list_of_angles_between_timestamps(self, timestamp1, timestamp2):
-        angles = []
-        angles_q4_adjusted = []
-        quadrants = {}
-        for timestamp in range(timestamp1, timestamp2+1):
-            quadrant = self._quadrant_to_tag(timestamp)
-            quadrants[quadrant] = True
-            angles.append(self._angle_to_tag(timestamp))
-            angles_q4_adjusted.append(self._q4_adjusted_angle_to_tag(timestamp))
+        if self._crosses_q1_4_boundary(timestamp1, timestamp2):
+            return self._get_tag_q4_adjusted_angles()[timestamp1: timestamp2 + 1]
 
-        return angles_q4_adjusted if self._crosses_q1_4_boundary(quadrants) else angles
+        return self._get_tag_angles()[timestamp1: timestamp2 + 1]
 
     def _first_time_after_timestamp_where_range_of_angles_exceeds_threshold(
             self,
@@ -77,6 +116,24 @@ class TagPositionAnalyzer:
                 break
 
         return r
+
+    def _distance_between_positions(self, timestamp1, timestamp2):
+        return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1),
+                                              self.tag.get_position_at_timestamp(timestamp2))
+
+    # Lower timestamp is a assumed to happen first
+    # Clockwise movement in time looking down gives negative angle
+    # Counterclockwise movement in time looking down gives positive angle
+    def _angle_between_timestamps(self, timestamp1, timestamp2):
+        t1, t2 = (timestamp1, timestamp2) if timestamp1 < timestamp2 else (timestamp2, timestamp1)
+        p1 = self.tag.get_position_at_timestamp(t1)
+        p2 = self.tag.get_position_at_timestamp(t2)
+        return GUtils.signed_subtended_angle_from_p1_to_p2_rad(self.camera.get_gps_position(), p1, p2)
+
+
+    def _crosses_q1_4_boundary(self, timestamp1, timestamp2):
+        return np.any(self._get_tag_quadrants()[timestamp1:timestamp2 + 1] == 1) and \
+               np.any(self._get_tag_quadrants()[timestamp1:timestamp2 + 1] == 4)
 
     def get_frames_where_range_exceeds_threshold(self, threshold_rad, limit=None):
         self._frames = []
@@ -112,6 +169,9 @@ class TagPositionAnalyzer:
             )
             if self.is_not_terminal_frame(frame)
         ]
+
+
+    # Frame helper methods
 
     def get_early_position(self, frame):
         if self.is_terminal_frame(frame):
@@ -169,21 +229,3 @@ class TagPositionAnalyzer:
 
     def is_terminal_frame(self, frame):
         return self.get_frame_end_timestamp(frame) is None
-
-    def _distance_between_positions(self, timestamp1, timestamp2):
-        return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1),
-                                              self.tag.get_position_at_timestamp(timestamp2))
-
-    # Lower timestamp is a assumed to happen first
-    # Clockwise movement in time looking down gives negative angle
-    # Counterclockwise movement in time looking down gives positive angle
-    def _angle_between_timestamps(self, timestamp1, timestamp2):
-        t1, t2 = (timestamp1, timestamp2) if timestamp1 < timestamp2 else (timestamp2, timestamp1)
-        p1 = self.tag.get_position_at_timestamp(t1)
-        p2 = self.tag.get_position_at_timestamp(t2)
-        return GUtils.signed_subtended_angle_from_p1_to_p2_rad(self.camera.get_gps_position(), p1, p2)
-
-
-    def _crosses_q1_4_boundary(self, quadrants):
-        return 1 in quadrants.keys() and 4 in quadrants.keys()
-
