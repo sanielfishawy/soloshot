@@ -4,22 +4,21 @@
 
 
 - LegacyDataBasePositionCalibrator
-    - ManualVisualImageAnalyzer
 
     - Params
         - TagPositionInStableFovSegmentsAnalyzer
             - FOV from frames
             - Base for motor positions and time offset to pull motor positions
             - Tag for time offset to pull frames
-        - Pull a pair of images_from_video and show them in vertical viewer
-        - Get marked positions from the vertical viewer
-        - Calculate subtended angle taking into account
-            - Change in  motor position
-            - Change visual angle ManualVisualImageAnalyzer
-        - Add Circumcircles
-        - Show them on a map along with frames.
+    - Calculate subtended angle taking into account
+        - Change in  motor position
+        - Change visual angle ManualVisualImageAnalyzer
+    - Add Circumcircles
+    - Show them on a map along with frames.
 
-
+- Base
+    - MotorPositionAnalyzer
+        -
 
 - BaseRenderer
     - Params
