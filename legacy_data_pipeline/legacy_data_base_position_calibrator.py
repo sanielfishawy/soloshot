@@ -29,6 +29,7 @@ class LegacyDataBasePositionCalibrator:
 
             angle_threshold_rad=np.radians(10),
             frames_limit=None,
+            min_distance_to_camera=80, # pixels after transformation.
     ):
         self._session_dir = session_dir
         self._tag_postion_analyzer = tag_position_in_stable_fov_segments_analyzer
@@ -36,6 +37,7 @@ class LegacyDataBasePositionCalibrator:
         self._cdf = calibration_data_filer
         self._angle_threshold_rad = angle_threshold_rad
         self._frames_limit = frames_limit
+        self._min_distance_to_camera = min_distance_to_camera
 
         # helpers
         self._image_from_video_grabber = ImageFromVideoGrabber(
@@ -56,6 +58,7 @@ class LegacyDataBasePositionCalibrator:
         if self._frames is None:
             self._frames = self._tag_postion_analyzer.get_frames_in_stable_fovs(
                 angle_threshold_rad=self._angle_threshold_rad,
+                min_distance_to_camera=self._min_distance_to_camera,
                 limit=self._frames_limit,
             )
         return self._frames
@@ -63,7 +66,7 @@ class LegacyDataBasePositionCalibrator:
     def _present_manual_visual_angle_calculator(self):
         for frame in self._get_frames():
             self._current_frame = frame
-            fov = self._tag_postion_analyzer.get_fov_for_frame(frame)
+            fov = np.radians(self._tag_postion_analyzer.get_fov_for_frame(frame))
             ManualVisualAngleCalculator(
                 image_from_video_1=self._get_early_image_from_video_for_frame(frame),
                 image_from_video_2=self._get_late_image_from_video_for_frame(frame),

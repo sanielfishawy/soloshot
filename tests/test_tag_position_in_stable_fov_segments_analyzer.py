@@ -117,12 +117,11 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             num_not_too_short_segments,
             len(tag_idxs),
         )
-
     def test_visualize_tag_positions(self):
-        limit = 30
+        limit = 8
         frames = self.tag_position_analyzer_with_reported_base.get_frames_in_stable_fovs(
-            angle_threshold_rad=np.radians(10),
-            min_distance_to_camera=80,
+            angle_threshold_rad=np.radians(20),
+            min_distance_to_camera=100,
             limit=limit,
         )
 

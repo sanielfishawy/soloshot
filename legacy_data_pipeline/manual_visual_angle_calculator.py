@@ -14,6 +14,8 @@ class ManualVisualAngleCalculator:
     Returns subtended visual angle of the object from image_from_video_1 to image_from_video_2
     '''
 
+    FOV = 'fov'
+    IMAGE_WIDTH = 'image_width'
     X_POS_1 = 'x_pos_1'
     X_POS_2 = 'x_pos_2'
     ANGLE_TO_CENTER_1 = 'angle_to_center_1'
@@ -46,6 +48,8 @@ class ManualVisualAngleCalculator:
 
         self._callback(
             angle_data={
+                self.__class__.FOV: self._fov,
+                self.__class__.IMAGE_WIDTH: self._image_width,
                 self.__class__.X_POS_1: selected_points[0][VerticalImageList.SELECTED_POINT][0],
                 self.__class__.X_POS_2: selected_points[1][VerticalImageList.SELECTED_POINT][0],
                 self.__class__.ANGLE_TO_CENTER_1: Vac.get_angle_relative_to_center_with_x_rad(

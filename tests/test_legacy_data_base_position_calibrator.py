@@ -109,8 +109,9 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             tag_position_in_stable_fov_segments_analyzer=tag_position_analyzer,
             legacy_data_file_system_helper=ldfh,
             calibration_data_filer=cdf,
-            frames_limit=1,
-            angle_threshold_rad=np.radians(10),
+            frames_limit=8,
+            angle_threshold_rad=np.radians(20),
+            min_distance_to_camera=100,
         )
 
     def test(self):
