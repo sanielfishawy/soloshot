@@ -16,6 +16,7 @@ class TagPositionAnalyzer:
         self.camera = camera
 
         # lazy init
+        self._tag_distances_to_camera = None
         self._tag_postions = None
         self._tag_angles = None
         self._tag_q4_adjusted_angles = None
@@ -66,6 +67,20 @@ class TagPositionAnalyzer:
             )
         return self._tag_quadrants
 
+    def _get_tag_distances_to_camera(self):
+        if self._tag_distances_to_camera is None:
+            self._tag_distances_to_camera = np.array(
+                [
+                    GUtils.distance_between_points(
+                        self.camera.get_gps_position(),
+                        tag_position,
+                    )
+                    for tag_position
+                    in self._get_tag_positions()
+                ]
+            )
+        return self._tag_distances_to_camera
+
     def _angle_to_tag(self, timestamp):
         return self._get_tag_angles()[timestamp]
 
@@ -78,41 +93,127 @@ class TagPositionAnalyzer:
     def _quadrant_to_tag(self, timestamp):
         return self._get_tag_quadrants()[timestamp]
 
-    def _range_of_angles_between_timestamps(self, timestamp1, timestamp2):
-        a = self._list_of_angles_between_timestamps(timestamp1, timestamp2)
+    def _range_of_angles_between_timestamps(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+    ):
+        a = self._list_of_angles_between_timestamps(
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera=min_distance_to_camera,
+        )
+        if a.size == 0:
+            return 0
+
         return np.max(a) - np.min(a)
 
-    def _timestamp_of_min_angle_in_frame(self, timestamp1, timestamp2):
-        a_s = self._list_of_angles_between_timestamps(timestamp1, timestamp2)
-        mn = min(a_s)
-        for i, a in enumerate(a_s):
-            if a == mn:
+    def _timestamp_of_angle_in_frame(
+            self,
+            angle,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+    ):
+        all_angles = self._list_of_angles_between_timestamps(
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera=0,
+        )
+
+        for i, test_angle in enumerate(all_angles):
+            if test_angle == angle and \
+               self._get_tag_distances_to_camera()[i+timestamp1] >= min_distance_to_camera:
                 return i + timestamp1
         return None
 
-    def _timestamp_of_max_angle_in_frame(self, timestamp1, timestamp2):
-        a_s = self._list_of_angles_between_timestamps(timestamp1, timestamp2)
-        mx = max(a_s)
-        for i, a in enumerate(a_s):
-            if a == mx:
-                return i + timestamp1
-        return None
+    def _timestamp_of_min_angle_in_frame(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+    ):
+        valid_angles = self._list_of_angles_between_timestamps(
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera=min_distance_to_camera,
+        )
+        min_angle = np.min(valid_angles)
 
-    def _list_of_angles_between_timestamps(self, timestamp1, timestamp2):
-        if self._crosses_q1_4_boundary(timestamp1, timestamp2):
-            return self._get_tag_q4_adjusted_angles()[timestamp1: timestamp2 + 1]
+        return self._timestamp_of_angle_in_frame(
+            min_angle,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+        )
 
-        return self._get_tag_angles()[timestamp1: timestamp2 + 1]
+    def _timestamp_of_max_angle_in_frame(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+    ):
+        valid_angles = self._list_of_angles_between_timestamps(
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera=min_distance_to_camera,
+        )
+        max_angle = np.max(valid_angles)
+
+        return self._timestamp_of_angle_in_frame(
+            max_angle,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+        )
+
+    def _list_of_angles_between_timestamps(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+        ):
+        if self._crosses_q1_4_boundary(timestamp1, timestamp2, min_distance_to_camera):
+            angles = self._get_tag_q4_adjusted_angles()
+        else:
+            angles = self._get_tag_angles()
+
+        return np.take(
+            angles,
+            self._get_timestamps_between_timestamps_with_distance_greater_than_min(
+                timestamp1,
+                timestamp2,
+                min_distance_to_camera,
+            )
+        )
+
+    def _get_timestamps_between_timestamps_with_distance_greater_than_min(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+        ):
+        t_stamps = np.where(self._get_tag_distances_to_camera() >= min_distance_to_camera)[0]
+        return np.take(
+            t_stamps,
+            np.where( (t_stamps >= timestamp1) & (t_stamps <= timestamp2))[0]
+        )
 
     def _first_time_after_timestamp_where_range_of_angles_exceeds_threshold(
             self,
             timestamp,
-            threshold
+            threshold,
+            min_distance_to_camera,
     ):
         r = None
-        for ts in range(timestamp, self.tag.get_num_timestamps()):
-            if self._range_of_angles_between_timestamps(timestamp, ts) > threshold:
-                r = ts
+        for t_stamp in range(timestamp, self.tag.get_num_timestamps()):
+            if self._range_of_angles_between_timestamps(
+                    timestamp,
+                    t_stamp,
+                    min_distance_to_camera,
+                ) > threshold:
+                r = t_stamp
                 break
 
         return r
@@ -131,11 +232,29 @@ class TagPositionAnalyzer:
         return GUtils.signed_subtended_angle_from_p1_to_p2_rad(self.camera.get_gps_position(), p1, p2)
 
 
-    def _crosses_q1_4_boundary(self, timestamp1, timestamp2):
-        return np.any(self._get_tag_quadrants()[timestamp1:timestamp2 + 1] == 1) and \
-               np.any(self._get_tag_quadrants()[timestamp1:timestamp2 + 1] == 4)
+    def _crosses_q1_4_boundary(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera=0
+    ):
+        quadrants = np.take(
+            self._get_tag_quadrants(),
+            self._get_timestamps_between_timestamps_with_distance_greater_than_min(
+                timestamp1,
+                timestamp2,
+                min_distance_to_camera,
+            )
+        )
 
-    def get_frames_where_range_exceeds_threshold(self, threshold_rad, limit=None):
+        return np.any(quadrants == 1) and  np.any(quadrants == 4)
+
+    def get_frames_where_range_exceeds_threshold(
+            self,
+            threshold_rad,
+            min_distance_to_camera,
+            limit=None,
+    ):
         self._frames = []
         frame_start = 0
         frame_end = None
@@ -143,12 +262,21 @@ class TagPositionAnalyzer:
             frame_end = self._first_time_after_timestamp_where_range_of_angles_exceeds_threshold(
                 timestamp=frame_start,
                 threshold=threshold_rad,
+                min_distance_to_camera=min_distance_to_camera,
             )
             frame = {}
             frame[self.__class__.FRAME] = (frame_start, frame_end)
             if frame_end is not None:
-                min_ts = self._timestamp_of_min_angle_in_frame(frame_start, frame_end)
-                max_ts = self._timestamp_of_max_angle_in_frame(frame_start, frame_end)
+                min_ts = self._timestamp_of_min_angle_in_frame(
+                    timestamp1=frame_start,
+                    timestamp2=frame_end,
+                    min_distance_to_camera=min_distance_to_camera,
+                )
+                max_ts = self._timestamp_of_max_angle_in_frame(
+                    timestamp1=frame_start,
+                    timestamp2=frame_end,
+                    min_distance_to_camera=min_distance_to_camera,
+                )
                 frame[self.__class__.TIMESTAMP_OF_MIN_ANGLE] = min_ts
                 frame[self.__class__.TIMESTAMP_OF_MAX_ANGLE] = max_ts
                 frame[self.__class__.DISTANCE_BETWEEN_POSITIONS] = self._distance_between_positions(min_ts, max_ts) # pylint: disable=C0301
@@ -161,10 +289,16 @@ class TagPositionAnalyzer:
 
         return self._frames
 
-    def get_complete_frames_where_range_exceeds_threshold(self, threshold_rad, limit=None):
+    def get_complete_frames_where_range_exceeds_threshold(
+            self,
+            threshold_rad,
+            min_distance_to_camera,
+            limit=None,
+    ):
         return [
             frame for frame in self.get_frames_where_range_exceeds_threshold(
                 threshold_rad=threshold_rad,
+                min_distance_to_camera=min_distance_to_camera,
                 limit=limit,
             )
             if self.is_not_terminal_frame(frame)

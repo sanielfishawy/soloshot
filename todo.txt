@@ -20,14 +20,14 @@
         - Show them on a map along with frames.
 
 - TapPositionAnalyzer
-    - Rewrite to allow setting a minimum distance from the base.
-        - Pull tag_xy_position_series
-        - Create a series with angles
-            - One without q4 adjusted
-            - One with q4 adjusted
-        - Create a series with quadrants
-        - Create a series with distances
-        - Create
+    - Add min distance to camera threshold
+    - Add min_distance parameter to:
+        x list_of_angles_between_timestamps
+        x range_of_angles_between_timestamps
+        x get_tag_quadrants_between_timestamps
+        x time_stamp_of_min_angle_in_frame
+        x time_stamp_of_max_angle_in_frame
+
 
 
 - BaseRenderer
