@@ -1,6 +1,6 @@
 import math
-import geometry_utils as GUtils
 import numpy as np
+import geometry_utils as GUtils
 
 class TagPositionAnalyzer:
 
@@ -116,11 +116,11 @@ class TagPositionAnalyzer:
             timestamp2,
             min_distance_to_camera,
     ):
-        all_angles = self._list_of_angles_between_timestamps(
+        all_angles = self._all_angles_q4_adjusted(
             timestamp1,
             timestamp2,
-            min_distance_to_camera=0,
-        )
+            min_distance_to_camera=min_distance_to_camera,
+        )[timestamp1: timestamp2+1]
 
         for i, test_angle in enumerate(all_angles):
             if test_angle == angle and \
@@ -168,17 +168,30 @@ class TagPositionAnalyzer:
             min_distance_to_camera,
         )
 
+    def _all_angles_q4_adjusted(
+            self,
+            timestamp1,
+            timestamp2,
+            min_distance_to_camera,
+        ):
+        # Uses distance for q4 determination but does not filter final angle results
+        # based on min_distance.
+        if self._crosses_q1_4_boundary(timestamp1, timestamp2, min_distance_to_camera):
+            return self._get_tag_q4_adjusted_angles()
+
+        return self._get_tag_angles()
+
     def _list_of_angles_between_timestamps(
             self,
             timestamp1,
             timestamp2,
             min_distance_to_camera,
         ):
-        if self._crosses_q1_4_boundary(timestamp1, timestamp2, min_distance_to_camera):
-            angles = self._get_tag_q4_adjusted_angles()
-        else:
-            angles = self._get_tag_angles()
-
+        angles = self._all_angles_q4_adjusted(
+            timestamp1=timestamp1,
+            timestamp2=timestamp2,
+            min_distance_to_camera=min_distance_to_camera,
+        )
         return np.take(
             angles,
             self._get_timestamps_between_timestamps_with_distance_greater_than_min(
@@ -219,8 +232,8 @@ class TagPositionAnalyzer:
         return r
 
     def _distance_between_positions(self, timestamp1, timestamp2):
-        return GUtils.distance_between_points(self.tag.get_position_at_timestamp(timestamp1),
-                                              self.tag.get_position_at_timestamp(timestamp2))
+        return GUtils.distance_between_points(self._get_tag_positions()[timestamp1],
+                                              self._get_tag_positions()[timestamp2])
 
     # Lower timestamp is a assumed to happen first
     # Clockwise movement in time looking down gives negative angle
