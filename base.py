@@ -25,8 +25,9 @@ class Base:
             actual_longitude=None,
             calibrated_latitude=None,
             calibrated_longitude=None,
+            base_gps_time_series: np.ndarray = None,
             pan_motor_angle_series: np.ndarray = None,
-            base_time_series: np.ndarray = None,
+            base_motor_time_series: np.ndarray = None,
             alignment_offset_motor_to_video_ms = None,
             map_coordinate_transformer: MapCoordinateTransformer = None,
     ):
@@ -34,10 +35,11 @@ class Base:
         self._actual_longitude = actual_longitude
         self._calibrated_latitude = calibrated_latitude
         self._calibrated_longitude = calibrated_longitude
+        self._base_gps_time_series = base_gps_time_series
         self._pan_motor_angle_series = pan_motor_angle_series
-        self._base_time_series = base_time_series
+        self._base_motor_time_series = base_motor_time_series
         self._gps_latitude_series = gps_latitude_series
-        self._gps_longitude_series = gps_longitude_series,
+        self._gps_longitude_series = gps_longitude_series
         self._alignment_offset_motor_to_video_ms = alignment_offset_motor_to_video_ms
         self._map_coordinate_transformer = map_coordinate_transformer
 
@@ -46,7 +48,9 @@ class Base:
             self._alignment_offset_motor_to_video_ms = 206
 
         # lazy inits for performance
-        self._normalized_base_time_series = None
+        self._normalized_base_motor_time_series = None
+        self._base_motor_time_series_in_video_time = None
+        self._pan_motor_angle_series_rad = None
 
 
     #
@@ -85,35 +89,29 @@ class Base:
     # Motor methods
     #
 
-    def get_normalized_base_time_series(self):
-        if self._normalized_base_time_series is None:
-            self._normalized_base_time_series = self._base_time_series - self._base_time_series[0]
-        return self._normalized_base_time_series
+
+    def get_normalized_base_motor_time_series(self):
+        if self._normalized_base_motor_time_series is None:
+            self._normalized_base_motor_time_series = self._base_motor_time_series - self._base_motor_time_series[0]
+        return self._normalized_base_motor_time_series
+
+    def get_base_motor_time_series_in_video_time(self):
+        if self._base_motor_time_series_in_video_time is None:
+            self._base_motor_time_series_in_video_time = self.get_normalized_base_motor_time_series() +\
+                                                   self._alignment_offset_motor_to_video_ms
+        return self._base_motor_time_series_in_video_time
 
     def get_motor_time_for_video_time(self, video_time_ms):
         return video_time_ms - self._alignment_offset_motor_to_video_ms
 
-    def get_motor_idx_for_motor_time(self, motor_time):
-        idx = None
-        for i, time_ms in enumerate(list(self.get_normalized_base_time_series())):
-            if time_ms > motor_time:
-                idx = i
-                break
+    def get_pan_motor_angle_series_rad(self):
+        if self._pan_motor_angle_series_rad is None:
+            self._pan_motor_angle_series_rad = np.radians(self._pan_motor_angle_series)
+        return self._pan_motor_angle_series_rad
 
-        after_idx = idx
-        before_idx = idx - 1
-        after_time = self.get_normalized_base_time_series()[after_idx]
-        before_time = self.get_normalized_base_time_series()[before_idx]
-        if abs(before_time - motor_time) < abs(after_time - motor_time):
-            return before_idx
-        return after_idx
-
-    def get_motor_idx_for_video_time(self, video_time):
-        return self.get_motor_idx_for_motor_time(
-            motor_time=self.get_motor_time_for_video_time(video_time)
+    def get_motor_angle_for_video_time_rad(self, video_time):
+        return np.interp(
+            x=video_time,
+            xp=self.get_base_motor_time_series_in_video_time(),
+            fp=self.get_pan_motor_angle_series_rad(),
         )
-
-    def get_motor_angle_for_video_time(self, video_time):
-        return self._pan_motor_angle_series[
-            self.get_motor_idx_for_video_time(video_time)
-        ]

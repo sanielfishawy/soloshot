@@ -11,16 +11,8 @@ class ManualVisualAngleCalculator:
     '''
     Displays images_from_video in vertical photo viewer.
     User pics position of object in both images.
-    Returns subtended visual angle of the object from image_from_video_1 to image_from_video_2
+    Returns VisualAngleData from image_from_video_1 to image_from_video_2
     '''
-
-    FOV = 'fov'
-    IMAGE_WIDTH = 'image_width'
-    X_POS_1 = 'x_pos_1'
-    X_POS_2 = 'x_pos_2'
-    ANGLE_TO_CENTER_1 = 'angle_to_center_1'
-    ANGLE_TO_CENTER_2 = 'angle_to_center_2'
-    SUBTENDED_ANGLE = 'subtended_angle'
 
     def __init__(
             self,
@@ -47,30 +39,75 @@ class ManualVisualAngleCalculator:
         x_2 = selected_points[1][VerticalImageList.SELECTED_POINT][0]
 
         self._callback(
-            angle_data={
-                self.__class__.FOV: self._fov,
-                self.__class__.IMAGE_WIDTH: self._image_width,
-                self.__class__.X_POS_1: selected_points[0][VerticalImageList.SELECTED_POINT][0],
-                self.__class__.X_POS_2: selected_points[1][VerticalImageList.SELECTED_POINT][0],
-                self.__class__.ANGLE_TO_CENTER_1: Vac.get_angle_relative_to_center_with_x_rad(
-                    x_pos=x_1,
-                    image_width=self._image_width,
-                    fov_rad=self._fov,
-                ),
-                self.__class__.ANGLE_TO_CENTER_2: Vac.get_angle_relative_to_center_with_x_rad(
-                    x_pos=x_2,
-                    image_width=self._image_width,
-                    fov_rad=self._fov,
-                ),
-                self.__class__.SUBTENDED_ANGLE: Vac.get_subtended_angle_with_x_rad(
-                    x_1=x_1,
-                    x_2=x_2,
-                    image_width=self._image_width,
-                    fov_rad=self._fov,
-                ),
-            }
+            VisualAngleData(
+                x_pos_1=x_1,
+                x_pos_2=x_2,
+                image_width=self._image_width,
+                fov=self._fov,
+            )
         )
-
 
     def run(self):
         self._vertical_image_list.run()
+
+
+class VisualAngleData:
+
+    def __init__(
+            self,
+            fov,
+            image_width,
+            x_pos_1,
+            x_pos_2,
+    ):
+
+        self._fov = fov
+        self._image_width = image_width
+        self._x_pos_1 = x_pos_1
+        self._x_pos_2 = x_pos_2
+
+        # lazy inits
+        self._subtended_angle = None
+        self._angle_to_center_1 = None
+        self._angle_to_center_2 = None
+
+
+    def get_fov(self):
+        return self._fov
+
+    def get_image_width(self):
+        return self._image_width
+
+    def get_x_pos_1(self):
+        return self._x_pos_1
+
+    def get_x_pos_2(self):
+        return self._x_pos_2
+
+    def get_angle_to_center_1(self):
+        if self._angle_to_center_1 is None:
+            self._angle_to_center_1 = Vac.get_angle_relative_to_center_with_x_rad(
+                x_pos=self.get_x_pos_1,
+                image_width=self.get_image_width(),
+                fov_rad=self.get_fov(),
+            )
+        return self._angle_to_center_1
+
+    def get_angle_to_center_2(self):
+        if self._angle_to_center_2 is None:
+            self._angle_to_center_2 = Vac.get_angle_relative_to_center_with_x_rad(
+                x_pos=self.get_x_pos_2,
+                image_width=self.get_image_width(),
+                fov_rad=self.get_fov(),
+            )
+        return self._angle_to_center_2
+
+    def get_subtended_angle(self):
+        if self._subtended_angle is None:
+            self._subtended_angle = Vac.get_subtended_angle_with_x_rad(
+                x_1=self.get_x_pos_1(),
+                x_2=self.get_x_pos_2(),
+                image_width=self.get_image_width(),
+                fov_rad=self.get_fov(),
+            )
+        return self._subtended_angle

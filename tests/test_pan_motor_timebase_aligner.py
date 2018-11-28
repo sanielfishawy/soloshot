@@ -2,6 +2,7 @@
 import os
 import sys
 import unittest
+import numpy as np
 from pathlib import Path
 
 sys.path.insert(0, os.getcwd())
@@ -17,9 +18,15 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
     def setUp(self):
         self.ldfh = LDFH(self.__class__.HEAD_PATH)
         self.pmta = PanMotorTimeBaseAligner(self.__class__.TEST_SESSION_DIR_NAME,
-                                            num_points=6)
+                                            num_points=1)
 
-    def dont_test_visualize_peaks(self):
+    def dont_test_analyze_motor_data(self):
+        data = self.pmta.get_motor_data()
+        differences = np.ediff1d(data)
+        sorted_differences = np.sort(np.abs(differences))[::-1]
+
+
+    def best_test_visualize_peaks(self):
         self.pmta.visualize_motor_local_maxima_and_minima()
 
     def dont_test_show_scrubber_for_maxima(self):
@@ -36,7 +43,7 @@ class TestPanMoterTimebaseAligner(unittest.TestCase):
             for image in images:
                 self.assertIsInstance(image, ImageFromVideo)
 
-    def dont_test_run(self):
+    def test_run(self):
         self.pmta.show_scrub_picker_for_min_and_max()
         self.pmta.save_results()
 

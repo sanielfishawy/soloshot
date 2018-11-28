@@ -4,10 +4,12 @@ import os
 import numpy as np
 
 sys.path.insert(0, os.getcwd())
+from base import Base
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer # pylint: disable=C0301
 from legacy_data_pipeline.manual_visual_angle_calculator import ManualVisualAngleCalculator
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
 from legacy_data_pipeline.calibration_data_filer import CalibrationDataFiler
+import legacy_data_pipeline.pan_motor_angle_calculator as PanAngleCalculator
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 
 class LegacyDataBasePositionCalibrator:
@@ -86,5 +88,68 @@ class LegacyDataBasePositionCalibrator:
         video_time = self._tag.get_video_time_for_timestamp(tag_timestamp)
         return self._image_from_video_grabber.get_image_from_video_at_time_ms(video_time)
 
-    def _manual_angle_calculator_callback(self, angle_data):
-        print(angle_data)
+    def _manual_angle_calculator_callback(self, visual_angle_data):
+        motor_angle_data = MotorAngleData(
+            early_video_time=self._tag.get_video_time_for_timestamp(
+                self._tag_postion_analyzer.get_early_min_max_timestamp(self._current_frame)
+            ),
+            late_video_time=self._tag.get_video_time_for_timestamp(
+                self._tag_postion_analyzer.get_late_min_max_timestamp(self._current_frame)
+            ),
+            base=self._base,
+        )
+        result = {
+            'visual_angle_data': visual_angle_data,
+            'frame': self._current_frame,
+            'motor_angle_data': motor_angle_data,
+        }
+        print(result)
+
+
+class MotorAngleData:
+
+    def __init__(
+            self,
+            base: Base,
+            early_video_time,
+            late_video_time,
+    ):
+
+        self._base = base
+        self._early_video_time = early_video_time
+        self._late_video_time = late_video_time
+
+        # lazy inits
+        self._early_motor_angle_rad = None
+        self._late_motor_angle_rad = None
+        self._subtended_motor_angle_rad = None
+
+
+    def get_base(self):
+        return self._base
+
+    def get_early_video_time(self):
+        return self._early_video_time
+
+    def get_late_video_time(self):
+        return self._late_video_time
+
+    def get_early_motor_angle_rad(self):
+        if self._early_motor_angle_rad is None:
+            self._early_motor_angle_rad = self.get_base().get_motor_angle_for_video_time_rad(
+                self.get_early_video_time()
+            )
+        return self._early_motor_angle_rad
+
+    def get_late_motor_angle_rad(self):
+        if self._late_motor_angle_rad is None:
+            self._late_motor_angle_rad = self.get_base().get_motor_angle_for_video_time_rad(
+                self.get_late_video_time()
+            )
+        return self._late_motor_angle_rad
+
+    def get_subtended_motor_angle(self):
+        return PanAngleCalculator.get_acute_subtened_motor_angle_rad(
+            early_angle_rad=self.get_early_motor_angle_rad(),
+            late_angle_rad=self.get_late_motor_angle_rad(),
+        )

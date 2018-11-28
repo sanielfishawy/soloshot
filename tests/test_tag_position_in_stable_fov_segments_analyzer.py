@@ -106,6 +106,8 @@ class TestTagPositionInStableFovSegmentAnalyzer(unittest.TestCase):
             base=reported_base,
         )
 
+        return self
+
     def dont_test_get_tag_idxs_for_stable_segment(self):
         segments = self.tag_position_analyzer_with_actual_base._get_stable_fov_segments()
         tag_idxs = self.tag_position_analyzer_with_actual_base._get_tag_idxs_for_stable_segments()
