@@ -5,25 +5,9 @@
 
 - LegacyDataBasePositionCalibrator
 
-    - Params
-        - TagPositionInStableFovSegmentsAnalyzer
-            - FOV from frames
-            - Base for motor positions and time offset to pull motor positions
-            - Tag for time offset to pull frames
-    - Calculate subtended angle taking into account
-        - Change in  motor position
-        - Change visual angle ManualVisualImageAnalyzer
-    - Add Circumcircles
+    - Circumcircles
+        - Extract to its own file.
     - Show them on a map along with frames.
-
-- Base
-    - MotorPositionAnalyzer
-        -
-
-- BaseRenderer
-    - Params
-        - Base
-        - FovSegmentAnalyzer
 
 
 - PanMotorToFovConsistencyCheckers
@@ -33,8 +17,3 @@
     - Ask the user to pick the same object in each image
     - Calculate angle
     - Compare to pan
-
-- GeoMapScrubber
-    - scrolls in such a way as to keep the dot in the middle
-    - SliderMouseHandler
-        - Freeze

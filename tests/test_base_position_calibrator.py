@@ -12,7 +12,7 @@ from object_universe import ObjectUniverse
 from camera import Camera
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
-from object_motion_analyzer import Circumcircles
+from circumcircles import Circumcircles
 
 from tk_canvas_renderers.render_orchestrator import RenderOrchestrator
 

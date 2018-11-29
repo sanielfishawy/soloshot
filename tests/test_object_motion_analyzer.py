@@ -8,7 +8,8 @@ from shapely.geometry import LineString, LinearRing
 sys.path.insert(0, os.getcwd())
 from object_universe import ObjectUniverse
 from camera import Camera
-from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
+from object_motion_analyzer import ObjectMotionAnalyzer
+from circumcircles import Circumcircles
 from viewable_object import RandomlyMovingObject, RandomlyMovingTag
 from boundary import Boundary
 

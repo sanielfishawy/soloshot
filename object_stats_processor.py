@@ -1,4 +1,4 @@
-from object_motion_analyzer import ObjectMotionAnalyzer, Circumcircles
+from object_motion_analyzer import ObjectMotionAnalyzer
 from tag_position_analyzer import TagPositionAnalyzer
 
 class ObjectsStatsProcessor:
@@ -9,24 +9,18 @@ class ObjectsStatsProcessor:
     eliminated = 'eliminated'
     elimination_t = 'elimination_t'
 
-    def __init__(self, object_motion_analyzer):
-        """
-        :type object_motion_analyzer: ObjectMotionAnalyzer
-        """
+    def __init__(self, object_motion_analyzer) -> ObjectMotionAnalyzer:
         self._object_motion_analyzer = object_motion_analyzer
         self._processed_objects = {}
 
-    def get_tag_position_analyzer(self):
-        """
-        :rtype TagPositionAnalyzer
-        """
+    def get_tag_position_analyzer(self) -> TagPositionAnalyzer:
         return self._object_motion_analyzer.get_tag_position_analyzer()
 
     def get_processed_objects(self):
         if self._processed_objects == {}:
             self._process_objects()
         return self._processed_objects
-    
+
     def get_object_motion_analyzer(self):
         return self._object_motion_analyzer
 
@@ -59,11 +53,8 @@ class ObjectsStatsProcessor:
             if self.get_moved_opposite_to_tag_t(obj) == None:
                 self._get_hash_for_obj(obj)[self.elimination_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
                 self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = self.get_tag_position_analyzer().get_early_min_max_timestamp(frame)
-    
+
     def _set_didnt_intersect_error_circle(self, frame, obj):
-        """
-        :type cc: Circumcircles
-        """
         cc = self._object_motion_analyzer.get_circumcircles_for_object_in_frame(frame, obj)
 
         if self.get_didnt_intersect_error_circle_n(obj) == None:
@@ -96,16 +87,16 @@ class ObjectsStatsProcessor:
     def get_moved_opposite_to_tag_n(self, obj):
         if self.moved_opposite_to_tag_n not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n] = 0
-        return self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n] 
-    
+        return self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_n]
+
     def get_moved_opposite_to_tag_t(self, obj):
         if self.moved_opposite_to_tag_t not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] = None
-        return self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t] 
-    
+        return self._get_hash_for_obj(obj)[self.moved_opposite_to_tag_t]
+
     def get_did_move_opposite_to_tag(self, obj):
         return self.get_moved_opposite_to_tag_t(obj) != None
-    
+
     def get_didnt_move_opposite_to_tag(self, obj):
         return not self.get_did_move_opposite_to_tag(obj)
 
@@ -113,15 +104,15 @@ class ObjectsStatsProcessor:
         if self.didnt_intersect_error_circle_n not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_n] = None
         return self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_n]
-    
+
     def get_didnt_intersect_error_circle_t(self, obj):
         if self.didnt_intersect_error_circle_t not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t] = None
         return self._get_hash_for_obj(obj)[self.didnt_intersect_error_circle_t]
-    
+
     def get_didnt_intersect_error_circle(self, obj):
         return self.didnt_intersect_error_circle_t != None
-    
+
     def get_elimination_t(self, obj):
         if self.elimination_t not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.elimination_t] = None
@@ -131,13 +122,13 @@ class ObjectsStatsProcessor:
         if self.eliminated not in self._get_hash_for_obj(obj):
             self._get_hash_for_obj(obj)[self.eliminated] = False
         return self._get_hash_for_obj(obj)[self.eliminated]
-    
+
     def get_not_eliminated(self, obj):
         return not self.get_eliminated(obj)
-    
+
     def get_all_eliminated(self):
         return list(filter(self.get_eliminated, [obj for obj in self.get_processed_objects()]))
-    
+
     def get_all_that_always_moved_same_direction_as_tag(self):
         return list(filter(self.get_didnt_move_opposite_to_tag, [obj for obj in self.get_processed_objects()]))
 
@@ -150,7 +141,7 @@ class ObjectsStatsProcessor:
     def get_top_ranked_object(self):
         r = self.get_ranked_objects()
         return r[0] if len(r) > 0 else None
-    
+
     def get_top_ranked_objects(self):
         return list(filter(self.get_had_same_didnt_intersect_n_as_top_ranked, self.get_ranked_objects()))
 
@@ -165,7 +156,7 @@ class ObjectsStatsProcessor:
     def get_all_eliminated_before_timestamp(self, timestamp):
         e_tuples = list(filter(self._eliminated_time_is_before_timestamp, [(obj, timestamp) for obj in self.get_all_eliminated()] ))
         return [t[0] for t in e_tuples]
-    
+
     def _eliminated_time_is_before_timestamp(self, obj_timestamp_tuple):
         obj, timestamp = obj_timestamp_tuple
         return self.get_elimination_t(obj) != None and self.get_elimination_t(obj) <= timestamp
