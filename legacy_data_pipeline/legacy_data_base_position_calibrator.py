@@ -83,6 +83,7 @@ class LegacyDataBasePositionCalibrator:
                 fov_rad=fov,
                 callback=self._manual_angle_calculator_callback,
             ).run()
+            break
 
     def _get_early_image_from_video_for_frame(self, frame):
         tag_timestamp = self._tag_postion_analyzer.get_early_min_max_timestamp(frame)
@@ -128,6 +129,18 @@ class LegacyDataBasePositionCalibrator:
                 self.__class__.COMBINED_ANGLE_DATA: combined_angle_data,
                 self.__class__.CIRCUMCIRCLES: circumcircles,
             }
+        )
+        va = visual_angle_data.get_subtended_angle()
+        ma = motor_angle_data.get_subtended_motor_angle()
+        print(
+            'fov', visual_angle_data.get_fov(),
+            'va', va,
+            'ma', ma,
+            'diff', np.degrees(va + ma)
+        )
+        print(
+            'fov_deg', np.degrees(visual_angle_data.get_fov()),
+            'va_deg', np.degrees(va),
         )
 
 

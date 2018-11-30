@@ -4,10 +4,8 @@
 
 
 - LegacyDataBasePositionCalibrator
+  - Pick stationary points
 
-    - Circumcircles
-        - Extract to its own file.
-    - Show them on a map along with frames.
 
 
 - PanMotorToFovConsistencyCheckers

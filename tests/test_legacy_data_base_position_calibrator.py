@@ -121,6 +121,9 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
         self.frames_limit = 8
         self.threshold_deg = 20
         self.min_distance_to_camera = 100
+        # self.frames_limit = None
+        # self.threshold_deg = 20
+        # self.min_distance_to_camera = 100
         self.legacy_data_base_position_calibrator = LegacyDataBasePositionCalibrator(
             session_dir=session_dir,
             tag_position_in_stable_fov_segments_analyzer=self.tag_position_analyzer,
@@ -133,7 +136,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
 
         return self
 
-    def test_calibrate(self):
+    def dont_test_calibrate(self):
         self.legacy_data_base_position_calibrator.run()
 
         master = tk.Tk()
@@ -161,7 +164,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
     def dont_test_present_manual_visual_angle_calculator(self):
         self.legacy_data_base_position_calibrator._present_manual_visual_angle_calculator()
 
-    def dont_test_visualize_tag_positions(self):
+    def test_visualize_tag_positions(self):
         frames = self.tag_position_analyzer.get_frames_in_stable_fovs(
             angle_threshold_rad=np.radians(self.threshold_deg),
             min_distance_to_camera=self.min_distance_to_camera,

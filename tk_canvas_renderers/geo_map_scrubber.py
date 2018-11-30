@@ -153,11 +153,13 @@ class GeoMapScrubber:
         return self._map_canvas
 
     def _map_left_click(self, event):
+        x = event.widget.canvasx(event.x)
+        y = event.widget.canvasy(event.y)
         print(
-            'x:', event.x,
-            'y:', event.y,
-            'latitude:', self._get_map_coordinate_transformer().get_latitude_for_y(event.y),
-            'longitude:', self._get_map_coordinate_transformer().get_longitude_for_x(event.x),
+            'x:', x,
+            'y:', y,
+            'latitude:', self._get_map_coordinate_transformer().get_latitude_for_y(y),
+            'longitude:', self._get_map_coordinate_transformer().get_longitude_for_x(x),
         )
 
     def _get_map_image(self) -> ImageTk.PhotoImage:
@@ -194,6 +196,8 @@ class GeoMapScrubber:
             self._get_tabular_info(
                 idx=idx,
                 time=self._get_time_from_idx(idx),
+                latitude=self._latitude_series[idx],
+                longitude=self._longitude_series[idx],
             )
         )
 
@@ -203,6 +207,8 @@ class GeoMapScrubber:
             self._get_tabular_info(
                 selected_idx=idx,
                 selected_time=self._get_time_from_idx(idx),
+                selected_latitude=self._latitude_series[idx],
+                selected_longitude=self._longitude_series[idx],
             )
         )
         self._geo_track_hilighter.set_selected_idx(idx)
@@ -215,7 +221,17 @@ class GeoMapScrubber:
     def _get_time_from_idx(self, idx):
         return self._time_series[idx] - self._time_series[0]
 
-    def _get_tabular_info(self, idx=None, time=None, selected_idx=None, selected_time=None):
+    def _get_tabular_info(
+            self,
+            idx=None,
+            time=None,
+            selected_idx=None,
+            selected_time=None,
+            latitude=None,
+            longitude=None,
+            selected_latitude=None,
+            selected_longitude=None,
+    ):
         return [
             {
                 TabularData.LABEL: 'Index:',
@@ -234,6 +250,26 @@ class GeoMapScrubber:
                 TabularData.LABEL: 'Selected Time:',
                 TabularData.VALUE: selected_time,
                 TabularData.COLUMN: 1,
+            },
+            {
+                TabularData.LABEL: 'Latitude:',
+                TabularData.VALUE: latitude,
+                TabularData.COLUMN: 2,
+            },
+            {
+                TabularData.LABEL: 'Longitude:',
+                TabularData.VALUE: longitude,
+                TabularData.COLUMN: 2,
+            },
+            {
+                TabularData.LABEL: 'Selected Latitude:',
+                TabularData.VALUE: selected_latitude,
+                TabularData.COLUMN: 3,
+            },
+            {
+                TabularData.LABEL: 'Selected Longitude:',
+                TabularData.VALUE: selected_longitude,
+                TabularData.COLUMN: 3,
             },
         ]
 
