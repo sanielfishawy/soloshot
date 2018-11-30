@@ -12,6 +12,7 @@ from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import Tag
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper as LDFH
 from legacy_data_pipeline.calibration_data_filer import CalibrationDataFiler as CDF
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
+import tk_canvas_renderers.legacy_data_element_renders as Renderer
 from geo_mapping.geo_mapper import MapFitter, MapCoordinateTransformer
 from tag import Tag
 from base import Base
@@ -102,7 +103,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             fieldname=LDFH.PAN_MOTOR_READ_FIELD,
         )
 
-        base = Base(
+        self.base = Base(
             gps_latitude_series=base_gps_latitude,
             gps_longitude_series=base_gps_longitude,
             base_motor_time_series=base_motor_time_series,
@@ -114,7 +115,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             fov_series=fov_series,
             fov_time_series=fov_time_series,
             tag=tag,
-            base=base,
+            base=self.base,
         )
 
         self.frames_limit = 8
@@ -132,7 +133,32 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
 
         return self
 
-    def test_present_manual_visual_angle_calculator(self):
+    def test_calibrate(self):
+        self.legacy_data_base_position_calibrator.run()
+
+        master = tk.Tk()
+        self.geo_map_scrubber.setup_ui(master)
+
+        Renderer.render_tag_position_analyzer_frames(
+            canvas=self.geo_map_scrubber.get_map_canvas(),
+            frames=self.legacy_data_base_position_calibrator.get_all_frames(),
+            tag_position_analyzer=self.tag_position_analyzer,
+        )
+
+        Renderer.render_base(
+            canvas=self.geo_map_scrubber.get_map_canvas(),
+            base=self.base,
+        )
+
+        Renderer.render_circumcircles(
+            canvas=self.geo_map_scrubber.get_map_canvas(),
+            circumcircles=self.legacy_data_base_position_calibrator.get_all_circumcircle_objects(),
+        )
+
+        master.mainloop()
+
+
+    def dont_test_present_manual_visual_angle_calculator(self):
         self.legacy_data_base_position_calibrator._present_manual_visual_angle_calculator()
 
     def dont_test_visualize_tag_positions(self):

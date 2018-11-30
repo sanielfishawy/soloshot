@@ -6,11 +6,12 @@ import numpy as np
 sys.path.insert(0, os.getcwd())
 from base import Base
 from legacy_data_pipeline.tag_postion_in_stable_fov_segments_analyzer import TagPositionInStableFovSegmentsAnalyzer # pylint: disable=C0301
-from legacy_data_pipeline.manual_visual_angle_calculator import ManualVisualAngleCalculator
+from legacy_data_pipeline.manual_visual_angle_calculator import ManualVisualAngleCalculator, VisualAngleData # pylint: disable=C0301
 from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSystemHelper
 from legacy_data_pipeline.calibration_data_filer import CalibrationDataFiler
 import legacy_data_pipeline.pan_motor_angle_calculator as PanAngleCalculator
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
+from circumcircles import Circumcircles
 
 class LegacyDataBasePositionCalibrator:
     '''
@@ -21,6 +22,12 @@ class LegacyDataBasePositionCalibrator:
       in motor positions.
     - Generates circumcircles.
     '''
+
+    FRAME = 'frame'
+    VISUAL_ANGLE_DATA = 'visual_angle_data'
+    MOTOR_ANGLE_DATA = 'motor_angle_data'
+    COMBINED_ANGLE_DATA = 'combined_angle_data'
+    CIRCUMCIRCLES = 'circumcircles'
 
     def __init__(
             self,
@@ -55,6 +62,7 @@ class LegacyDataBasePositionCalibrator:
 
         # state
         self._current_frame = None # Because ManualVisualAngleCalculator calls back and context is lost
+        self._results = []
 
     def _get_frames(self):
         if self._frames is None:
@@ -88,7 +96,7 @@ class LegacyDataBasePositionCalibrator:
         video_time = self._tag.get_video_time_for_timestamp(tag_timestamp)
         return self._image_from_video_grabber.get_image_from_video_at_time_ms(video_time)
 
-    def _manual_angle_calculator_callback(self, visual_angle_data):
+    def _manual_angle_calculator_callback(self, visual_angle_data: VisualAngleData):
         motor_angle_data = MotorAngleData(
             early_video_time=self._tag.get_video_time_for_timestamp(
                 self._tag_postion_analyzer.get_early_min_max_timestamp(self._current_frame)
@@ -98,13 +106,67 @@ class LegacyDataBasePositionCalibrator:
             ),
             base=self._base,
         )
-        result = {
-            'visual_angle_data': visual_angle_data,
-            'frame': self._current_frame,
-            'motor_angle_data': motor_angle_data,
-        }
-        print(result)
 
+        combined_angle_data = CombinedAngleData(
+            motor_angle_data=motor_angle_data,
+            visual_angle_data=visual_angle_data,
+        )
+
+        circumcircles = Circumcircles(
+            early_postion=self._tag_postion_analyzer.get_early_position(self._current_frame),
+            late_position=self._tag_postion_analyzer.get_late_position(self._current_frame),
+            theta_rad=combined_angle_data.get_combined_subtended_angle(),
+            error_circle_center=self._base.get_x_y_gps_position(),
+            error_circle_radius=self._base.get_base_gps_error_circle_radius_pixels(),
+        )
+
+        self._results.append(
+            {
+                self.__class__.VISUAL_ANGLE_DATA: visual_angle_data,
+                self.__class__.FRAME: self._current_frame,
+                self.__class__.MOTOR_ANGLE_DATA: motor_angle_data,
+                self.__class__.COMBINED_ANGLE_DATA: combined_angle_data,
+                self.__class__.CIRCUMCIRCLES: circumcircles,
+            }
+        )
+
+
+    def run(self):
+        self._present_manual_visual_angle_calculator()
+        return self._results
+
+    def get_all_frames(self):
+        return [
+            result[self.__class__.FRAME]
+            for result in self.get_results()
+        ]
+
+    def get_results(self):
+        return self._results
+
+    def get_all_error_circle_intersections(self):
+        return [
+            circumcircle.get_error_circle_intersection()
+            for circumcircle in self.get_all_circumcircle_objects()
+        ]
+
+    def get_all_c1s_low_def(self):
+        return [
+            circumcircle.get_c1_low_def()
+            for circumcircle in self.get_all_circumcircle_objects()
+        ]
+
+    def get_all_c2s_low_def(self):
+        return [
+            circumcircle.get_c2_low_def()
+            for circumcircle in self.get_all_circumcircle_objects()
+        ]
+
+    def get_all_circumcircle_objects(self):
+        return [
+            result[self.__class__.CIRCUMCIRCLES]
+            for result in self.get_results()
+        ]
 
 class MotorAngleData:
 
@@ -153,3 +215,16 @@ class MotorAngleData:
             early_angle_rad=self.get_early_motor_angle_rad(),
             late_angle_rad=self.get_late_motor_angle_rad(),
         )
+
+class CombinedAngleData:
+    def __init__(
+            self,
+            motor_angle_data: MotorAngleData,
+            visual_angle_data: VisualAngleData,
+    ):
+        self._motor_angle_data = motor_angle_data
+        self._visual_angle_data = visual_angle_data
+
+    def get_combined_subtended_angle(self):
+        return self._motor_angle_data.get_subtended_motor_angle() + \
+               self._visual_angle_data.get_subtended_angle()

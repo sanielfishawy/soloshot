@@ -149,6 +149,9 @@ class GeoMapScrubber:
                 anchor=tk.NW,
             )
 
+    def get_map_canvas(self):
+        return self._map_canvas
+
     def _map_left_click(self, event):
         print(
             'x:', event.x,

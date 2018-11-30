@@ -9,6 +9,7 @@ from base_position_calibrator import BasePositionCalibrator
 from object_motion_analyzer import ObjectMotionAnalyzer
 from tag_position_analyzer import TagPositionAnalyzer
 from object_stats_processor import ObjectsStatsProcessor
+from image_generator import ImageGenerator
 
 class ElementRenderer:
     def __init__(self, **kargs):
@@ -125,11 +126,12 @@ class ViewableObjectsRenderer(ElementRenderer):
 
 class ImageRenderer(ViewableObjectsRenderer):
 
-    def __init__(self, image_generator, object_stats_processor=None, **kargs):
-        '''
-        :param ImageGenerator image_generator:
-        :param ObjectsStatsProcessor object_stats_processor:
-        '''
+    def __init__(
+            self,
+            image_generator: ImageGenerator,
+            object_stats_processor: ObjectsStatsProcessor = None,
+            **kargs
+    ):
         self.image_generator = image_generator
         self.object_stats_processor = object_stats_processor
         self.y_of_line = 50
@@ -262,10 +264,11 @@ class CameraRenderer(ElementRenderer):
 
 class BasePositionCalibratorRenderer(ElementRenderer):
 
-    def __init__(self, base_position_calibrator, **kargs):
-        '''
-        :param BasePositionCalibrator base_position_calibrator:
-        '''
+    def __init__(
+            self,
+            base_position_calibrator: BasePositionCalibrator,
+            **kargs
+    ):
         self.base_position_calibrator = base_position_calibrator
         self.cc_color = 'orange'
         self.dot_color = 'blue'
@@ -283,21 +286,19 @@ class BasePositionCalibratorRenderer(ElementRenderer):
     def render_moving_elements(self, timestamp):
         self.delete_moving_rendered_elements()
         if timestamp in self._get_early_late_points():
-            self.stationary_rendered_elements.append(self.tk_renderer.create_dot(self.early_late_points[timestamp],
-                                                                             fill=self.dot_color,
-                                                                             outline=self.dot_color,
-                                                                             size=3))
+            self.stationary_rendered_elements.append(
+                self.tk_renderer.create_dot(
+                    self.early_late_points[timestamp],
+                    fill=self.dot_color,
+                    outline=self.dot_color,
+                    size=3,
+                )
+            )
 
-    def _get_object_motion_analyzer(self):
-        '''
-        :rtype ObjectMotionAnalyzer
-        '''
+    def _get_object_motion_analyzer(self) -> ObjectMotionAnalyzer:
         return self.base_position_calibrator.get_object_motion_analyzer()
 
-    def _get_tag_position_analyzer(self):
-        '''
-        :rtype TagPositionAnalzyer
-        '''
+    def _get_tag_position_analyzer(self) -> TagPositionAnalyzer:
         return self._get_object_motion_analyzer().get_tag_position_analyzer()
 
     def _get_frames(self):

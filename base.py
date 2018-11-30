@@ -26,9 +26,10 @@ class Base:
             calibrated_latitude=None,
             calibrated_longitude=None,
             base_gps_time_series: np.ndarray = None,
+            base_gps_error_circle_radius_feet=15,
             pan_motor_angle_series: np.ndarray = None,
             base_motor_time_series: np.ndarray = None,
-            alignment_offset_motor_to_video_ms = None,
+            alignment_offset_motor_to_video_ms=None,
             map_coordinate_transformer: MapCoordinateTransformer = None,
     ):
         self._actual_latitude = actual_latitude
@@ -36,6 +37,7 @@ class Base:
         self._calibrated_latitude = calibrated_latitude
         self._calibrated_longitude = calibrated_longitude
         self._base_gps_time_series = base_gps_time_series
+        self._base_error_circle_radius_feet = base_gps_error_circle_radius_feet
         self._pan_motor_angle_series = pan_motor_angle_series
         self._base_motor_time_series = base_motor_time_series
         self._gps_latitude_series = gps_latitude_series
@@ -58,6 +60,13 @@ class Base:
     #
 
     # For compatability with calibration pipeline base on simulated Camera
+    def get_base_gps_error_circle_radius_feet(self):
+        return self._base_error_circle_radius_feet
+
+    def get_base_gps_error_circle_radius_pixels(self):
+        return self._base_error_circle_radius_feet / \
+               self._get_map_coordinate_transformer().get_feet_per_px()
+
     def get_gps_position(self):
         return self.get_x_y_gps_position()
 
@@ -74,16 +83,15 @@ class Base:
         return self._gps_longitude_series[0]
 
     def get_x_gps_position(self):
-        self._ensure_map_coordinate_transformer()
-        return self._map_coordinate_transformer.get_x_for_longitude(self.get_gps_longitude())
+        return self._get_map_coordinate_transformer().get_x_for_longitude(self.get_gps_longitude())
 
     def get_y_gps_position(self):
-        self._ensure_map_coordinate_transformer()
-        return self._map_coordinate_transformer.get_y_for_latitude(self.get_gps_latitude())
+        return self._get_map_coordinate_transformer().get_y_for_latitude(self.get_gps_latitude())
 
-    def _ensure_map_coordinate_transformer(self):
+    def _get_map_coordinate_transformer(self):
         assert self._map_coordinate_transformer is not None, \
                'Must provide a MapCoordinateTransformer to get x, y pixel positions'
+        return self._map_coordinate_transformer
 
     #
     # Motor methods

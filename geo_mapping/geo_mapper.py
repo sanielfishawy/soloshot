@@ -403,6 +403,12 @@ class MapCoordinateTransformer:
                                                                                         )
         return self._lat_deg_per_px
 
+    def get_feet_per_px(self):
+        return GeoConversions.feet_per_deg_latitude() * self._get_lat_deg_per_px()
+
+    def get_meters_per_px(self):
+        return GeoConversions.meters_per_degree_latitude() * self._get_lat_deg_per_px()
+
     def _get_long_deg_per_px(self):
         if self._long_deg_per_px is None:
             self._long_deg_per_px =\
@@ -425,3 +431,21 @@ class MapCoordinateTransformer:
             angle_from_center = self._get_lat_deg_per_px() * px_from_center
             self._lat_top = self._center_latitude + angle_from_center
         return self._lat_top
+
+class GeoConversions:
+
+    @classmethod
+    def feet_per_deg_latitude(cls):
+        return 364604.73
+
+    @classmethod
+    def deg_latitude_per_foot(cls):
+        return 1 / cls.deg_latitude_per_foot()
+
+    @classmethod
+    def meters_per_degree_latitude(cls):
+        return 111131.75
+
+    @classmethod
+    def deg_latitude_per_meter(cls):
+        return 1 / cls.deg_latitude_per_meter()
