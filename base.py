@@ -76,6 +76,12 @@ class Base:
             self.get_y_gps_position(),
         )
 
+    def get_actual_x_y_position(self):
+        return (
+            self._get_map_coordinate_transformer().get_x_for_longitude(self._actual_longitude),
+            self._get_map_coordinate_transformer().get_y_for_latitude(self._actual_latitude),
+        )
+
     def get_gps_latitude(self):
         return self._gps_latitude_series[0]
 

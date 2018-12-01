@@ -5,8 +5,10 @@
 
 - LegacyDataBasePositionCalibrator
   - Pick stationary points
-
-
+  - List of things that can be wrong:
+    - Alignment of tag postion to video frame.
+    - Alignment of video time to motor position.
+    - Motor angle vs reality.
 
 - PanMotorToFovConsistencyCheckers
     - Visualize FOV

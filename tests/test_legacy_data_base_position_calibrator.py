@@ -77,7 +77,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             latitude_series=tag_latitude_series,
             longitude_series=tag_longitude_series,
             time_series=tag_time_series,
-            alignment_offset_video_to_tag_ms=-57, # From calibration data
+            alignment_offset_video_to_tag_ms=-340, # From calibration data
             map_coordinate_transformer=map_coordinate_transformer,
         )
 
@@ -109,6 +109,10 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             base_motor_time_series=base_motor_time_series,
             map_coordinate_transformer=map_coordinate_transformer,
             pan_motor_angle_series=pan_motor_angle_series,
+            actual_latitude=37.386206696022725,
+            actual_longitude=-122.11009181597608,
+            # actual_latitude=37.386203,
+            # actual_longitude=-122.110091,
         )
 
         self.tag_position_analyzer = TagPositionInStableFovSegmentsAnalyzer(
@@ -136,7 +140,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
 
         return self
 
-    def dont_test_calibrate(self):
+    def test_calibrate(self):
         self.legacy_data_base_position_calibrator.run()
 
         master = tk.Tk()
@@ -164,7 +168,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
     def dont_test_present_manual_visual_angle_calculator(self):
         self.legacy_data_base_position_calibrator._present_manual_visual_angle_calculator()
 
-    def test_visualize_tag_positions(self):
+    def dont_test_visualize_tag_positions(self):
         frames = self.tag_position_analyzer.get_frames_in_stable_fovs(
             angle_threshold_rad=np.radians(self.threshold_deg),
             min_distance_to_camera=self.min_distance_to_camera,

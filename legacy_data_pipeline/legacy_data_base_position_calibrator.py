@@ -12,6 +12,7 @@ from legacy_data_pipeline.calibration_data_filer import CalibrationDataFiler
 import legacy_data_pipeline.pan_motor_angle_calculator as PanAngleCalculator
 from video_and_photo_tools.image_from_video_grabber import ImageFromVideoGrabber
 from circumcircles import Circumcircles
+import geometry_utils as GU
 
 class LegacyDataBasePositionCalibrator:
     '''
@@ -141,6 +142,24 @@ class LegacyDataBasePositionCalibrator:
         print(
             'fov_deg', np.degrees(visual_angle_data.get_fov()),
             'va_deg', np.degrees(va),
+        )
+        print(
+            'total_subtended_angle_deg',
+            np.degrees(combined_angle_data.get_combined_subtended_angle()),
+            'expected_subtended_angle_deg',
+            np.degrees(
+                GU.signed_subtended_angle_from_p1_to_p2_rad(
+                    v=self._base.get_actual_x_y_position(),
+                    p1=self._tag_postion_analyzer.get_early_position(
+                        self._current_frame,
+                    ),
+                    p2=self._tag_postion_analyzer.get_late_position(
+                        self._current_frame,
+                    ),
+                )
+            ),
+            'early_video_time',
+            motor_angle_data.get_early_video_time(),
         )
 
 
