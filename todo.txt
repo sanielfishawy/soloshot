@@ -1,3 +1,9 @@
+- Problems
+  - Camera calibration.
+  - Tag alignment to video variability.
+  - Motor alignment to video variability.
+  - Motor angle to Fov
+
 - GeoMapScrubber
     - Get lat and long of the camera
         - x: 132 y: 612 latitude: 37.38639419602273 longitude: -122.11008779357967
@@ -10,6 +16,29 @@
     - Alignment of video time to motor position.
     - Motor angle vs reality.
 
+
+- Control and read from the base
+    - Python with a telnet connection.
+
+- Tag software.
+    - MCUX IDE Toolkit if I want to use Mac
+    - Write a hello world app
+    - KL26 chip
+        - Interacts with the
+            - Uart Ublox
+            - Uart Kl25 for the
+            - Uart to the back tag for docking
+            - Oled bitmap
+        - Docs
+            - Readme on K20 freescale bit bucket
+            - CMake file
+    - Ublox chip
+        Neo M8
+
+- Video stream software.
+
+    - Android IDE android Java.
+
 - PanMotorToFovConsistencyCheckers
     - Visualize FOV
     - Choose regions with fixed FOV and large pan
@@ -17,3 +46,19 @@
     - Ask the user to pick the same object in each image
     - Calculate angle
     - Compare to pan
+
+- Camera Calibration
+    - Wade have they done it?
+    - Need to be able to grab photos at various zoom settings.
+
+
+
+
+- video
+- Tag reads
+- Motor reads
+- Compass reads
+- Motor sends
+- Video feed
+
+

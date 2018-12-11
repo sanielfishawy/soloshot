@@ -31,7 +31,7 @@ class Tag:
 
         if self._alignment_offset_video_to_tag_ms is None:
             # Emperical: see tag_gps_timebase_alignment_all_direction_changes.yml
-            self._alignment_offset_video_to_tag_ms = -57
+            self._alignment_offset_video_to_tag_ms = -421
 
         self._map_coordinate_transformer = map_coordinate_transformer
 

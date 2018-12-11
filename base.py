@@ -47,7 +47,7 @@ class Base:
 
         # Emperical see: pan_motor_timebase_alignment.yml
         if self._alignment_offset_motor_to_video_ms is None:
-            self._alignment_offset_motor_to_video_ms = 206
+            self._alignment_offset_motor_to_video_ms = 200
 
         # lazy inits for performance
         self._normalized_base_motor_time_series = None
@@ -117,6 +117,30 @@ class Base:
 
     def get_motor_time_for_video_time(self, video_time_ms):
         return video_time_ms - self._alignment_offset_motor_to_video_ms
+
+    def get_idx_after_video_time(self, video_time):
+        for idx, v_time in enumerate(self.get_base_motor_time_series_in_video_time()):
+            if v_time > video_time:
+                return idx
+        return None
+
+    def get_idx_before_video_time(self, video_time):
+        after = self.get_idx_after_video_time(video_time)
+        if after is None:
+            return None
+        return after - 1
+
+    def get_idx_after_motor_time(self, motor_time):
+        for idx, m_time in enumerate(self.get_normalized_base_motor_time_series()):
+            if m_time > motor_time:
+                return idx
+        return None
+
+    def get_idx_before_motor_time(self, motor_time):
+        after = self.get_idx_after_motor_time(motor_time)
+        if after is None:
+            return None
+        return after - 1
 
     def get_pan_motor_angle_series_rad(self):
         if self._pan_motor_angle_series_rad is None:

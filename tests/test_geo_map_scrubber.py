@@ -33,11 +33,12 @@ class TestGeoMapScrubber(unittest.TestCase):
         return self
 
     def visualize(self):
-        GeoMapScrubber(
+        geo_map_scrubber = GeoMapScrubber(
             latitude_series=self.latitude_series,
             longitude_series=self.longitude_series,
             time_series=self.time_series,
-        ).run()
+        )
+        geo_map_scrubber.run()
 
 
 if __name__ == '__main__':

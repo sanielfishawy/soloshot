@@ -13,6 +13,7 @@ from legacy_data_pipeline.legacy_data_file_system_helper import LegacyDataFileSy
 from legacy_data_pipeline.calibration_data_filer import CalibrationDataFiler as CDF
 from tk_canvas_renderers.geo_map_scrubber import GeoMapScrubber
 import tk_canvas_renderers.legacy_data_element_renders as Renderer
+from tk_canvas_renderers.tag_gps_timebase_aligner_ui import TagGpsTimebaseAlignerUi
 from geo_mapping.geo_mapper import MapFitter, MapCoordinateTransformer
 from tag import Tag
 from base import Base
@@ -63,6 +64,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             time_series=tag_time_series,
         )
 
+        self.video_path = ldfh.get_video_path(session_dir)
 
         map_fitter = MapFitter(
             latitude_series=tag_latitude_series,
@@ -122,7 +124,7 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
             base=self.base,
         )
 
-        self.frames_limit = 8
+        self.frames_limit = 1
         self.threshold_deg = 20
         self.min_distance_to_camera = 100
         # self.frames_limit = None
@@ -169,21 +171,24 @@ class TestLegacyDataBasePositionCalibrator(unittest.TestCase):
         self.legacy_data_base_position_calibrator._present_manual_visual_angle_calculator()
 
     def dont_test_visualize_tag_positions(self):
-        frames = self.tag_position_analyzer.get_frames_in_stable_fovs(
-            angle_threshold_rad=np.radians(self.threshold_deg),
-            min_distance_to_camera=self.min_distance_to_camera,
-            limit=self.frames_limit,
-        )
 
         master = tk.Tk()
-        self.geo_map_scrubber.setup_ui(master)
 
-        for frame in frames:
-            early_x_y_pos = self.tag_position_analyzer.get_early_position(frame)
-            late_x_y_pos = self.tag_position_analyzer.get_late_position(frame)
+        tag_gps_timebase_aligner_ui = TagGpsTimebaseAlignerUi(
+            geo_map_scrubber=self.geo_map_scrubber,
+            video_path=self.video_path,
+        )
 
-            self.geo_map_scrubber.add_marker_x_y(*early_x_y_pos)
-            self.geo_map_scrubber.add_marker_x_y(*late_x_y_pos)
+        tag_gps_timebase_aligner_ui.setup_ui(master)
+
+        Renderer.render_tag_position_analyzer_frames(
+            canvas=self.geo_map_scrubber.get_map_canvas(),
+            frames=self.tag_position_analyzer.get_complete_frames_where_range_exceeds_threshold(
+                threshold_rad=np.radians(self.threshold_deg),
+                min_distance_to_camera=self.min_distance_to_camera,
+            ),
+            tag_position_analyzer=self.tag_position_analyzer,
+        )
 
         master.mainloop()
 

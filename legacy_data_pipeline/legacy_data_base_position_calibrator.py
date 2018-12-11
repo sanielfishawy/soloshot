@@ -70,12 +70,16 @@ class LegacyDataBasePositionCalibrator:
             self._frames = self._tag_postion_analyzer.get_frames_in_stable_fovs(
                 angle_threshold_rad=self._angle_threshold_rad,
                 min_distance_to_camera=self._min_distance_to_camera,
-                limit=self._frames_limit,
+                # limit=self._frames_limit,
+                limit=None,
             )
         return self._frames
 
     def _present_manual_visual_angle_calculator(self):
-        for frame in self._get_frames():
+        for i, frame in enumerate(self._get_frames()):
+            if i >= self._frames_limit:
+                break
+
             self._current_frame = frame
             fov = np.radians(self._tag_postion_analyzer.get_fov_for_frame(frame))
             ManualVisualAngleCalculator(
@@ -84,7 +88,6 @@ class LegacyDataBasePositionCalibrator:
                 fov_rad=fov,
                 callback=self._manual_angle_calculator_callback,
             ).run()
-            break
 
     def _get_early_image_from_video_for_frame(self, frame):
         tag_timestamp = self._tag_postion_analyzer.get_early_min_max_timestamp(frame)
@@ -99,13 +102,15 @@ class LegacyDataBasePositionCalibrator:
         return self._image_from_video_grabber.get_image_from_video_at_time_ms(video_time)
 
     def _manual_angle_calculator_callback(self, visual_angle_data: VisualAngleData):
+        early_video_time=self._tag.get_video_time_for_timestamp(
+            self._tag_postion_analyzer.get_early_min_max_timestamp(self._current_frame)
+        )
+        late_video_time=self._tag.get_video_time_for_timestamp(
+            self._tag_postion_analyzer.get_late_min_max_timestamp(self._current_frame)
+        )
         motor_angle_data = MotorAngleData(
-            early_video_time=self._tag.get_video_time_for_timestamp(
-                self._tag_postion_analyzer.get_early_min_max_timestamp(self._current_frame)
-            ),
-            late_video_time=self._tag.get_video_time_for_timestamp(
-                self._tag_postion_analyzer.get_late_min_max_timestamp(self._current_frame)
-            ),
+            early_video_time=early_video_time,
+            late_video_time=late_video_time,
             base=self._base,
         )
 
@@ -134,10 +139,10 @@ class LegacyDataBasePositionCalibrator:
         va = visual_angle_data.get_subtended_angle()
         ma = motor_angle_data.get_subtended_motor_angle()
         print(
-            'fov', visual_angle_data.get_fov(),
-            'va', va,
-            'ma', ma,
-            'diff', np.degrees(va + ma)
+            'fov', np.degrees(visual_angle_data.get_fov()),
+            'va', np.degrees(va),
+            'ma', np.degrees(ma),
+            'diff', np.degrees(va + ma),
         )
         print(
             'fov_deg', np.degrees(visual_angle_data.get_fov()),
@@ -160,6 +165,41 @@ class LegacyDataBasePositionCalibrator:
             ),
             'early_video_time',
             motor_angle_data.get_early_video_time(),
+        )
+        print(
+            '\n\nMotor interpolation',
+        )
+        early_motor_time = self._base.get_motor_time_for_video_time(early_video_time)
+        print(
+            '\nInterpolated angle', np.degrees(self._base.get_motor_angle_for_video_time_rad(early_video_time)),
+
+            '\n\nEarly Video Time', early_video_time,
+            '\nidx before video time', self._base.get_idx_before_video_time(early_video_time),
+            '\nidx after video time', self._base.get_idx_after_video_time(early_video_time),
+            '\nVideo time at before idx', self._base.get_base_motor_time_series_in_video_time()[
+                self._base.get_idx_before_video_time(early_video_time)
+            ],
+            '\nVideo time at after idx', self._base.get_base_motor_time_series_in_video_time()[
+                self._base.get_idx_after_video_time(early_video_time)
+            ],
+            '\nVideo angle before', np.degrees(
+                self._base.get_pan_motor_angle_series_rad()[self._base.get_idx_before_video_time(early_video_time)]
+            ),
+            '\nVideo angle after', np.degrees(
+                self._base.get_pan_motor_angle_series_rad()[self._base.get_idx_after_video_time(early_video_time)]
+            ),
+
+            '\n\nEarly Motor Time', early_motor_time,
+            '\nidx before motor time', self._base.get_idx_before_motor_time(early_motor_time),
+            '\nidx after motor time', self._base.get_idx_after_motor_time(early_motor_time),
+            '\nMotor angle before', np.degrees(
+                self._base.get_pan_motor_angle_series_rad()[self._base.get_idx_before_motor_time(early_motor_time)]
+            ),
+            '\nMotor angle after', np.degrees(
+                self._base.get_pan_motor_angle_series_rad()[self._base.get_idx_after_motor_time(early_motor_time)]
+            ),
+
+
         )
 
 
