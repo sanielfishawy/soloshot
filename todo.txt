@@ -1,3 +1,11 @@
+- Remote control client
+    - TcpConnection
+        - Host_ip
+        - Host_port
+        - Returns get_reader, get_writer
+        - Opens a new connection if lost
+        - Close connection
+
 - Problems
   - Camera calibration.
   - Tag alignment to video variability.
@@ -17,8 +25,6 @@
     - Motor angle vs reality.
 
 
-- Control and read from the base
-    - Python with a telnet connection.
 
 - Tag software.
     - MCUX IDE Toolkit if I want to use Mac
@@ -35,9 +41,6 @@
     - Ublox chip
         Neo M8
 
-- Video stream software.
-
-    - Android IDE android Java.
 
 - PanMotorToFovConsistencyCheckers
     - Visualize FOV
@@ -51,14 +54,5 @@
     - Wade have they done it?
     - Need to be able to grab photos at various zoom settings.
 
-
-
-
-- video
-- Tag reads
-- Motor reads
-- Compass reads
-- Motor sends
-- Video feed
 
 

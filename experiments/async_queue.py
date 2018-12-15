@@ -22,9 +22,6 @@ async def main():
         queue.put_nowait(i)
 
     loop = asyncio.get_running_loop()
-    # for i in range(4):
-        # print(f'adding worker {i}')
-        # asyncio.create_task(worker(f'worker-{i}', queue))
 
     with concurrent.futures.ThreadPoolExecutor() as pool:
         workers = [
