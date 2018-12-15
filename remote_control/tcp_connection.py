@@ -23,14 +23,14 @@ class TcpConnection():
 
     def get_reader(self) -> asyncio.StreamReader:
         if self._reader is None:
-            asyncio.get_event_loop().run_until_complete(
+            asyncio.run(
                 self._open_connection()
             )
         return self._reader
 
     def get_writer(self) -> asyncio.StreamWriter:
         if self._writer is None:
-            asyncio.get_event_loop().run_until_complete(
+            asyncio.run(
                 self._open_connection()
             )
         return self._writer
@@ -49,4 +49,5 @@ class TcpConnection():
         self._reader, self._writer = await asyncio.open_connection(
             host=self._host_ip,
             port=self._port,
+            loop=asyncio.get_event_loop(),
         )

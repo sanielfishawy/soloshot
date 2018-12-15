@@ -12,17 +12,19 @@ from remote_control.event_loop_policy import EventLoopPolicy
 class TestRemoteControlTcpConnection(unittest.TestCase):
 
     def setUp(self):
-        asyncio.set_event_loop_policy(EventLoopPolicy())
-        self.server = EchoServer().start_server()
+        # asyncio.set_event_loop_policy(EventLoopPolicy())
+        self.server = EchoServer()
+        self.server.start_server()
         self.client = TcpConnection(
             host_ip=self.server.host_ip,
             port=self.server.port,
         )
+
         self.reader = self.client.get_reader()
         self.writer = self.client.get_writer()
 
     def test_echo(self):
-        asyncio.run(self.write('foo'))
+        asyncio.run(self.write('foo'), debug=True)
 
     async def write(self, message):
         self.writer.write(message.encode())

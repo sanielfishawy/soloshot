@@ -4,19 +4,29 @@ import asyncio
 
 sys.path.insert(0, os.getcwd())
 
+global reader, writer
+reader = None
+writer = None
+
 async def tcp_echo_client(message, delay):
+    global reader, writer
     await asyncio.sleep(delay)
 
-    reader, writer = await asyncio.open_connection(
-        host='127.0.0.1',
-        port=8886,
-    )
+    if reader is None:
+        reader, writer = await asyncio.open_connection(
+            host='127.0.0.1',
+            port=8886,
+        )
 
     print(f'Tcp_echo_client: Send: {message!r}')
     writer.write(message.encode())
+    await writer.drain()
 
-    writer.close()
-    await writer.wait_closed()
+    data = await reader.read(100)
+    print(f'Tcp_echo_client: received: {data.decode()!r}')
+
+    # writer.close()
+    # await writer.wait_closed()
 
 async def handle_server_cb(reader, writer):
     data = await reader.read(100)
@@ -24,8 +34,9 @@ async def handle_server_cb(reader, writer):
     addr = writer.get_extra_info('peername')
 
     print(f"Handle Echo: Received {message!r} from {addr!r}")
-
-    writer.close()
+    writer.write(data)
+    print(f"Handle Echo: Echoed back {message!r} to {addr!r}")
+    # writer.close()
 
 async def start_server():
     server = await asyncio.start_server(
