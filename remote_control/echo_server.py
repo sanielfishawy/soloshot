@@ -2,60 +2,94 @@
 import sys
 import os
 import asyncio
+from threading import Thread, Event
+import logging
 
 sys.path.insert(0, os.getcwd())
 
-class EchoServer():
+class EchoServer(Thread):
     '''
-    A simple echo server for testing TCP connections.
+    A simple echo server for testing TCP connections on a new Thread.
     host_ip: 127.0.0.1
     port: 8888
+
+    Server may not be restarted after stopped. Create a new instance if desired.
     '''
 
     def __init__(
             self,
     ):
+        super().__init__()
+
         self.host_ip = '127.0.0.1'
         self.port = 8888
+        self.started_event = Event()
+        self.stopped_event = Event()
 
-        # lazy init
         self._server = None
+        self._request_stop_event = Event()
 
-        # asyncio.set_event_loop_policy(EventLoopPolicy())
+        self._log = logging.getLogger(self.__class__.__name__)
 
-
-    def start_server(self):
-        asyncio.run(self._start_server())
-        return self
-
-    def stop_server(self):
+    def is_serving(self):
         if self._server is not None:
-            self._server.stop()
-            self._server = None
-        return self
+            return self._server.is_serving()
+        return False
+
+    def sockets(self):
+        if self._server is not None:
+            return self._server.sockets()
+        return []
+
+    def stop(self):
+        asyncio.run(self._stop_coro())
+
+    async def _stop_coro(self):
+        self._server.close()
+        await self._server.wait_closed()
+        self._request_stop_event.set()
+
+    def run(self):
+        asyncio.run(self._start_server())
+        self._request_stop_event.wait()
+        self.stopped_event.set()
+        self._log.debug('Stopped')
 
     async def _start_server(self):
-        if self._server is None:
-            self._server = await asyncio.start_server(
-                client_connected_cb=self._handle_server_connection,
-                host=self.host_ip,
-                port=self.port,
-                start_serving=True,
-            )
-            addr = self._server.sockets[0].getsockname()
-            print(f'Serving on {addr}')
+        self._server = await asyncio.start_server(
+            client_connected_cb=self._handle_server_connection,
+            host=self.host_ip,
+            port=self.port,
+            start_serving=True,
+        )
+        addr = self._server.sockets[0].getsockname()
+        self._log.debug('Serving on %s', addr)
+        self.started_event.set()
+
+        async with self._server:
+            await self._server.serve_forever()
 
     async def _handle_server_connection(
             self,
             reader: asyncio.StreamReader,
             writer: asyncio.StreamWriter,
     ):
-        data = await reader.read(100)
-        message = data.decode()
+        while True:
+            data = await reader.readline()
+            message = data.decode()
 
-        addr = writer.get_extra_info('peername')
-        print(f"Handle Echo: Received {message!r} from {addr!r}")
+            addr = writer.get_extra_info('peername')
+            self._log.debug(
+                'Received "%s" from %s',
+                message,
+                addr,
+            )
 
-        await writer.write(data)
+            writer.write(data)
+            await writer.drain()
 
-        writer.close()
+            self._log.debug(
+                'Sent "%s" to %s',
+                message,
+                addr,
+            )

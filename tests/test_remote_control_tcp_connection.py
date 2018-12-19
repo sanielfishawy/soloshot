@@ -1,35 +1,43 @@
-# pylint: disable=C0413
-import os
 import sys
+import os
 import unittest
+import logging
 import asyncio
 
 sys.path.insert(0, os.getcwd())
-from remote_control.tcp_connection import TcpConnection
 from remote_control.echo_server import EchoServer
-from remote_control.event_loop_policy import EventLoopPolicy
+from remote_control.tcp_connection import TcpConnection
+
 
 class TestRemoteControlTcpConnection(unittest.TestCase):
 
     def setUp(self):
-        # asyncio.set_event_loop_policy(EventLoopPolicy())
+
+        logging.basicConfig(
+            level=logging.DEBUG,
+            format='%(threadName)10s %(name)18s: %(message)s',
+            stream=sys.stderr,
+        )
+
+        self.log = logging.getLogger(__class__.__name__)
+
         self.server = EchoServer()
-        self.server.start_server()
-        self.client = TcpConnection(
+        self.server.start()
+        self.server.started_event.wait()
+
+        self.tcp_connection = TcpConnection(
             host_ip=self.server.host_ip,
             port=self.server.port,
         )
 
-        self.reader = self.client.get_reader()
-        self.writer = self.client.get_writer()
+    def tearDown(self):
+        self.server.stop()
 
-    def test_echo(self):
-        asyncio.run(self.write('foo'), debug=True)
+    def test_open_close(self):
+        self.tcp_connection.open()
+        self.tcp_connection.connection_open_event.wait()
 
-    async def write(self, message):
-        self.writer.write(message.encode())
-        data = await self.reader.read(100)
-        print(data.decode())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,12 +1,21 @@
 import sys
 import os
 import asyncio
+from threading import Thread, Event
+import logging
 
 sys.path.insert(0, os.getcwd())
 
-class TcpConnection():
+class TcpConnection(Thread):
     '''
-    Opens a tcp connection at domain_ip and port. Provides a reader and writer
+    Opens a tcp connection at host_ip and port on a new Thread.
+    To use:
+        - start()
+        - get_reader()
+        - get_writer()
+        - stop()
+
+    Cannot be restarted use a new instance if desired.
     '''
 
     def __init__(
@@ -14,40 +23,53 @@ class TcpConnection():
             host_ip: str,
             port: int,
     ):
+        super().__init__()
+
         self._host_ip = host_ip
         self._port = port
 
-        # lazy init
-        self._writer = None
-        self._reader = None
+        self.connection_open_event = Event()
+        self.connection_closed_event = Event()
 
-    def get_reader(self) -> asyncio.StreamReader:
-        if self._reader is None:
-            asyncio.run(
-                self._open_connection()
-            )
-        return self._reader
+        self._log = logging.getLogger(__class__.__name__)
+        self._debug = logging.getLogger().getEffectiveLevel() == logging.DEBUG
 
-    def get_writer(self) -> asyncio.StreamWriter:
-        if self._writer is None:
-            asyncio.run(
-                self._open_connection()
-            )
-        return self._writer
+    def open(self):
+        self.start() # super Thread
 
-    def close_connection(self):
-        asyncio.get_event_loop().run_until_complete(self._close_connection())
+    def run(self):
+        asyncio.run(self._run_coro(), debug=self._debug)
+        self.connection_open_event.set()
+        self.connection_closed_event.wait()
 
-    async def _close_connection(self):
-        if self._writer is not None:
-            self._writer.close()
-            await self._writer.wait_closed()
-        self._reader = None
-        self._writer = None
-
-    async def _open_connection(self):
-        self._reader, self._writer = await asyncio.open_connection(
+    async def _run_coro(self):
+        self._log.debug('Opening')
+        reader, writer = await asyncio.open_connection(
             host=self._host_ip,
             port=self._port,
-            loop=asyncio.get_event_loop(),
         )
+
+        await self.send_and_receive_foo(writer, reader)
+        await self.send_and_receive_foo(writer, reader)
+        await self.close(writer)
+
+
+    async def send_and_receive_foo(self, writer, reader):
+        self._log.debug('Writing foo')
+        writer.write('foo\n'.encode())
+        await writer.drain()
+        self._log.debug('Sent foo')
+        self._log.debug('Waiting on readline')
+        r = await reader.readline()
+        self._log.debug('Received %s', r.decode())
+
+    async def close(self, writer):
+        self._log.debug('Writing eof')
+        writer.write_eof()
+        self._log.debug('Waiting writing eof')
+        await writer.drain()
+        self._log.debug('Closing')
+        writer.close()
+        self._log.debug('Waiting closing')
+        await writer.wait_closed()
+        self._log.debug('Closed')

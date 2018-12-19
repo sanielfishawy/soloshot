@@ -1,11 +1,11 @@
 import asyncio
 
 def do_something_that_takes_time():
-    print('before run something')
-    asyncio.run(something())
+
     print('after run something')
     asyncio.run(something())
     print('after second run')
+
 
 
 async def something():
