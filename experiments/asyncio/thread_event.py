@@ -13,6 +13,9 @@ class EventSenderThread(Thread):
         self.stop_request_event = Event()
         self.log = logging.getLogger(self.__class__.__name__)
 
+    def stop(self):
+        self.stop_request_event.set()
+
     def run(self):
         self.is_running_event.set()
         for n in range(5):
@@ -33,6 +36,9 @@ class EventWaiterThread(Thread):
 
         self.stop_request_event = Event()
         self.log = logging.getLogger(self.__class__.__name__)
+
+    def stop(self):
+        self.stop_request_event.set()
 
     def run(self):
         self.log.info('Waiting on event')
@@ -71,8 +77,8 @@ if __name__ == '__main__':
     time.sleep(3)
 
     log.info('Attempting to stop event_sender')
-    event_sender.stop_request_event.set()
+    event_sender.stop()
 
     log.info('Attempting to stop event_waiter')
-    event_waiter.stop_request_event.set()
+    event_waiter.stop()
 

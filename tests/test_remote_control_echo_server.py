@@ -19,7 +19,7 @@ class TestRemoteControlEchoServer(unittest.TestCase):
         )
 
         logging.basicConfig(
-            level=logging.INFO,
+            level=logging.DEBUG,
             format='%(threadName)10s %(name)18s: %(message)s',
             stream=sys.stderr,
         )
@@ -34,6 +34,7 @@ class TestRemoteControlEchoServer(unittest.TestCase):
         self.assertTrue(self.server.is_serving())
         self.log.debug('Stopping server')
         self.server.stop()
+        self.log.debug('Is serving = %s', self.server.is_serving())
         self.log.debug('Waiting on stopped event')
         self.server.stopped_event.wait()
         self.log.debug('Got stopped event')

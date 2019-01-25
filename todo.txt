@@ -1,3 +1,26 @@
+x Motor control testing
+    x Test constant velocity command via telnet
+        x Send power on commands via adb
+        x Connect via telnet
+        x Send the cv command via telnet
+            #SEND,$61,12,0,0,-300000,0
+            #SEND,$61,12,0,0,-600000,0
+            #SEND,$61,12,0,0,-900000,0
+            #SEND,$61,12,0,0,-1800000,0
+            #SEND,$61,12,0,0,1800000,0
+            #SEND,$61,12,0,0,100000,0
+            #SEND,$61,12,0,0,0,0
+    x Test pan to position command via telnet
+            #SEND,$61,11,0,0,900000,100000,0,0
+            adb shell "echo '\$61,11,0,0,0,100000,0,0' > /dev/ttyHSL1"
+
+x TcpConnection
+    x Continuously recieve and log messages
+- BaseController
+    -
+
+
+
 https://pymotw.com/3/asyncio/executors.html
 - Remote control client
     - TcpConnection
@@ -55,3 +78,54 @@ https://pymotw.com/3/asyncio/executors.html
     - Wade have they done it?
     - Need to be able to grab photos at various zoom settings.
 
+
+- Soloshot hardware setup:
+    - Software Information
+        - SoloshotOsVersionFuture
+
+
+echo `date +"%T"` POWER OFF K20
+adb shell "echo 0 > /sys/class/gpio/gpio976/value"
+adb shell "echo 0 > /sys/class/gpio/gpio974/value"
+sleep 2
+
+
+echo `date +"%T"` POWER ON K20
+adb shell "echo 1 > /sys/class/gpio/gpio976/value"
+sleep 2
+adb shell "echo 1 > /sys/class/gpio/gpio974/value"
+sleep 1
+
+echo boot controllers
+adb shell "echo '\$105' > /dev/ttyHSL1"
+
+echo enable motors
+adb shell "echo '\$61,B1,7,0,0' > /dev/ttyHSL1"
+
+echo pan forever at 10 deg per second
+adb shell "echo '\$61,12,0,0,-100000,0' > /dev/ttyHSL1"
+
+sleep 2
+
+adb shell "echo '\$61,12,0,0,0,0' > /dev/ttyHSL1"
+
+
+Sani:~: adb shell "echo '\$61,12,0,0,0,0' > /dev/ttyHSL1"
+Sani:~: adb shell "echo '\$61,12,0,0,30000,0' > /dev/ttyHSL1"   >> Runs for a few seconds then stops.
+Sani:~: adb shell "echo '\$61,12,0,0,-100000,0' > /dev/ttyHSL1" >> Runs continuously for several revolutions no stop.
+Sani:~: adb shell "echo '\$61,12,0,0,100000,0' > /dev/ttyHSL1" >> Runs continuously for several revolutions no stop.
+Sani:~: adb shell "echo '\$61,12,0,0,-120000,0' > /dev/ttyHSL1" >> Runs continuously for several revolutions no stop faster.
+Sani:~: adb shell "echo '\$61,12,0,0,120000,0' > /dev/ttyHSL1" >> Runs continuously for several revolutions no stop.
+Sani:~: adb shell "echo '\$61,12,0,0,-150000,0' > /dev/ttyHSL1" >>  Runs continuously for several revolutions no stop.
+Sani:~: adb shell "echo '\$61,12,0,0,-50000,0' > /dev/ttyHSL1" >>  Stops does not run.
+Sani:~: adb shell "echo '\$61,12,0,0,50000,0' > /dev/ttyHSL1" >>  Stops does not run.
+Sani:~: adb shell "echo '\$61,12,0,0,50000,0' > /dev/ttyHSL1" >>  Starts then stops after a second or two
+
+
+Bill at Merrill 855-299-2535
+
+Smita send me tracking numbers for checks.
+
+Nicole will fax papwerwork to Smita
+
+Nicole will call their back office.

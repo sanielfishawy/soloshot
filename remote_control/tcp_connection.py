@@ -5,6 +5,9 @@ from threading import Thread, Event
 import logging
 
 sys.path.insert(0, os.getcwd())
+from remote_control.request_response_object import RequestResponseObject
+
+sys.path.insert(0, os.getcwd())
 
 class TcpConnection(Thread):
     '''
@@ -29,47 +32,68 @@ class TcpConnection(Thread):
         self._port = port
 
         self.connection_open_event = Event()
-        self.connection_closed_event = Event()
 
         self._log = logging.getLogger(__class__.__name__)
         self._debug = logging.getLogger().getEffectiveLevel() == logging.DEBUG
+        self._request_response_queue = None
+
+    def queue_request(self, request_response_object: RequestResponseObject):
+        self._request_response_queue.put_nowait(request_response_object)
 
     def open(self):
         self.start() # super Thread
 
     def run(self):
-        asyncio.run(self._run_coro(), debug=self._debug)
-        self.connection_open_event.set()
-        self.connection_closed_event.wait()
+        # asyncio.run(self._run_coro(), debug=self._debug)
+        asyncio.run(self._run_coro(), debug=True)
 
     async def _run_coro(self):
-        self._log.debug('Opening')
+        self._log.info('Opening')
+
+        self._request_response_queue = asyncio.Queue()
+
         reader, writer = await asyncio.open_connection(
             host=self._host_ip,
             port=self._port,
         )
+        self.connection_open_event.set()
 
-        await self.send_and_receive_foo(writer, reader)
-        await self.send_and_receive_foo(writer, reader)
-        await self.close(writer)
+        await asyncio.gather(
+            self._continuous_send_task(writer),
+            self._continuous_receive_task(reader),
+        )
+        # while True:
+        #     rro = self._request_response_queue.get()
+        #     await self._send_request(rro.request, writer)
+        #     rro.response = await self._get_response(reader)
+        #     self._send_callback(rro)
+        #     self._request_response_queue.task_done()
 
+    def _send_callback(self, request_response_object: RequestResponseObject):
+        if request_response_object.callback:
+            request_response_object.callback(request_response_object)
 
-    async def send_and_receive_foo(self, writer, reader):
-        self._log.debug('Writing foo')
-        writer.write('foo\n'.encode())
+    async def _continuous_send_task(self, writer):
+        while True:
+            rro = await self._request_response_queue.get()
+            await self._send_request(rro.request, writer)
+            self._log.info('sent: %s', rro.request)
+            self._request_response_queue.task_done()
+
+    async def _continuous_receive_task(self, reader):
+        while True:
+            response = await self._get_response(reader)
+            self._log.info('recieved: %s', response)
+
+    async def _send_request(self, request, writer):
+        writer.write(request.encode())
         await writer.drain()
-        self._log.debug('Sent foo')
-        self._log.debug('Waiting on readline')
+
+    async def _get_response(self, reader):
         r = await reader.readline()
-        self._log.debug('Received %s', r.decode())
+        return r.decode()
 
     async def close(self, writer):
-        self._log.debug('Writing eof')
-        writer.write_eof()
-        self._log.debug('Waiting writing eof')
-        await writer.drain()
-        self._log.debug('Closing')
         writer.close()
-        self._log.debug('Waiting closing')
         await writer.wait_closed()
         self._log.debug('Closed')

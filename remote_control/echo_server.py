@@ -27,47 +27,48 @@ class EchoServer(Thread):
         self.stopped_event = Event()
 
         self._server = None
+        self._run_forever_task = None
         self._request_stop_event = Event()
 
         self._log = logging.getLogger(self.__class__.__name__)
 
     def is_serving(self):
-        if self._server is not None:
+        if self._server:
             return self._server.is_serving()
         return False
 
     def sockets(self):
-        if self._server is not None:
+        if self._server:
             return self._server.sockets()
         return []
 
     def stop(self):
-        asyncio.run(self._stop_coro())
-
-    async def _stop_coro(self):
-        self._server.close()
-        await self._server.wait_closed()
-        self._request_stop_event.set()
+        self._run_forever_task.cancel()
 
     def run(self):
         asyncio.run(self._start_server())
-        self._request_stop_event.wait()
-        self.stopped_event.set()
-        self._log.debug('Stopped')
+        # try:
+        #     asyncio.run(self._start_server())
+        # except asyncio.CancelledError:
+        #     self.stopped_event.set()
+        #     self._log.debug('Stopped')
 
     async def _start_server(self):
         self._server = await asyncio.start_server(
             client_connected_cb=self._handle_server_connection,
             host=self.host_ip,
             port=self.port,
-            start_serving=True,
+            start_serving=False,
         )
         addr = self._server.sockets[0].getsockname()
         self._log.debug('Serving on %s', addr)
         self.started_event.set()
 
-        async with self._server:
-            await self._server.serve_forever()
+        self._run_forever_task = asyncio.create_task(self._server.serve_forever())
+        await self._run_forever_task
+
+        # async with self._server:
+            # await self._server.serve_forever()
 
     async def _handle_server_connection(
             self,
@@ -75,7 +76,8 @@ class EchoServer(Thread):
             writer: asyncio.StreamWriter,
     ):
         while True:
-            data = await reader.readline()
+            # data = await reader.readline()
+            data = await reader.read(10)
             message = data.decode()
 
             addr = writer.get_extra_info('peername')
