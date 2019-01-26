@@ -17,7 +17,9 @@ x Motor control testing
 x TcpConnection
     x Continuously recieve and log messages
 - BaseController
-    -
+    - deinit
+    - init
+    - enable_motors
 
 
 

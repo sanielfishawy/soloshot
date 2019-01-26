@@ -1,3 +1,4 @@
+# pylint: disable=C0413
 import sys
 import os
 import asyncio
@@ -11,14 +12,7 @@ sys.path.insert(0, os.getcwd())
 
 class TcpConnection(Thread):
     '''
-    Opens a tcp connection at host_ip and port on a new Thread.
-    To use:
-        - start()
-        - get_reader()
-        - get_writer()
-        - stop()
-
-    Cannot be restarted use a new instance if desired.
+    Opens a tcp connection at host_ip and port
     '''
 
     def __init__(
@@ -36,9 +30,13 @@ class TcpConnection(Thread):
         self._log = logging.getLogger(__class__.__name__)
         self._debug = logging.getLogger().getEffectiveLevel() == logging.DEBUG
         self._request_response_queue = None
+        self._loop = None
 
     def queue_request(self, request_response_object: RequestResponseObject):
-        self._request_response_queue.put_nowait(request_response_object)
+        asyncio.run_coroutine_threadsafe(
+            self._request_response_queue.put(request_response_object),
+            self._loop,
+        )
 
     def open(self):
         self.start() # super Thread
@@ -51,6 +49,7 @@ class TcpConnection(Thread):
         self._log.info('Opening')
 
         self._request_response_queue = asyncio.Queue()
+        self._loop = asyncio.get_event_loop()
 
         reader, writer = await asyncio.open_connection(
             host=self._host_ip,
@@ -77,13 +76,13 @@ class TcpConnection(Thread):
         while True:
             rro = await self._request_response_queue.get()
             await self._send_request(rro.request, writer)
-            self._log.info('sent: %s', rro.request)
+            self._log.info('sent: %r', rro.request)
             self._request_response_queue.task_done()
 
     async def _continuous_receive_task(self, reader):
         while True:
             response = await self._get_response(reader)
-            self._log.info('recieved: %s', response)
+            self._log.info('recieved: %r', response)
 
     async def _send_request(self, request, writer):
         writer.write(request.encode())
